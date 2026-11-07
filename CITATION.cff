@@ -1,12 +1,12 @@
 cff-version: 1.2.0
 message: If you use this software, please cite it using these metadata.
-title: One object instead of a choice of vacuum to put the observer in de Sitter
-  space: From wormholes, black holes and baby universes to the criteria for an observer
-  in de Sitter, contrasted with the Kaluza–Klein graviton candidates and with the
-  cosmological constant
+title: "One object instead of a choice of vacuum to put the observer in de
+  Sitter space: From wormholes, black holes and baby universes to the criteria
+  for an observer in de Sitter, contrasted with the Kaluza–Klein graviton
+  candidates and with the cosmological constant"
 type: software
 version: 0.1.0
-date-released: 2026-11-06
+date-released: 2026-11-07
 authors:
   - family-names: González García
     given-names: Jorge Armando
@@ -37,40 +37,2052 @@ keywords:
   - Formal verification
   - Lean 4
   - Mathlib4
-abstract: >-
-  In de Sitter space an observer must be inside the universe it observes, and in
-  string theory placing it has become a choice: of a vacuum among some 10^500. The
-  same choice returns where wormholes, black holes and baby universes meet. The baby
-  universes that branch off through wormholes carry parameters that fix the constants
-  of nature, the cosmological constant among them, and the same parameters label the
-  boundary theories over which the gravity of a black-hole throat is averaged; in
-  both the question is which value, and the answer is sought in what a throat
-  contains. The programme to which this note belongs, written within critical
-  realism, reads the difficulty as one of representation rather than of selection:
-  what is missing is one object that meets the criteria Witten and Chandrasekaran,
-  Longo, Penington and Witten set for an observer in de Sitter, not a choice among
-  values. This note does not test that claim itself; it tests two of its consequences
-  where data can reach them, on the particles of one throat and on the cosmological
+abstract: "In de Sitter space an observer must be inside the universe it
+  observes, and in string theory placing it has become a choice: of a vacuum
+  among some 10^500. The same choice returns where wormholes, black holes and
+  baby universes meet. The baby universes that branch off through wormholes
+  carry parameters that fix the constants of nature, the cosmological constant
+  among them, and the same parameters label the boundary theories over which the
+  gravity of a black-hole throat is averaged; in both the question is which
+  value, and the answer is sought in what a throat contains. The programme to
+  which this note belongs, written within critical realism, reads the difficulty
+  as one of representation rather than of selection: what is missing is one
+  object that meets the criteria Witten and Chandrasekaran, Longo, Penington and
+  Witten set for an observer in de Sitter, not a choice among values. This note
+  does not test that claim itself; it tests two of its consequences where data
+  can reach them, on the particles of one throat and on the cosmological
   constant. The object, in the framework of the programme, is a microstate whose
-  levels form a tower built from two numbers, π and the golden ratio φ; read as a
-  warped extra dimension it is a throat, the golden throat, whose Kaluza–Klein modes
-  are its particles. The question becomes whether the tower fixes what a throat
-  model otherwise chooses. The two-brane model of Randall and Sundrum assumes the
-  dimension and chooses the infrared scale and the depth. The golden throat has the
-  same equations, so the same mass ratios, and four independent conditions of the
-  tower, reflection positivity, four-dimensional gravity, the arity of the framework
-  and the clock of φ, fix its spectrum with no free parameter, to leading order
-  π(k+1/4) times Mφ^12 in the unit M of the framework. The arity gives the dimension
-  that the two-brane model assumes; with M identified with the scale of the charged
-  leptons and the level 12 with the bottom of the throat, the spectrum fixes the
-  infrared scale that it chooses. Identified with the graviton candidates reported
-  at 380 and 700 GeV, they place the bottom of the throat at 11.97±0.05, 0.6 standard
-  deviations from 12, and give the next modes at 1028 and 1346 GeV, against 1014 and
-  1328 GeV for the two-brane model fitted to the same candidates. Only the depth, the
-  position of the top, stays free, and the ratio of the vector modes can decide it if
-  they share the throat. The same tower carries the observer of de Sitter space. In
-  the gravitational unit of the framework the observed cosmological constant gives
-  the observer's level, 583.79±0.03: the level is read from the data, not chosen, and
-  the hypothesis that it sits at an integer level is excluded within ΛCDM at 7.6
-  standard deviations. What the note leaves open is one number, the ratio of the
-  lepton scale to the Planck scale.
+  levels form a tower built from two numbers, π and the golden ratio φ; read as
+  a warped extra dimension it is a throat, the golden throat, whose Kaluza–Klein
+  modes are its particles. The question becomes whether the tower fixes what a
+  throat model otherwise chooses. The two-brane model of Randall and Sundrum
+  assumes the dimension and chooses the infrared scale and the depth. The golden
+  throat has the same equations, so the same mass ratios, and four independent
+  conditions of the tower, reflection positivity, four-dimensional gravity, the
+  arity of the framework and the clock of φ, fix its spectrum with no free
+  parameter, to leading order π(k+1/4) times Mφ^12 in the unit M of the
+  framework. The arity gives the dimension that the two-brane model assumes;
+  with M identified with the scale of the charged leptons and the level 12 with
+  the bottom of the throat, the spectrum fixes the infrared scale that it
+  chooses. Identified with the graviton candidates reported at 380 and 700 GeV,
+  they place the bottom of the throat at 11.97±0.05, 0.6 standard deviations
+  from 12, and give the next modes at 1028 and 1346 GeV, against 1014 and 1328
+  GeV for the two-brane model fitted to the same candidates. Only the depth, the
+  position of the top, stays free, and the ratio of the vector modes can decide
+  it if they share the throat. The same tower carries the observer of de Sitter
+  space. In the gravitational unit of the framework the observed cosmological
+  constant gives the observer's level, 583.79±0.03: the level is read from the
+  data, not chosen, and the hypothesis that it sits at an integer level is
+  excluded within ΛCDM at 7.6 standard deviations. What the note leaves open is
+  one number, the ratio of the lepton scale to the Planck scale."
+references:
+  - type: article
+    title: Evidence for Kaluza--Klein excitations of the graviton, gluon and quark
+      at LHC
+    authors:
+      - family-names: Le Yaouanc
+        given-names: A.
+      - family-names: Richard
+        given-names: F.
+    year: 2026
+    doi: 10.48550/arXiv.2610.31458
+    url: https://arxiv.org/abs/2610.31458
+  - authors:
+      - family-names: Witten
+        given-names: E.
+    doi: 10.48550/arXiv.hep-th/0106109
+    identifiers:
+      - type: doi
+        value: 10.48550/arXiv.hep-th/0106109
+      - type: url
+        value: https://arxiv.org/abs/hep-th/0106109
+    title: Quantum gravity in de Sitter space
+    url: https://arxiv.org/abs/hep-th/0106109
+    date-published: 2001-01-01
+    year: 2001
+    notes: arXiv:hep-th/0106109
+    type: historical-work
+  - authors:
+      - family-names: Banks
+        given-names: T.
+      - family-names: Fischler
+        given-names: W.
+    doi: 10.48550/arXiv.hep-th/0102077
+    identifiers:
+      - type: doi
+        value: 10.48550/arXiv.hep-th/0102077
+      - type: url
+        value: https://arxiv.org/abs/hep-th/0102077
+    title: M-theory observables for cosmological space-times
+    url: https://arxiv.org/abs/hep-th/0102077
+    date-published: 2001-01-01
+    year: 2001
+    notes: arXiv:hep-th/0102077
+    type: historical-work
+  - authors:
+      - family-names: Chandrasekaran
+        given-names: V.
+      - family-names: Longo
+        given-names: R.
+      - family-names: Penington
+        given-names: G.
+      - family-names: Witten
+        given-names: E.
+    doi: 10.1007/JHEP02(2023)082
+    identifiers:
+      - type: doi
+        value: 10.1007/JHEP02(2023)082
+      - type: url
+        value: https://doi.org/10.1007/JHEP02(2023)082
+    title: An algebra of observables for de Sitter space
+    url: https://doi.org/10.1007/JHEP02(2023)082
+    date-published: 2023-01-01
+    year: 2023
+    issue: "2"
+    journal: Journal of High Energy Physics
+    start: "82"
+    type: article
+    volume: "2023"
+  - authors:
+      - family-names: Maldacena
+        given-names: J. M.
+    doi: 10.1142/S0217751X2647010X
+    identifiers:
+      - type: doi
+        value: 10.1142/S0217751X2647010X
+      - type: url
+        value: https://doi.org/10.1142/S0217751X2647010X
+    title: Real observers solving some imaginary problems
+    url: https://doi.org/10.1142/S0217751X2647010X
+    date-published: 2026-01-01
+    year: 2026
+    issue: "26"
+    journal: International Journal of Modern Physics A
+    notes: arXiv:2412.14014
+    type: article
+    volume: "41"
+  - authors:
+      - family-names: Susskind
+        given-names: L.
+    doi: 10.3390/universe7120464
+    identifiers:
+      - type: doi
+        value: 10.3390/universe7120464
+      - type: url
+        value: https://doi.org/10.3390/universe7120464
+    title: "De Sitter holography: fluctuations, anomalous symmetry, and wormholes"
+    url: https://doi.org/10.3390/universe7120464
+    date-published: 2021-01-01
+    year: 2021
+    issue: "12"
+    journal: Universe
+    start: "464"
+    type: article
+    volume: "7"
+  - authors:
+      - family-names: Narovlansky
+        given-names: V.
+      - family-names: Verlinde
+        given-names: H.
+    doi: 10.1007/JHEP05(2025)032
+    identifiers:
+      - type: doi
+        value: 10.1007/JHEP05(2025)032
+      - type: url
+        value: https://doi.org/10.1007/JHEP05(2025)032
+    title: Double-scaled SYK and de Sitter holography
+    url: https://doi.org/10.1007/JHEP05(2025)032
+    date-published: 2025-01-01
+    year: 2025
+    issue: "5"
+    journal: Journal of High Energy Physics
+    start: "032"
+    type: article
+    volume: "2025"
+  - authors:
+      - family-names: Maldacena
+        given-names: J.
+      - family-names: Qi
+        given-names: X.-L.
+    doi: 10.48550/arXiv.1804.00491
+    identifiers:
+      - type: doi
+        value: 10.48550/arXiv.1804.00491
+      - type: url
+        value: https://arxiv.org/abs/1804.00491
+    title: Eternal traversable wormhole
+    url: https://arxiv.org/abs/1804.00491
+    date-published: 2018-01-01
+    year: 2018
+    notes: arXiv:1804.00491
+    type: historical-work
+  - authors:
+      - family-names: Schlenker
+        given-names: J.-M.
+      - family-names: Witten
+        given-names: E.
+    doi: 10.1007/JHEP07(2022)143
+    identifiers:
+      - type: doi
+        value: 10.1007/JHEP07(2022)143
+      - type: url
+        value: https://doi.org/10.1007/JHEP07(2022)143
+    title: No ensemble averaging below the black hole threshold
+    url: https://doi.org/10.1007/JHEP07(2022)143
+    date-published: 2022-01-01
+    year: 2022
+    issue: "7"
+    journal: Journal of High Energy Physics
+    start: "143"
+    type: article
+    volume: "2022"
+  - authors:
+      - family-names: Gibbons
+        given-names: G. W.
+      - family-names: Hawking
+        given-names: S. W.
+    doi: 10.1103/PhysRevD.15.2738
+    identifiers:
+      - type: doi
+        value: 10.1103/PhysRevD.15.2738
+      - type: url
+        value: https://doi.org/10.1103/PhysRevD.15.2738
+    title: Cosmological event horizons, thermodynamics, and particle creation
+    url: https://doi.org/10.1103/PhysRevD.15.2738
+    date-published: 1977-01-01
+    year: 1977
+    issue: "10"
+    journal: Physical Review D
+    start: "2738"
+    end: "2751"
+    type: article
+    volume: "15"
+  - authors:
+      - family-names: Sayer
+        given-names: A.
+    title: "Abstraction: a realist interpretation"
+    date-published: 1998-01-01
+    year: 1998
+    editors:
+      - family-names: Archer
+        given-names: M.
+      - family-names: Bhaskar
+        given-names: R.
+      - family-names: Collier
+        given-names: A.
+      - family-names: Lawson
+        given-names: T.
+      - family-names: Norrie
+        given-names: A.
+    journal: "Critical Realism: Essential Readings"
+    publisher:
+      name: Routledge
+    start: "120"
+    end: "143"
+    type: generic
+  - authors:
+      - family-names: de Giorgi
+        given-names: A.
+      - family-names: Marcoli
+        given-names: M.
+      - family-names: Silvetti
+        given-names: F.
+    doi: 10.48550/arXiv.2607.12012
+    identifiers:
+      - type: doi
+        value: 10.48550/arXiv.2607.12012
+      - type: url
+        value: https://arxiv.org/abs/2607.12012
+    title: LHC constraints on resonant Kaluza--Klein gravitons
+    url: https://arxiv.org/abs/2607.12012
+    date-published: 2026-01-01
+    year: 2026
+    notes: arXiv:2607.12012
+    type: historical-work
+  - authors:
+      - family-names: Le Yaouanc
+        given-names: A.
+      - family-names: Richard
+        given-names: F.
+    doi: 10.48550/arXiv.2606.29922
+    identifiers:
+      - type: doi
+        value: 10.48550/arXiv.2606.29922
+      - type: url
+        value: https://arxiv.org/abs/2606.29922
+    title: Influence of the KK graviton decay into hh on the triple Higgs
+      measurement at LHC
+    url: https://arxiv.org/abs/2606.29922
+    date-published: 2026-01-01
+    year: 2026
+    notes: arXiv:2606.29922
+    type: historical-work
+  - authors:
+      - family-names: Koide
+        given-names: Y.
+    doi: 10.1007/BF02817096
+    identifiers:
+      - type: doi
+        value: 10.1007/BF02817096
+      - type: url
+        value: https://doi.org/10.1007/BF02817096
+    title: Fermion-boson two-body model of quarks and leptons and Cabibbo mixing
+    url: https://doi.org/10.1007/BF02817096
+    date-published: 1982-01-01
+    year: 1982
+    issue: "8"
+    journal: Lettere al Nuovo Cimento
+    start: "201"
+    end: "205"
+    type: article
+    volume: "34"
+  - authors:
+      - family-names: Koide
+        given-names: Y.
+    doi: 10.1016/0370-2693(83)90644-5
+    identifiers:
+      - type: doi
+        value: 10.1016/0370-2693(83)90644-5
+      - type: url
+        value: https://doi.org/10.1016/0370-2693(83)90644-5
+    title: A fermion-boson composite model of quarks and leptons
+    url: https://doi.org/10.1016/0370-2693(83)90644-5
+    date-published: 1983-01-01
+    year: 1983
+    issue: 1-3
+    journal: Physics Letters B
+    start: "161"
+    end: "165"
+    type: article
+    volume: "120"
+  - authors:
+      - family-names: Rivero
+        given-names: A.
+      - family-names: Gsponer
+        given-names: A.
+    doi: 10.48550/arXiv.hep-ph/0505220
+    identifiers:
+      - type: doi
+        value: 10.48550/arXiv.hep-ph/0505220
+      - type: url
+        value: https://arxiv.org/abs/hep-ph/0505220
+    title: The strange formula of Dr. Koide
+    url: https://arxiv.org/abs/hep-ph/0505220
+    date-published: 2005-01-01
+    year: 2005
+    notes: arXiv:hep-ph/0505220
+    type: historical-work
+  - authors:
+      - family-names: Hawking
+        given-names: S. W.
+    doi: 10.1103/PhysRevD.37.904
+    identifiers:
+      - type: doi
+        value: 10.1103/PhysRevD.37.904
+      - type: url
+        value: https://doi.org/10.1103/PhysRevD.37.904
+    title: Wormholes in spacetime
+    url: https://doi.org/10.1103/PhysRevD.37.904
+    date-published: 1988-01-01
+    year: 1988
+    issue: "4"
+    journal: Physical Review D
+    start: "904"
+    end: "910"
+    type: article
+    volume: "37"
+  - authors:
+      - family-names: Hawking
+        given-names: S. W.
+    title: Black Holes and Baby Universes and Other Essays
+    date-published: 1993-01-01
+    year: 1993
+    publisher:
+      name: Bantam
+    type: book
+  - authors:
+      - family-names: Barceló
+        given-names: C.
+      - family-names: Garay
+        given-names: L. J.
+    doi: 10.1103/PhysRevD.57.5291
+    identifiers:
+      - type: doi
+        value: 10.1103/PhysRevD.57.5291
+      - type: url
+        value: https://doi.org/10.1103/PhysRevD.57.5291
+    title: Quantum fields in anti-de Sitter wormholes
+    url: https://doi.org/10.1103/PhysRevD.57.5291
+    date-published: 1998-01-01
+    year: 1998
+    issue: "8"
+    journal: Physical Review D
+    start: "5291"
+    end: "5294"
+    type: article
+    volume: "57"
+  - authors:
+      - family-names: Hawking
+        given-names: S. W.
+    doi: 10.1103/PhysRevD.72.084013
+    identifiers:
+      - type: doi
+        value: 10.1103/PhysRevD.72.084013
+      - type: url
+        value: https://doi.org/10.1103/PhysRevD.72.084013
+    title: Information loss in black holes
+    url: https://doi.org/10.1103/PhysRevD.72.084013
+    date-published: 2005-01-01
+    year: 2005
+    issue: "8"
+    journal: Physical Review D
+    start: "084013"
+    type: article
+    volume: "72"
+  - authors:
+      - family-names: Bousso
+        given-names: R.
+      - family-names: Susskind
+        given-names: L.
+    doi: 10.1103/PhysRevD.85.045007
+    identifiers:
+      - type: doi
+        value: 10.1103/PhysRevD.85.045007
+      - type: url
+        value: https://doi.org/10.1103/PhysRevD.85.045007
+    title: Multiverse interpretation of quantum mechanics
+    url: https://doi.org/10.1103/PhysRevD.85.045007
+    date-published: 2012-01-01
+    year: 2012
+    issue: "4"
+    journal: Physical Review D
+    start: "045007"
+    type: article
+    volume: "85"
+  - authors:
+      - family-names: Giddings
+        given-names: S. B.
+      - family-names: Strominger
+        given-names: A.
+    doi: 10.1016/0550-3213(88)90109-5
+    identifiers:
+      - type: doi
+        value: 10.1016/0550-3213(88)90109-5
+      - type: url
+        value: https://doi.org/10.1016/0550-3213(88)90109-5
+    title: Loss of incoherence and determination of coupling constants in quantum
+      gravity
+    url: https://doi.org/10.1016/0550-3213(88)90109-5
+    date-published: 1988-01-01
+    year: 1988
+    issue: "4"
+    journal: Nuclear Physics B
+    start: "854"
+    end: "866"
+    type: article
+    volume: "307"
+  - authors:
+      - family-names: Giddings
+        given-names: S. B.
+      - family-names: Strominger
+        given-names: A.
+    doi: 10.1016/0550-3213(89)90353-2
+    identifiers:
+      - type: doi
+        value: 10.1016/0550-3213(89)90353-2
+      - type: url
+        value: https://doi.org/10.1016/0550-3213(89)90353-2
+    title: Baby universes, third quantization and the cosmological constant
+    url: https://doi.org/10.1016/0550-3213(89)90353-2
+    date-published: 1989-01-01
+    year: 1989
+    issue: "2"
+    journal: Nuclear Physics B
+    start: "481"
+    end: "508"
+    type: article
+    volume: "321"
+  - authors:
+      - family-names: Coleman
+        given-names: S.
+    doi: 10.1016/0550-3213(88)90097-1
+    identifiers:
+      - type: doi
+        value: 10.1016/0550-3213(88)90097-1
+      - type: url
+        value: https://doi.org/10.1016/0550-3213(88)90097-1
+    title: "Why there is nothing rather than something: a theory of the cosmological
+      constant"
+    url: https://doi.org/10.1016/0550-3213(88)90097-1
+    date-published: 1988-01-01
+    year: 1988
+    issue: 3-4
+    journal: Nuclear Physics B
+    start: "643"
+    end: "668"
+    type: article
+    volume: "310"
+  - authors:
+      - family-names: Marolf
+        given-names: D.
+      - family-names: Maxfield
+        given-names: H.
+    doi: 10.1007/JHEP08(2020)044
+    identifiers:
+      - type: doi
+        value: 10.1007/JHEP08(2020)044
+      - type: url
+        value: https://doi.org/10.1007/JHEP08(2020)044
+    title: "Transcending the ensemble: baby universes, spacetime wormholes, and the
+      order and disorder of black hole information"
+    url: https://doi.org/10.1007/JHEP08(2020)044
+    date-published: 2020-01-01
+    year: 2020
+    issue: "8"
+    journal: Journal of High Energy Physics
+    start: "044"
+    type: article
+    volume: "2020"
+  - authors:
+      - family-names: McNamara
+        given-names: J.
+      - family-names: Vafa
+        given-names: C.
+    doi: 10.48550/arXiv.2004.06738
+    identifiers:
+      - type: doi
+        value: 10.48550/arXiv.2004.06738
+      - type: url
+        value: https://arxiv.org/abs/2004.06738
+    title: Baby universes, holography, and the swampland
+    url: https://arxiv.org/abs/2004.06738
+    date-published: 2020-01-01
+    year: 2020
+    notes: arXiv:2004.06738
+    type: historical-work
+  - authors:
+      - family-names: Zurek
+        given-names: W. H.
+    doi: 10.1038/nphys1202
+    identifiers:
+      - type: doi
+        value: 10.1038/nphys1202
+      - type: url
+        value: https://doi.org/10.1038/nphys1202
+    title: Quantum Darwinism
+    url: https://doi.org/10.1038/nphys1202
+    date-published: 2009-01-01
+    year: 2009
+    issue: "3"
+    journal: Nature Physics
+    start: "181"
+    end: "188"
+    type: article
+    volume: "5"
+  - authors:
+      - family-names: Kiely
+        given-names: A.
+      - family-names: Chisholm
+        given-names: D. A.
+      - family-names: Touil
+        given-names: A.
+      - family-names: Deffner
+        given-names: S.
+      - family-names: Landi
+        given-names: G. T.
+      - family-names: Campbell
+        given-names: S.
+    doi: 10.1103/hn78-7xx3
+    identifiers:
+      - type: doi
+        value: 10.1103/hn78-7xx3
+      - type: url
+        value: https://doi.org/10.1103/hn78-7xx3
+    title: Metrological approach to the emergence of classical objectivity
+    url: https://doi.org/10.1103/hn78-7xx3
+    date-published: 2026-01-01
+    year: 2026
+    issue: "2"
+    journal: Physical Review A
+    start: "022403"
+    type: article
+    volume: "113"
+  - authors:
+      - name: A. G. Riess et al.
+    doi: 10.3847/2041-8213/ac5c5b
+    identifiers:
+      - type: doi
+        value: 10.3847/2041-8213/ac5c5b
+      - type: url
+        value: https://doi.org/10.3847/2041-8213/ac5c5b
+    title: A comprehensive measurement of the local value of the Hubble constant
+      with 1 km s⁻<sup>1</sup> Mpc⁻<sup>1</sup> uncertainty from the Hubble
+      Space Telescope and the SH0ES team
+    url: https://doi.org/10.3847/2041-8213/ac5c5b
+    date-published: 2022-01-01
+    year: 2022
+    issue: "1"
+    journal: The Astrophysical Journal Letters
+    start: L7
+    type: article
+    volume: "934"
+  - authors:
+      - name: DESI Collaboration
+    doi: 10.1103/tr6y-kpc6
+    identifiers:
+      - type: doi
+        value: 10.1103/tr6y-kpc6
+      - type: url
+        value: https://doi.org/10.1103/tr6y-kpc6
+    title: DESI DR2 results. II. Measurements of baryon acoustic oscillations and
+      cosmological constraints
+    url: https://doi.org/10.1103/tr6y-kpc6
+    date-published: 2025-01-01
+    year: 2025
+    issue: "8"
+    journal: Physical Review D
+    start: "083515"
+    type: article
+    volume: "112"
+  - authors:
+      - family-names: Neukirch
+        given-names: J.
+    doi: 10.1007/978-3-662-03983-0
+    identifiers:
+      - type: doi
+        value: 10.1007/978-3-662-03983-0
+      - type: url
+        value: https://doi.org/10.1007/978-3-662-03983-0
+    title: Algebraic Number Theory
+    url: https://doi.org/10.1007/978-3-662-03983-0
+    date-published: 1999-01-01
+    year: 1999
+    notes: Grundlehren der mathematischen Wissenschaften; Ch. I, §7
+    publisher:
+      name: Springer
+    type: book
+  - authors:
+      - family-names: Baake
+        given-names: M.
+      - family-names: Grimm
+        given-names: U.
+    doi: 10.1017/cbo9781139025256
+    identifiers:
+      - type: doi
+        value: 10.1017/cbo9781139025256
+      - type: url
+        value: https://doi.org/10.1017/cbo9781139025256
+    title: "Aperiodic Order, Vol. 1: A Mathematical Invitation"
+    url: https://doi.org/10.1017/cbo9781139025256
+    date-published: 2013-01-01
+    year: 2013
+    publisher:
+      name: Cambridge University Press
+    type: book
+  - authors:
+      - family-names: Jagannathan
+        given-names: A.
+    doi: 10.1103/RevModPhys.93.045001
+    identifiers:
+      - type: doi
+        value: 10.1103/RevModPhys.93.045001
+      - type: url
+        value: https://doi.org/10.1103/RevModPhys.93.045001
+    title: "The Fibonacci quasicrystal: case study of hidden dimensions and
+      multifractality"
+    url: https://doi.org/10.1103/RevModPhys.93.045001
+    date-published: 2021-01-01
+    year: 2021
+    issue: "4"
+    journal: Reviews of Modern Physics
+    start: "045001"
+    type: article
+    volume: "93"
+  - authors:
+      - family-names: Randall
+        given-names: L.
+      - family-names: Sundrum
+        given-names: R.
+    doi: 10.1103/PhysRevLett.83.4690
+    identifiers:
+      - type: doi
+        value: 10.1103/PhysRevLett.83.4690
+      - type: url
+        value: https://doi.org/10.1103/PhysRevLett.83.4690
+    title: An alternative to compactification
+    url: https://doi.org/10.1103/PhysRevLett.83.4690
+    date-published: 1999-01-01
+    year: 1999
+    issue: "23"
+    journal: Physical Review Letters
+    start: "4690"
+    end: "4693"
+    type: article
+    volume: "83"
+  - authors:
+      - family-names: Garriga
+        given-names: J.
+      - family-names: Tanaka
+        given-names: T.
+    doi: 10.1103/PhysRevLett.84.2778
+    identifiers:
+      - type: doi
+        value: 10.1103/PhysRevLett.84.2778
+      - type: url
+        value: https://doi.org/10.1103/PhysRevLett.84.2778
+    title: Gravity in the Randall--Sundrum brane world
+    url: https://doi.org/10.1103/PhysRevLett.84.2778
+    date-published: 2000-01-01
+    year: 2000
+    issue: "13"
+    journal: Physical Review Letters
+    start: "2778"
+    end: "2781"
+    type: article
+    volume: "84"
+  - authors:
+      - family-names: Binétruy
+        given-names: P.
+      - family-names: Deffayet
+        given-names: C.
+      - family-names: Langlois
+        given-names: D.
+    doi: 10.1016/S0550-3213(99)00696-3
+    identifiers:
+      - type: doi
+        value: 10.1016/S0550-3213(99)00696-3
+      - type: url
+        value: https://doi.org/10.1016/S0550-3213(99)00696-3
+    title: Non-conventional cosmology from a brane universe
+    url: https://doi.org/10.1016/S0550-3213(99)00696-3
+    date-published: 2000-01-01
+    year: 2000
+    issue: 1-2
+    journal: Nuclear Physics B
+    start: "269"
+    end: "287"
+    type: article
+    volume: "565"
+  - authors:
+      - family-names: Sakharov
+        given-names: A. D.
+    doi: 10.1023/A:1001947813563
+    identifiers:
+      - type: doi
+        value: 10.1023/A:1001947813563
+      - type: url
+        value: https://doi.org/10.1023/A:1001947813563
+    title: Vacuum quantum fluctuations in curved space and the theory of gravitation
+    url: https://doi.org/10.1023/A:1001947813563
+    date-published: 2000-01-01
+    year: 2000
+    issue: "2"
+    journal: General Relativity and Gravitation
+    start: "365"
+    end: "367"
+    type: article
+    volume: "32"
+  - authors:
+      - family-names: Vassilevich
+        given-names: D. V.
+    doi: 10.1016/j.physrep.2003.09.002
+    identifiers:
+      - type: doi
+        value: 10.1016/j.physrep.2003.09.002
+      - type: url
+        value: https://doi.org/10.1016/j.physrep.2003.09.002
+    title: "Heat kernel expansion: user's manual"
+    url: https://doi.org/10.1016/j.physrep.2003.09.002
+    date-published: 2003-01-01
+    year: 2003
+    issue: 5-6
+    journal: Physics Reports
+    start: "279"
+    end: "360"
+    type: article
+    volume: "388"
+  - authors:
+      - family-names: Whittaker
+        given-names: E. T.
+      - family-names: Watson
+        given-names: G. N.
+    doi: 10.1017/cbo9780511608759
+    identifiers:
+      - type: doi
+        value: 10.1017/cbo9780511608759
+      - type: url
+        value: https://doi.org/10.1017/cbo9780511608759
+    title: A Course of Modern Analysis
+    url: https://doi.org/10.1017/cbo9780511608759
+    date-published: 1927-01-01
+    year: 1927
+    notes: 4th ed., Ch. XXI; DOI is the Cambridge University Press e-book of the 4th
+      edition (Crossref year 1996)
+    publisher:
+      name: Cambridge University Press
+    type: book
+  - authors:
+      - family-names: Buckingham
+        given-names: E.
+    doi: 10.1103/PhysRev.4.345
+    identifiers:
+      - type: doi
+        value: 10.1103/PhysRev.4.345
+    title: On physically similar systems; illustrations of the use of dimensional
+      equations
+    date-published: 1914-01-01
+    year: 1914
+    journal: Physical Review
+    start: "345"
+    end: "376"
+    type: article
+    volume: "4"
+  - authors:
+      - family-names: Scherk
+        given-names: J.
+      - family-names: Schwarz
+        given-names: John H.
+    doi: 10.1016/0550-3213(79)90592-3
+    identifiers:
+      - type: doi
+        value: 10.1016/0550-3213(79)90592-3
+    title: How to get masses from extra dimensions
+    date-published: 1979-01-01
+    year: 1979
+    journal: Nuclear Physics B
+    start: "61"
+    end: "88"
+    type: article
+    volume: "153"
+  - authors:
+      - family-names: Hosotani
+        given-names: Yutaka
+    doi: 10.1016/0370-2693(83)90170-3
+    identifiers:
+      - type: doi
+        value: 10.1016/0370-2693(83)90170-3
+    title: Dynamical mass generation by compact extra dimensions
+    date-published: 1983-01-01
+    year: 1983
+    journal: Physics Letters B
+    start: "309"
+    end: "313"
+    type: article
+    volume: "126"
+  - authors:
+      - family-names: Hawking
+        given-names: S. W.
+      - family-names: Page
+        given-names: Don N.
+    doi: 10.1007/BF01208266
+    identifiers:
+      - type: doi
+        value: 10.1007/BF01208266
+    title: Thermodynamics of black holes in anti-de Sitter space
+    date-published: 1983-01-01
+    year: 1983
+    journal: Communications in Mathematical Physics
+    start: "577"
+    end: "588"
+    type: article
+    volume: "87"
+  - authors:
+      - family-names: Witten
+        given-names: Edward
+    doi: 10.4310/ATMP.1998.v2.n3.a3
+    identifiers:
+      - type: doi
+        value: 10.4310/ATMP.1998.v2.n3.a3
+    title: Anti-de Sitter space, thermal phase transition, and confinement in gauge
+      theories
+    date-published: 1998-01-01
+    year: 1998
+    journal: Advances in Theoretical and Mathematical Physics
+    start: "505"
+    end: "532"
+    type: article
+    volume: "2"
+  - authors:
+      - family-names: Goldberger
+        given-names: Walter D.
+      - family-names: Wise
+        given-names: Mark B.
+    doi: 10.1103/PhysRevLett.83.4922
+    identifiers:
+      - type: doi
+        value: 10.1103/PhysRevLett.83.4922
+    title: Modulus stabilization with bulk fields
+    date-published: 1999-01-01
+    year: 1999
+    journal: Physical Review Letters
+    start: "4922"
+    end: "4925"
+    type: article
+    volume: "83"
+  - authors:
+      - family-names: Davoudiasl
+        given-names: Hooman
+      - family-names: Perez
+        given-names: Gilad
+      - family-names: Soni
+        given-names: Amarjit
+    doi: 10.1016/j.physletb.2008.05.024
+    identifiers:
+      - type: doi
+        value: 10.1016/j.physletb.2008.05.024
+    title: The little Randall--Sundrum model at the Large Hadron Collider
+    date-published: 2008-01-01
+    year: 2008
+    journal: Physics Letters B
+    start: "67"
+    end: "71"
+    type: article
+    volume: "665"
+  - authors:
+      - family-names: Obied
+        given-names: Georges
+      - family-names: Ooguri
+        given-names: Hirosi
+      - family-names: Spodyneiko
+        given-names: Lev
+      - family-names: Vafa
+        given-names: Cumrun
+    identifiers:
+      - type: url
+        value: https://arxiv.org/abs/1806.08362
+    title: De Sitter space and the swampland
+    url: https://arxiv.org/abs/1806.08362
+    date-published: 2018-01-01
+    year: 2018
+    journal: arXiv
+    notes: arXiv:1806.08362
+    type: historical-work
+  - authors:
+      - family-names: Ooguri
+        given-names: Hirosi
+      - family-names: Palti
+        given-names: Eran
+      - family-names: Shiu
+        given-names: Gary
+      - family-names: Vafa
+        given-names: Cumrun
+    doi: 10.1016/j.physletb.2018.11.018
+    identifiers:
+      - type: doi
+        value: 10.1016/j.physletb.2018.11.018
+    title: Distance and de Sitter conjectures on the swampland
+    date-published: 2019-01-01
+    year: 2019
+    journal: Physics Letters B
+    start: "180"
+    end: "184"
+    type: article
+    volume: "788"
+  - authors:
+      - family-names: Akrami
+        given-names: Yashar
+      - family-names: Alestas
+        given-names: George
+      - family-names: Nesseris
+        given-names: Savvas
+    identifiers:
+      - type: url
+        value: https://arxiv.org/abs/2504.04226
+    title: Has DESI detected exponential quintessence?
+    url: https://arxiv.org/abs/2504.04226
+    date-published: 2025-01-01
+    year: 2025
+    journal: arXiv
+    notes: arXiv:2504.04226
+    type: historical-work
+  - authors:
+      - family-names: Nguyen
+        given-names: J.
+    identifiers:
+      - type: url
+        value: https://plato.stanford.edu/entries/scientific-representation/
+    title: Scientific representation
+    url: https://plato.stanford.edu/entries/scientific-representation/
+    date-published: 2026-01-01
+    year: 2026
+    editors:
+      - family-names: Zalta
+        given-names: E. N.
+      - family-names: Nodelman
+        given-names: U.
+    journal: The Stanford Encyclopedia of Philosophy
+    notes: first published 2016, revised 2026
+    type: website
+  - authors:
+      - family-names: Sonnino
+        given-names: Giorgio
+      - family-names: Nardone
+        given-names: Pasquale
+    doi: 10.3390/axioms13120862
+    identifiers:
+      - type: doi
+        value: 10.3390/axioms13120862
+    title: The golden ratio family of extremal Kerr--Newman black holes and its
+      implications for the cosmological constant
+    date-published: 2024-01-01
+    year: 2024
+    journal: Axioms
+    start: "862"
+    type: article
+    volume: "13"
+  - authors:
+      - family-names: Julia
+        given-names: B.
+    doi: 10.1007/978-3-642-75405-0_30
+    identifiers:
+      - type: doi
+        value: 10.1007/978-3-642-75405-0_30
+    title: Statistical theory of numbers
+    date-published: 1990-01-01
+    year: 1990
+    journal: Springer Proceedings in Physics
+    publisher:
+      name: Springer
+    start: "276"
+    end: "293"
+    type: generic
+    volume: "47"
+  - authors:
+      - family-names: Hartnoll
+        given-names: Sean A.
+      - family-names: Yang
+        given-names: Ming
+    doi: 10.1007/JHEP07(2025)281
+    identifiers:
+      - type: doi
+        value: 10.1007/JHEP07(2025)281
+    title: The conformal primon gas at the end of time
+    date-published: 2025-01-01
+    year: 2025
+    issue: "7"
+    journal: Journal of High Energy Physics
+    start: "281"
+    type: article
+    volume: "2025"
+  - authors:
+      - family-names: De Clerck
+        given-names: Marine
+      - family-names: Hartnoll
+        given-names: Sean A.
+      - family-names: Yang
+        given-names: Ming
+    doi: 10.1007/JHEP11(2025)160
+    identifiers:
+      - type: doi
+        value: 10.1007/JHEP11(2025)160
+    title: Wheeler--DeWitt wavefunctions for 5d BKL dynamics, automorphic
+      L-functions and complex primon gases
+    date-published: 2025-01-01
+    year: 2025
+    issue: "11"
+    journal: Journal of High Energy Physics
+    start: "160"
+    type: article
+    volume: "2025"
+  - authors:
+      - family-names: Grisales Herrera
+        given-names: J.
+    title: Golden Prime Symmetry
+    date-published: 2023-01-01
+    year: 2023
+    notes: B.Sc. thesis, Ibagué (Colombia)
+    institution:
+      name: Universidad del Tolima
+    type: thesis
+  - authors:
+      - family-names: Bedroya
+        given-names: Alek
+      - family-names: Vafa
+        given-names: Cumrun
+    doi: 10.1007/JHEP09(2020)123
+    identifiers:
+      - type: doi
+        value: 10.1007/JHEP09(2020)123
+    title: Trans-Planckian censorship and the swampland
+    date-published: 2020-01-01
+    year: 2020
+    issue: "9"
+    journal: Journal of High Energy Physics
+    start: "123"
+    type: article
+    volume: "2020"
+  - authors:
+      - family-names: Montero
+        given-names: Miguel
+      - family-names: Vafa
+        given-names: Cumrun
+      - family-names: Valenzuela
+        given-names: Irene
+    doi: 10.1007/JHEP02(2023)022
+    identifiers:
+      - type: doi
+        value: 10.1007/JHEP02(2023)022
+    title: The dark dimension and the swampland
+    date-published: 2023-01-01
+    year: 2023
+    issue: "2"
+    journal: Journal of High Energy Physics
+    start: "022"
+    type: article
+    volume: "2023"
+  - authors:
+      - family-names: Weinberg
+        given-names: Steven
+    doi: 10.1103/PhysRevLett.59.2607
+    identifiers:
+      - type: doi
+        value: 10.1103/PhysRevLett.59.2607
+    title: Anthropic bound on the cosmological constant
+    date-published: 1987-01-01
+    year: 1987
+    journal: Physical Review Letters
+    start: "2607"
+    end: "2610"
+    type: article
+    volume: "59"
+  - authors:
+      - family-names: Hawking
+        given-names: S.W.
+    doi: 10.1016/0370-2693(84)91370-4
+    identifiers:
+      - type: doi
+        value: 10.1016/0370-2693(84)91370-4
+    title: The cosmological constant is probably zero
+    date-published: 1984-01-01
+    year: 1984
+    journal: Physics Letters B
+    start: "403"
+    end: "404"
+    type: article
+    volume: "134"
+  - authors:
+      - family-names: Bousso
+        given-names: Raphael
+    doi: 10.1103/PhysRevLett.97.191302
+    identifiers:
+      - type: doi
+        value: 10.1103/PhysRevLett.97.191302
+    title: Holographic probabilities in eternal inflation
+    date-published: 2006-01-01
+    year: 2006
+    journal: Physical Review Letters
+    start: "191302"
+    type: article
+    volume: "97"
+  - authors:
+      - family-names: Cohen
+        given-names: Andrew G.
+      - family-names: Kaplan
+        given-names: David B.
+      - family-names: Nelson
+        given-names: Ann E.
+    doi: 10.1103/PhysRevLett.82.4971
+    identifiers:
+      - type: doi
+        value: 10.1103/PhysRevLett.82.4971
+    title: Effective field theory, black holes, and the cosmological constant
+    date-published: 1999-01-01
+    year: 1999
+    journal: Physical Review Letters
+    start: "4971"
+    end: "4974"
+    type: article
+    volume: "82"
+  - authors:
+      - family-names: Banks
+        given-names: T.
+    doi: 10.1142/S0217751X01003998
+    identifiers:
+      - type: doi
+        value: 10.1142/S0217751X01003998
+    title: Cosmological breaking of supersymmetry?
+    date-published: 2001-01-01
+    year: 2001
+    journal: International Journal of Modern Physics A
+    notes: arXiv:hep-th/0007146
+    start: "910"
+    end: "921"
+    type: article
+    volume: "16"
+  - authors:
+      - family-names: Huerta
+        given-names: John
+      - family-names: Schreiber
+        given-names: Urs
+    doi: 10.1007/s11005-018-1110-z
+    identifiers:
+      - type: doi
+        value: 10.1007/s11005-018-1110-z
+    title: M-theory from the superpoint
+    date-published: 2018-01-01
+    year: 2018
+    journal: Letters in Mathematical Physics
+    notes: arXiv:1702.01774
+    start: "2695"
+    end: "2727"
+    type: article
+    volume: "108"
+  - authors:
+      - family-names: Maldacena
+        given-names: Juan
+      - family-names: Michelson
+        given-names: Jeremy
+      - family-names: Strominger
+        given-names: Andrew
+    doi: 10.1088/1126-6708/1999/02/011
+    identifiers:
+      - type: doi
+        value: 10.1088/1126-6708/1999/02/011
+    title: Anti-de Sitter fragmentation
+    date-published: 1999-01-01
+    year: 1999
+    issue: "02"
+    journal: Journal of High Energy Physics
+    start: "011"
+    type: article
+    volume: "1999"
+  - authors:
+      - family-names: Reuter
+        given-names: M.
+    doi: 10.1103/PhysRevD.57.971
+    identifiers:
+      - type: doi
+        value: 10.1103/PhysRevD.57.971
+    title: Nonperturbative evolution equation for quantum gravity
+    date-published: 1998-01-01
+    year: 1998
+    journal: Physical Review D
+    start: "971"
+    end: "985"
+    type: article
+    volume: "57"
+  - authors:
+      - name: Planck Collaboration
+    doi: 10.1051/0004-6361/201833910
+    identifiers:
+      - type: doi
+        value: 10.1051/0004-6361/201833910
+    title: Planck 2018 results. VI. Cosmological parameters
+    date-published: 2020-01-01
+    year: 2020
+    journal: Astronomy & Astrophysics
+    start: A6
+    type: article
+    volume: "641"
+  - authors:
+      - family-names: Le Yaouanc
+        given-names: Alain
+      - family-names: Richard
+        given-names: François
+    identifiers:
+      - type: url
+        value: https://arxiv.org/abs/2506.09490
+    title: "Evidence for BSM spin 0 and spin 2 resonances at LHC: possible
+      interpretations"
+    url: https://arxiv.org/abs/2506.09490
+    date-published: 2025-01-01
+    year: 2025
+    journal: arXiv
+    notes: arXiv:2506.09490 (v7, 2026)
+    type: historical-work
+  - authors:
+      - family-names: González García
+        given-names: Jorge Armando
+      - family-names: González García
+        given-names: Víctor Manuel
+      - family-names: García Ordóñez
+        given-names: Luz María
+      - family-names: Dressler Pérez
+        given-names: Itzel Marion
+    doi: 10.5281/zenodo.21343602
+    identifiers:
+      - type: doi
+        value: 10.5281/zenodo.21343602
+    title: "The Crystalline Worldsheet: a string theoretical framework based on 𝔽₁,
+      for the de Sitter observer problem"
+    date-published: 2026-01-01
+    year: 2026
+    publisher:
+      name: Zenodo
+    type: historical-work
+  - authors:
+      - family-names: González García
+        given-names: Jorge Armando
+      - family-names: González García
+        given-names: Víctor Manuel
+      - family-names: Dressler Pérez
+        given-names: Itzel Marion
+      - family-names: García Ordóñez
+        given-names: Luz María
+    doi: 10.5281/zenodo.19492791
+    identifiers:
+      - type: doi
+        value: 10.5281/zenodo.19492791
+    title: "Odd zeta values from pentagonal 𝔽₁-descent: a Λ-structure on ℤ[φ], the
+      character χ₅, and GRH for L(s,χ₅) in equivalent forms"
+    date-published: 2026-01-01
+    year: 2026
+    publisher:
+      name: Zenodo
+    type: historical-work
+  - authors:
+      - family-names: Saad
+        given-names: Phil
+      - family-names: Shenker
+        given-names: Stephen H.
+      - family-names: Stanford
+        given-names: Douglas
+    identifiers:
+      - type: url
+        value: https://arxiv.org/abs/1903.11115
+    title: JT gravity as a matrix integral
+    url: https://arxiv.org/abs/1903.11115
+    date-published: 2019-01-01
+    year: 2019
+    journal: arXiv
+    notes: arXiv:1903.11115
+    type: historical-work
+  - authors:
+      - family-names: Bousso
+        given-names: Raphael
+      - family-names: Polchinski
+        given-names: Joseph
+    doi: 10.1088/1126-6708/2000/06/006
+    identifiers:
+      - type: doi
+        value: 10.1088/1126-6708/2000/06/006
+    title: Quantization of four-form fluxes and dynamical neutralization of the
+      cosmological constant
+    date-published: 2000-01-01
+    year: 2000
+    issue: "06"
+    journal: Journal of High Energy Physics
+    start: "006"
+    type: article
+    volume: "2000"
+  - authors:
+      - family-names: González
+        given-names: J.
+    title: ¿Cómo representar un agujero de gusano? Presentación de un programa de
+      investigación sobre modelos de juguete en gravedad cuántica desde una
+      perspectiva de tendencia realista crítica
+    date-published: 2026-01-01
+    year: 2026
+    notes: in preparation
+    type: generic
+  - authors:
+      - family-names: González
+        given-names: J.
+    title: Representación y representado en la física teórica
+    date-published: 2026-01-01
+    year: 2026
+    notes: in preparation
+    type: generic
+  - authors:
+      - family-names: Randall
+        given-names: Lisa
+      - family-names: Sundrum
+        given-names: Raman
+    doi: 10.1103/PhysRevLett.83.3370
+    identifiers:
+      - type: doi
+        value: 10.1103/PhysRevLett.83.3370
+    title: Large mass hierarchy from a small extra dimension
+    date-published: 1999-01-01
+    year: 1999
+    journal: Physical Review Letters
+    start: "3370"
+    end: "3373"
+    type: article
+    volume: "83"
+  - authors:
+      - family-names: Davoudiasl
+        given-names: H.
+      - family-names: Hewett
+        given-names: J. L.
+      - family-names: Rizzo
+        given-names: T. G.
+    doi: 10.1016/S0370-2693(99)01430-6
+    identifiers:
+      - type: doi
+        value: 10.1016/S0370-2693(99)01430-6
+    title: Bulk gauge fields in the Randall--Sundrum model
+    date-published: 2000-01-01
+    year: 2000
+    journal: Physics Letters B
+    notes: "Second paper: Phenomenology of the Randall--Sundrum gauge hierarchy
+      model, Phys. Rev. Lett. 84 (2000) 2080, doi:10.1103/PhysRevLett.84.2080"
+    start: "43"
+    end: "49"
+    type: article
+    volume: "473"
+  - authors:
+      - name: National Institute of Standards and Technology
+    identifiers:
+      - type: url
+        value: https://dlmf.nist.gov/10.21.vii
+    title: NIST Digital Library of Mathematical Functions, §10.21(vii), McMahon's
+      expansion
+    url: https://dlmf.nist.gov/10.21.vii
+    type: website
+  - authors:
+      - family-names: Polchinski
+        given-names: Joseph
+    doi: 10.1017/CBO9780511816079
+    identifiers:
+      - type: doi
+        value: 10.1017/CBO9780511816079
+    title: String Theory
+    date-published: 1998-01-01
+    year: 1998
+    notes: §§1.3, 7.3
+    publisher:
+      name: Cambridge University Press
+    type: book
+    volume: "1"
+  - authors:
+      - family-names: Agashe
+        given-names: Kaustubh
+      - family-names: Davoudiasl
+        given-names: Hooman
+      - family-names: Perez
+        given-names: Gilad
+      - family-names: Soni
+        given-names: Amarjit
+    doi: 10.1103/PhysRevD.76.036006
+    identifiers:
+      - type: doi
+        value: 10.1103/PhysRevD.76.036006
+    title: Warped gravitons at the CERN LHC and beyond
+    date-published: 2007-01-01
+    year: 2007
+    journal: Physical Review D
+    start: "036006"
+    type: article
+    volume: "76"
+  - authors:
+      - family-names: Avila
+        given-names: Artur
+    doi: 10.1007/s11511-015-0128-7
+    identifiers:
+      - type: doi
+        value: 10.1007/s11511-015-0128-7
+    title: Global theory of one-frequency Schrödinger operators
+    date-published: 2015-01-01
+    year: 2015
+    issue: "1"
+    journal: Acta Mathematica
+    start: "1"
+    end: "54"
+    type: article
+    volume: "215"
+  - authors:
+      - family-names: Avila
+        given-names: Artur
+      - family-names: Jitomirskaya
+        given-names: Svetlana
+    doi: 10.4007/annals.2009.170.303
+    identifiers:
+      - type: doi
+        value: 10.4007/annals.2009.170.303
+    title: The Ten Martini Problem
+    date-published: 2009-01-01
+    year: 2009
+    issue: "1"
+    journal: Annals of Mathematics
+    start: "303"
+    end: "342"
+    type: article
+    volume: "170"
+  - authors:
+      - family-names: Band
+        given-names: Ram
+      - family-names: Beckus
+        given-names: Siegfried
+      - family-names: Loewy
+        given-names: Raphael
+    doi: 10.48550/arXiv.2402.16703
+    identifiers:
+      - type: doi
+        value: 10.48550/arXiv.2402.16703
+      - type: url
+        value: https://arxiv.org/abs/2402.16703
+    title: The Dry Ten Martini Problem for Sturmian Hamiltonians
+    url: https://arxiv.org/abs/2402.16703
+    date-published: 2024-01-01
+    year: 2024
+    notes: arXiv:2402.16703
+    type: historical-work
+  - authors:
+      - family-names: Wall
+        given-names: D. D.
+    doi: 10.1080/00029890.1960.11989541
+    identifiers:
+      - type: doi
+        value: 10.1080/00029890.1960.11989541
+    title: Fibonacci series modulo m
+    date-published: 1960-01-01
+    year: 1960
+    issue: "6"
+    journal: The American Mathematical Monthly
+    start: "525"
+    end: "532"
+    type: article
+    volume: "67"
+  - authors:
+      - family-names: Jacobson
+        given-names: Ted
+    doi: 10.1103/PhysRevLett.75.1260
+    identifiers:
+      - type: doi
+        value: 10.1103/PhysRevLett.75.1260
+    title: "Thermodynamics of spacetime: the Einstein equation of state"
+    date-published: 1995-01-01
+    year: 1995
+    issue: "7"
+    journal: Physical Review Letters
+    start: "1260"
+    end: "1263"
+    type: article
+    volume: "75"
+  - authors:
+      - family-names: Maldacena
+        given-names: Juan
+    doi: 10.4310/ATMP.1998.v2.n2.a1
+    identifiers:
+      - type: doi
+        value: 10.4310/ATMP.1998.v2.n2.a1
+    title: The large N limit of superconformal field theories and supergravity
+    date-published: 1998-01-01
+    year: 1998
+    issue: "2"
+    journal: Advances in Theoretical and Mathematical Physics
+    start: "231"
+    end: "252"
+    type: article
+    volume: "2"
+  - authors:
+      - family-names: Gubser
+        given-names: S. S.
+      - family-names: Klebanov
+        given-names: I. R.
+      - family-names: Polyakov
+        given-names: A. M.
+    doi: 10.1016/S0370-2693(98)00377-3
+    identifiers:
+      - type: doi
+        value: 10.1016/S0370-2693(98)00377-3
+    title: Gauge theory correlators from non-critical string theory
+    date-published: 1998-01-01
+    year: 1998
+    issue: 1-2
+    journal: Physics Letters B
+    start: "105"
+    end: "114"
+    type: article
+    volume: "428"
+  - authors:
+      - family-names: Witten
+        given-names: Edward
+    doi: 10.4310/ATMP.1998.v2.n2.a2
+    identifiers:
+      - type: doi
+        value: 10.4310/ATMP.1998.v2.n2.a2
+    title: Anti de Sitter space and holography
+    date-published: 1998-01-01
+    year: 1998
+    issue: "2"
+    journal: Advances in Theoretical and Mathematical Physics
+    start: "253"
+    end: "291"
+    type: article
+    volume: "2"
+  - authors:
+      - family-names: Ryu
+        given-names: Shinsei
+      - family-names: Takayanagi
+        given-names: Tadashi
+    doi: 10.1103/PhysRevLett.96.181602
+    identifiers:
+      - type: doi
+        value: 10.1103/PhysRevLett.96.181602
+    title: Holographic derivation of entanglement entropy from the anti-de Sitter
+      space/conformal field theory correspondence
+    date-published: 2006-01-01
+    year: 2006
+    issue: "18"
+    journal: Physical Review Letters
+    start: "181602"
+    type: article
+    volume: "96"
+  - authors:
+      - family-names: Brown
+        given-names: J. D.
+      - family-names: Henneaux
+        given-names: Marc
+    doi: 10.1007/BF01211590
+    identifiers:
+      - type: doi
+        value: 10.1007/BF01211590
+    title: "Central charges in the canonical realization of asymptotic symmetries:
+      an example from three-dimensional gravity"
+    date-published: 1986-01-01
+    year: 1986
+    issue: "2"
+    journal: Communications in Mathematical Physics
+    start: "207"
+    end: "226"
+    type: article
+    volume: "104"
+  - authors:
+      - family-names: Montgomery
+        given-names: H. L.
+    doi: 10.1090/pspum/024/9944
+    identifiers:
+      - type: doi
+        value: 10.1090/pspum/024/9944
+    title: The pair correlation of zeros of the zeta function
+    date-published: 1973-01-01
+    year: 1973
+    journal: Proceedings of Symposia in Pure Mathematics
+    start: "181"
+    end: "193"
+    type: article
+    volume: "24"
+  - authors:
+      - family-names: Odlyzko
+        given-names: A. M.
+    doi: 10.1090/s0025-5718-1987-0866115-0
+    identifiers:
+      - type: doi
+        value: 10.1090/s0025-5718-1987-0866115-0
+    title: On the distribution of spacings between zeros of the zeta function
+    date-published: 1987-01-01
+    year: 1987
+    issue: "177"
+    journal: Mathematics of Computation
+    start: "273"
+    end: "308"
+    type: article
+    volume: "48"
+  - authors:
+      - family-names: Serre
+        given-names: Jean-Pierre
+    doi: 10.1007/978-1-4684-9884-4
+    identifiers:
+      - type: doi
+        value: 10.1007/978-1-4684-9884-4
+    title: A Course in Arithmetic
+    date-published: 1973-01-01
+    year: 1973
+    journal: Graduate Texts in Mathematics
+    notes: GTM 7
+    publisher:
+      name: Springer
+    type: book
+  - authors:
+      - family-names: Susskind
+        given-names: L.
+      - family-names: Witten
+        given-names: Edward
+    doi: 10.48550/arXiv.hep-th/9805114
+    identifiers:
+      - type: doi
+        value: 10.48550/arXiv.hep-th/9805114
+      - type: url
+        value: https://arxiv.org/abs/hep-th/9805114
+    title: The holographic bound in anti-de Sitter space
+    url: https://arxiv.org/abs/hep-th/9805114
+    date-published: 1998-01-01
+    year: 1998
+    notes: arXiv:hep-th/9805114
+    type: historical-work
+  - authors:
+      - family-names: Hurwitz
+        given-names: A.
+    doi: 10.1007/BF01206656
+    identifiers:
+      - type: doi
+        value: 10.1007/BF01206656
+    title: Über die angenäherte Darstellung der Irrationalzahlen durch rationale
+      Brüche
+    date-published: 1891-01-01
+    year: 1891
+    issue: "2"
+    journal: Mathematische Annalen
+    start: "279"
+    end: "284"
+    type: article
+    volume: "39"
+  - authors:
+      - family-names: Weyl
+        given-names: Hermann
+    doi: 10.1007/BF01475864
+    identifiers:
+      - type: doi
+        value: 10.1007/BF01475864
+    title: Über die Gleichverteilung von Zahlen mod. Eins
+    date-published: 1916-01-01
+    year: 1916
+    issue: "3"
+    journal: Mathematische Annalen
+    start: "313"
+    end: "352"
+    type: article
+    volume: "77"
+  - authors:
+      - family-names: Cardy
+        given-names: John L.
+    doi: 10.1016/0550-3213(86)90552-3
+    identifiers:
+      - type: doi
+        value: 10.1016/0550-3213(86)90552-3
+    title: Operator content of two-dimensional conformally invariant theories
+    date-published: 1986-01-01
+    year: 1986
+    journal: Nuclear Physics B
+    start: "186"
+    end: "204"
+    type: article
+    volume: "270"
+  - authors:
+      - family-names: van Ravenstein
+        given-names: Tony
+    doi: 10.1017/S1446788700031062
+    identifiers:
+      - type: doi
+        value: 10.1017/S1446788700031062
+    title: The three gap theorem (Steinhaus conjecture)
+    date-published: 1988-01-01
+    year: 1988
+    issue: "3"
+    journal: Journal of the Australian Mathematical Society. Series A. Pure
+      Mathematics and Statistics
+    start: "360"
+    end: "370"
+    type: article
+    volume: "45"
+  - authors:
+      - family-names: Fejes Tóth
+        given-names: L.
+    doi: 10.1007/BF01181430
+    identifiers:
+      - type: doi
+        value: 10.1007/BF01181430
+    title: Über einen geometrischen Satz
+    date-published: 1940-01-01
+    year: 1940
+    issue: "1"
+    journal: Mathematische Zeitschrift
+    start: "83"
+    end: "85"
+    type: article
+    volume: "46"
+  - authors:
+      - family-names: Schütte
+        given-names: K.
+      - family-names: van der Waerden
+        given-names: B. L.
+    doi: 10.1007/BF01343127
+    identifiers:
+      - type: doi
+        value: 10.1007/BF01343127
+    title: Das Problem der dreizehn Kugeln
+    date-published: 1952-01-01
+    year: 1952
+    issue: "1"
+    journal: Mathematische Annalen
+    start: "325"
+    end: "334"
+    type: article
+    volume: "125"
+  - authors:
+      - family-names: Pryce
+        given-names: J. D.
+    title: Numerical Solution of Sturm--Liouville Problems
+    date-published: 1993-01-01
+    year: 1993
+    publisher:
+      name: Oxford University Press
+    type: book
+  - authors:
+      - family-names: Davoudiasl
+        given-names: H.
+      - family-names: Hewett
+        given-names: J. L.
+      - family-names: Rizzo
+        given-names: T. G.
+    doi: 10.1103/PhysRevD.68.045002
+    identifiers:
+      - type: doi
+        value: 10.1103/PhysRevD.68.045002
+    title: Brane localized kinetic terms in the Randall--Sundrum model
+    date-published: 2003-01-01
+    year: 2003
+    issue: "4"
+    journal: Physical Review D
+    start: "045002"
+    type: article
+    volume: "68"
+  - authors:
+      - family-names: Streater
+        given-names: Raymond F.
+      - family-names: Wightman
+        given-names: Arthur S.
+    title: PCT, Spin and Statistics, and All That
+    date-published: 1964-01-01
+    year: 1964
+    publisher:
+      name: Benjamin
+    type: book
+  - authors:
+      - family-names: Watson
+        given-names: G. N.
+    title: A Treatise on the Theory of Bessel Functions
+    date-published: 1944-01-01
+    year: 1944
+    edition: "2"
+    publisher:
+      name: Cambridge University Press
+    type: book
+  - authors:
+      - family-names: Apostol
+        given-names: Tom M.
+    doi: 10.1007/978-1-4612-0999-7
+    identifiers:
+      - type: doi
+        value: 10.1007/978-1-4612-0999-7
+    title: Modular Functions and Dirichlet Series in Number Theory
+    date-published: 1990-01-01
+    year: 1990
+    edition: "2"
+    journal: Graduate Texts in Mathematics
+    publisher:
+      name: Springer
+    type: book
+  - authors:
+      - family-names: Poland
+        given-names: David
+      - family-names: Rychkov
+        given-names: Slava
+      - family-names: Vichi
+        given-names: Alessandro
+    doi: 10.1103/RevModPhys.91.015002
+    identifiers:
+      - type: doi
+        value: 10.1103/RevModPhys.91.015002
+    title: "The conformal bootstrap: theory, numerical techniques, and applications"
+    date-published: 2019-01-01
+    year: 2019
+    issue: "1"
+    journal: Reviews of Modern Physics
+    start: "015002"
+    type: article
+    volume: "91"
+  - authors:
+      - family-names: Heemskerk
+        given-names: Idse
+      - family-names: Penedones
+        given-names: Joao
+      - family-names: Polchinski
+        given-names: Joseph
+      - family-names: Sully
+        given-names: James
+    doi: 10.1088/1126-6708/2009/10/079
+    identifiers:
+      - type: doi
+        value: 10.1088/1126-6708/2009/10/079
+    title: Holography from conformal field theory
+    date-published: 2009-01-01
+    year: 2009
+    issue: "10"
+    journal: Journal of High Energy Physics
+    start: "079"
+    type: article
+    volume: "2009"
+  - authors:
+      - family-names: Saad
+        given-names: Phil
+      - family-names: Shenker
+        given-names: Stephen H.
+      - family-names: Stanford
+        given-names: Douglas
+      - family-names: Yao
+        given-names: Shunyu
+    doi: 10.1007/JHEP09(2024)133
+    identifiers:
+      - type: doi
+        value: 10.1007/JHEP09(2024)133
+    title: Wormholes without averaging
+    date-published: 2024-01-01
+    year: 2024
+    issue: "9"
+    journal: Journal of High Energy Physics
+    start: "133"
+    type: article
+    volume: "2024"
+  - authors:
+      - family-names: Lüst
+        given-names: Dieter
+      - family-names: Palti
+        given-names: Eran
+      - family-names: Vafa
+        given-names: Cumrun
+    doi: 10.1016/j.physletb.2019.134867
+    identifiers:
+      - type: doi
+        value: 10.1016/j.physletb.2019.134867
+    title: AdS and the Swampland
+    date-published: 2019-01-01
+    year: 2019
+    journal: Physics Letters B
+    start: "134867"
+    type: article
+    volume: "797"
+  - authors:
+      - family-names: Higuchi
+        given-names: Atsushi
+    doi: 10.1016/0550-3213(87)90691-2
+    identifiers:
+      - type: doi
+        value: 10.1016/0550-3213(87)90691-2
+    title: Forbidden mass range for spin-2 field theory in de Sitter spacetime
+    date-published: 1987-01-01
+    year: 1987
+    journal: Nuclear Physics B
+    start: "397"
+    end: "436"
+    type: article
+    volume: "282"
+  - authors:
+      - family-names: Bhaskar
+        given-names: Roy
+    title: A Realist Theory of Science
+    date-published: 1975-01-01
+    year: 1975
+    notes: Routledge, London, 2008
+    publisher:
+      name: Leeds Books
+    type: book
+  - authors:
+      - family-names: Mason
+        given-names: Peter Stuart
+    doi: 10.1179/1572513814Y.0000000009
+    identifiers:
+      - type: doi
+        value: 10.1179/1572513814Y.0000000009
+    title: Does quantum theory redefine realism? The neo-Copenhagen view
+    date-published: 2015-01-01
+    year: 2015
+    issue: "2"
+    journal: Journal of Critical Realism
+    start: "137"
+    end: "163"
+    type: article
+    volume: "14"
+  - authors:
+      - family-names: Elder-Vass
+        given-names: Dave
+    doi: 10.1007/s11229-025-05119-y
+    identifiers:
+      - type: doi
+        value: 10.1007/s11229-025-05119-y
+    title: Segmenting ontology
+    date-published: 2025-01-01
+    year: 2025
+    issue: "1"
+    journal: Synthese
+    start: "33"
+    type: article
+    volume: "206"
+  - authors:
+      - family-names: Plotnitsky
+        given-names: Arkady
+      - family-names: Khrennikov
+        given-names: Andrei
+    doi: 10.1007/s10701-015-9942-1
+    identifiers:
+      - type: doi
+        value: 10.1007/s10701-015-9942-1
+    title: "Reality without realism: on the ontological and epistemological
+      architecture of quantum mechanics"
+    date-published: 2015-01-01
+    year: 2015
+    issue: "10"
+    journal: Foundations of Physics
+    start: "1269"
+    end: "1300"
+    type: article
+    volume: "45"
+  - authors:
+      - family-names: Schneider
+        given-names: Theodor
+    doi: 10.1515/crll.1935.172.65
+    identifiers:
+      - type: doi
+        value: 10.1515/crll.1935.172.65
+    title: Transzendenzuntersuchungen periodischer Funktionen. I. Transzendenz von
+      Potenzen
+    date-published: 1935-01-01
+    year: 1935
+    journal: Journal für die reine und angewandte Mathematik
+    start: "65"
+    end: "69"
+    type: article
+    volume: "172"
+  - authors:
+      - family-names: Greene
+        given-names: John M.
+    doi: 10.1063/1.524170
+    identifiers:
+      - type: doi
+        value: 10.1063/1.524170
+    title: A method for determining a stochastic transition
+    date-published: 1979-01-01
+    year: 1979
+    issue: "6"
+    journal: Journal of Mathematical Physics
+    start: "1183"
+    end: "1201"
+    type: article
+    volume: "20"
+  - authors:
+      - family-names: Serre
+        given-names: Jean-Pierre
+    doi: 10.1515/9781400881697-005
+    identifiers:
+      - type: doi
+        value: 10.1515/9781400881697-005
+    title: Cohomologie des groupes discrets
+    date-published: 1971-01-01
+    year: 1971
+    journal: Prospects in Mathematics
+    notes: Annals of Mathematics Studies 70
+    publisher:
+      name: Princeton University Press
+    start: "77"
+    end: "170"
+    type: generic
+  - authors:
+      - family-names: Osterwalder
+        given-names: Konrad
+      - family-names: Schrader
+        given-names: Robert
+    doi: 10.1007/BF01645738
+    identifiers:
+      - type: doi
+        value: 10.1007/BF01645738
+    title: Axioms for Euclidean Green's functions
+    date-published: 1973-01-01
+    year: 1973
+    issue: "2"
+    journal: Communications in Mathematical Physics
+    start: "83"
+    end: "112"
+    type: article
+    volume: "31"
