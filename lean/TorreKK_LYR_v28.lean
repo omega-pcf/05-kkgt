@@ -28,7 +28,7 @@ namespace TorreKK
 /-! ### 1–3. La métrica de la garganta -/
 
 /-- Métrica del nivel σ: η_σ = b^(−4σ). -/
-def eta (b : ℝ) (σ : ℤ) : ℝ := b ^ (-(4 : ℤ) * σ)
+def etaMetric (b : ℝ) (σ : ℤ) : ℝ := b ^ (-(4 : ℤ) * σ)
 
 /-- Salto hacia abajo (σ → σ−1) y hacia arriba (σ → σ+1) del operador de A.7. -/
 def hopDown (b : ℝ) : ℝ := b ^ (2 : ℤ)
@@ -37,8 +37,8 @@ def hopUp   (b : ℝ) : ℝ := b ^ (-(2 : ℤ))
 /-- E1: η·K es simétrica. El elemento (σ, σ+1) de η·K es η_σ·b⁻²; el (σ+1, σ)
     es η_{σ+1}·b². Son iguales para toda base no nula. -/
 theorem eta_symmetrizes (b : ℝ) (hb : b ≠ 0) (σ : ℤ) :
-    eta b σ * hopUp b = eta b (σ + 1) * hopDown b := by
-  unfold eta hopUp hopDown
+    etaMetric b σ * hopUp b = etaMetric b (σ + 1) * hopDown b := by
+  unfold etaMetric hopUp hopDown
   rw [← zpow_add₀ hb, ← zpow_add₀ hb]
   congr 1
   ring
@@ -54,8 +54,8 @@ theorem eta_reflected_symmetrizes (b : ℝ) (hb : b ≠ 0) (σ : ℤ) :
 
 /-- E1: η es la exponencial de 4A, con A σ = −σ·log b. -/
 theorem eta_eq_exp_fourA (b : ℝ) (hb : 0 < b) (σ : ℤ) :
-    eta b σ = Real.exp (4 * (-(σ : ℝ) * Real.log b)) := by
-  unfold eta
+    etaMetric b σ = Real.exp (4 * (-(σ : ℝ) * Real.log b)) := by
+  unfold etaMetric
   rw [← Real.rpow_intCast, Real.rpow_def_of_pos hb]
   congr 1
   push_cast
@@ -65,8 +65,8 @@ theorem eta_eq_exp_fourA (b : ℝ) (hb : 0 < b) (σ : ℤ) :
 def D (b : ℝ) (σ : ℤ) : ℝ := b ^ (-(2 : ℤ) * σ)
 
 /-- D² = η. -/
-theorem D_sq_eq_eta (b : ℝ) (hb : b ≠ 0) (σ : ℤ) : D b σ * D b σ = eta b σ := by
-  unfold D eta
+theorem D_sq_eq_eta (b : ℝ) (hb : b ≠ 0) (σ : ℤ) : D b σ * D b σ = etaMetric b σ := by
+  unfold D etaMetric
   rw [← zpow_add₀ hb]
   congr 1
   ring
@@ -259,10 +259,10 @@ theorem exponent_angle_radius (E x y : ℝ) :
   ring
 
 theorem angle_has_modulus_one (E x : ℝ) :
-    Complex.abs (Complex.exp (2 * Real.pi * I * (E * x))) = 1 := by
+    ‖Complex.exp (2 * Real.pi * I * (E * x))‖ = 1 := by
   rw [show (2 * Real.pi * I * (E * x) : ℂ) = ((2 * Real.pi * (E * x) : ℝ) : ℂ) * I by
     push_cast; ring]
-  exact Complex.abs_exp_ofReal_mul_I _
+  exact Complex.norm_exp_ofReal_mul_I _
 
 /-! ### 10. Resultados importados de CW6 y F1 (Appendix A del artículo v2)
   Enunciados elementales de CW6 y F1 que el artículo usa, demostrados aquí de nuevo para que
@@ -398,8 +398,8 @@ theorem fibre_half_turn : Complex.exp (Real.pi * Complex.I) = -1 ∧ ((-1 : ℂ)
 
 /-- El módulo de la línea de mundo es `½` a toda fase: `|½ e^{iθ}| = ½`. -/
 theorem worldline_modulus (θ : ℝ) :
-    Complex.abs ((1 / 2 : ℂ) * Complex.exp (θ * Complex.I)) = 1 / 2 := by
-  rw [map_mul, Complex.abs_exp_ofReal_mul_I]; norm_num
+    ‖(1 / 2 : ℂ) * Complex.exp (θ * Complex.I)‖ = 1 / 2 := by
+  rw [Complex.norm_mul, Complex.norm_exp_ofReal_mul_I]; norm_num
 
 /-- La garganta es exactamente una pseudoesfera (Beltrami): el perfil `r(y) = e^{y}`, `y ≤ 0`,
 con altura `h'(y) = √(1 − r²)` tiene rapidez uno, `r'² + h'² = 1`; la métrica inducida es
@@ -436,13 +436,13 @@ sobre todo el círculo. -/
 theorem golden_irrational : Irrational ((1 + Real.sqrt 5) / 2) := by
   have h5 : Irrational (Real.sqrt 5) := by
     simpa using Nat.Prime.irrational_sqrt (by norm_num : Nat.Prime 5)
-  have h1 : Irrational ((1 : ℚ) + Real.sqrt 5) := h5.rat_add 1
-  have h2 := h1.div_rat (by norm_num : (2 : ℚ) ≠ 0)
+  have h1 : Irrational ((1 : ℚ) + Real.sqrt 5) := Irrational.ratCast_add 1 h5
+  have h2 := Irrational.div_ratCast h1 (by norm_num : (2 : ℚ) ≠ 0)
   simpa using h2
 
 theorem golden_rotation_aperiodic (n m : ℤ) (hn : n ≠ 0) :
     (n : ℝ) * ((1 + Real.sqrt 5) / 2) ≠ m :=
-  (golden_irrational.int_mul hn).ne_int m
+  (Irrational.intCast_mul golden_irrational hn).ne_int m
 
 
 /-! ## Contacto en 2 y 3 dimensiones
@@ -518,6 +518,7 @@ theorem modular_orders :
     S ^ 4 = 1 ∧ S ^ 2 ≠ 1 ∧ (S * T) ^ 6 = 1 ∧ (S * T) ^ 2 ≠ 1 ∧ (S * T) ^ 3 ≠ 1 := by
   decide
 
+set_option maxRecDepth 100000 in
 /-- Los relojes de `φ`: el orden de la matriz de Fibonacci `Q = [[0,1],[1,1]]` (la
 multiplicación por `φ` en `ℤ[φ]`) módulo `N`. Es 24 para `N = 16` y `N = 9`, 20 para `N = 5`
 y 60 para `N = 10`; en cada caso se descartan los divisores maximales. -/
@@ -559,7 +560,6 @@ theorem golden_isAlgebraic : IsAlgebraic ℚ ((1 + Real.sqrt 5) / 2) := by
     simp [Polynomial.coeff_X, Polynomial.coeff_one] at this
   · have h5 : Real.sqrt 5 ^ 2 = 5 := Real.sq_sqrt (by norm_num)
     simp [Polynomial.aeval_def]
-    nlinarith [h5]
 
 /-- `log φ / π` es irracional: si `q·log φ = p·π` con `q > 0`, entonces `φ^q = (e^π)^p`, y
 `e^π` sería algebraico. -/
@@ -578,12 +578,12 @@ theorem log_golden_div_pi_irrational :
     · subst h0; simp at h
       rcases h with h | h
       · exact absurd h (by exact_mod_cast hq.ne')
-      · linarith
+      · rcases h with h | h | h <;> linarith
     · exact h0
   have hpow : b ^ q = Real.exp Real.pi ^ p := by
     rw [← Real.exp_log (by linarith : (0 : ℝ) < b), ← Real.exp_nat_mul, ← Real.exp_nat_mul, h]
   have halg : IsAlgebraic ℚ (Real.exp Real.pi ^ p) := hpow ▸ golden_isAlgebraic.pow q
-  exact exp_pi_transcendental (IsAlgebraic.of_pow (Nat.pos_iff_ne_zero.mp hp) halg)
+  exact exp_pi_transcendental (IsAlgebraic.of_pow hp halg)
 
 /-- La imagen estereográfica del toro de Clifford es el toro de revolución con `R = √2`, `r = 1`:
 para `s² + c² = 1` y `d = 1 − s/√2`, el punto `(ρ, z) = (1/(√2 d), c/(√2 d))` cumple
@@ -598,8 +598,7 @@ theorem clifford_stereographic_torus (s c : ℝ) (hsc : s ^ 2 + c ^ 2 = 1)
   rw [hden]
   have hd' : Real.sqrt 2 - s ≠ 0 := by
     intro h0; apply hd; field_simp; linarith
-  field_simp <;> ring
-  nlinarith [h2, hsc]
+  field_simp <;> nlinarith [h2, hsc]
 
 /-- **Axioma (derivadas de la proyección).** Con `r(b) = √2 − sin b`, el meridiano proyectado
 `ρ(b) = 1/r`, `z(b) = cos b / r` tiene derivadas `ρ' = cos b / r²` y `z' = (1 − √2 sin b) / r²`.
@@ -666,8 +665,8 @@ theorem eta_power_T_phase :
 
 /-- `|η|^{48}` es invariante bajo `T`. -/
 theorem partition_T_invariant (τ : ℂ) (h : 0 < τ.im) :
-    Complex.abs (eta (τ + 1)) ^ 48 = Complex.abs (eta τ) ^ 48 := by
-  rw [eta_T τ h, map_mul, Complex.abs_exp]
+    ‖eta (τ + 1)‖ ^ 48 = ‖eta τ‖ ^ 48 := by
+  rw [eta_T τ h, Complex.norm_mul, Complex.norm_exp]
   have : (2 * Real.pi * Complex.I / 24 : ℂ).re = 0 := by simp
   rw [this, Real.exp_zero, one_mul]
 
@@ -735,15 +734,17 @@ theorem ring_resolution_irrational (n : ℕ) (hn : 1 ≤ n) :
   have hF : (Nat.fib (2 * m + 1 + 1) : ℤ) ≠ 0 := by
     have : 0 < Nat.fib (2 * m + 1 + 1) := Nat.fib_pos.mpr (by omega)
     exact_mod_cast this.ne'
-  have := (golden_irrational.int_mul hF).add_int (Nat.fib (2 * m + 1) : ℤ)
-  simpa using this
+  have hI : Irrational ((Nat.fib (2 * m + 1 + 1) : ℕ) * ((1 + Real.sqrt 5) / 2)) := by
+    rw [mul_comm]
+    exact Irrational.mul_natCast golden_irrational (by exact_mod_cast hF)
+  exact hI.add_natCast (Nat.fib (2 * m + 1))
 
 /-- `N = z²`: con `z = b^σ` y `τ = M·b^{−σ}`, `z / (τ/M) = b^{2σ}`. -/
 theorem ring_resolution_is_square (b M σ : ℝ) (hb : 0 < b) (hM : M ≠ 0) :
     b ^ σ / ((M * b ^ (-σ)) / M) = (b ^ σ) ^ 2 := by
-  rw [mul_div_assoc, div_self hM, mul_one, Real.rpow_neg hb.le]
-  have : b ^ σ ≠ 0 := (Real.rpow_pos_of_pos hb σ).ne'
-  field_simp; ring
+  rw [show (M * b ^ (-σ)) / M = b ^ (-σ) by rw [mul_comm M, mul_div_cancel_right₀ _ hM],
+    Real.rpow_neg hb.le, div_inv_eq_mul]
+  ring
 
 /-- Cardy con `c = 3` y `L₀ = N/2`: `2π√(c·L₀/6) = π√N`; con `N = z²`, `= π z = S`. -/
 theorem cardy_entropy (N : ℝ) (hN : 0 ≤ N) :
@@ -820,15 +821,16 @@ Un solo microestado: su módulo, la isometría de la tríada, el bit, los datos 
 
 /-- La tríada `v_k = ½ ω^k`, `ω = e^{2πi/3}`: cada `|v_k| = ½`. -/
 theorem triad_modulus (k : ℕ) :
-    Complex.abs ((1 / 2 : ℂ) * Complex.exp (((2 * Real.pi / 3 : ℝ) : ℂ) * Complex.I) ^ k) = 1 / 2 := by
-  rw [map_mul, map_pow, Complex.abs_exp_ofReal_mul_I, one_pow, mul_one]; norm_num
+    ‖(1 / 2 : ℂ) * Complex.exp (((2 * Real.pi / 3 : ℝ) : ℂ) * Complex.I) ^ k‖ = 1 / 2 := by
+  rw [Complex.norm_mul, Complex.norm_pow, Complex.norm_exp_ofReal_mul_I, one_pow, mul_one]
+  norm_num
 
 /-- Isometría bulk–frontera: `‖v‖² = 3·¼ = ¾`, y la columna normalizada cumple `V†V = Σ|V_k|² = 1`. -/
 theorem bulk_boundary_isometry :
     (∑ k ∈ Finset.range 3,
-        (Complex.abs ((1 / 2 : ℂ) * Complex.exp (((2 * Real.pi / 3 : ℝ) : ℂ) * Complex.I) ^ k)) ^ 2) = 3 / 4 ∧
+        (‖(1 / 2 : ℂ) * Complex.exp (((2 * Real.pi / 3 : ℝ) : ℂ) * Complex.I) ^ k‖) ^ 2) = 3 / 4 ∧
     (∑ k ∈ Finset.range 3,
-        (Complex.abs ((1 / 2 : ℂ) * Complex.exp (((2 * Real.pi / 3 : ℝ) : ℂ) * Complex.I) ^ k)) ^ 2 / (3 / 4)) = 1 := by
+        (‖(1 / 2 : ℂ) * Complex.exp (((2 * Real.pi / 3 : ℝ) : ℂ) * Complex.I) ^ k‖) ^ 2 / (3 / 4)) = 1 := by
   simp only [triad_modulus]; constructor <;> norm_num [Finset.sum_range_succ]
 
 /-- Entropía binaria en `½`: un bit. -/
@@ -864,11 +866,15 @@ theorem fisher_unit_iff (μ : ℝ) (hμ : 0 < μ) : 4 * μ ^ 2 = 1 ↔ μ = 1 / 
 theorem energy_per_bit_constant (b σ ε₀ M : ℝ) (hb : 0 < b) (hM : M ≠ 0) (hc : ε₀ * M = Real.pi) :
     (ε₀ * b ^ σ) / (Real.pi * b ^ σ) = 1 / M := by
   have hp : b ^ σ ≠ 0 := (Real.rpow_pos_of_pos hb σ).ne'
-  rw [← hc]; field_simp; ring
+  have he0 : ε₀ ≠ 0 := by
+    intro h
+    have h0 : Real.pi = 0 := by rw [← hc, h, zero_mul]
+    linarith [Real.pi_pos]
+  rw [← hc]; field_simp
 
 /-- El coeficiente de la ley de área, `η = 1/(4G_N)`, es el mismo en cada nivel: `G_N = |Ω_σ| = ½`. -/
 theorem area_coefficient_every_level (θ : ℝ) :
-    1 / (4 * Complex.abs ((1 / 2 : ℂ) * Complex.exp (θ * Complex.I))) = 1 / 2 := by
+    1 / (4 * ‖(1 / 2 : ℂ) * Complex.exp (θ * Complex.I)‖) = 1 / 2 := by
   rw [worldline_modulus]; norm_num
 
 /-- La garganta es un espacio de Einstein. Para `ds² = e^{2A(y)} η dx² + dy²` en cinco dimensiones
@@ -905,7 +911,7 @@ theorem lambda_times_entropy (b σ : ℝ) (hb : 0 < b) :
     (6 * b ^ (-σ)) * (Real.pi * b ^ σ) = 6 * Real.pi := by
   rw [Real.rpow_neg hb.le]
   have : b ^ σ ≠ 0 := (Real.rpow_pos_of_pos hb σ).ne'
-  field_simp; ring
+  field_simp
 
 /-- `6π = 3π/G_N` con `G_N = ½`: la ley de entropía del horizonte de de Sitter, `S = 3π/(GΛ)`. -/
 theorem dS_entropy_law : 3 * Real.pi / (1 / 2 : ℝ) = 6 * Real.pi := by ring
@@ -1072,17 +1078,17 @@ theorem no_unit_below_golden (u : ℝ) (t : ℤ) (h1 : 1 < u) (h2 : u < (1 + Rea
   constructor
   · intro h
     have a1 : (2 : ℝ) < t := by
-      rw [← h, show u + 1 / u = (u ^ 2 + 1) / u by field_simp; ring, lt_div_iff hu0]; nlinarith
+      rw [← h, show u + 1 / u = (u ^ 2 + 1) / u by field_simp, lt_div_iff₀ hu0]; nlinarith
     have a2 : (t : ℝ) < 3 := by
-      rw [← h, show u + 1 / u = (u ^ 2 + 1) / u by field_simp; ring, div_lt_iff hu0]; nlinarith
+      rw [← h, show u + 1 / u = (u ^ 2 + 1) / u by field_simp, div_lt_iff₀ hu0]; nlinarith
     have b1 : (2 : ℤ) < t := by exact_mod_cast a1
     have b2 : t < (3 : ℤ) := by exact_mod_cast a2
     omega
   · intro h
     have a1 : (0 : ℝ) < t := by
-      rw [← h, show u - 1 / u = (u ^ 2 - 1) / u by field_simp, lt_div_iff hu0]; nlinarith
+      rw [← h, show u - 1 / u = (u ^ 2 - 1) / u by field_simp, lt_div_iff₀ hu0]; nlinarith
     have a2 : (t : ℝ) < 1 := by
-      rw [← h, show u - 1 / u = (u ^ 2 - 1) / u by field_simp, div_lt_iff hu0]; nlinarith
+      rw [← h, show u - 1 / u = (u ^ 2 - 1) / u by field_simp, div_lt_iff₀ hu0]; nlinarith
     have b1 : (0 : ℤ) < t := by exact_mod_cast a1
     have b2 : t < (1 : ℤ) := by exact_mod_cast a2
     omega
@@ -1112,7 +1118,7 @@ theorem fourier_width_iff (a : ℝ) (ha : 0 < a) : Real.pi ^ 2 / a = a ↔ a = R
   · intro h
     have h2 : a ^ 2 = Real.pi ^ 2 := by field_simp at h; linarith
     nlinarith [sq_nonneg (a - Real.pi), sq_nonneg (a + Real.pi)]
-  · rintro rfl; field_simp; ring
+  · rintro rfl; field_simp
 
 /-- El umbral de la ventana: `e^{−y} > ½ ⟺ y < log 2`. -/
 theorem window_half_iff (y : ℝ) : (1 / 2 : ℝ) < Real.exp (-y) ↔ y < Real.log 2 := by
@@ -1129,15 +1135,15 @@ theorem window_crosses_half (b : ℝ) (h : b ^ 2 = b + 1) (h1 : 1.618 < b) (h2 :
   have hpi1 := Real.pi_gt_d2
   have hpi2 := Real.pi_lt_d2
   constructor
-  · rw [lt_div_iff (by positivity)]; nlinarith
-  · rw [div_lt_iff (by positivity)]; nlinarith
+  · rw [lt_div_iff₀ (by positivity)]; nlinarith
+  · rw [div_lt_iff₀ (by positivity)]; nlinarith
 
 /-- `Hℓ = √(2φ^{−n})` cruza `1` en el mismo intervalo: `2/φ > 1` y `2/φ² < 1`. -/
 theorem hubble_below_bulk_crossing (b : ℝ) (h : b ^ 2 = b + 1) (h1 : 1 < b) (h2 : b < 2) :
     1 < 2 / b ∧ 2 / b ^ 2 < 1 := by
   constructor
-  · rw [lt_div_iff (by linarith)]; linarith
-  · rw [div_lt_iff (by positivity), h]; linarith
+  · rw [lt_div_iff₀ (by linarith)]; linarith
+  · rw [div_lt_iff₀ (by positivity), h]; linarith
 
 /-! ## v23: la torre de nomes, el intervalo invariante, la norma de las dos escalas, la pendiente de moduli -/
 
@@ -1150,7 +1156,6 @@ theorem S_acts_as_mirror (x : ℝ) (hx : x ≠ 0) :
   field_simp
   ring_nf
   rw [Complex.I_sq]
-  ring
 
 /-- Un intervalo de niveles invariante bajo el espejo es simétrico. -/
 theorem invariant_interval_symmetric (p q : ℝ) (hpq : p ≤ q)
@@ -1256,9 +1261,15 @@ theorem heptagon_layers :
 /-- Las capas crecen por la recurrencia de raíz φ²: F₂ₖ₊₄ = 3·F₂ₖ₊₂ − F₂ₖ. -/
 theorem fib_even_recurrence (k : ℕ) :
     Nat.fib (2 * k + 4) + Nat.fib (2 * k) = 3 * Nat.fib (2 * k + 2) := by
-  have h1 : Nat.fib (2 * k + 4) = Nat.fib (2 * k + 3) + Nat.fib (2 * k + 2) := Nat.fib_add_two
-  have h2 : Nat.fib (2 * k + 3) = Nat.fib (2 * k + 2) + Nat.fib (2 * k + 1) := Nat.fib_add_two
-  have h3 : Nat.fib (2 * k + 2) = Nat.fib (2 * k + 1) + Nat.fib (2 * k) := Nat.fib_add_two
+  have h1 : Nat.fib (2 * k + 4) = Nat.fib (2 * k + 3) + Nat.fib (2 * k + 2) := by
+    rw [show 2 * k + 4 = (2 * k + 2) + 2 by ring, show 2 * k + 3 = (2 * k + 2) + 1 by ring,
+      Nat.fib_add_two, add_comm]
+  have h2 : Nat.fib (2 * k + 3) = Nat.fib (2 * k + 2) + Nat.fib (2 * k + 1) := by
+    rw [show 2 * k + 3 = (2 * k + 1) + 2 by ring, show 2 * k + 2 = (2 * k + 1) + 1 by ring,
+      Nat.fib_add_two, add_comm]
+  have h3 : Nat.fib (2 * k + 2) = Nat.fib (2 * k + 1) + Nat.fib (2 * k) := by
+    rw [show 2 * k + 2 = (2 * k) + 2 by ring, show 2 * k + 1 = (2 * k) + 1 by ring,
+      Nat.fib_add_two, add_comm]
   omega
 
 end TorreKK
