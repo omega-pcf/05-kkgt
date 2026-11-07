@@ -1,0 +1,2998 @@
+[
+  {
+    "id": "LYR26",
+    "type": "posted-content",
+    "title": "Evidence for Kaluza--Klein excitations of the graviton, gluon and quark at LHC",
+    "author": [
+      {
+        "family": "Le Yaouanc",
+        "given": "A."
+      },
+      {
+        "family": "Richard",
+        "given": "F."
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2026
+        ]
+      ]
+    },
+    "DOI": "10.48550/arXiv.2610.31458",
+    "URL": "https://arxiv.org/abs/2610.31458",
+    "note": "contribution to the European Strategy for future accelerators (October 26, 2026); arXiv:2610.31458"
+  },
+  {
+    "id": "Wit01",
+    "type": "posted-content",
+    "title": "Quantum gravity in de Sitter space",
+    "author": [
+      {
+        "family": "Witten",
+        "given": "E."
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2001
+        ]
+      ]
+    },
+    "DOI": "10.48550/arXiv.hep-th/0106109",
+    "URL": "https://arxiv.org/abs/hep-th/0106109",
+    "note": "arXiv:hep-th/0106109"
+  },
+  {
+    "id": "BF01",
+    "type": "posted-content",
+    "title": "M-theory observables for cosmological space-times",
+    "author": [
+      {
+        "family": "Banks",
+        "given": "T."
+      },
+      {
+        "family": "Fischler",
+        "given": "W."
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2001
+        ]
+      ]
+    },
+    "DOI": "10.48550/arXiv.hep-th/0102077",
+    "URL": "https://arxiv.org/abs/hep-th/0102077",
+    "note": "arXiv:hep-th/0102077"
+  },
+  {
+    "id": "CLPW23",
+    "type": "article-journal",
+    "title": "An algebra of observables for de Sitter space",
+    "author": [
+      {
+        "family": "Chandrasekaran",
+        "given": "V."
+      },
+      {
+        "family": "Longo",
+        "given": "R."
+      },
+      {
+        "family": "Penington",
+        "given": "G."
+      },
+      {
+        "family": "Witten",
+        "given": "E."
+      }
+    ],
+    "container-title": "Journal of High Energy Physics",
+    "volume": "2023",
+    "issue": "2",
+    "page": "82",
+    "issued": {
+      "date-parts": [
+        [
+          2023
+        ]
+      ]
+    },
+    "DOI": "10.1007/JHEP02(2023)082",
+    "URL": "https://doi.org/10.1007/JHEP02(2023)082"
+  },
+  {
+    "id": "Mal24",
+    "type": "article-journal",
+    "title": "Real observers solving some imaginary problems",
+    "author": [
+      {
+        "family": "Maldacena",
+        "given": "J. M."
+      }
+    ],
+    "container-title": "International Journal of Modern Physics A",
+    "volume": "41",
+    "issue": "26",
+    "issued": {
+      "date-parts": [
+        [
+          2026
+        ]
+      ]
+    },
+    "DOI": "10.1142/S0217751X2647010X",
+    "URL": "https://doi.org/10.1142/S0217751X2647010X",
+    "note": "arXiv:2412.14014"
+  },
+  {
+    "id": "Sus21",
+    "type": "article-journal",
+    "title": "De Sitter holography: fluctuations, anomalous symmetry, and wormholes",
+    "author": [
+      {
+        "family": "Susskind",
+        "given": "L."
+      }
+    ],
+    "container-title": "Universe",
+    "volume": "7",
+    "issue": "12",
+    "page": "464",
+    "issued": {
+      "date-parts": [
+        [
+          2021
+        ]
+      ]
+    },
+    "DOI": "10.3390/universe7120464",
+    "URL": "https://doi.org/10.3390/universe7120464"
+  },
+  {
+    "id": "NV25",
+    "type": "article-journal",
+    "title": "Double-scaled SYK and de Sitter holography",
+    "author": [
+      {
+        "family": "Narovlansky",
+        "given": "V."
+      },
+      {
+        "family": "Verlinde",
+        "given": "H."
+      }
+    ],
+    "container-title": "Journal of High Energy Physics",
+    "volume": "2025",
+    "issue": "5",
+    "page": "032",
+    "issued": {
+      "date-parts": [
+        [
+          2025
+        ]
+      ]
+    },
+    "DOI": "10.1007/JHEP05(2025)032",
+    "URL": "https://doi.org/10.1007/JHEP05(2025)032"
+  },
+  {
+    "id": "MQ18",
+    "type": "posted-content",
+    "title": "Eternal traversable wormhole",
+    "author": [
+      {
+        "family": "Maldacena",
+        "given": "J."
+      },
+      {
+        "family": "Qi",
+        "given": "X.-L."
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2018
+        ]
+      ]
+    },
+    "DOI": "10.48550/arXiv.1804.00491",
+    "URL": "https://arxiv.org/abs/1804.00491",
+    "note": "arXiv:1804.00491"
+  },
+  {
+    "id": "SW22",
+    "type": "article-journal",
+    "title": "No ensemble averaging below the black hole threshold",
+    "author": [
+      {
+        "family": "Schlenker",
+        "given": "J.-M."
+      },
+      {
+        "family": "Witten",
+        "given": "E."
+      }
+    ],
+    "container-title": "Journal of High Energy Physics",
+    "volume": "2022",
+    "issue": "7",
+    "page": "143",
+    "issued": {
+      "date-parts": [
+        [
+          2022
+        ]
+      ]
+    },
+    "DOI": "10.1007/JHEP07(2022)143",
+    "URL": "https://doi.org/10.1007/JHEP07(2022)143"
+  },
+  {
+    "id": "GH77",
+    "type": "article-journal",
+    "title": "Cosmological event horizons, thermodynamics, and particle creation",
+    "author": [
+      {
+        "family": "Gibbons",
+        "given": "G. W."
+      },
+      {
+        "family": "Hawking",
+        "given": "S. W."
+      }
+    ],
+    "container-title": "Physical Review D",
+    "volume": "15",
+    "issue": "10",
+    "page": "2738-2751",
+    "issued": {
+      "date-parts": [
+        [
+          1977
+        ]
+      ]
+    },
+    "DOI": "10.1103/PhysRevD.15.2738",
+    "URL": "https://doi.org/10.1103/PhysRevD.15.2738"
+  },
+  {
+    "id": "Say98",
+    "type": "chapter",
+    "title": "Abstraction: a realist interpretation",
+    "author": [
+      {
+        "family": "Sayer",
+        "given": "A."
+      }
+    ],
+    "editor": [
+      {
+        "family": "Archer",
+        "given": "M."
+      },
+      {
+        "family": "Bhaskar",
+        "given": "R."
+      },
+      {
+        "family": "Collier",
+        "given": "A."
+      },
+      {
+        "family": "Lawson",
+        "given": "T."
+      },
+      {
+        "family": "Norrie",
+        "given": "A."
+      }
+    ],
+    "container-title": "Critical Realism: Essential Readings",
+    "publisher": "Routledge",
+    "page": "120-143",
+    "issued": {
+      "date-parts": [
+        [
+          1998
+        ]
+      ]
+    }
+  },
+  {
+    "id": "dGMS26",
+    "type": "posted-content",
+    "title": "LHC constraints on resonant Kaluza--Klein gravitons",
+    "author": [
+      {
+        "family": "de Giorgi",
+        "given": "A."
+      },
+      {
+        "family": "Marcoli",
+        "given": "M."
+      },
+      {
+        "family": "Silvetti",
+        "given": "F."
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2026
+        ]
+      ]
+    },
+    "DOI": "10.48550/arXiv.2607.12012",
+    "URL": "https://arxiv.org/abs/2607.12012",
+    "note": "arXiv:2607.12012"
+  },
+  {
+    "id": "LYR26b",
+    "type": "posted-content",
+    "title": "Influence of the KK graviton decay into hh on the triple Higgs measurement at LHC",
+    "author": [
+      {
+        "family": "Le Yaouanc",
+        "given": "A."
+      },
+      {
+        "family": "Richard",
+        "given": "F."
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2026
+        ]
+      ]
+    },
+    "DOI": "10.48550/arXiv.2606.29922",
+    "URL": "https://arxiv.org/abs/2606.29922",
+    "note": "arXiv:2606.29922"
+  },
+  {
+    "id": "Koi82",
+    "type": "article-journal",
+    "title": "Fermion-boson two-body model of quarks and leptons and Cabibbo mixing",
+    "author": [
+      {
+        "family": "Koide",
+        "given": "Y."
+      }
+    ],
+    "container-title": "Lettere al Nuovo Cimento",
+    "volume": "34",
+    "issue": "8",
+    "page": "201-205",
+    "issued": {
+      "date-parts": [
+        [
+          1982
+        ]
+      ]
+    },
+    "DOI": "10.1007/BF02817096",
+    "URL": "https://doi.org/10.1007/BF02817096"
+  },
+  {
+    "id": "Koi83",
+    "type": "article-journal",
+    "title": "A fermion-boson composite model of quarks and leptons",
+    "author": [
+      {
+        "family": "Koide",
+        "given": "Y."
+      }
+    ],
+    "container-title": "Physics Letters B",
+    "volume": "120",
+    "issue": "1-3",
+    "page": "161-165",
+    "issued": {
+      "date-parts": [
+        [
+          1983
+        ]
+      ]
+    },
+    "DOI": "10.1016/0370-2693(83)90644-5",
+    "URL": "https://doi.org/10.1016/0370-2693(83)90644-5"
+  },
+  {
+    "id": "RG05",
+    "type": "posted-content",
+    "title": "The strange formula of Dr. Koide",
+    "author": [
+      {
+        "family": "Rivero",
+        "given": "A."
+      },
+      {
+        "family": "Gsponer",
+        "given": "A."
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2005
+        ]
+      ]
+    },
+    "DOI": "10.48550/arXiv.hep-ph/0505220",
+    "URL": "https://arxiv.org/abs/hep-ph/0505220",
+    "note": "arXiv:hep-ph/0505220"
+  },
+  {
+    "id": "Haw88",
+    "type": "article-journal",
+    "title": "Wormholes in spacetime",
+    "author": [
+      {
+        "family": "Hawking",
+        "given": "S. W."
+      }
+    ],
+    "container-title": "Physical Review D",
+    "volume": "37",
+    "issue": "4",
+    "page": "904-910",
+    "issued": {
+      "date-parts": [
+        [
+          1988
+        ]
+      ]
+    },
+    "DOI": "10.1103/PhysRevD.37.904",
+    "URL": "https://doi.org/10.1103/PhysRevD.37.904"
+  },
+  {
+    "id": "Haw93",
+    "type": "book",
+    "title": "Black Holes and Baby Universes and Other Essays",
+    "author": [
+      {
+        "family": "Hawking",
+        "given": "S. W."
+      }
+    ],
+    "publisher": "Bantam",
+    "publisher-place": "New York",
+    "issued": {
+      "date-parts": [
+        [
+          1993
+        ]
+      ]
+    }
+  },
+  {
+    "id": "BG98",
+    "type": "article-journal",
+    "title": "Quantum fields in anti-de Sitter wormholes",
+    "author": [
+      {
+        "family": "Barceló",
+        "given": "C."
+      },
+      {
+        "family": "Garay",
+        "given": "L. J."
+      }
+    ],
+    "container-title": "Physical Review D",
+    "volume": "57",
+    "issue": "8",
+    "page": "5291-5294",
+    "issued": {
+      "date-parts": [
+        [
+          1998
+        ]
+      ]
+    },
+    "DOI": "10.1103/PhysRevD.57.5291",
+    "URL": "https://doi.org/10.1103/PhysRevD.57.5291"
+  },
+  {
+    "id": "Haw05",
+    "type": "article-journal",
+    "title": "Information loss in black holes",
+    "author": [
+      {
+        "family": "Hawking",
+        "given": "S. W."
+      }
+    ],
+    "container-title": "Physical Review D",
+    "volume": "72",
+    "issue": "8",
+    "page": "084013",
+    "issued": {
+      "date-parts": [
+        [
+          2005
+        ]
+      ]
+    },
+    "DOI": "10.1103/PhysRevD.72.084013",
+    "URL": "https://doi.org/10.1103/PhysRevD.72.084013"
+  },
+  {
+    "id": "BS12",
+    "type": "article-journal",
+    "title": "Multiverse interpretation of quantum mechanics",
+    "author": [
+      {
+        "family": "Bousso",
+        "given": "R."
+      },
+      {
+        "family": "Susskind",
+        "given": "L."
+      }
+    ],
+    "container-title": "Physical Review D",
+    "volume": "85",
+    "issue": "4",
+    "page": "045007",
+    "issued": {
+      "date-parts": [
+        [
+          2012
+        ]
+      ]
+    },
+    "DOI": "10.1103/PhysRevD.85.045007",
+    "URL": "https://doi.org/10.1103/PhysRevD.85.045007"
+  },
+  {
+    "id": "GS88",
+    "type": "article-journal",
+    "title": "Loss of incoherence and determination of coupling constants in quantum gravity",
+    "author": [
+      {
+        "family": "Giddings",
+        "given": "S. B."
+      },
+      {
+        "family": "Strominger",
+        "given": "A."
+      }
+    ],
+    "container-title": "Nuclear Physics B",
+    "volume": "307",
+    "issue": "4",
+    "page": "854-866",
+    "issued": {
+      "date-parts": [
+        [
+          1988
+        ]
+      ]
+    },
+    "DOI": "10.1016/0550-3213(88)90109-5",
+    "URL": "https://doi.org/10.1016/0550-3213(88)90109-5"
+  },
+  {
+    "id": "GS89",
+    "type": "article-journal",
+    "title": "Baby universes, third quantization and the cosmological constant",
+    "author": [
+      {
+        "family": "Giddings",
+        "given": "S. B."
+      },
+      {
+        "family": "Strominger",
+        "given": "A."
+      }
+    ],
+    "container-title": "Nuclear Physics B",
+    "volume": "321",
+    "issue": "2",
+    "page": "481-508",
+    "issued": {
+      "date-parts": [
+        [
+          1989
+        ]
+      ]
+    },
+    "DOI": "10.1016/0550-3213(89)90353-2",
+    "URL": "https://doi.org/10.1016/0550-3213(89)90353-2"
+  },
+  {
+    "id": "Col88",
+    "type": "article-journal",
+    "title": "Why there is nothing rather than something: a theory of the cosmological constant",
+    "author": [
+      {
+        "family": "Coleman",
+        "given": "S."
+      }
+    ],
+    "container-title": "Nuclear Physics B",
+    "volume": "310",
+    "issue": "3-4",
+    "page": "643-668",
+    "issued": {
+      "date-parts": [
+        [
+          1988
+        ]
+      ]
+    },
+    "DOI": "10.1016/0550-3213(88)90097-1",
+    "URL": "https://doi.org/10.1016/0550-3213(88)90097-1"
+  },
+  {
+    "id": "MM20",
+    "type": "article-journal",
+    "title": "Transcending the ensemble: baby universes, spacetime wormholes, and the order and disorder of black hole information",
+    "author": [
+      {
+        "family": "Marolf",
+        "given": "D."
+      },
+      {
+        "family": "Maxfield",
+        "given": "H."
+      }
+    ],
+    "container-title": "Journal of High Energy Physics",
+    "volume": "2020",
+    "issue": "8",
+    "page": "044",
+    "issued": {
+      "date-parts": [
+        [
+          2020
+        ]
+      ]
+    },
+    "DOI": "10.1007/JHEP08(2020)044",
+    "URL": "https://doi.org/10.1007/JHEP08(2020)044"
+  },
+  {
+    "id": "MV20",
+    "type": "posted-content",
+    "title": "Baby universes, holography, and the swampland",
+    "author": [
+      {
+        "family": "McNamara",
+        "given": "J."
+      },
+      {
+        "family": "Vafa",
+        "given": "C."
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2020
+        ]
+      ]
+    },
+    "DOI": "10.48550/arXiv.2004.06738",
+    "URL": "https://arxiv.org/abs/2004.06738",
+    "note": "arXiv:2004.06738"
+  },
+  {
+    "id": "Zur09",
+    "type": "article-journal",
+    "title": "Quantum Darwinism",
+    "author": [
+      {
+        "family": "Zurek",
+        "given": "W. H."
+      }
+    ],
+    "container-title": "Nature Physics",
+    "volume": "5",
+    "issue": "3",
+    "page": "181-188",
+    "issued": {
+      "date-parts": [
+        [
+          2009
+        ]
+      ]
+    },
+    "DOI": "10.1038/nphys1202",
+    "URL": "https://doi.org/10.1038/nphys1202"
+  },
+  {
+    "id": "Kie26",
+    "type": "article-journal",
+    "title": "Metrological approach to the emergence of classical objectivity",
+    "author": [
+      {
+        "family": "Kiely",
+        "given": "A."
+      },
+      {
+        "family": "Chisholm",
+        "given": "D. A."
+      },
+      {
+        "family": "Touil",
+        "given": "A."
+      },
+      {
+        "family": "Deffner",
+        "given": "S."
+      },
+      {
+        "family": "Landi",
+        "given": "G. T."
+      },
+      {
+        "family": "Campbell",
+        "given": "S."
+      }
+    ],
+    "container-title": "Physical Review A",
+    "volume": "113",
+    "issue": "2",
+    "page": "022403",
+    "issued": {
+      "date-parts": [
+        [
+          2026
+        ]
+      ]
+    },
+    "DOI": "10.1103/hn78-7xx3",
+    "URL": "https://doi.org/10.1103/hn78-7xx3"
+  },
+  {
+    "id": "Rie22",
+    "type": "article-journal",
+    "title": "A comprehensive measurement of the local value of the Hubble constant with 1 km s⁻¹ Mpc⁻¹ uncertainty from the Hubble Space Telescope and the SH0ES team",
+    "author": [
+      {
+        "literal": "A. G. Riess et al."
+      }
+    ],
+    "container-title": "The Astrophysical Journal Letters",
+    "volume": "934",
+    "issue": "1",
+    "page": "L7",
+    "issued": {
+      "date-parts": [
+        [
+          2022
+        ]
+      ]
+    },
+    "DOI": "10.3847/2041-8213/ac5c5b",
+    "URL": "https://doi.org/10.3847/2041-8213/ac5c5b"
+  },
+  {
+    "id": "DESI25",
+    "type": "article-journal",
+    "title": "DESI DR2 results. II. Measurements of baryon acoustic oscillations and cosmological constraints",
+    "author": [
+      {
+        "literal": "DESI Collaboration"
+      }
+    ],
+    "container-title": "Physical Review D",
+    "volume": "112",
+    "issue": "8",
+    "page": "083515",
+    "issued": {
+      "date-parts": [
+        [
+          2025
+        ]
+      ]
+    },
+    "DOI": "10.1103/tr6y-kpc6",
+    "URL": "https://doi.org/10.1103/tr6y-kpc6"
+  },
+  {
+    "id": "Neu99",
+    "type": "book",
+    "title": "Algebraic Number Theory",
+    "author": [
+      {
+        "family": "Neukirch",
+        "given": "J."
+      }
+    ],
+    "publisher": "Springer",
+    "issued": {
+      "date-parts": [
+        [
+          1999
+        ]
+      ]
+    },
+    "DOI": "10.1007/978-3-662-03983-0",
+    "URL": "https://doi.org/10.1007/978-3-662-03983-0",
+    "note": "Grundlehren der mathematischen Wissenschaften; Ch. I, §7"
+  },
+  {
+    "id": "BG13",
+    "type": "book",
+    "title": "Aperiodic Order, Vol. 1: A Mathematical Invitation",
+    "author": [
+      {
+        "family": "Baake",
+        "given": "M."
+      },
+      {
+        "family": "Grimm",
+        "given": "U."
+      }
+    ],
+    "publisher": "Cambridge University Press",
+    "issued": {
+      "date-parts": [
+        [
+          2013
+        ]
+      ]
+    },
+    "DOI": "10.1017/cbo9781139025256",
+    "URL": "https://doi.org/10.1017/cbo9781139025256"
+  },
+  {
+    "id": "Jag21",
+    "type": "article-journal",
+    "title": "The Fibonacci quasicrystal: case study of hidden dimensions and multifractality",
+    "author": [
+      {
+        "family": "Jagannathan",
+        "given": "A."
+      }
+    ],
+    "container-title": "Reviews of Modern Physics",
+    "volume": "93",
+    "issue": "4",
+    "page": "045001",
+    "issued": {
+      "date-parts": [
+        [
+          2021
+        ]
+      ]
+    },
+    "DOI": "10.1103/RevModPhys.93.045001",
+    "URL": "https://doi.org/10.1103/RevModPhys.93.045001"
+  },
+  {
+    "id": "RS99b",
+    "type": "article-journal",
+    "title": "An alternative to compactification",
+    "author": [
+      {
+        "family": "Randall",
+        "given": "L."
+      },
+      {
+        "family": "Sundrum",
+        "given": "R."
+      }
+    ],
+    "container-title": "Physical Review Letters",
+    "volume": "83",
+    "issue": "23",
+    "page": "4690-4693",
+    "issued": {
+      "date-parts": [
+        [
+          1999
+        ]
+      ]
+    },
+    "DOI": "10.1103/PhysRevLett.83.4690",
+    "URL": "https://doi.org/10.1103/PhysRevLett.83.4690"
+  },
+  {
+    "id": "GT00",
+    "type": "article-journal",
+    "title": "Gravity in the Randall--Sundrum brane world",
+    "author": [
+      {
+        "family": "Garriga",
+        "given": "J."
+      },
+      {
+        "family": "Tanaka",
+        "given": "T."
+      }
+    ],
+    "container-title": "Physical Review Letters",
+    "volume": "84",
+    "issue": "13",
+    "page": "2778-2781",
+    "issued": {
+      "date-parts": [
+        [
+          2000
+        ]
+      ]
+    },
+    "DOI": "10.1103/PhysRevLett.84.2778",
+    "URL": "https://doi.org/10.1103/PhysRevLett.84.2778"
+  },
+  {
+    "id": "BDL00",
+    "type": "article-journal",
+    "title": "Non-conventional cosmology from a brane universe",
+    "author": [
+      {
+        "family": "Binétruy",
+        "given": "P."
+      },
+      {
+        "family": "Deffayet",
+        "given": "C."
+      },
+      {
+        "family": "Langlois",
+        "given": "D."
+      }
+    ],
+    "container-title": "Nuclear Physics B",
+    "volume": "565",
+    "issue": "1-2",
+    "page": "269-287",
+    "issued": {
+      "date-parts": [
+        [
+          2000
+        ]
+      ]
+    },
+    "DOI": "10.1016/S0550-3213(99)00696-3",
+    "URL": "https://doi.org/10.1016/S0550-3213(99)00696-3"
+  },
+  {
+    "id": "Sak00",
+    "type": "article-journal",
+    "title": "Vacuum quantum fluctuations in curved space and the theory of gravitation",
+    "author": [
+      {
+        "family": "Sakharov",
+        "given": "A. D."
+      }
+    ],
+    "container-title": "General Relativity and Gravitation",
+    "volume": "32",
+    "issue": "2",
+    "page": "365-367",
+    "issued": {
+      "date-parts": [
+        [
+          2000
+        ]
+      ]
+    },
+    "DOI": "10.1023/A:1001947813563",
+    "URL": "https://doi.org/10.1023/A:1001947813563"
+  },
+  {
+    "id": "Vas03",
+    "type": "article-journal",
+    "title": "Heat kernel expansion: user's manual",
+    "author": [
+      {
+        "family": "Vassilevich",
+        "given": "D. V."
+      }
+    ],
+    "container-title": "Physics Reports",
+    "volume": "388",
+    "issue": "5-6",
+    "page": "279-360",
+    "issued": {
+      "date-parts": [
+        [
+          2003
+        ]
+      ]
+    },
+    "DOI": "10.1016/j.physrep.2003.09.002",
+    "URL": "https://doi.org/10.1016/j.physrep.2003.09.002"
+  },
+  {
+    "id": "WW27",
+    "type": "book",
+    "title": "A Course of Modern Analysis",
+    "author": [
+      {
+        "family": "Whittaker",
+        "given": "E. T."
+      },
+      {
+        "family": "Watson",
+        "given": "G. N."
+      }
+    ],
+    "publisher": "Cambridge University Press",
+    "issued": {
+      "date-parts": [
+        [
+          1927
+        ]
+      ]
+    },
+    "DOI": "10.1017/cbo9780511608759",
+    "URL": "https://doi.org/10.1017/cbo9780511608759",
+    "note": "4th ed., Ch. XXI; DOI is the Cambridge University Press e-book of the 4th edition (Crossref year 1996)"
+  },
+  {
+    "id": "Buc14",
+    "type": "article-journal",
+    "title": "On physically similar systems; illustrations of the use of dimensional equations",
+    "author": [
+      {
+        "given": "E.",
+        "family": "Buckingham"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1914
+        ]
+      ]
+    },
+    "container-title": "Physical Review",
+    "volume": "4",
+    "page": "345-376",
+    "DOI": "10.1103/PhysRev.4.345"
+  },
+  {
+    "id": "SS79",
+    "type": "article-journal",
+    "title": "How to get masses from extra dimensions",
+    "author": [
+      {
+        "given": "J.",
+        "family": "Scherk"
+      },
+      {
+        "given": "John H.",
+        "family": "Schwarz"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1979
+        ]
+      ]
+    },
+    "container-title": "Nuclear Physics B",
+    "volume": "153",
+    "page": "61-88",
+    "DOI": "10.1016/0550-3213(79)90592-3"
+  },
+  {
+    "id": "Hos83",
+    "type": "article-journal",
+    "title": "Dynamical mass generation by compact extra dimensions",
+    "author": [
+      {
+        "given": "Yutaka",
+        "family": "Hosotani"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1983
+        ]
+      ]
+    },
+    "container-title": "Physics Letters B",
+    "volume": "126",
+    "page": "309-313",
+    "DOI": "10.1016/0370-2693(83)90170-3"
+  },
+  {
+    "id": "HP83",
+    "type": "article-journal",
+    "title": "Thermodynamics of black holes in anti-de Sitter space",
+    "author": [
+      {
+        "given": "S. W.",
+        "family": "Hawking"
+      },
+      {
+        "given": "Don N.",
+        "family": "Page"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1983
+        ]
+      ]
+    },
+    "container-title": "Communications in Mathematical Physics",
+    "volume": "87",
+    "page": "577-588",
+    "DOI": "10.1007/BF01208266"
+  },
+  {
+    "id": "Wit98b",
+    "type": "article-journal",
+    "title": "Anti-de Sitter space, thermal phase transition, and confinement in gauge theories",
+    "author": [
+      {
+        "given": "Edward",
+        "family": "Witten"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1998
+        ]
+      ]
+    },
+    "container-title": "Advances in Theoretical and Mathematical Physics",
+    "volume": "2",
+    "page": "505-532",
+    "DOI": "10.4310/ATMP.1998.v2.n3.a3"
+  },
+  {
+    "id": "GW99",
+    "type": "article-journal",
+    "title": "Modulus stabilization with bulk fields",
+    "author": [
+      {
+        "given": "Walter D.",
+        "family": "Goldberger"
+      },
+      {
+        "given": "Mark B.",
+        "family": "Wise"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1999
+        ]
+      ]
+    },
+    "container-title": "Physical Review Letters",
+    "volume": "83",
+    "page": "4922-4925",
+    "DOI": "10.1103/PhysRevLett.83.4922"
+  },
+  {
+    "id": "DPS08",
+    "type": "article-journal",
+    "title": "The little Randall--Sundrum model at the Large Hadron Collider",
+    "author": [
+      {
+        "given": "Hooman",
+        "family": "Davoudiasl"
+      },
+      {
+        "given": "Gilad",
+        "family": "Perez"
+      },
+      {
+        "given": "Amarjit",
+        "family": "Soni"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2008
+        ]
+      ]
+    },
+    "container-title": "Physics Letters B",
+    "volume": "665",
+    "page": "67-71",
+    "DOI": "10.1016/j.physletb.2008.05.024"
+  },
+  {
+    "id": "Obi18",
+    "type": "posted-content",
+    "title": "De Sitter space and the swampland",
+    "author": [
+      {
+        "given": "Georges",
+        "family": "Obied"
+      },
+      {
+        "given": "Hirosi",
+        "family": "Ooguri"
+      },
+      {
+        "given": "Lev",
+        "family": "Spodyneiko"
+      },
+      {
+        "given": "Cumrun",
+        "family": "Vafa"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2018
+        ]
+      ]
+    },
+    "container-title": "arXiv",
+    "note": "arXiv:1806.08362",
+    "URL": "https://arxiv.org/abs/1806.08362"
+  },
+  {
+    "id": "OPSV19",
+    "type": "article-journal",
+    "title": "Distance and de Sitter conjectures on the swampland",
+    "author": [
+      {
+        "given": "Hirosi",
+        "family": "Ooguri"
+      },
+      {
+        "given": "Eran",
+        "family": "Palti"
+      },
+      {
+        "given": "Gary",
+        "family": "Shiu"
+      },
+      {
+        "given": "Cumrun",
+        "family": "Vafa"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2019
+        ]
+      ]
+    },
+    "container-title": "Physics Letters B",
+    "volume": "788",
+    "page": "180-184",
+    "DOI": "10.1016/j.physletb.2018.11.018"
+  },
+  {
+    "id": "AAN25",
+    "type": "posted-content",
+    "title": "Has DESI detected exponential quintessence?",
+    "author": [
+      {
+        "given": "Yashar",
+        "family": "Akrami"
+      },
+      {
+        "given": "George",
+        "family": "Alestas"
+      },
+      {
+        "given": "Savvas",
+        "family": "Nesseris"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2025
+        ]
+      ]
+    },
+    "container-title": "arXiv",
+    "note": "arXiv:2504.04226",
+    "URL": "https://arxiv.org/abs/2504.04226"
+  },
+  {
+    "id": "Ngu26",
+    "type": "webpage",
+    "title": "Scientific representation",
+    "author": [
+      {
+        "given": "J.",
+        "family": "Nguyen"
+      }
+    ],
+    "editor": [
+      {
+        "given": "E. N.",
+        "family": "Zalta"
+      },
+      {
+        "given": "U.",
+        "family": "Nodelman"
+      }
+    ],
+    "container-title": "The Stanford Encyclopedia of Philosophy",
+    "issued": {
+      "date-parts": [
+        [
+          2026
+        ]
+      ]
+    },
+    "note": "first published 2016, revised 2026",
+    "URL": "https://plato.stanford.edu/entries/scientific-representation/"
+  },
+  {
+    "id": "SN24",
+    "type": "article-journal",
+    "title": "The golden ratio family of extremal Kerr--Newman black holes and its implications for the cosmological constant",
+    "author": [
+      {
+        "given": "Giorgio",
+        "family": "Sonnino"
+      },
+      {
+        "given": "Pasquale",
+        "family": "Nardone"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2024
+        ]
+      ]
+    },
+    "container-title": "Axioms",
+    "volume": "13",
+    "page": "862",
+    "DOI": "10.3390/axioms13120862"
+  },
+  {
+    "id": "Jul90",
+    "type": "chapter",
+    "title": "Statistical theory of numbers",
+    "author": [
+      {
+        "given": "B.",
+        "family": "Julia"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1990
+        ]
+      ]
+    },
+    "container-title": "Springer Proceedings in Physics",
+    "volume": "47",
+    "page": "276-293",
+    "publisher": "Springer",
+    "DOI": "10.1007/978-3-642-75405-0_30"
+  },
+  {
+    "id": "HY25",
+    "type": "article-journal",
+    "title": "The conformal primon gas at the end of time",
+    "author": [
+      {
+        "given": "Sean A.",
+        "family": "Hartnoll"
+      },
+      {
+        "given": "Ming",
+        "family": "Yang"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2025
+        ]
+      ]
+    },
+    "container-title": "Journal of High Energy Physics",
+    "volume": "2025",
+    "issue": "7",
+    "page": "281",
+    "DOI": "10.1007/JHEP07(2025)281"
+  },
+  {
+    "id": "DCHY25",
+    "type": "article-journal",
+    "title": "Wheeler--DeWitt wavefunctions for 5d BKL dynamics, automorphic L-functions and complex primon gases",
+    "author": [
+      {
+        "given": "Marine",
+        "family": "De Clerck"
+      },
+      {
+        "given": "Sean A.",
+        "family": "Hartnoll"
+      },
+      {
+        "given": "Ming",
+        "family": "Yang"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2025
+        ]
+      ]
+    },
+    "container-title": "Journal of High Energy Physics",
+    "volume": "2025",
+    "issue": "11",
+    "page": "160",
+    "DOI": "10.1007/JHEP11(2025)160"
+  },
+  {
+    "id": "GH23",
+    "type": "thesis",
+    "title": "Golden Prime Symmetry",
+    "author": [
+      {
+        "given": "J.",
+        "family": "Grisales Herrera"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2023
+        ]
+      ]
+    },
+    "publisher": "Universidad del Tolima",
+    "note": "B.Sc. thesis, Ibagué (Colombia)"
+  },
+  {
+    "id": "BV20",
+    "type": "article-journal",
+    "title": "Trans-Planckian censorship and the swampland",
+    "author": [
+      {
+        "given": "Alek",
+        "family": "Bedroya"
+      },
+      {
+        "given": "Cumrun",
+        "family": "Vafa"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2020
+        ]
+      ]
+    },
+    "container-title": "Journal of High Energy Physics",
+    "volume": "2020",
+    "issue": "9",
+    "page": "123",
+    "DOI": "10.1007/JHEP09(2020)123"
+  },
+  {
+    "id": "MVV23",
+    "type": "article-journal",
+    "title": "The dark dimension and the swampland",
+    "author": [
+      {
+        "given": "Miguel",
+        "family": "Montero"
+      },
+      {
+        "given": "Cumrun",
+        "family": "Vafa"
+      },
+      {
+        "given": "Irene",
+        "family": "Valenzuela"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2023
+        ]
+      ]
+    },
+    "container-title": "Journal of High Energy Physics",
+    "volume": "2023",
+    "issue": "2",
+    "page": "022",
+    "DOI": "10.1007/JHEP02(2023)022"
+  },
+  {
+    "id": "Wei87",
+    "type": "article-journal",
+    "title": "Anthropic bound on the cosmological constant",
+    "author": [
+      {
+        "given": "Steven",
+        "family": "Weinberg"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1987
+        ]
+      ]
+    },
+    "container-title": "Physical Review Letters",
+    "volume": "59",
+    "page": "2607-2610",
+    "DOI": "10.1103/PhysRevLett.59.2607"
+  },
+  {
+    "id": "Haw84",
+    "type": "article-journal",
+    "title": "The cosmological constant is probably zero",
+    "author": [
+      {
+        "given": "S.W.",
+        "family": "Hawking"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1984
+        ]
+      ]
+    },
+    "container-title": "Physics Letters B",
+    "volume": "134",
+    "page": "403-404",
+    "DOI": "10.1016/0370-2693(84)91370-4"
+  },
+  {
+    "id": "Bou06",
+    "type": "article-journal",
+    "title": "Holographic probabilities in eternal inflation",
+    "author": [
+      {
+        "given": "Raphael",
+        "family": "Bousso"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2006
+        ]
+      ]
+    },
+    "container-title": "Physical Review Letters",
+    "volume": "97",
+    "page": "191302",
+    "DOI": "10.1103/PhysRevLett.97.191302"
+  },
+  {
+    "id": "CKN99",
+    "type": "article-journal",
+    "title": "Effective field theory, black holes, and the cosmological constant",
+    "author": [
+      {
+        "given": "Andrew G.",
+        "family": "Cohen"
+      },
+      {
+        "given": "David B.",
+        "family": "Kaplan"
+      },
+      {
+        "given": "Ann E.",
+        "family": "Nelson"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1999
+        ]
+      ]
+    },
+    "container-title": "Physical Review Letters",
+    "volume": "82",
+    "page": "4971-4974",
+    "DOI": "10.1103/PhysRevLett.82.4971"
+  },
+  {
+    "id": "Ban01",
+    "type": "article-journal",
+    "title": "Cosmological breaking of supersymmetry?",
+    "author": [
+      {
+        "given": "T.",
+        "family": "Banks"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2001
+        ]
+      ]
+    },
+    "container-title": "International Journal of Modern Physics A",
+    "volume": "16",
+    "page": "910-921",
+    "note": "arXiv:hep-th/0007146",
+    "DOI": "10.1142/S0217751X01003998"
+  },
+  {
+    "id": "HS18",
+    "type": "article-journal",
+    "title": "M-theory from the superpoint",
+    "author": [
+      {
+        "given": "John",
+        "family": "Huerta"
+      },
+      {
+        "given": "Urs",
+        "family": "Schreiber"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2018
+        ]
+      ]
+    },
+    "container-title": "Letters in Mathematical Physics",
+    "volume": "108",
+    "page": "2695-2727",
+    "note": "arXiv:1702.01774",
+    "DOI": "10.1007/s11005-018-1110-z"
+  },
+  {
+    "id": "MMS99",
+    "type": "article-journal",
+    "title": "Anti-de Sitter fragmentation",
+    "author": [
+      {
+        "given": "Juan",
+        "family": "Maldacena"
+      },
+      {
+        "given": "Jeremy",
+        "family": "Michelson"
+      },
+      {
+        "given": "Andrew",
+        "family": "Strominger"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1999
+        ]
+      ]
+    },
+    "container-title": "Journal of High Energy Physics",
+    "volume": "1999",
+    "issue": "02",
+    "page": "011",
+    "DOI": "10.1088/1126-6708/1999/02/011"
+  },
+  {
+    "id": "Reu98",
+    "type": "article-journal",
+    "title": "Nonperturbative evolution equation for quantum gravity",
+    "author": [
+      {
+        "given": "M.",
+        "family": "Reuter"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1998
+        ]
+      ]
+    },
+    "container-title": "Physical Review D",
+    "volume": "57",
+    "page": "971-985",
+    "DOI": "10.1103/PhysRevD.57.971"
+  },
+  {
+    "id": "Pla18",
+    "type": "article-journal",
+    "title": "Planck 2018 results. VI. Cosmological parameters",
+    "author": [
+      {
+        "literal": "Planck Collaboration"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2020
+        ]
+      ]
+    },
+    "container-title": "Astronomy & Astrophysics",
+    "volume": "641",
+    "page": "A6",
+    "DOI": "10.1051/0004-6361/201833910"
+  },
+  {
+    "id": "LYR25",
+    "type": "posted-content",
+    "title": "Evidence for BSM spin 0 and spin 2 resonances at LHC: possible interpretations",
+    "author": [
+      {
+        "given": "Alain",
+        "family": "Le Yaouanc"
+      },
+      {
+        "given": "François",
+        "family": "Richard"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2025
+        ]
+      ]
+    },
+    "container-title": "arXiv",
+    "note": "arXiv:2506.09490 (v7, 2026)",
+    "URL": "https://arxiv.org/abs/2506.09490"
+  },
+  {
+    "id": "CW6",
+    "type": "posted-content",
+    "title": "The Crystalline Worldsheet: a string theoretical framework based on 𝔽₁, for the de Sitter observer problem",
+    "author": [
+      {
+        "given": "Jorge Armando",
+        "family": "González García"
+      },
+      {
+        "given": "Víctor Manuel",
+        "family": "González García"
+      },
+      {
+        "given": "Luz María",
+        "family": "García Ordóñez"
+      },
+      {
+        "given": "Itzel Marion",
+        "family": "Dressler Pérez"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2026
+        ]
+      ]
+    },
+    "publisher": "Zenodo",
+    "DOI": "10.5281/zenodo.21343602"
+  },
+  {
+    "id": "F1",
+    "type": "posted-content",
+    "title": "Odd zeta values from pentagonal 𝔽₁-descent: a Λ-structure on ℤ[φ], the character χ₅, and GRH for L(s,χ₅) in equivalent forms",
+    "author": [
+      {
+        "given": "Jorge Armando",
+        "family": "González García"
+      },
+      {
+        "given": "Víctor Manuel",
+        "family": "González García"
+      },
+      {
+        "given": "Itzel Marion",
+        "family": "Dressler Pérez"
+      },
+      {
+        "given": "Luz María",
+        "family": "García Ordóñez"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2026
+        ]
+      ]
+    },
+    "publisher": "Zenodo",
+    "DOI": "10.5281/zenodo.19492791"
+  },
+  {
+    "id": "SSS19",
+    "type": "posted-content",
+    "title": "JT gravity as a matrix integral",
+    "author": [
+      {
+        "given": "Phil",
+        "family": "Saad"
+      },
+      {
+        "given": "Stephen H.",
+        "family": "Shenker"
+      },
+      {
+        "given": "Douglas",
+        "family": "Stanford"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2019
+        ]
+      ]
+    },
+    "container-title": "arXiv",
+    "note": "arXiv:1903.11115",
+    "URL": "https://arxiv.org/abs/1903.11115"
+  },
+  {
+    "id": "BP00",
+    "type": "article-journal",
+    "title": "Quantization of four-form fluxes and dynamical neutralization of the cosmological constant",
+    "author": [
+      {
+        "given": "Raphael",
+        "family": "Bousso"
+      },
+      {
+        "given": "Joseph",
+        "family": "Polchinski"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2000
+        ]
+      ]
+    },
+    "container-title": "Journal of High Energy Physics",
+    "volume": "2000",
+    "issue": "06",
+    "page": "006",
+    "DOI": "10.1088/1126-6708/2000/06/006"
+  },
+  {
+    "id": "PRES",
+    "type": "document",
+    "title": "¿Cómo representar un agujero de gusano? Presentación de un programa de investigación sobre modelos de juguete en gravedad cuántica desde una perspectiva de tendencia realista crítica",
+    "author": [
+      {
+        "given": "J.",
+        "family": "González"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2026
+        ]
+      ]
+    },
+    "note": "in preparation"
+  },
+  {
+    "id": "REPR",
+    "type": "document",
+    "title": "Representación y representado en la física teórica",
+    "author": [
+      {
+        "given": "J.",
+        "family": "González"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2026
+        ]
+      ]
+    },
+    "note": "in preparation"
+  },
+  {
+    "id": "RS99",
+    "type": "article-journal",
+    "title": "Large mass hierarchy from a small extra dimension",
+    "author": [
+      {
+        "given": "Lisa",
+        "family": "Randall"
+      },
+      {
+        "given": "Raman",
+        "family": "Sundrum"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1999
+        ]
+      ]
+    },
+    "container-title": "Physical Review Letters",
+    "volume": "83",
+    "page": "3370-3373",
+    "DOI": "10.1103/PhysRevLett.83.3370"
+  },
+  {
+    "id": "DHR00",
+    "type": "article-journal",
+    "title": "Bulk gauge fields in the Randall--Sundrum model",
+    "author": [
+      {
+        "given": "H.",
+        "family": "Davoudiasl"
+      },
+      {
+        "given": "J. L.",
+        "family": "Hewett"
+      },
+      {
+        "given": "T. G.",
+        "family": "Rizzo"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2000
+        ]
+      ]
+    },
+    "container-title": "Physics Letters B",
+    "volume": "473",
+    "page": "43-49",
+    "note": "Second paper: Phenomenology of the Randall--Sundrum gauge hierarchy model, Phys. Rev. Lett. 84 (2000) 2080, doi:10.1103/PhysRevLett.84.2080",
+    "DOI": "10.1016/S0370-2693(99)01430-6"
+  },
+  {
+    "id": "DLMF",
+    "type": "webpage",
+    "title": "NIST Digital Library of Mathematical Functions, §10.21(vii), McMahon's expansion",
+    "author": [
+      {
+        "literal": "National Institute of Standards and Technology"
+      }
+    ],
+    "URL": "https://dlmf.nist.gov/10.21.vii"
+  },
+  {
+    "id": "Pol98",
+    "type": "book",
+    "title": "String Theory",
+    "author": [
+      {
+        "given": "Joseph",
+        "family": "Polchinski"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1998
+        ]
+      ]
+    },
+    "volume": "1",
+    "publisher": "Cambridge University Press",
+    "note": "§§1.3, 7.3",
+    "DOI": "10.1017/CBO9780511816079"
+  },
+  {
+    "id": "ADPS07",
+    "type": "article-journal",
+    "title": "Warped gravitons at the CERN LHC and beyond",
+    "author": [
+      {
+        "given": "Kaustubh",
+        "family": "Agashe"
+      },
+      {
+        "given": "Hooman",
+        "family": "Davoudiasl"
+      },
+      {
+        "given": "Gilad",
+        "family": "Perez"
+      },
+      {
+        "given": "Amarjit",
+        "family": "Soni"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2007
+        ]
+      ]
+    },
+    "container-title": "Physical Review D",
+    "volume": "76",
+    "page": "036006",
+    "DOI": "10.1103/PhysRevD.76.036006"
+  },
+  {
+    "id": "Av15",
+    "type": "article-journal",
+    "title": "Global theory of one-frequency Schrödinger operators",
+    "author": [
+      {
+        "given": "Artur",
+        "family": "Avila"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2015
+        ]
+      ]
+    },
+    "container-title": "Acta Mathematica",
+    "volume": "215",
+    "issue": "1",
+    "page": "1-54",
+    "DOI": "10.1007/s11511-015-0128-7"
+  },
+  {
+    "id": "AJ09",
+    "type": "article-journal",
+    "title": "The Ten Martini Problem",
+    "author": [
+      {
+        "given": "Artur",
+        "family": "Avila"
+      },
+      {
+        "given": "Svetlana",
+        "family": "Jitomirskaya"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2009
+        ]
+      ]
+    },
+    "container-title": "Annals of Mathematics",
+    "volume": "170",
+    "issue": "1",
+    "page": "303-342",
+    "DOI": "10.4007/annals.2009.170.303"
+  },
+  {
+    "id": "BBL24",
+    "type": "posted-content",
+    "title": "The Dry Ten Martini Problem for Sturmian Hamiltonians",
+    "author": [
+      {
+        "given": "Ram",
+        "family": "Band"
+      },
+      {
+        "given": "Siegfried",
+        "family": "Beckus"
+      },
+      {
+        "given": "Raphael",
+        "family": "Loewy"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2024
+        ]
+      ]
+    },
+    "note": "arXiv:2402.16703",
+    "DOI": "10.48550/arXiv.2402.16703",
+    "URL": "https://arxiv.org/abs/2402.16703"
+  },
+  {
+    "id": "Wall60",
+    "type": "article-journal",
+    "title": "Fibonacci series modulo m",
+    "author": [
+      {
+        "given": "D. D.",
+        "family": "Wall"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1960
+        ]
+      ]
+    },
+    "container-title": "The American Mathematical Monthly",
+    "volume": "67",
+    "issue": "6",
+    "page": "525-532",
+    "DOI": "10.1080/00029890.1960.11989541"
+  },
+  {
+    "id": "Jac95",
+    "type": "article-journal",
+    "title": "Thermodynamics of spacetime: the Einstein equation of state",
+    "author": [
+      {
+        "given": "Ted",
+        "family": "Jacobson"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1995
+        ]
+      ]
+    },
+    "container-title": "Physical Review Letters",
+    "volume": "75",
+    "issue": "7",
+    "page": "1260-1263",
+    "DOI": "10.1103/PhysRevLett.75.1260"
+  },
+  {
+    "id": "Mal98",
+    "type": "article-journal",
+    "title": "The large N limit of superconformal field theories and supergravity",
+    "author": [
+      {
+        "given": "Juan",
+        "family": "Maldacena"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1998
+        ]
+      ]
+    },
+    "container-title": "Advances in Theoretical and Mathematical Physics",
+    "volume": "2",
+    "issue": "2",
+    "page": "231-252",
+    "DOI": "10.4310/ATMP.1998.v2.n2.a1"
+  },
+  {
+    "id": "GKP98",
+    "type": "article-journal",
+    "title": "Gauge theory correlators from non-critical string theory",
+    "author": [
+      {
+        "given": "S. S.",
+        "family": "Gubser"
+      },
+      {
+        "given": "I. R.",
+        "family": "Klebanov"
+      },
+      {
+        "given": "A. M.",
+        "family": "Polyakov"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1998
+        ]
+      ]
+    },
+    "container-title": "Physics Letters B",
+    "volume": "428",
+    "issue": "1-2",
+    "page": "105-114",
+    "DOI": "10.1016/S0370-2693(98)00377-3"
+  },
+  {
+    "id": "Wit98",
+    "type": "article-journal",
+    "title": "Anti de Sitter space and holography",
+    "author": [
+      {
+        "given": "Edward",
+        "family": "Witten"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1998
+        ]
+      ]
+    },
+    "container-title": "Advances in Theoretical and Mathematical Physics",
+    "volume": "2",
+    "issue": "2",
+    "page": "253-291",
+    "DOI": "10.4310/ATMP.1998.v2.n2.a2"
+  },
+  {
+    "id": "RT06",
+    "type": "article-journal",
+    "title": "Holographic derivation of entanglement entropy from the anti-de Sitter space/conformal field theory correspondence",
+    "author": [
+      {
+        "given": "Shinsei",
+        "family": "Ryu"
+      },
+      {
+        "given": "Tadashi",
+        "family": "Takayanagi"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2006
+        ]
+      ]
+    },
+    "container-title": "Physical Review Letters",
+    "volume": "96",
+    "issue": "18",
+    "page": "181602",
+    "DOI": "10.1103/PhysRevLett.96.181602"
+  },
+  {
+    "id": "BH86",
+    "type": "article-journal",
+    "title": "Central charges in the canonical realization of asymptotic symmetries: an example from three-dimensional gravity",
+    "author": [
+      {
+        "given": "J. D.",
+        "family": "Brown"
+      },
+      {
+        "given": "Marc",
+        "family": "Henneaux"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1986
+        ]
+      ]
+    },
+    "container-title": "Communications in Mathematical Physics",
+    "volume": "104",
+    "issue": "2",
+    "page": "207-226",
+    "DOI": "10.1007/BF01211590"
+  },
+  {
+    "id": "Mon73",
+    "type": "article-journal",
+    "title": "The pair correlation of zeros of the zeta function",
+    "author": [
+      {
+        "given": "H. L.",
+        "family": "Montgomery"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1973
+        ]
+      ]
+    },
+    "container-title": "Proceedings of Symposia in Pure Mathematics",
+    "volume": "24",
+    "page": "181-193",
+    "DOI": "10.1090/pspum/024/9944"
+  },
+  {
+    "id": "Odl87",
+    "type": "article-journal",
+    "title": "On the distribution of spacings between zeros of the zeta function",
+    "author": [
+      {
+        "given": "A. M.",
+        "family": "Odlyzko"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1987
+        ]
+      ]
+    },
+    "container-title": "Mathematics of Computation",
+    "volume": "48",
+    "issue": "177",
+    "page": "273-308",
+    "DOI": "10.1090/s0025-5718-1987-0866115-0"
+  },
+  {
+    "id": "Ser73",
+    "type": "book",
+    "title": "A Course in Arithmetic",
+    "author": [
+      {
+        "given": "Jean-Pierre",
+        "family": "Serre"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1973
+        ]
+      ]
+    },
+    "publisher": "Springer",
+    "container-title": "Graduate Texts in Mathematics",
+    "note": "GTM 7",
+    "DOI": "10.1007/978-1-4684-9884-4"
+  },
+  {
+    "id": "SW98",
+    "type": "posted-content",
+    "title": "The holographic bound in anti-de Sitter space",
+    "author": [
+      {
+        "given": "L.",
+        "family": "Susskind"
+      },
+      {
+        "given": "Edward",
+        "family": "Witten"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1998
+        ]
+      ]
+    },
+    "note": "arXiv:hep-th/9805114",
+    "DOI": "10.48550/arXiv.hep-th/9805114",
+    "URL": "https://arxiv.org/abs/hep-th/9805114"
+  },
+  {
+    "id": "Hur91",
+    "type": "article-journal",
+    "title": "Über die angenäherte Darstellung der Irrationalzahlen durch rationale Brüche",
+    "author": [
+      {
+        "given": "A.",
+        "family": "Hurwitz"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1891
+        ]
+      ]
+    },
+    "container-title": "Mathematische Annalen",
+    "volume": "39",
+    "issue": "2",
+    "page": "279-284",
+    "DOI": "10.1007/BF01206656"
+  },
+  {
+    "id": "Wey16",
+    "type": "article-journal",
+    "title": "Über die Gleichverteilung von Zahlen mod. Eins",
+    "author": [
+      {
+        "given": "Hermann",
+        "family": "Weyl"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1916
+        ]
+      ]
+    },
+    "container-title": "Mathematische Annalen",
+    "volume": "77",
+    "issue": "3",
+    "page": "313-352",
+    "DOI": "10.1007/BF01475864"
+  },
+  {
+    "id": "Car86",
+    "type": "article-journal",
+    "title": "Operator content of two-dimensional conformally invariant theories",
+    "author": [
+      {
+        "given": "John L.",
+        "family": "Cardy"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1986
+        ]
+      ]
+    },
+    "container-title": "Nuclear Physics B",
+    "volume": "270",
+    "page": "186-204",
+    "DOI": "10.1016/0550-3213(86)90552-3"
+  },
+  {
+    "id": "vRa88",
+    "type": "article-journal",
+    "title": "The three gap theorem (Steinhaus conjecture)",
+    "author": [
+      {
+        "given": "Tony",
+        "family": "van Ravenstein"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1988
+        ]
+      ]
+    },
+    "container-title": "Journal of the Australian Mathematical Society. Series A. Pure Mathematics and Statistics",
+    "volume": "45",
+    "issue": "3",
+    "page": "360-370",
+    "DOI": "10.1017/S1446788700031062"
+  },
+  {
+    "id": "FT40",
+    "type": "article-journal",
+    "title": "Über einen geometrischen Satz",
+    "author": [
+      {
+        "given": "L.",
+        "family": "Fejes Tóth"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1940
+        ]
+      ]
+    },
+    "container-title": "Mathematische Zeitschrift",
+    "volume": "46",
+    "issue": "1",
+    "page": "83-85",
+    "DOI": "10.1007/BF01181430"
+  },
+  {
+    "id": "SvdW52",
+    "type": "article-journal",
+    "title": "Das Problem der dreizehn Kugeln",
+    "author": [
+      {
+        "given": "K.",
+        "family": "Schütte"
+      },
+      {
+        "given": "B. L.",
+        "family": "van der Waerden"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1952
+        ]
+      ]
+    },
+    "container-title": "Mathematische Annalen",
+    "volume": "125",
+    "issue": "1",
+    "page": "325-334",
+    "DOI": "10.1007/BF01343127"
+  },
+  {
+    "id": "Pry94",
+    "type": "book",
+    "title": "Numerical Solution of Sturm--Liouville Problems",
+    "author": [
+      {
+        "given": "J. D.",
+        "family": "Pryce"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1993
+        ]
+      ]
+    },
+    "publisher": "Oxford University Press"
+  },
+  {
+    "id": "DHR03",
+    "type": "article-journal",
+    "title": "Brane localized kinetic terms in the Randall--Sundrum model",
+    "author": [
+      {
+        "given": "H.",
+        "family": "Davoudiasl"
+      },
+      {
+        "given": "J. L.",
+        "family": "Hewett"
+      },
+      {
+        "given": "T. G.",
+        "family": "Rizzo"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2003
+        ]
+      ]
+    },
+    "container-title": "Physical Review D",
+    "volume": "68",
+    "issue": "4",
+    "page": "045002",
+    "DOI": "10.1103/PhysRevD.68.045002"
+  },
+  {
+    "id": "SW64",
+    "type": "book",
+    "title": "PCT, Spin and Statistics, and All That",
+    "author": [
+      {
+        "given": "Raymond F.",
+        "family": "Streater"
+      },
+      {
+        "given": "Arthur S.",
+        "family": "Wightman"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1964
+        ]
+      ]
+    },
+    "publisher": "Benjamin"
+  },
+  {
+    "id": "Wat44",
+    "type": "book",
+    "title": "A Treatise on the Theory of Bessel Functions",
+    "author": [
+      {
+        "given": "G. N.",
+        "family": "Watson"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1944
+        ]
+      ]
+    },
+    "publisher": "Cambridge University Press",
+    "edition": "2"
+  },
+  {
+    "id": "Apo90",
+    "type": "book",
+    "title": "Modular Functions and Dirichlet Series in Number Theory",
+    "author": [
+      {
+        "given": "Tom M.",
+        "family": "Apostol"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1990
+        ]
+      ]
+    },
+    "publisher": "Springer",
+    "container-title": "Graduate Texts in Mathematics",
+    "edition": "2",
+    "DOI": "10.1007/978-1-4612-0999-7"
+  },
+  {
+    "id": "PRV19",
+    "type": "article-journal",
+    "title": "The conformal bootstrap: theory, numerical techniques, and applications",
+    "author": [
+      {
+        "given": "David",
+        "family": "Poland"
+      },
+      {
+        "given": "Slava",
+        "family": "Rychkov"
+      },
+      {
+        "given": "Alessandro",
+        "family": "Vichi"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2019
+        ]
+      ]
+    },
+    "container-title": "Reviews of Modern Physics",
+    "volume": "91",
+    "issue": "1",
+    "page": "015002",
+    "DOI": "10.1103/RevModPhys.91.015002"
+  },
+  {
+    "id": "HPPS09",
+    "type": "article-journal",
+    "title": "Holography from conformal field theory",
+    "author": [
+      {
+        "given": "Idse",
+        "family": "Heemskerk"
+      },
+      {
+        "given": "Joao",
+        "family": "Penedones"
+      },
+      {
+        "given": "Joseph",
+        "family": "Polchinski"
+      },
+      {
+        "given": "James",
+        "family": "Sully"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2009
+        ]
+      ]
+    },
+    "container-title": "Journal of High Energy Physics",
+    "volume": "2009",
+    "issue": "10",
+    "page": "079",
+    "DOI": "10.1088/1126-6708/2009/10/079"
+  },
+  {
+    "id": "SSSY24",
+    "type": "article-journal",
+    "title": "Wormholes without averaging",
+    "author": [
+      {
+        "given": "Phil",
+        "family": "Saad"
+      },
+      {
+        "given": "Stephen H.",
+        "family": "Shenker"
+      },
+      {
+        "given": "Douglas",
+        "family": "Stanford"
+      },
+      {
+        "given": "Shunyu",
+        "family": "Yao"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2024
+        ]
+      ]
+    },
+    "container-title": "Journal of High Energy Physics",
+    "volume": "2024",
+    "issue": "9",
+    "page": "133",
+    "DOI": "10.1007/JHEP09(2024)133"
+  },
+  {
+    "id": "LPV19",
+    "type": "article-journal",
+    "title": "AdS and the Swampland",
+    "author": [
+      {
+        "given": "Dieter",
+        "family": "Lüst"
+      },
+      {
+        "given": "Eran",
+        "family": "Palti"
+      },
+      {
+        "given": "Cumrun",
+        "family": "Vafa"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2019
+        ]
+      ]
+    },
+    "container-title": "Physics Letters B",
+    "volume": "797",
+    "page": "134867",
+    "DOI": "10.1016/j.physletb.2019.134867"
+  },
+  {
+    "id": "Hig87",
+    "type": "article-journal",
+    "title": "Forbidden mass range for spin-2 field theory in de Sitter spacetime",
+    "author": [
+      {
+        "given": "Atsushi",
+        "family": "Higuchi"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1987
+        ]
+      ]
+    },
+    "container-title": "Nuclear Physics B",
+    "volume": "282",
+    "page": "397-436",
+    "DOI": "10.1016/0550-3213(87)90691-2"
+  },
+  {
+    "id": "Bha75",
+    "type": "book",
+    "title": "A Realist Theory of Science",
+    "author": [
+      {
+        "given": "Roy",
+        "family": "Bhaskar"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1975
+        ]
+      ]
+    },
+    "publisher": "Leeds Books",
+    "note": "Routledge, London, 2008"
+  },
+  {
+    "id": "Mas15",
+    "type": "article-journal",
+    "title": "Does quantum theory redefine realism? The neo-Copenhagen view",
+    "author": [
+      {
+        "given": "Peter Stuart",
+        "family": "Mason"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2015
+        ]
+      ]
+    },
+    "container-title": "Journal of Critical Realism",
+    "volume": "14",
+    "issue": "2",
+    "page": "137-163",
+    "DOI": "10.1179/1572513814Y.0000000009"
+  },
+  {
+    "id": "EV25",
+    "type": "article-journal",
+    "title": "Segmenting ontology",
+    "author": [
+      {
+        "given": "Dave",
+        "family": "Elder-Vass"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2025
+        ]
+      ]
+    },
+    "container-title": "Synthese",
+    "volume": "206",
+    "issue": "1",
+    "page": "33",
+    "DOI": "10.1007/s11229-025-05119-y"
+  },
+  {
+    "id": "PK15",
+    "type": "article-journal",
+    "title": "Reality without realism: on the ontological and epistemological architecture of quantum mechanics",
+    "author": [
+      {
+        "given": "Arkady",
+        "family": "Plotnitsky"
+      },
+      {
+        "given": "Andrei",
+        "family": "Khrennikov"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2015
+        ]
+      ]
+    },
+    "container-title": "Foundations of Physics",
+    "volume": "45",
+    "issue": "10",
+    "page": "1269-1300",
+    "DOI": "10.1007/s10701-015-9942-1"
+  },
+  {
+    "id": "Sch35",
+    "type": "article-journal",
+    "title": "Transzendenzuntersuchungen periodischer Funktionen. I. Transzendenz von Potenzen",
+    "author": [
+      {
+        "given": "Theodor",
+        "family": "Schneider"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1935
+        ]
+      ]
+    },
+    "container-title": "Journal für die reine und angewandte Mathematik",
+    "volume": "172",
+    "page": "65-69",
+    "DOI": "10.1515/crll.1935.172.65"
+  },
+  {
+    "id": "Gre79",
+    "type": "article-journal",
+    "title": "A method for determining a stochastic transition",
+    "author": [
+      {
+        "given": "John M.",
+        "family": "Greene"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1979
+        ]
+      ]
+    },
+    "container-title": "Journal of Mathematical Physics",
+    "volume": "20",
+    "issue": "6",
+    "page": "1183-1201",
+    "DOI": "10.1063/1.524170"
+  },
+  {
+    "id": "Ser71",
+    "type": "chapter",
+    "title": "Cohomologie des groupes discrets",
+    "author": [
+      {
+        "given": "Jean-Pierre",
+        "family": "Serre"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1971
+        ]
+      ]
+    },
+    "container-title": "Prospects in Mathematics",
+    "publisher": "Princeton University Press",
+    "page": "77-170",
+    "note": "Annals of Mathematics Studies 70",
+    "DOI": "10.1515/9781400881697-005"
+  },
+  {
+    "id": "OS73",
+    "type": "article-journal",
+    "title": "Axioms for Euclidean Green's functions",
+    "author": [
+      {
+        "given": "Konrad",
+        "family": "Osterwalder"
+      },
+      {
+        "given": "Robert",
+        "family": "Schrader"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1973
+        ]
+      ]
+    },
+    "container-title": "Communications in Mathematical Physics",
+    "volume": "31",
+    "issue": "2",
+    "page": "83-112",
+    "DOI": "10.1007/BF01645738"
+  }
+]
