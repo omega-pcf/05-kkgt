@@ -15,8 +15,8 @@
 ## Setup
 
 ```bash
-git clone https://github.com/omega-pcf/<repo>.git
-cd <repo>
+git clone https://github.com/omega-pcf/05-kk-golden-throat.git
+cd 05-kk-golden-throat
 pnpm install
 ```
 

@@ -4,7 +4,8 @@ This document describes how citations flow from a single source of truth to
 the PDF, CITATION.cff, and .zenodo.json, and the conventions for adding new
 references. It applies to every paper repository in this family
 (01-hilbert-polya, 02-odd-zeta, 03-crystalline-worldsheet, 04-mersenne-cr,
-05-granularity); the pipeline scripts are byte-identical across them.
+05-granularity, 05-kk-golden-throat); the pipeline scripts are byte-identical
+across them.
 
 ## 1. Single source of truth
 

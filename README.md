@@ -1,7 +1,8 @@
-# Simultaneous Identities of the Golden Ratio and Euler's Identity, Formally Verified in Lean 4 over the Known Mersenne Prime Exponents
+# One object instead of a choice of vacuum to put the observer in de Sitter space
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21681395.svg)](https://doi.org/10.5281/zenodo.21681395)
-[![Project Page](https://img.shields.io/badge/Project%20Page-omega--pcf.com-blue)](https://omega-pcf.com/mersenne-cr)
+From wormholes, black holes and baby universes to the criteria for an observer in de Sitter, contrasted with the Kaluza–Klein graviton candidates and with the cosmological constant.
+
+[![Project Page](https://img.shields.io/badge/Project%20Page-omega--pcf.com-blue)](https://omega-pcf.com)
 
 ## Authors
 
@@ -14,100 +15,70 @@
 
 ## Abstract
 
-We present a sustained study of a single object followed across representations, where the content lives in the equivalences between them, not in any representation in isolation. We prove and formally verify in Lean 4 that the golden ratio φ=(1+√5)/2 satisfies simultaneously twelve identities, inclusions, and identifications across five canonical structures: the complex rotor of Euler's identity, the real trigonometric and real-multiplicative lines, the arithmetic of Mersenne numbers modulo 20, and the Galois group (ℤ/20ℤ)× of ℚ(ζ₂₀)/ℚ. The central clause is the identity 3φ^{σ(p)}=2^p, with σ(p)=pλ−log_φ 3 and λ=log_φ 2 transcendental by Gelfond–Schneider. Specialised to the 52 known Mersenne prime exponents (GIMPS, 1952–2024), it holds exactly for each, and every pair of Mersenne numbers, in their binary form 2^p=M_p+1, stands in an exact golden ratio. The factor 3 coincides with M₂, with the number of admissible residue classes of M_p mod 20, and with the numerator of M₂/|(ℤ/20ℤ)×|=3/8. The verification is conducted against Mathlib4 with 0 sorry, taking as external axioms only the Gelfond–Schneider theorem and the 44 large GIMPS primalities.
+In de Sitter space an observer must be inside the universe it observes, and in string theory placing it has become a choice: of a vacuum among some 10^500. The same choice returns where wormholes, black holes and baby universes meet. The baby universes that branch off through wormholes carry parameters that fix the constants of nature, the cosmological constant among them, and the same parameters label the boundary theories over which the gravity of a black-hole throat is averaged; in both the question is which value, and the answer is sought in what a throat contains. The programme to which this note belongs, written within critical realism, reads the difficulty as one of representation rather than of selection: what is missing is one object that meets the criteria Witten and Chandrasekaran, Longo, Penington and Witten set for an observer in de Sitter, not a choice among values. This note does not test that claim itself; it tests two of its consequences where data can reach them, on the particles of one throat and on the cosmological constant. The object, in the framework of the programme, is a microstate whose levels form a tower built from two numbers, π and the golden ratio φ; read as a warped extra dimension it is a throat, the golden throat, whose Kaluza–Klein modes are its particles. The question becomes whether the tower fixes what a throat model otherwise chooses. The two-brane model of Randall and Sundrum assumes the dimension and chooses the infrared scale and the depth. The golden throat has the same equations, so the same mass ratios, and four independent conditions of the tower, reflection positivity, four-dimensional gravity, the arity of the framework and the clock of φ, fix its spectrum with no free parameter, to leading order π(k+1/4) times Mφ^12 in the unit M of the framework. The arity gives the dimension that the two-brane model assumes; with M identified with the scale of the charged leptons and the level 12 with the bottom of the throat, the spectrum fixes the infrared scale that it chooses. Identified with the graviton candidates reported at 380 and 700 GeV, they place the bottom of the throat at 11.97±0.05, 0.6 standard deviations from 12, and give the next modes at 1028 and 1346 GeV, against 1014 and 1328 GeV for the two-brane model fitted to the same candidates. Only the depth, the position of the top, stays free, and the ratio of the vector modes can decide it if they share the throat. The same tower carries the observer of de Sitter space. In the gravitational unit of the framework the observed cosmological constant gives the observer's level, 583.79±0.03: the level is read from the data, not chosen, and the hypothesis that it sits at an integer level is excluded within ΛCDM at 7.6 standard deviations. What the note leaves open is one number, the ratio of the lepton scale to the Planck scale.
 
-**Keywords:** Golden ratio, Mersenne primes, cyclotomic fields, modular concentration, Gelfond–Schneider theorem, formal verification, Lean 4.
+**Keywords:** de Sitter space, wormholes, Kaluza–Klein gravitons, golden ratio, Randall–Sundrum model, cosmological constant, formal verification, Lean 4.
 
 ## Citation
 
-González García, J. A., González García, V. M., Dressler Pérez, I. M., & García Ordóñez, L. M. (2026). *Simultaneous identities of the golden ratio and Euler's identity, formally verified in Lean 4 over the known Mersenne prime exponents*. Preprint. DOI: [10.5281/zenodo.21681395](https://doi.org/10.5281/zenodo.21681395).
-
-```bibtex
-@article{Gonzalez2026MersenneCR,
-  author  = {González García, J. A. and González García, V. M. and Dressler Pérez, I. M. and García Ordóñez, L. M.},
-  title   = {Simultaneous identities of the golden ratio and Euler's identity, formally verified in Lean 4 over the known Mersenne prime exponents},
-  journal = {Preprint},
-  year    = {2026},
-  doi     = {10.5281/zenodo.21681395},
-  url     = {https://doi.org/10.5281/zenodo.21681395}
-}
-```
+González García, J. A., González García, V. M., Dressler Pérez, I. M., & García Ordóñez, L. M. (2026). *One object instead of a choice of vacuum to put the observer in de Sitter space*. Preprint. Repository: [omega-pcf/05-kk-golden-throat](https://github.com/omega-pcf/05-kk-golden-throat).
 
 ## Repository Structure
 
-### Manuscript (`src/`)
+### Manuscript
 
-- **`main.tex`**: Master document file.
+- **`main.tex`**: the manuscript (single-file article, `amsart`, biblatex bibliography).
+- **`src/bibliography.bib`**: references — auto-generated from `citation.csl.json` on every build; never edit by hand.
 
-- **`src/chapters/`**:
-  - `01-introduction.tex`: Historical context and classification under equivalence.
-  - `02-universal-identity.tex`: Statement and proof of the universal identity.
-  - `03-factor-three.tex`: The factor 3 as M₂ and modular concentration.
-  - `04-fibonacci-splitting.tex`: Fibonacci splitting and its consequences.
-  - `05-reciprocal-turn.tex`: Reciprocal turn structure.
-  - `06-discussion.tex`: Implications and broader theory.
-  - `07-formal-verification.tex`: Lean 4 formalization and verification tables.
-  - `08-closing-remark.tex`: Final synthesis and future directions.
-  - `09-ai-statement.tex`: AI assistance disclosure.
-  - `acknowledgments.tex`: Acknowledgments.
-  - `disclosure.tex`: Conflict of interest disclosure.
-- **`src/bibliography.bib`**: References (auto-generated from `citation.csl.json`).
+### Citations
+
+- **`citation.csl.json`**: CSL JSON array — the single source of truth for every reference. See [`docs/citations.md`](docs/citations.md).
 
 ### Formal Verification (`lean/`)
 
-- **`lean/golden_mersenne.lean`**: Single self-contained Lean 4 proof file (1599 lines, 0 sorry). Built against Mathlib4 (Lean toolchain `v4.28.0`). Imports only Mathlib. Proves the twelve identities, the central clause 3φ^{σ(p)}=2^p, and the Fibonacci splitting.
-- **`lean/lakefile.toml`**: Lake build configuration with Mathlib dependency.
-- **`lean/lean-toolchain`**: Lean toolchain version.
+- **`lean/TorreKK_LYR_v28.lean`**: the entire development in one file (139 theorems, 6 axioms, no `sorry`).
+- **`lean/lakefile.toml`**: lake build configuration with the Mathlib dependency (`v4.33.1`).
+- **`lean/lean-toolchain`**: `leanprover/lean4:v4.33.1`.
 
-### Figures (`scripts/figures/`)
+### Numerical reproduction
 
-- **`scripts/figures/cd_correspondance.tex`**: CD correspondence diagram (standalone TikZ).
-- **`scripts/figures/build.sh`**: Builds all figures via Docker (`kjarosh/latex:2024.4-full`).
+- **`reproduce_v93.py`**: reproduces every number and every figure of the note, in thirty-nine sections that run together or one at a time (`uv run python reproduce_v93.py`).
+
+### Figures (`images/`)
+
+- `images/fig_*.pdf`: the five vector figures of the manuscript. Their generators (`scripts/figures/main.py`) are **pending**; `pnpm run generate:figures` fails until they are added.
 
 ## Verification Execution
 
 ```bash
-pnpm run verify
+pnpm run validate     # = pnpm run verify = pnpm run verify:lean
+pnpm run verify:lean  # cd lean && lake build TorreKK_LYR_v28
 ```
-
-This runs the Lean 4 proof verification via `lake build` in the `lean/` directory. The proof imports only Mathlib and takes as external axioms the Gelfond–Schneider theorem and the 44 large GIMPS primalities.
-
-```bash
-pnpm run verify:lean
-```
-
-Same as `verify` — runs `cd lean && lake build`.
 
 ## Build and Compilation
 
 ```bash
-pnpm run build
-```
-
-Or for full build with figures:
-
-```bash
-pnpm run build:full
+pnpm install           # once
+pnpm run type-check    # tsc --noEmit
+pnpm run build         # citation sync + Docker latexmk + checksums
+pnpm run build:full    # generate:figures first (pending figures — fails until they exist)
 ```
 
 > [!IMPORTANT]
-> - **Metadata Flow**: `citation.csl.json` provides the source references, which are synchronized into `src/bibliography.bib`, `CITATION.cff`, and `.zenodo.json` during the build.
-> - **Figures**: Assets are generated automatically; manual execution of `pnpm run generate:figures` is only required for auditing specific components.
-> - **Verification**: While `build` produces the documentation artifacts, formal proof verification must be executed via `pnpm run verify`.
+> - **Metadata flow**: `citation.csl.json` → `src/bibliography.bib`, `CITATION.cff`, `.zenodo.json`, all regenerated by `pnpm run build`.
+> - **Verification**: `build` produces the PDF only; proof verification runs through `pnpm run verify`.
 
 ## Release
-
-To automate a new versioned release (updates Zenodo deposition, Changelog, Tags, and GitHub Release):
 
 ```bash
 pnpm run release
 ```
 
-This triggers a full build, asset regeneration, and metadata synchronization before publishing, ensuring a deterministic and fully auditable release state.
+Releases, tags and GitHub publication are handled by `release-it` and are **not** executed in this repository without an explicit instruction from the author.
 
 ### Traditional Manual Build
 
-For local environments with a full TeX Live distribution, you may use the standard compilation sequence:
+For local environments with a full TeX Live distribution:
 
 ```bash
 pdflatex main
