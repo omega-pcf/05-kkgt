@@ -6,7 +6,7 @@ title: "One object instead of a choice of vacuum to put the observer in de
   candidates and with the cosmological constant"
 type: software
 version: 0.1.0
-date-released: 2026-11-07
+date-released: 2026-11-09
 authors:
   - family-names: González García
     given-names: Jorge Armando
@@ -2086,3 +2086,340 @@ references:
     end: "112"
     type: article
     volume: "31"
+  - authors:
+      - family-names: González García
+        given-names: Jorge Armando
+      - family-names: González García
+        given-names: Víctor Manuel
+      - family-names: Dressler Pérez
+        given-names: Itzel Marion
+      - family-names: García Ordóñez
+        given-names: Luz María
+      - family-names: Moreno
+        given-names: M.
+    doi: 10.5281/zenodo.21712308
+    identifiers:
+      - type: doi
+        value: 10.5281/zenodo.21712308
+    title: "The Hilbert–Pólya operator and the primitive structure of the complex
+      plane: between 𝔽₁, string theory, and ancient geometry"
+    date-published: 2026-01-01
+    year: 2026
+    notes: Preprint, version 2.5.4
+    publisher:
+      name: Zenodo
+    type: historical-work
+  - authors:
+      - family-names: Mandelstam
+        given-names: L.
+      - family-names: Tamm
+        given-names: I.
+    title: The uncertainty relation between energy and time in non-relativistic
+      quantum mechanics
+    date-published: 1945-01-01
+    year: 1945
+    journal: Journal of Physics USSR
+    notes: No DOI (1945 journal not in Crossref)
+    start: "249"
+    end: "254"
+    type: article
+    volume: "9"
+  - authors:
+      - family-names: Margolus
+        given-names: Norman
+      - family-names: Levitin
+        given-names: Lev B.
+    doi: 10.1016/S0167-2789(98)00054-2
+    identifiers:
+      - type: doi
+        value: 10.1016/S0167-2789(98)00054-2
+    title: The maximum speed of dynamical evolution
+    date-published: 1998-01-01
+    year: 1998
+    issue: 1-2
+    journal: "Physica D: Nonlinear Phenomena"
+    start: "188"
+    end: "195"
+    type: article
+    volume: "120"
+  - authors:
+      - family-names: Cohn
+        given-names: Harvey
+    doi: 10.2307/1969618
+    identifiers:
+      - type: doi
+        value: 10.2307/1969618
+    title: Approach to Markoff's minimal forms through modular functions
+    date-published: 1955-01-01
+    year: 1955
+    issue: "1"
+    journal: Annals of Mathematics
+    start: "1"
+    end: "12"
+    type: article
+    volume: "61"
+  - authors:
+      - family-names: Weil
+        given-names: André
+    doi: 10.1007/978-1-4757-1705-1_33
+    identifiers:
+      - type: doi
+        value: 10.1007/978-1-4757-1705-1_33
+    title: Une lettre et un extrait de lettre à Simone Weil
+    date-published: 1979-01-01
+    year: 1979
+    journal: Œuvres Scientifiques Collected Papers
+    notes: Œuvres scientifiques / Collected Papers, vol. I; letter written 1940,
+      published 1979
+    publisher:
+      name: Springer
+    start: "244"
+    end: "255"
+    type: generic
+  - authors:
+      - family-names: Maloney
+        given-names: Alexander
+      - family-names: Witten
+        given-names: Edward
+    doi: 10.1007/JHEP10(2020)187
+    identifiers:
+      - type: doi
+        value: 10.1007/JHEP10(2020)187
+    title: Averaging over Narain moduli space
+    date-published: 2020-01-01
+    year: 2020
+    issue: "10"
+    journal: Journal of High Energy Physics
+    start: "187"
+    type: article
+    volume: "2020"
+  - authors:
+      - family-names: Afkhami-Jeddi
+        given-names: Nima
+      - family-names: Cohn
+        given-names: Henry
+      - family-names: Hartman
+        given-names: Thomas
+      - family-names: Tajdini
+        given-names: Amirhossein
+    doi: 10.1007/JHEP01(2021)130
+    identifiers:
+      - type: doi
+        value: 10.1007/JHEP01(2021)130
+    title: Free partition functions and an averaged holographic duality
+    date-published: 2021-01-01
+    year: 2021
+    issue: "1"
+    journal: Journal of High Energy Physics
+    start: "130"
+    type: article
+    volume: "2021"
+  - authors:
+      - family-names: Swingle
+        given-names: Brian
+    doi: 10.1103/PhysRevD.86.065007
+    identifiers:
+      - type: doi
+        value: 10.1103/PhysRevD.86.065007
+    title: Entanglement renormalization and holography
+    date-published: 2012-01-01
+    year: 2012
+    issue: "6"
+    journal: Physical Review D
+    start: "065007"
+    type: article
+    volume: "86"
+  - authors:
+      - family-names: Pastawski
+        given-names: Fernando
+      - family-names: Yoshida
+        given-names: Beni
+      - family-names: Harlow
+        given-names: Daniel
+      - family-names: Preskill
+        given-names: John
+    doi: 10.1007/JHEP06(2015)149
+    identifiers:
+      - type: doi
+        value: 10.1007/JHEP06(2015)149
+    title: "Holographic quantum error-correcting codes: toy models for the
+      bulk/boundary correspondence"
+    date-published: 2015-01-01
+    year: 2015
+    issue: "6"
+    journal: Journal of High Energy Physics
+    start: "149"
+    type: article
+    volume: "2015"
+  - authors:
+      - family-names: Jahn
+        given-names: Alexander
+      - family-names: Eisert
+        given-names: Jens
+    doi: 10.1088/2058-9565/ac0293
+    identifiers:
+      - type: doi
+        value: 10.1088/2058-9565/ac0293
+    title: "Holographic tensor network models and quantum error correction: a
+      topical review"
+    date-published: 2021-01-01
+    year: 2021
+    issue: "3"
+    journal: Quantum Science and Technology
+    start: "033002"
+    type: article
+    volume: "6"
+  - authors:
+      - family-names: Jahn
+        given-names: Alexander
+      - family-names: Zimborás
+        given-names: Zoltán
+      - family-names: Eisert
+        given-names: Jens
+    doi: 10.1103/PhysRevA.102.042407
+    identifiers:
+      - type: doi
+        value: 10.1103/PhysRevA.102.042407
+    title: Central charges of aperiodic holographic tensor-network models
+    date-published: 2020-01-01
+    year: 2020
+    issue: "4"
+    journal: Physical Review A
+    start: "042407"
+    type: article
+    volume: "102"
+  - authors:
+      - family-names: Boyle
+        given-names: Latham
+      - family-names: Dickens
+        given-names: Madeline
+      - family-names: Flicker
+        given-names: Felix
+    doi: 10.1103/PhysRevX.10.011009
+    identifiers:
+      - type: doi
+        value: 10.1103/PhysRevX.10.011009
+    title: Conformal quasicrystals and holography
+    date-published: 2020-01-01
+    year: 2020
+    issue: "1"
+    journal: Physical Review X
+    start: "011009"
+    type: article
+    volume: "10"
+  - authors:
+      - family-names: Morse
+        given-names: Marston
+      - family-names: Hedlund
+        given-names: Gustav A.
+    doi: 10.2307/2371431
+    identifiers:
+      - type: doi
+        value: 10.2307/2371431
+    title: Symbolic dynamics II. Sturmian trajectories
+    date-published: 1940-01-01
+    year: 1940
+    journal: American Journal of Mathematics
+    start: "1"
+    end: "42"
+    type: article
+    volume: "62"
+  - authors:
+      - family-names: Margulis
+        given-names: G. A.
+      - family-names: Mozes
+        given-names: S.
+    doi: 10.1007/BF02764015
+    identifiers:
+      - type: doi
+        value: 10.1007/BF02764015
+    title: Aperiodic tilings of the hyperbolic plane by convex polygons
+    date-published: 1998-01-01
+    year: 1998
+    issue: "1"
+    journal: Israel Journal of Mathematics
+    start: "319"
+    end: "325"
+    type: article
+    volume: "107"
+  - authors:
+      - family-names: Goodman-Strauss
+        given-names: Chaim
+    doi: 10.1007/s00222-004-0384-1
+    identifiers:
+      - type: doi
+        value: 10.1007/s00222-004-0384-1
+    title: A strongly aperiodic set of tiles in the hyperbolic plane
+    date-published: 2005-01-01
+    year: 2005
+    issue: "1"
+    journal: Inventiones mathematicae
+    notes: Crossref online publication date 2004; volume 159 (2005)
+    start: "119"
+    end: "132"
+    type: article
+    volume: "159"
+  - authors:
+      - family-names: Huxley
+        given-names: M. N.
+    doi: 10.1112/S0024611503014485
+    identifiers:
+      - type: doi
+        value: 10.1112/S0024611503014485
+    title: Exponential sums and lattice points III
+    date-published: 2003-01-01
+    year: 2003
+    issue: "3"
+    journal: Proceedings of the London Mathematical Society
+    start: "591"
+    end: "609"
+    type: article
+    volume: "87"
+  - authors:
+      - family-names: Santaló
+        given-names: L. A.
+    title: Integral Geometry and Geometric Probability
+    date-published: 1976-01-01
+    year: 1976
+    notes: No DOI for the 1976 edition (Crossref lists only the 2004 Cambridge
+      reprint)
+    publisher:
+      name: Addison-Wesley
+    type: book
+  - authors:
+      - family-names: Blume-Kohout
+        given-names: Robin
+      - family-names: Zurek
+        given-names: Wojciech H.
+    doi: 10.1103/PhysRevA.73.062310
+    identifiers:
+      - type: doi
+        value: 10.1103/PhysRevA.73.062310
+    title: "Quantum Darwinism: entanglement, branches, and the emergent classicality
+      of redundantly stored quantum information"
+    date-published: 2006-01-01
+    year: 2006
+    issue: "6"
+    journal: Physical Review A
+    start: "062310"
+    type: article
+    volume: "73"
+  - authors:
+      - family-names: Riedel
+        given-names: C. Jess
+      - family-names: Zurek
+        given-names: Wojciech H.
+    doi: 10.1103/PhysRevLett.105.020404
+    identifiers:
+      - type: doi
+        value: 10.1103/PhysRevLett.105.020404
+    title: "Quantum Darwinism in an everyday environment: huge redundancy in
+      scattered photons"
+    date-published: 2010-01-01
+    year: 2010
+    issue: "2"
+    journal: Physical Review Letters
+    notes: arXiv:1001.3419
+    start: "020404"
+    type: article
+    volume: "105"
