@@ -1,0 +1,107 @@
+# Tests for `reproduce_v108.py`
+
+`main.tex` cites the reproduction script **by section number**
+(`section~38 of \code{reproduce_v108.py}`), so the numbering is part of the
+paper.  This suite keeps a strict 1:1 identity with those sections: every
+test names its section, and `tests/test_section_census.py` parses `main.tex`
+to prove that every `section~N` the manuscript quotes still exists.
+
+```bash
+uv run pytest tests/ -q                 # whole suite   (447 tests, ~68 s)
+uv run pytest tests/ -q -m 'not slow'   # without >10 s (440 tests, ~55 s)
+pnpm run test                           # same, through package.json
+```
+
+## Layout (mirrors `03-crystalline-worldsheet/tests/`)
+
+```
+tests/
+├── conftest.py                # Agg backend, `repro`, `sections`, cached `run_section`
+├── src/kkgt/
+│   ├── constants.py           # PHI, M_PCF, OBS_G, FIGURES, SLOW_SECTIONS
+│   └── harness.py             # SectionRun: run a section, read its stdout
+├── test_section_census.py     # registry <-> main.tex contract (numbers, figures)
+├── test_section_runs.py       # all 43 sections run clean and print their number
+├── test_sections_01_08.py     # tower, spectra, phase, Bessel chain, look-elsewhere
+├── test_sections_09_16.py     # granularity, contact, figures 1-2, gaps, Koide
+├── test_sections_17_28.py     # observer level, units, window, nome, Poisson
+├── test_sections_29_38.py     # lattice point, quintessence, entropy, area law
+└── test_sections_39_43.py     # tilings (figures 4-5), dictionary, three columns
+```
+
+## Section -> test map
+
+| section | run test | deep tests |
+|---|---|---|
+| 1  | `test_section_runs.py::test_section_runs_and_prints_its_number[section-01]` | `TestSection1Numbers` (19) |
+| 2  | `...[section-02]` | `TestSection2Casimir` (3) |
+| 3  | `...[section-03]` | `TestSection3TwoBraneSpectra` (7) |
+| 4  | `...[section-04]` | `TestSection4MetricPositivity` (4) |
+| 5  | `...[section-05]` | `TestSection5QuarterPhase` (2) |
+| 6  | `...[section-06]` | `TestSection6BesselChain` (5) |
+| 7  | `...[section-07]` | `TestSection7Prediction` (4) |
+| 8  | `...[section-08]` | `TestSection8LookElsewhere` (11) |
+| 9  | `...[section-09]` | `TestSection9GapRatios` (7) |
+| 10 | `...[section-10]` | `TestSection10Granularity` (12) |
+| 11 | `...[section-11]` | `TestSection11ContactConfigurations` (5) |
+| 12 | `...[section-12]` | `TestSection12FigureOneStatements` (21) |
+| 13 | `...[section-13]` | `TestSection13FigureTwoReciprocity` (11) |
+| 14 | `...[section-14]` | `TestSection14RingGaps` (12) |
+| 15 | `...[section-15]` | `TestSection15StateCount` (6) |
+| 16 | `...[section-16]` | `TestSection16KoideFromM` (4) |
+| 17 | `...[section-17]` | `TestSection17ObserverLevelFromLambda` (3) |
+| 18 | `...[section-18]` | `TestSection18TwoReadingsOfTheSameCurvature` (3) |
+| 19 | `...[section-19]` | `TestSection19TowerOffset` (9) |
+| 20 | `...[section-20]` | `TestSection20TwoCandidates` (6) |
+| 21 | `...[section-21]` | `TestSection21TwoBraneRival` (1) |
+| 22 | `...[section-22]` | `TestSection22CurvatureUnit` (6) |
+| 23 | `...[section-23]` | `TestSection23LatticeOfUnits` (10) |
+| 24 | `...[section-24]` | `TestSection24ScaleAndTop` (4) |
+| 25 | `...[section-25]` | `TestSection25AutodualWindow` (11) |
+| 26 | `...[section-26]` | `TestSection26WindowEdge` (6) |
+| 27 | `...[section-27]` | `TestSection27WindowAsNome` (6) |
+| 28 | `...[section-28]` | `TestSection28PoissonTheta` (3) |
+| 29 | `...[section-29]` | `TestSection29LatticePointFromOmegaLambda` (7) |
+| 30 | `...[section-30]` | `TestSection30SymmetricThroat` (4) |
+| 31 | `...[section-31]` | `TestSection31ModuliMetric` (11) |
+| 32 | `...[section-32]` | `TestSection32LevelVersusGridShape` (6) |
+| 33 | `...[section-33]` | `TestSection33ColourHole` (8) |
+| 34 | `...[section-34]` | `TestSection34Quintessence` (4) |
+| 35 | `...[section-35]` | `TestSection35HalfThreshold` (8) |
+| 36 | `...[section-36]` | `TestSection36BlackHoleWhereNeeded` (6) |
+| 37 | `...[section-37]` | `TestSection37Consistency` (13) |
+| 38 | `...[section-38]` | `TestSection38AreaLawHalf` (4) |
+| 39 | `...[section-39]` | `TestSection39FibonacciTiling` (28) |
+| 40 | `...[section-40]` | `TestSection40DictionaryAgainstTheCusp` (27) |
+| 41 | `...[section-41]` | `TestSection41FiveRegularTilings` (17) |
+| 42 | `...[section-42]` | `TestSection42TwoCoordinatesAndTheStep` (33) |
+| 43 | `...[section-43]` | `TestSection43ThreeColumns` (12) |
+
+Every section therefore has at least two tests: one that *runs* it (so the
+author's own `assert`s execute) and one or more that recompute its numbers.
+
+## Two kinds of check
+
+* **independent** -- the quantity is recomputed in the test from the closed
+  form (Bessel zeros, Fibonacci words, lattice counts, weighted fits) and
+  compared with an explicit tolerance.  This is the regression net: it does
+  not depend on the script being right.
+* **contract** -- the number is read from the section's stdout with an
+  explicit tolerance, for quantities whose computation lives only inside the
+  section (discretised chains, the 50 340-pair search of section 40, the
+  seeded Monte-Carlo errors).
+
+Tolerances are never loosened to make a test pass.  Rounding tolerances are
+the width of the printed precision (`.4f` -> `5e-5`); everything else is
+stated in the test with a comment saying where the number comes from.
+
+## Slow tests
+
+`@pytest.mark.slow` marks what takes more than 10 s on this machine:
+
+* section 12 (figure 1) and section 41 (figure 5) -- 12 s and 36 s;
+* the seven tests that need them are deselected with `-m 'not slow'`.
+
+Sections run inside a temporary directory, so the five `fig_*.pdf` files and
+the `kk_vs_cw6_out.txt` dump never touch the repository, and the matplotlib
+backend is forced to `Agg` in `conftest.py`.

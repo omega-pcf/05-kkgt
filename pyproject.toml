@@ -10,3 +10,18 @@ dependencies = [
     "numpy>=1.26.0",
     "scipy>=1.11.0",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = [".", "tests/src"]
+addopts = "--tb=short -p no:cacheprovider"
+markers = [
+    "slow: marks tests that take >10 s (deselect with '-m \"not slow\"')",
+    "figure: tests that render one of the five figures cited by main.tex",
+    "section: contract test bound to one numbered section of reproduce_v108.py",
+]
