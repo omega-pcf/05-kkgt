@@ -22,13 +22,40 @@
 \hypersetup{colorlinks=true,urlcolor=blue,linkcolor=linkred,citecolor=blue}
 
 \newcommand{\golden}{\varphi}
-\providecommand{\tier}[1]{{\footnotesize\textbf{[#1]}}}
+% ---------------------------------------------------------------------------
+% Witness system.  Colour by class; a bare status tag stays inline, while a
+% witness with names gets a line of its own in list form, P[name1, name2].
+% Every mark selects its own font with \normalfont..., so neither an enclosing
+% \itshape (amsthm's plain theorem style) nor an open \emph can leak into it.
+% ---------------------------------------------------------------------------
+\definecolor{tierP}{rgb}{0.15,0.35,0.65}   % blue   -- proved in Lean
+\definecolor{tierPs}{rgb}{0.70,0.45,0.05}  % ochre  -- written in Lean, no name cited
+\definecolor{tierN}{rgb}{0.05,0.40,0.20}   % green  -- verified numerically
+\definecolor{tierL}{rgb}{0.45,0.45,0.45}   % grey   -- cited
+\definecolor{tierR}{rgb}{0.45,0.15,0.55}   % purple -- a reading
+\definecolor{tierW}{rgb}{0.00,0.35,0.45}   % teal   -- witness item
 % allow line breaks after underscores, commas and dots inside code names
 \makeatletter
 \DeclareRobustCommand{\brk@us}{\textunderscore\allowbreak}
-\newcommand{\Lean}[1]{{\small\ttfamily\let\_\brk@us[#1]}}
-\newcommand{\LeanCW}[1]{{\small\ttfamily\let\_\brk@us[CW6:~#1]}}
-\newcommand{\code}[1]{{\ttfamily\let\_\brk@us #1}}
+\newcommand{\Lean}[1]{{\upshape\small\ttfamily\let\_\brk@us[#1]}}
+\newcommand{\LeanCW}[1]{{\upshape\small\ttfamily\let\_\brk@us[CW6:~#1]}}
+\newcommand{\code}[1]{{\upshape\ttfamily\let\_\brk@us #1}}
+\@namedef{tiercol@P}{\color{tierP}}
+\@namedef{tiercol@P*}{\color{tierPs}}
+\@namedef{tiercol@N}{\color{tierN}}
+\@namedef{tiercol@L}{\color{tierL}}
+\@namedef{tiercol@R}{\color{tierR}}
+\@namedef{tiercol@W}{\color{tierW}}
+\newcommand{\tiercol}[1]{\expandafter\ifx\csname tiercol@#1\endcsname\relax\else\csname tiercol@#1\endcsname\fi}
+% inline status tag: [P], [N] ... unbreakable, its own colour and its own style
+\providecommand{\tier}[1]{{\normalfont\footnotesize\bfseries\tiercol{#1}[#1]}}
+% a witness with names, on a line of its own: P[name1, name2]
+\newcommand{\witness}[2]{%
+  \par\noindent
+  {\normalfont\footnotesize\bfseries\tiercol{#1}#1\mdseries\ttfamily\let\_\brk@us[#2]}%
+  \par}
+% witness label of the W list: W1[CLPW]
+\newcommand{\wtag}[2]{{\normalfont\bfseries\tiercol{W}#1\mdseries\ttfamily[#2]}}
 \makeatother
 \setlength{\emergencystretch}{2em}
 
@@ -100,9 +127,10 @@ Randall--Sundrum model, cosmological constant, formal verification, Lean 4}
 
 \maketitle
 
-\noindent\emph{Tiers:} \tier{P} proved in Lean; \tier{P*} written in Lean, not yet compiled;
-\tier{N} verified numerically; \tier{L} cited; \tier{R} a reading: a comparison of form, not an
-identification and not a contrast.
+\noindent\emph{Tiers:} \tier{P} proved in Lean; \tier{P*} written in Lean, no theorem name cited
+here; \tier{N} verified numerically; \tier{L} cited; \tier{R} a reading: a comparison of form, not
+an identification and not a contrast. A witness with names is set on a line of its own, in the form
+\code{P[name1, name2]}.
 
 \section{Introduction}\label{sec:intro}
 
@@ -465,7 +493,7 @@ with the bound \Lean{log\_golden\_lt\_half}
 
 \begin{imported}[The arity; \cite{CW6}, \S2.2 and Appendix~A.7]\label{imp:arity}
 The golden central chain $\golden^2+\golden^{-2}=3$ fixes the arity $n=3$, and $d=n+1=4$.
-\tier{P*} \Lean{sq\_add\_inv\_sq}
+\witness{P}{sq\_add\_inv\_sq}
 \end{imported}
 
 \begin{imported}[The scale; \cite{CW6}, eq.~(31), Theorems~5.33 and~5.35; \cite{F1}; \cite{HP26}, the certainty principle]\label{imp:scale}
@@ -476,7 +504,7 @@ $\mu=\tfrac12$ the common modulus of the microstate. $M_{\mathrm{PCF}}=67.846$ i
 identification $M=M_{\mathrm{PCF}}$ of~\cite{CW6} (\code{M\_eq\_Mpcf} there) with the
 charged-lepton scale $M=313.84$~MeV fixes the unit of the framework, $M/M_{\mathrm{PCF}}=4.626$~MeV, and
 every relation of $M$ with $\pi$ and $\log\golden$ below is written in that unit; its placement face, the proton five steps of action $\pi$ above the
-electron, gives $m_p/3=312.8$~MeV. \tier{P*} \Lean{certainty\_principle, log\_from\_scale}
+electron, gives $m_p/3=312.8$~MeV. \witness{P}{certainty\_principle, log\_from\_scale}
 \end{imported}
 
 \begin{imported}[The monodromy; \cite{CW6}, Proposition~2.24 and Remark~4.11]\label{imp:monodromy}
@@ -492,20 +520,19 @@ the half-turn and its order \Lean{fibre\_half\_turn}
 The throat coordinate $z(\sigma)=\golden^{\sigma}$ and the weld time
 $\tau(\sigma)=M_{\mathrm{PCF}}\golden^{-\sigma}$ satisfy $z(\sigma)\tau(\sigma)=M_{\mathrm{PCF}}$ at every
 level. This is $R\cdot(\alpha'/R)=\alpha'$ with $\alpha'=M_{\mathrm{PCF}}$: short and long distance are
-one family exchanged by T-duality. \tier{P*} \Lean{lattice\_radius\_conjugate}
+one family exchanged by T-duality. \witness{P}{lattice\_radius\_conjugate}
 \end{imported}
 
 \begin{imported}[The additive law of the tower; \cite{F1}]\label{imp:additive}
 $\golden^{\sigma}+\golden^{\sigma+1}=\golden^{\sigma+2}$ for every real $\sigma$; conversely, a positive
 $r$ with $r^{\sigma}+r^{\sigma+1}=r^{\sigma+2}$ for some real $\sigma$ satisfies $r^2=r+1$, whose only
-positive root is $\golden$. \tier{P*} \Lean{additive\_law\_forces\_golden}
+positive root is $\golden$. \witness{P}{additive\_law\_forces\_golden}
 \end{imported}
 
 \begin{imported}[The golden valuation; \cite{F1}, the golden valuation and the $2$-adic anchor]\label{imp:valuation}
 With $v(x)=\log x/\log\golden$, $v(\golden^{n})=n$, and $x>0$ lies on the tower exactly when $v(x)$ is
 an integer. With $\lambda=\log2/\log\golden$, $|2|_2=\tfrac12=\golden^{-\lambda}$: a power of $2$ and a
-level of $\golden$ are one quantity, in the unit $\lambda$. \tier{P*}
-\Lean{golden\_valuation\_on\_tower, two\_adic\_is\_level}
+level of $\golden$ are one quantity, in the unit $\lambda$. \witness{P}{golden\_valuation\_on\_tower, two\_adic\_is\_level}
 \end{imported}
 
 \begin{imported}[The polar form of $\golden$; \cite{F1}, the polar form and the cyclotomic clock]\label{imp:polar}
@@ -514,7 +541,7 @@ unity whose order is the order of $\golden$ modulo $p$, times a principal unit, 
 Over $\mathbb{Q}$ the angular origin is already visible: $\golden=2\cos(\pi/5)=\zeta_{10}+\zeta_{10}^{-1}$,
 with $\zeta_{10}=e^{i\pi/5}$ a root of the cyclotomic polynomial $\Phi_{10}$, so $\golden$ is a
 point of the circle read on its diameter; and $\golden=1+1/\golden$, the relation that makes its
-continued fraction $[1;1,1,\dots]$. \tier{P*} \Lean{golden\_eq\_two\_cos\_pi\_div\_five,
+continued fraction $[1;1,1,\dots]$. \witness{P}{golden\_eq\_two\_cos\_pi\_div\_five,
 golden\_self\_reference}
 \end{imported}
 
@@ -532,11 +559,11 @@ The orders modulo $16$, $9$, $5$ and $10$, and those of $S$ and $ST$, are comput
 
 \begin{imported}[One exponent, angle and radius]\label{imp:angle}
 With $q=e^{2\pi i\tau}$ and $\tau=x+iy$, $q^{E}=e^{2\pi iEx}\,e^{-2\pi Ey}$: a factor of modulus one
-and a positive real. \tier{P*} \Lean{exponent\_angle\_radius, angle\_has\_modulus\_one}
+and a positive real. \witness{P}{exponent\_angle\_radius, angle\_has\_modulus\_one}
 On the tower the angle and the radius are one quantity: the spectral angle of the level $\sigma$,
 $\alpha(\sigma)=\arctan(\varepsilon_0\golden^{\sigma})$, has $\tan\alpha(\sigma+1)/\tan\alpha(\sigma)=\golden$
 (\cite{CW6}, Proposition~3.4, eq.~(76)): one step in angle is one step $\golden$ in scale.
-\tier{P*} \Lean{spectral\_angle\_ratio}
+\witness{P}{spectral\_angle\_ratio}
 \end{imported}
 
 \begin{imported}[One microstate at every level; \cite{CW6}, \S3.4]\label{imp:adscft}
@@ -697,7 +724,7 @@ $\|P\|=\tfrac1{\sqrt3}$ of~\cite{CW6}, whose product is the modulus $\tfrac12$: 
 eigenvalue normalised by the circumradius, $F$ the chord between adjacent eigenvalues, and $P$ the
 ratio of the apothem $\tfrac14$ to the half-side $\tfrac{\sqrt3}4$.
 \begin{description}
-\item[W1 (CLPW).] The observer is described by the theory: the projection that places it is internal,
+\item[\wtag{W1}{CLPW}.] The observer is described by the theory: the projection that places it is internal,
 with no region outside. Mathematics: the bulk--boundary map is an isometry, $V^\dagger V=\mathbf 1$
 (item (b) of the proof after Imported statement~\ref{imp:adscft}) \Lean{bulk\_boundary\_isometry};
 then $P=VV^\dagger$ is a projection, $P^2=V(V^\dagger V)V^\dagger=P$ \Lean{projection\_of\_isometry},
@@ -707,44 +734,44 @@ theory's own map, and nothing is left outside the two. The observer so placed is
 Fisher information per eigenvalue is $4\mu^2$, one bit if and only if $\mu=\tfrac12$
 \Lean{fisher\_unit\_iff}, and $\tfrac12$ is the threshold at which redundant records make a level
 objective~\cite{Kie26,CW6}. Physics: axiom~(F8).
-\item[W2 (W01).] The Hilbert space of a level is finite. Its dimension is the number of states of the boundary theory of Imported statement~\ref{imp:adscft}, of central charge $c=3$, at or below the level $L_0=N/2$; it is an integer because the levels $L_0$ of that theory are integers while $N/2=\golden^{2\sigma}/2$ is real, and it is $1654$, $3.4\times10^{6}$ and $8.2\times10^{11}$ at $\sigma=3,4,5$. Its logarithm is $S(\sigma)$ to leading order, by Cardy's formula~\cite{Car86}, with a correction of order $\ln N$: fitted over $\sigma=3,\dots,9$, the slope in $S$ is $0.997$ (section~37 of \code{reproduce\_v108.py}) \tier{N}. The count at the level itself, used for the weld (Imported statement~\ref{imp:weld}, item (c) of its proof), grows in the same way, with slope $1.001$. So $e^{S}$, which is not an integer, is the growth of an integer dimension, as the area of a disk is the growth of the integer count of the lattice points inside it~\cite{Hux03}. The level also carries the integer number $\lfloor S(\sigma)\rfloor\ge0$ of modes \Lean{witten\_finite\_rank}; \cite{CW6} writes that count as $\dim\mathcal H(\sigma)$, and it is read here as the number of modes.
-\item[W3 (W01).] The pairing is positive: the modulus exceeds the collapse threshold of~\cite{CW6},
+\item[\wtag{W2}{W01}.] The Hilbert space of a level is finite. Its dimension is the number of states of the boundary theory of Imported statement~\ref{imp:adscft}, of central charge $c=3$, at or below the level $L_0=N/2$; it is an integer because the levels $L_0$ of that theory are integers while $N/2=\golden^{2\sigma}/2$ is real, and it is $1654$, $3.4\times10^{6}$ and $8.2\times10^{11}$ at $\sigma=3,4,5$. Its logarithm is $S(\sigma)$ to leading order, by Cardy's formula~\cite{Car86}, with a correction of order $\ln N$: fitted over $\sigma=3,\dots,9$, the slope in $S$ is $0.997$ (section~37 of \code{reproduce\_v108.py}) \tier{N}. The count at the level itself, used for the weld (Imported statement~\ref{imp:weld}, item (c) of its proof), grows in the same way, with slope $1.001$. So $e^{S}$, which is not an integer, is the growth of an integer dimension, as the area of a disk is the growth of the integer count of the lattice points inside it~\cite{Hux03}. The level also carries the integer number $\lfloor S(\sigma)\rfloor\ge0$ of modes \Lean{witten\_finite\_rank}; \cite{CW6} writes that count as $\dim\mathcal H(\sigma)$, and it is read here as the number of modes.
+\item[\wtag{W3}{W01}.] The pairing is positive: the modulus exceeds the collapse threshold of~\cite{CW6},
 $\tfrac12>\tfrac14$ \Lean{half\_gt\_quarter}; its Osterwalder--Schrader form is the reflection
 positivity of the tower.
-\item[W4 (W01).] The entropy counts the states, $S=\ln\dim\mathcal H$ to leading order (W2), in natural units, as are the entropies of
+\item[\wtag{W4}{W01}.] The entropy counts the states, $S=\ln\dim\mathcal H$ to leading order (W2), in natural units, as are the entropies of
 Gibbons--Hawking (W9) and of Cardy; the level carries $\lfloor S(\sigma)\rfloor$ modes, and $\Lambda(\sigma)S(\sigma)=6\golden^{-\sigma}\cdot\pi\golden^{\sigma}=6\pi=3\pi/G_N$
 with $G_N=\tfrac12$, the entropy law of a de~Sitter horizon \Lean{lambda\_times\_entropy,
 dS\_entropy\_law}.
-\item[W5 (W01).] The initial--final pairing is observable from within: $\langle F|P\rangle=\bar FP/C$
+\item[\wtag{W5}{W01}.] The initial--final pairing is observable from within: $\langle F|P\rangle=\bar FP/C$
 has modulus $\|F\|\,\|P\|/\|C\|=\tfrac{\sqrt3}2\cdot\tfrac1{\sqrt3}=\tfrac12$ \Lean{pairing\_FP\_modulus\_half}.
-\item[W6 (W01).] The antilinear CPT map is the Galois conjugation of $\mathbb Z[\golden]$,
+\item[\wtag{W6}{W01}.] The antilinear CPT map is the Galois conjugation of $\mathbb Z[\golden]$,
 $a+b\golden\mapsto a+b\bar\golden$: an involution that exchanges $\golden$ and $\bar\golden$, fixes
 the rational centre and preserves the norm $a^2+ab-b^2$ \Lean{cpt\_involution, cpt\_preserves\_modulus,
 cpt\_swaps\_and\_fixes}; on the lattice of Imported statement~\ref{imp:units} it exchanges the two coordinates, a level
 and its mirror.
-\item[W7 (W01).] With a finite Hilbert space the non-compact isometry group cannot act; its place is
+\item[\wtag{W7}{W01}.] With a finite Hilbert space the non-compact isometry group cannot act; its place is
 taken by the discrete $\mathbb Z_3$, $\omega^3=1$ \Lean{eisenstein\_cube}, with the scale invariance
 $|\Omega|_\sigma=\tfrac12$ \Lean{worldline\_modulus}. No continuous group acts exactly on the tower.
-\item[W8 (W01).] A theory that determines the cosmological constant: $|\Lambda_5|=d(d-1)/2$ with
+\item[\wtag{W8}{W01}.] A theory that determines the cosmological constant: $|\Lambda_5|=d(d-1)/2$ with
 $d=n+1$ and the ceiling $\sigma_\Lambda=2n$ of the levels of~\cite{CW6} agree only at the arity,
 $(n+1)n/2=2n\iff n=3$ \Lean{two\_routes\_to\_six}, giving $\Lambda_5=-6$ and $\sigma_\Lambda=6$.
 This determines the cosmological constant of the throat, negative and in the units of the
 framework; Witten's demand concerns the positive constant of the observed universe, which the note
 places on the ladder and does not derive.
-\item[W9 (GH).] The static patch is thermal. With the Hubble rate of the level,
+\item[\wtag{W9}{GH}.] The static patch is thermal. With the Hubble rate of the level,
 $H_{\mathrm{dS}}(\sigma)=\sqrt2\,\golden^{-\sigma/2}$ (Imported statement~\ref{imp:weld}), and $G_N=\tfrac12$, the
 Gibbons--Hawking entropy of the horizon is $\pi/(G_NH_{\mathrm{dS}}^2)=\pi\golden^{\sigma}=S(\sigma)$
 \Lean{gibbons\_hawking\_entropy}, the count of bits of the level, at the temperature $T=H_{\mathrm{dS}}/2\pi$; and
 the energy per bit is the same at every level, $1/M_{\mathrm{PCF}}$ (premise (b) of the proof after
 Imported statement~\ref{imp:weld}) \Lean{energy\_per\_bit\_constant}.
-\item[W10 (W01).] The antipodal map, $z\mapsto-1/\bar z$ in the stereographic coordinate, is an
+\item[\wtag{W10}{W01}.] The antipodal map, $z\mapsto-1/\bar z$ in the stereographic coordinate, is an
 involution \Lean{antipodal\_involution}: $F$ is antipodal to $P$, past and future the two sheets of
 de~Sitter~\cite{CW6}.
-\item[W11 (CLPW).] The type~II algebra by crossed product: the flow $\sigma\mapsto\sigma+t$ preserves
+\item[\wtag{W11}{CLPW}.] The type~II algebra by crossed product: the flow $\sigma\mapsto\sigma+t$ preserves
 the modulus \Lean{worldline\_modulus} and the product $\Lambda S=6\pi$ \Lean{lambda\_times\_entropy};
 that invariant plays the role of the trace, and the tracial weight on the algebra of the patch that
 makes it type~II is constructed in~\cite{CLPW23}, not here.
-\item[W12 (CLPW).] The maximally mixed vacuum: one bit per cell, $H(\tfrac12)=1$
+\item[\wtag{W12}{CLPW}.] The maximally mixed vacuum: one bit per cell, $H(\tfrac12)=1$
 \Lean{binEntropy\_half}.
 \end{description}
 The three types appear in the tower: type~I in its discrete spectrum, type~II in the observer's
@@ -786,7 +813,7 @@ so $K$ is self-adjoint for $\langle u,v\rangle_\eta=\sum_\sigma\eta_\sigma u_\si
   \eta_\sigma=e^{4A(\sigma)},\qquad A(\sigma)=-\sigma\log b,
 \end{equation}
 which is $\sqrt{-g}$ of the throat. The symmetrizer is $D_\sigma=b^{-2\sigma}$, with $D^2=\eta$.
-\tier{P*} \Lean{eta\_symmetrizes, eta\_eq\_exp\_fourA, D\_sq\_eq\_eta, D\_conjugated\_hops\_equal}
+\witness{P}{eta\_symmetrizes, eta\_eq\_exp\_fourA, D\_sq\_eq\_eta, D\_conjugated\_hops\_equal}
 \end{proposition}
 
 \begin{proof}
@@ -824,7 +851,7 @@ $\log\golden<\tfrac12$ \Lean{log\_golden\_lt\_half}, $m^2=-1/(\log\golden)^2=-4.
 $m^2_{\mathrm{BF}}=-d^2/4=-4$. This is the value $-4.318$ that~\cite{CW6} computes for the continuous
 interior mode (Imported statement~\ref{imp:A1}); the constant mode of the ring has exactly that value, and the
 open tower has no such mode. The Kaluza--Klein tower is therefore open.
-\tier{P*} \Lean{bloch\_complexified, bloch\_factor\_is\_hop, bloch\_factor\_is\_hop\_inv, ring\_constant\_mode,
+\witness{P}{bloch\_complexified, bloch\_factor\_is\_hop, bloch\_factor\_is\_hop\_inv, ring\_constant\_mode,
 ring\_mode\_below\_BF} \tier{N} for the complex spectrum.
 
 In the language of quasi-periodic Schr\"odinger operators, the shift is the complexification of
@@ -899,8 +926,7 @@ a physical parameter. \tier{N}
 \begin{corollary}[The Bessel phase is fixed by the arity]\label{cor:phase}
 The profile in $\mathrm{AdS}_{d+1}$ involves $J_\nu$ with $\nu=d/2-1$, whose zeros have asymptotic
 phase $\nu/2-\tfrac14=(d-3)/4$~\cite{DLMF}. The phase equals $\tfrac14$ if and only if $d=4$. With
-$d=n+1$, axiom~(F2), and the arity $n=3$ (Imported statement~\ref{imp:arity}), $\nu=1$ and the phase is $\tfrac14$. \tier{P*}
-\Lean{phase\_of\_dimension, phase\_quarter\_iff, phase\_from\_arity}
+$d=n+1$, axiom~(F2), and the arity $n=3$ (Imported statement~\ref{imp:arity}), $\nu=1$ and the phase is $\tfrac14$. \witness{P}{phase\_of\_dimension, phase\_quarter\_iff, phase\_from\_arity}
 \end{corollary}
 
 \noindent Against~\eqref{eq:data}, with the scale as the only parameter:
@@ -939,7 +965,7 @@ $2/(\log\golden)^2$ and hoppings $-1/(\log\golden)^2$, whose eigenvalues are
 $(2-2\cos(\pi k/8))/(\log\golden)^2$, $k=1,\dots,7$: a Dirichlet sine band, $m_k\propto\sin(\pi k/16)$,
 linear in $k$ without offset. Its phase is $0$, the phase of the case $d=3$ of
 Corollary~\ref{cor:phase}, although its measure has exponent $4$; the weight $e^{2A}$ is what
-brings the phase to $\tfrac14$. \tier{P*} \Lean{D\_conjugated\_hop\_is\_one} \tier{N}
+brings the phase to $\tfrac14$. \witness{P}{D\_conjugated\_hop\_is\_one} \tier{N}
 
 \subsection*{The factor $\pi$, and where the golden ratio is}
 
@@ -1018,7 +1044,7 @@ ultraviolet at a scale $M_{\mathrm{UV}}$,
 \begin{equation}\label{eq:kpir}
   k\pi r=\log\frac{M_{\mathrm{UV}}}{m_0}-\sigma_{\mathrm{IR}}\log b.
 \end{equation}
-\tier{P*} \Lean{rs\_warp\_is\_golden, rs\_depth\_is\_levels, rs\_scale\_is\_H\_at\_bottom,
+\witness{P}{rs\_warp\_is\_golden, rs\_depth\_is\_levels, rs\_scale\_is\_H\_at\_bottom,
 rs\_kpir\_from\_uv}
 \end{proposition}
 
@@ -1036,7 +1062,7 @@ $[\sigma_{\mathrm{IR}},\sigma_{\mathrm{UV}}]$ are
   m_k=j_{1,k}\,e^{A(\sigma_{\mathrm{IR}})}=j_{1,k}\,\frac{H(\sigma_{\mathrm{IR}})}{m_0},
 \end{equation}
 independently of $\sigma_{\mathrm{UV}}$.
-\tier{P*} \Lean{scale\_operator\_at\_bottom}
+\witness{P}{scale\_operator\_at\_bottom}
 \end{proposition}
 
 \begin{proof}
@@ -1663,7 +1689,9 @@ By Poisson summation the window is that winding term, so the two readings have t
 are one if the proper time of the heat kernel is $N$ and its coefficient $a_1$ is the Einstein--Hilbert
 term, which the note does not compute. \tier{R} On that reading gravity turns on where the windings of the ring stop
 dominating, and the first level with weight above $\tfrac12$ and the first with $H_{\mathrm{dS}}\ell<1$ are
-both $\sigma_G=2$ \Lean{window\_crosses\_half} \Lean{hubble\_below\_bulk\_crossing} \tier{P*}. The level
+both $\sigma_G=2$.
+\witness{P}{window\_crosses\_half, hubble\_below\_bulk\_crossing}
+The level
 lies far above the scales the data reach. The same modulus gives the slope of the potential in the canonical field,
 $|\partial_\Phi V|/V=1/\sqrt2=0.707$ (\S\ref{ssec:math}): of order one, as the de~Sitter conjecture
 asks~\cite{Obi18,OPSV19}, but below the asymptotic lower bound $\sqrt{2/3}=0.816$ of trans-Planckian
@@ -1850,7 +1878,7 @@ the Poincar\'e form; the spectra do not depend on it, the scale does. The proof 
 Proposition~A.1 of~\cite{CW6} conjugates by $\mathrm{diag}(\golden^{\sigma})$; that matrix does not
 symmetrise~\eqref{eq:K} for $\golden>1$, while $D=\mathrm{diag}(\golden^{-2\sigma})$ of
 Proposition~\ref{prop:metric} does; the spectrum stated there is unaffected.
-\tier{P*} \Lean{old\_symmetrizer\_fails}
+\witness{P}{old\_symmetrizer\_fails}
 
 The crossing equations themselves, with the coefficients of the operator product expansion, are
 not derived; only their group and their point are. The gap of~\cite{HPPS09} and the comparison of
@@ -2049,7 +2077,7 @@ gap ratios of \S\ref{sec:discussion}; (10) Figure~\ref{fig:granularity} with its
 contact configurations; (12) Figure~\ref{fig:torus} and the lattice counts of \S\ref{ssec:math}, checking numerically each
 statement drawn or stated; (13) Figure~\ref{fig:mobius}, checking that $z\tau$ is constant; (14) the three
 gaps of the marks on the ring; (15) the exact count of states at level $N/2$ against $S$; (16) the reconstruction of the lepton masses from $M$; (17) the level $\sigma_{\mathrm{obs}}$ read from the observed $\Lambda$; (18) the observer's level and the unit of curvature; (19) the phase of the tower against its asymptotic form, and the form of~\cite{MQ18}; (20) the contrast with the two observed candidates; (21) the two-brane model fitted to the same candidates; (22) the unit of curvature and the value of~\cite{CW6}; (23) the lattice, the bottom and the observer's lattice point with the $H_0$ it requires; (24) the two dimensionful data and the top; (25) the self-dual Gaussian as a window on the index and as a weight on the scale; (26) the edge of the window and $\sigma_G$; (27) the window as a nome, the tower of tori, $S$ as the mirror and the crossing of $\tfrac12$ against $\pi/2$; (28) Poisson summation and $\vartheta_3(e^{-\pi})$; (29) the density of dark energy at the lattice point; (30) the mirror-invariant throat; (31) the metric of the modulus of the ring and the conjectures; (32) the level of the observer read from each determination against the lattice; (33) the welded tension, the Higuchi ratio, the Regge scale in the two units and the count of graviton modes below $1000$~TeV; (34) the exponential quintessence of slope $1/\sqrt2$ and the fit of~\cite{AAN25}; (35) the threshold $\tfrac12$: the Fisher time, the binary entropy and one bit per eigenvalue; (36) the orbit of the phase of the tower, the horizon of $S(12)$ and the black-hole threshold of the two-brane throat; (37) the entropy, the modes and the bits, the vector ratio as a function of the depth alone, the gluons in the graviton throat, the placement face of $M$, and the ratio $700/380$; (38) the area quantum of (B1) against a Shannon bit; (39) Figure~\ref{fig:throattiling}, checking that the boundaries of the tiles continue from ring to ring and that the weighted count is $S$; (40) the dictionary on a regular tiling against the cusp: the open legs of $\{7,3\}$ and the constant of Crofton, the pairs of a tiling and a bond dimension, the metric of the cusp, the two tiles and their substitution, the weighted count to $60$ digits, and the lattice count of \S\ref{ssec:math}; (41) Figure~\ref{fig:tilingstrip}, the tiles inside each disk of five regular tilings, the tangencies of the levels with their edges, and the approach of the Fibonacci ratios to $\golden$; (42) the weld time as the Galois coordinate, the step of level as an exchange and a shift, the ring labelled by a unit, the orthogonalisation at the half-turn, the rational step against the contrast, the trace $3$, and the ratios of the operator of Imported statement~\ref{imp:A1}; (43) the substitutions on two letters and the four conditions, the diagonal of the cube, Binet's bound on the tile count, the kernel of a rational step and the Bragg peaks of the Fibonacci chain.
-Lean~4: \code{TorreKK\_LYR\_v33.lean}, one hundred and fifty theorems and six axioms, no \code{sorry}, not yet compiled;
+Lean~4: \code{TorreKK\_LYR\_v33.lean}, one hundred and fifty theorems and six axioms, no \code{sorry}, compiled with no errors;
 the Mathlib names at risk are listed below.
 \begin{center}\small\ttfamily
 \begin{tabular}{@{}ll@{}}

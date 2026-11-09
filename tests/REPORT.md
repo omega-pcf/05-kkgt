@@ -154,7 +154,15 @@ excepciones de arriba ya estaban motivadas al escribirlas.
 
 ## (f) Etiquetas de "testigo" / tier
 
-**`main.tex` (no renombradas aquí):**
+**`main.tex` (no renombradas aquí; censo previo a la estandarización de testigos):**
+
+> Posterior a este informe, el sistema de testigos de `main.tex` se
+> estandarizó (color por clase, `\witness{P}{…}` en línea propia, etiquetas
+> `W1[CLPW]`, migración de 16 marcas `P*`→`P` con verificación de los 33
+> nombres contra `lean/TorreKK_LYR_v33.lean`). Estado vigente: 114 `\tier`
+> (P 12, P* 5, N 74, L 8, R 15) + 16 `\witness{P}` = 130 marcas, 12
+> `\wtag`, y "not yet compiled" = 0. La tabla siguiente documenta el estado
+> con el que se audita­ba el script.
 
 | etiqueta | apariciones |
 |---|---|
