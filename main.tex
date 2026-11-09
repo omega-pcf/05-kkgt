@@ -1,14 +1,25 @@
-\documentclass[11pt]{article}
+\pdfoutput=1
+\documentclass[11pt,reqno]{amsart}
+
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{amsmath,amssymb,amsthm}
+% U+2212 (minus sign) reaches the bibliography through biber when a title
+% carries a Unicode superscript minus; pdflatex has no default mapping for it.
+\DeclareUnicodeCharacter{2212}{-}
 \usepackage[margin=1in]{geometry}
+\usepackage{mathtools}
+\usepackage{amsmath,amssymb,amsthm}
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{graphicx}
+\graphicspath{{images/}}
 \usepackage{float}
+\usepackage{xcolor}\definecolor{linkred}{rgb}{0.78,0.08,0.12}
+\usepackage[backend=biber,style=numeric,sorting=nyt,giveninits=true,doi=true,url=true,isbn=false]{biblatex}
+\addbibresource{src/bibliography.bib}
+\AtEveryBibitem{\iffieldundef{doi}{}{\clearfield{url}}}
 \usepackage{hyperref}
-\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+\hypersetup{colorlinks=true,urlcolor=blue,linkcolor=linkred,citecolor=blue}
 
 \newcommand{\golden}{\varphi}
 \providecommand{\tier}[1]{{\footnotesize\textbf{[#1]}}}
@@ -22,7 +33,9 @@
 \setlength{\emergencystretch}{2em}
 
 
-\newtheorem{theorem}{Theorem}
+\numberwithin{equation}{section}
+
+\newtheorem{theorem}{Theorem}[section]
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{definition}[theorem]{Definition}
@@ -31,16 +44,23 @@
 \newtheorem{imported}{Imported statement}
 \renewcommand{\theimported}{I\arabic{imported}}
 
-\title{\textbf{One object instead of a choice of vacuum to put the observer in de~Sitter space}\\[2pt]
+\title[One object instead of a choice of vacuum]{\textbf{One object instead of a choice of vacuum to put the observer in de~Sitter space}\\[2pt]
 \large From wormholes, black holes and baby universes to the criteria for an observer in de~Sitter,
 contrasted with the Kaluza--Klein graviton candidates and with the cosmological constant}
-\author{J.~A.~Gonz\'alez Garc\'ia \and V.~M.~Gonz\'alez Garc\'ia \and I.~M.~Dressler P\'erez
-\and L.~M.~Garc\'ia Ord\'o\~nez\\[2pt]
-\small TTAMAYO PUNTO COM, S.A.P.I.\ de C.V.}
+\author[J. A. González García et al.]{J.~A.~Gonz\'alez Garc\'ia}
+\address{TTAMAYO PUNTO COM, S.A.P.I.\ de C.V.; Research \& Development Division;
+  Naucalpan de Juárez, State of Mexico, Mexico}
+\author[]{V.~M.~Gonz\'alez Garc\'ia}
+\address{TTAMAYO PUNTO COM, S.A.P.I.\ de C.V.; Research \& Development Division;
+  Naucalpan de Juárez, State of Mexico, Mexico}
+\author[]{I.~M.~Dressler P\'erez}
+\address{Independent Researcher}
+\author[]{L.~M.~Garc\'ia Ord\'o~nez}
+\address{TTAMAYO PUNTO COM, S.A.P.I.\ de C.V.; Research \& Development Division;
+  Naucalpan de Juárez, State of Mexico, Mexico}
 \date{November 6, 2026}
 
 \begin{document}
-\maketitle
 
 \begin{abstract}
 In de~Sitter space an observer must be inside the universe it observes, and in string theory placing
@@ -74,6 +94,11 @@ observer's level, $583.79\pm0.03$: the level is read from the data, not chosen, 
 that it sits at an integer level is excluded within $\Lambda$CDM at $7.6$ standard deviations with DESI and the CMB. What
 the note leaves open is one number, the ratio of the lepton scale to the Planck scale.
 \end{abstract}
+
+\keywords{de Sitter space, wormholes, Kaluza--Klein gravitons, golden ratio,
+Randall--Sundrum model, cosmological constant, formal verification, Lean 4}
+
+\maketitle
 
 \noindent\emph{Tiers:} \tier{P} proved in Lean; \tier{P*} written in Lean, not yet compiled;
 \tier{N} verified numerically; \tier{L} cited; \tier{R} a reading: a comparison of form, not an
@@ -2042,205 +2067,6 @@ Nat.Prime.irrational\_sqrt & Irrational.int\_mul
 \end{tabular}
 \end{center} Every \code{[name]} cited in the text is a theorem of this file; names marked \code{[CW6:~name]} are theorems of~\cite{CW6}. Five classical results that Mathlib does not yet contain enter as six axioms, each with its source and each used only where the text says: the zeros of $J_1$ with McMahon's phase \Lean{bessel\_J1\_zeros}~\cite{RS99,DHR00,Wat44}; the transcendence of $e^{\pi}$ \Lean{exp\_pi\_transcendental}~\cite{Sch35}, from which the irrationality of $\log\golden/\pi$ is proved; the two derivatives of the stereographic meridian \Lean{stereographic\_meridian\_deriv}, from which the conformality is proved; the function $\eta$ and its law under $T$ \Lean{eta, eta\_T}~\cite{Apo90}; and Weyl's equidistribution \Lean{weyl\_equidistribution}~\cite{Wey16}, from which the average along one orbit and its connected part are proved. There is no \code{sorry}.
 
-\begin{thebibliography}{9}
-\bibitem{LYR26} A.~Le~Yaouanc and F.~Richard, \emph{Evidence for Kaluza--Klein excitations of the
-graviton, gluon and quark at LHC}, contribution to the European Strategy (October 26, 2026).
-\bibitem{Wit01} E.~Witten, \emph{Quantum gravity in de~Sitter space}, arXiv:hep-th/0106109 (2001).
-\bibitem{BF01} T.~Banks and W.~Fischler, \emph{M-theory observables for cosmological space-times}, arXiv:hep-th/0102077 (2001).
-\bibitem{CLPW23} V.~Chandrasekaran, R.~Longo, G.~Penington and E.~Witten, \emph{An algebra of observables for de~Sitter space}, JHEP \textbf{02} (2023) 082, doi:10.1007/JHEP02(2023)082.
-\bibitem{Mal24} J.~M.~Maldacena, \emph{Real observers solving some imaginary problems}, Int.\ J.\ Mod.\ Phys.\ A (2026), doi:10.1142/S0217751X2647010X, arXiv:2412.14014.
-\bibitem{Sus21} L.~Susskind, \emph{De~Sitter holography: fluctuations, anomalous symmetry, and wormholes}, Universe \textbf{7} (2021) 464, doi:10.3390/universe7120464.
-\bibitem{NV25} V.~Narovlansky and H.~Verlinde, \emph{Double-scaled SYK and de~Sitter holography}, JHEP \textbf{05} (2025) 032, doi:10.1007/JHEP05(2025)032.
-\bibitem{MQ18} J.~Maldacena and X.-L.~Qi, \emph{Eternal traversable wormhole}, arXiv:1804.00491 (2018).
-\bibitem{SW22} J.-M.~Schlenker and E.~Witten, \emph{No ensemble averaging below the black hole threshold}, JHEP \textbf{07} (2022) 143, doi:10.1007/JHEP07(2022)143.
-\bibitem{GH77} G.~W.~Gibbons and S.~W.~Hawking, \emph{Cosmological event horizons, thermodynamics, and particle creation}, Phys.\ Rev.\ D \textbf{15} (1977) 2738, doi:10.1103/PhysRevD.15.2738.
-\bibitem{Say98} A.~Sayer, \emph{Abstraction: a realist interpretation}, in M.~Archer, R.~Bhaskar, A.~Collier, T.~Lawson and A.~Norrie (eds.), \emph{Critical Realism: Essential Readings}, Routledge (1998) 120--143.
-\bibitem{dGMS26} A.~de~Giorgi, M.~Marcoli and F.~Silvetti, \emph{LHC constraints on resonant Kaluza--Klein gravitons}, arXiv:2607.12012 (2026).
-\bibitem{LYR26b} A.~Le~Yaouanc and F.~Richard, \emph{Influence of the KK graviton decay into $hh$ on the triple Higgs measurement at LHC}, arXiv:2606.29922 (2026).
-\bibitem{Koi82} Y.~Koide, \emph{Fermion-boson two-body model of quarks and leptons and Cabibbo mixing}, Lett.\ Nuovo Cim.\ \textbf{34} (1982) 201, doi:10.1007/BF02817096.
-\bibitem{Koi83} Y.~Koide, \emph{A fermion-boson composite model of quarks and leptons}, Phys.\ Lett.\ B \textbf{120} (1983) 161, doi:10.1016/0370-2693(83)90644-5.
-\bibitem{RG05} A.~Rivero and A.~Gsponer, \emph{The strange formula of Dr.\ Koide}, arXiv:hep-ph/0505220 (2005).
-\bibitem{Haw88} S.~W.~Hawking, \emph{Wormholes in spacetime}, Phys.\ Rev.\ D \textbf{37} (1988) 904, doi:10.1103/PhysRevD.37.904.
-\bibitem{Haw93} S.~W.~Hawking, \emph{Black Holes and Baby Universes and Other Essays}, Bantam, New York, 1993.
-\bibitem{BG98} C.~Barcel\'o and L.~J.~Garay, \emph{Quantum fields in anti-de~Sitter wormholes}, Phys.\ Rev.\ D \textbf{57} (1998) 5291, doi:10.1103/PhysRevD.57.5291.
-\bibitem{Haw05} S.~W.~Hawking, \emph{Information loss in black holes}, Phys.\ Rev.\ D \textbf{72} (2005) 084013, doi:10.1103/PhysRevD.72.084013.
-\bibitem{BS12} R.~Bousso and L.~Susskind, \emph{Multiverse interpretation of quantum mechanics}, Phys.\ Rev.\ D \textbf{85} (2012) 045007, doi:10.1103/PhysRevD.85.045007.
-\bibitem{GS88} S.~B.~Giddings and A.~Strominger, \emph{Loss of incoherence and determination of coupling constants in quantum gravity}, Nucl.\ Phys.\ B \textbf{307} (1988) 854, doi:10.1016/0550-3213(88)90109-5.
-\bibitem{GS89} S.~B.~Giddings and A.~Strominger, \emph{Baby universes, third quantization and the cosmological constant}, Nucl.\ Phys.\ B \textbf{321} (1989) 481, doi:10.1016/0550-3213(89)90353-2.
-\bibitem{Col88} S.~Coleman, \emph{Why there is nothing rather than something: a theory of the cosmological constant}, Nucl.\ Phys.\ B \textbf{310} (1988) 643, doi:10.1016/0550-3213(88)90097-1.
-\bibitem{MM20} D.~Marolf and H.~Maxfield, \emph{Transcending the ensemble: baby universes, spacetime wormholes, and the order and disorder of black hole information}, JHEP \textbf{08} (2020) 044, doi:10.1007/JHEP08(2020)044.
-\bibitem{MV20} J.~McNamara and C.~Vafa, \emph{Baby universes, holography, and the swampland}, arXiv:2004.06738 (2020).
-\bibitem{Zur09} W.~H.~Zurek, \emph{Quantum Darwinism}, Nature Phys.\ \textbf{5} (2009) 181, doi:10.1038/nphys1202.
-\bibitem{Kie26} A.~Kiely, D.~A.~Chisholm, A.~Touil, S.~Deffner, G.~T.~Landi and S.~Campbell, \emph{Metrological approach to the emergence of classical objectivity}, Phys.\ Rev.\ A \textbf{113} (2026) 022403, doi:10.1103/hn78-7xx3.
-\bibitem{Rie22} A.~G.~Riess \emph{et al.}, \emph{A comprehensive measurement of the local value of the Hubble constant with 1~km\,s$^{-1}$\,Mpc$^{-1}$ uncertainty from the Hubble Space Telescope and the SH0ES team}, Astrophys.\ J.\ Lett.\ \textbf{934} (2022) L7, doi:10.3847/2041-8213/ac5c5b.
-\bibitem{DESI25} DESI Collaboration (M.~Abdul Karim \emph{et al.}), \emph{DESI DR2 results. II. Measurements of baryon acoustic oscillations and cosmological constraints}, Phys.\ Rev.\ D (2025), doi:10.1103/tr6y-kpc6.
-\bibitem{Neu99} J.~Neukirch, \emph{Algebraic Number Theory}, Springer (1999), Ch.~I, \S7.
-\bibitem{BG13} M.~Baake and U.~Grimm, \emph{Aperiodic Order, Vol.~1: A Mathematical Invitation}, Cambridge University Press (2013).
-\bibitem{Jag21} A.~Jagannathan, \emph{The Fibonacci quasicrystal: case study of hidden dimensions and multifractality}, Rev.\ Mod.\ Phys.\ \textbf{93} (2021) 045001, doi:10.1103/RevModPhys.93.045001.
-\bibitem{RS99b} L.~Randall and R.~Sundrum, \emph{An alternative to compactification}, Phys.\ Rev.\ Lett.\ \textbf{83} (1999) 4690, doi:10.1103/PhysRevLett.83.4690.
-\bibitem{GT00} J.~Garriga and T.~Tanaka, \emph{Gravity in the Randall--Sundrum brane world}, Phys.\ Rev.\ Lett.\ \textbf{84} (2000) 2778, doi:10.1103/PhysRevLett.84.2778.
-\bibitem{BDL00} P.~Bin\'etruy, C.~Deffayet and D.~Langlois, \emph{Non-conventional cosmology from a brane universe}, Nucl.\ Phys.\ B \textbf{565} (2000) 269, doi:10.1016/S0550-3213(99)00696-3.
-\bibitem{Sak00} A.~D.~Sakharov, \emph{Vacuum quantum fluctuations in curved space and the theory of gravitation}, Gen.\ Rel.\ Grav.\ \textbf{32} (2000) 365, doi:10.1023/A:1001947813563.
-\bibitem{Vas03} D.~V.~Vassilevich, \emph{Heat kernel expansion: user's manual}, Phys.\ Rep.\ \textbf{388} (2003) 279, doi:10.1016/j.physrep.2003.09.002.
-\bibitem{WW27} E.~T.~Whittaker and G.~N.~Watson, \emph{A Course of Modern Analysis}, 4th ed., Cambridge University Press (1927), Ch.~XXI.
-\bibitem{Buc14} E.~Buckingham, \emph{On physically similar systems; illustrations of the use of dimensional equations}, Phys.\ Rev.\ \textbf{4} (1914) 345, doi:10.1103/PhysRev.4.345.
-\bibitem{SS79} J.~Scherk and J.~H.~Schwarz, \emph{How to get masses from extra dimensions}, Nucl.\ Phys.\ B \textbf{153} (1979) 61, doi:10.1016/0550-3213(79)90592-3.
-\bibitem{Hos83} Y.~Hosotani, \emph{Dynamical mass generation by compact extra dimensions}, Phys.\ Lett.\ B \textbf{126} (1983) 309, doi:10.1016/0370-2693(83)90170-3.
-\bibitem{HP83} S.~W.~Hawking and D.~N.~Page, \emph{Thermodynamics of black holes in anti-de~Sitter space}, Commun.\ Math.\ Phys.\ \textbf{87} (1983) 577, doi:10.1007/BF01208266.
-\bibitem{Wit98b} E.~Witten, \emph{Anti-de~Sitter space, thermal phase transition, and confinement in gauge theories}, Adv.\ Theor.\ Math.\ Phys.\ \textbf{2} (1998) 505, doi:10.4310/ATMP.1998.v2.n3.a3.
-\bibitem{GW99} W.~D.~Goldberger and M.~B.~Wise, \emph{Modulus stabilization with bulk fields}, Phys.\ Rev.\ Lett.\ \textbf{83} (1999) 4922, doi:10.1103/PhysRevLett.83.4922.
-\bibitem{DPS08} H.~Davoudiasl, G.~Perez and A.~Soni, \emph{The little Randall--Sundrum model at the Large Hadron Collider}, Phys.\ Lett.\ B \textbf{665} (2008) 67, doi:10.1016/j.physletb.2008.05.024.
-\bibitem{Obi18} G.~Obied, H.~Ooguri, L.~Spodyneiko and C.~Vafa, \emph{De~Sitter space and the swampland}, arXiv:1806.08362 (2018).
-\bibitem{OPSV19} H.~Ooguri, E.~Palti, G.~Shiu and C.~Vafa, \emph{Distance and de~Sitter conjectures on the swampland}, Phys.\ Lett.\ B \textbf{788} (2019) 180, doi:10.1016/j.physletb.2018.11.018.
-\bibitem{AAN25} Y.~Akrami, G.~Alestas and S.~Nesseris, \emph{Has DESI detected exponential quintessence?}, arXiv:2504.04226 (2025).
-\bibitem{Ngu26} J.~Nguyen, \emph{Scientific representation}, in E.~N.~Zalta and U.~Nodelman (eds.), \emph{The Stanford Encyclopedia of Philosophy}, first published 2016, revised 2026, plato.stanford.edu/entries/scientific-representation.
-\bibitem{SN24} G.~Sonnino and P.~Nardone, \emph{The golden ratio family of extremal Kerr--Newman black holes and its implications for the cosmological constant}, Axioms \textbf{13} (2024) 862, doi:10.3390/axioms13120862.
-\bibitem{Jul90} B.~L.~Julia, \emph{Statistical theory of numbers}, in \emph{Number Theory and Physics}, Springer Proc.\ Phys.\ \textbf{47} (1990) 276, doi:10.1007/978-3-642-75405-0\_30.
-\bibitem{HY25} S.~A.~Hartnoll and M.~Yang, \emph{The conformal primon gas at the end of time}, JHEP \textbf{07} (2025) 281, doi:10.1007/JHEP07(2025)281.
-\bibitem{DCHY25} M.~De~Clerck, S.~A.~Hartnoll and M.~Yang, \emph{Wheeler--DeWitt wavefunctions for 5d BKL dynamics, automorphic L-functions and complex primon gases}, JHEP \textbf{11} (2025) 160, doi:10.1007/JHEP11(2025)160.
-\bibitem{GH23} J.~Grisales Herrera, \emph{Golden Prime Symmetry}, B.Sc.\ thesis, Universidad del Tolima, Ibagu\'e (Colombia), 2023.
-\bibitem{BV20} A.~Bedroya and C.~Vafa, \emph{Trans-Planckian censorship and the swampland}, JHEP \textbf{09} (2020) 123, doi:10.1007/JHEP09(2020)123.
-\bibitem{MVV23} M.~Montero, C.~Vafa and I.~Valenzuela, \emph{The dark dimension and the swampland}, JHEP \textbf{02} (2023) 022, doi:10.1007/JHEP02(2023)022.
-\bibitem{Wei87} S.~Weinberg, \emph{Anthropic bound on the cosmological constant}, Phys.\ Rev.\ Lett.\ \textbf{59} (1987) 2607, doi:10.1103/PhysRevLett.59.2607.
-\bibitem{Haw84} S.~W.~Hawking, \emph{The cosmological constant is probably zero}, Phys.\ Lett.\ B \textbf{134} (1984) 403, doi:10.1016/0370-2693(84)91370-4.
-\bibitem{Bou06} R.~Bousso, \emph{Holographic probabilities in eternal inflation}, Phys.\ Rev.\ Lett.\ \textbf{97} (2006) 191302, doi:10.1103/PhysRevLett.97.191302.
-\bibitem{CKN99} A.~G.~Cohen, D.~B.~Kaplan and A.~E.~Nelson, \emph{Effective field theory, black holes, and the cosmological constant}, Phys.\ Rev.\ Lett.\ \textbf{82} (1999) 4971, doi:10.1103/PhysRevLett.82.4971.
-\bibitem{Ban01} T.~Banks, \emph{Cosmological breaking of supersymmetry?}, Int.\ J.\ Mod.\ Phys.\ A (2001), doi:10.1142/S0217751X01003998, arXiv:hep-th/0007146.
-\bibitem{HS18} J.~Huerta and U.~Schreiber, \emph{M-theory from the superpoint}, Lett.\ Math.\ Phys.\ \textbf{108} (2018) 2695, arXiv:1702.01774.
-\bibitem{MMS99} J.~M.~Maldacena, J.~Michelson and A.~Strominger, \emph{Anti-de~Sitter fragmentation}, JHEP \textbf{02} (1999) 011.
-\bibitem{Reu98} M.~Reuter, \emph{Nonperturbative evolution equation for quantum gravity}, Phys.\ Rev.\ D \textbf{57} (1998) 971, doi:10.1103/PhysRevD.57.971.
-\bibitem{Pla18} Planck Collaboration (N.~Aghanim \emph{et al.}), \emph{Planck 2018 results. VI. Cosmological parameters}, Astron.\ Astrophys.\ \textbf{641} (2020) A6, doi:10.1051/0004-6361/201833910.
-\bibitem{LYR25} A.~Le~Yaouanc and F.~Richard, \emph{Evidence for BSM spin 0 and spin 2 resonances at LHC: possible interpretations}, arXiv:2506.09490 (2025, v7 2026).
-\bibitem{CW6} J.~A.~Gonz\'alez Garc\'ia, V.~M.~Gonz\'alez Garc\'ia, L.~M.~Garc\'ia Ord\'o\~nez and
-I.~M.~Dressler P\'erez, \emph{The Crystalline Worldsheet: a string theoretical framework based on
-$\mathbb{F}_1$, for the de~Sitter observer problem}, preprint, Zenodo (2026),
-doi:10.5281/zenodo.21343602.
-\bibitem{F1} J.~A.~Gonz\'alez Garc\'ia, V.~M.~Gonz\'alez Garc\'ia, I.~M.~Dressler P\'erez and
-L.~M.~Garc\'ia Ord\'o\~nez, \emph{Odd zeta values from pentagonal $\mathbb{F}_1$-descent: a
-$\Lambda$-structure on $\mathbb{Z}[\golden]$, the character $\chi_5$, and GRH for $L(s,\chi_5)$ in
-equivalent forms}, preprint, Zenodo (2026), doi:10.5281/zenodo.19492791.
-\bibitem{SSS19} P.~Saad, S.~H.~Shenker and D.~Stanford, \emph{JT gravity as a matrix integral},
-arXiv:1903.11115 (2019).
-\bibitem{BP00} R.~Bousso and J.~Polchinski, \emph{Quantization of four-form fluxes and dynamical
-neutralization of the cosmological constant}, JHEP \textbf{06} (2000) 006.
-\bibitem{HP26} J.~A.~Gonz\'alez Garc\'ia, V.~M.~Gonz\'alez Garc\'ia, I.~M.~Dressler P\'erez,
-L.~M.~Garc\'ia Ord\'o\~nez and M.~Moreno, \emph{The Hilbert--P\'olya operator and the primitive structure of the
-complex plane: between $\mathbb{F}_1$, string theory, and ancient geometry}, preprint, Zenodo (2026),
-version 2.5.4, doi:10.5281/zenodo.21712308.
-\bibitem{MT45} L.~Mandelstam and I.~Tamm, \emph{The uncertainty relation between energy and time in
-non-relativistic quantum mechanics}, J.\ Phys.\ USSR \textbf{9} (1945) 249--254.
-\bibitem{ML98} N.~Margolus and L.~B.~Levitin, \emph{The maximum speed of dynamical evolution}, Physica~D
-\textbf{120} (1998) 188--195, doi:10.1016/S0167-2789(98)00054-2.
-\bibitem{Coh55} H.~Cohn, \emph{Approach to Markoff's minimal forms through modular functions}, Ann.\ of
-Math.\ \textbf{61} (1955) 1--12, doi:10.2307/1969618.
-\bibitem{Wei40} A.~Weil, \emph{Une lettre et un extrait de lettre \`a Simone Weil} (1940), in \emph{\OE uvres scientifiques/Collected Papers}, vol.~I, Springer, 1979, pp.~244--255.
-\bibitem{PRES} J.~Gonz\'alez, \emph{\textquestiondown C\'omo representar un agujero de gusano?
-Presentaci\'on de un programa de investigaci\'on sobre modelos de juguete en gravedad cu\'antica desde una perspectiva de tendencia realista cr\'itica},
-in preparation (2026).
-\bibitem{REPR} J.~Gonz\'alez, \emph{Representaci\'on y representado en la f\'isica te\'orica}, in preparation (2026).
-\bibitem{RS99} L.~Randall and R.~Sundrum, \emph{Large mass hierarchy from a small extra
-dimension}, Phys.\ Rev.\ Lett.\ \textbf{83} (1999) 3370.
-\bibitem{DHR00} H.~Davoudiasl, J.~L.~Hewett and T.~G.~Rizzo, \emph{Bulk gauge fields in the
-Randall--Sundrum model}, Phys.\ Lett.\ B \textbf{473} (2000) 43; \emph{Phenomenology of the
-Randall--Sundrum gauge hierarchy model}, Phys.\ Rev.\ Lett.\ \textbf{84} (2000) 2080.
-\bibitem{DLMF} NIST Digital Library of Mathematical Functions, \S10.21(vii), McMahon's expansion.
-\bibitem{Pol98} J.~Polchinski, \emph{String Theory}, Vol.~1, Cambridge University Press (1998),
-\S\S1.3, 7.3.
-\bibitem{ADPS07} K.~Agashe, H.~Davoudiasl, G.~Perez and A.~Soni, \emph{Warped gravitons at the CERN
-LHC and beyond}, Phys.\ Rev.\ D \textbf{76} (2007) 036006.
-\bibitem{Av15} A.~Avila, \emph{Global theory of one-frequency Schr\"odinger operators}, Acta Math.\
-\textbf{215} (2015) 1.
-\bibitem{AJ09} A.~Avila and S.~Jitomirskaya, \emph{The Ten Martini Problem}, Ann.\ of Math.\
-\textbf{170} (2009) 303.
-\bibitem{BBL24} R.~Band, S.~Beckus and R.~Loewy, \emph{The Dry Ten Martini Problem for Sturmian
-Hamiltonians}, arXiv:2402.16703 (2024).
-\bibitem{Wall60} D.~D.~Wall, \emph{Fibonacci series modulo $m$}, Amer.\ Math.\ Monthly \textbf{67}
-(1960) 525.
-\bibitem{Jac95} T.~Jacobson, \emph{Thermodynamics of spacetime: the Einstein equation of state}, Phys.\ Rev.\ Lett.\ \textbf{75} (1995) 1260--1263, doi:10.1103/PhysRevLett.75.1260.
-
-\bibitem{Mal98} J.~M.~Maldacena, \emph{The large $N$ limit of superconformal field theories and supergravity}, Adv.\ Theor.\ Math.\ Phys.\ \textbf{2} (1998) 231--252, doi:10.4310/ATMP.1998.v2.n2.a1.
-
-\bibitem{GKP98} S.~S.~Gubser, I.~R.~Klebanov and A.~M.~Polyakov, \emph{Gauge theory correlators from non-critical string theory}, Phys.\ Lett.\ B \textbf{428} (1998) 105--114, doi:10.1016/S0370-2693(98)00377-3.
-
-\bibitem{Wit98} E.~Witten, \emph{Anti de Sitter space and holography}, Adv.\ Theor.\ Math.\ Phys.\ \textbf{2} (1998) 253--291, doi:10.4310/ATMP.1998.v2.n2.a2.
-
-\bibitem{RT06} S.~Ryu and T.~Takayanagi, \emph{Holographic derivation of entanglement entropy from the anti-de Sitter space/conformal field theory correspondence}, Phys.\ Rev.\ Lett.\ \textbf{96} (2006) 181602, doi:10.1103/PhysRevLett.96.181602.
-
-\bibitem{BH86} J.~D.~Brown and M.~Henneaux, \emph{Central charges in the canonical realization of asymptotic symmetries: an example from three-dimensional gravity}, Commun.\ Math.\ Phys.\ \textbf{104} (1986) 207--226, doi:10.1007/BF01211590.
-
-\bibitem{Mon73} H.~L.~Montgomery, \emph{The pair correlation of zeros of the zeta function}, Proc.\
-Sympos.\ Pure Math.\ \textbf{24} (1973) 181.
-\bibitem{Odl87} A.~M.~Odlyzko, \emph{On the distribution of spacings between zeros of the zeta
-function}, Math.\ Comp.\ \textbf{48} (1987) 273.
-\bibitem{Ser73} J.-P.~Serre, \emph{A Course in Arithmetic}, Graduate Texts in Mathematics
-\textbf{7}, Springer (1973), Ch.~VII.
-\bibitem{SW98} L.~Susskind and E.~Witten, \emph{The holographic bound in anti-de Sitter space},
-arXiv:hep-th/9805114 (1998).
-\bibitem{Hur91} A.~Hurwitz, \emph{\"Uber die angen\"aherte Darstellung der Irrationalzahlen durch
-rationale Br\"uche}, Math.\ Ann.\ \textbf{39} (1891) 279.
-\bibitem{Wey16} H.~Weyl, \emph{\"Uber die Gleichverteilung von Zahlen mod.\ Eins}, Math.\ Ann.\
-\textbf{77} (1916) 313--352, doi:10.1007/BF01475864.
-\bibitem{Car86} J.~L.~Cardy, \emph{Operator content of two-dimensional conformally invariant theories}, Nucl.\ Phys.\ B \textbf{270} (1986) 186--204, doi:10.1016/0550-3213(86)90552-3.
-
-\bibitem{vRa88} T.~van Ravenstein, \emph{The three gap theorem (Steinhaus conjecture)}, J.\ Austral.\
-Math.\ Soc.\ Ser.\ A \textbf{45} (1988) 360--370, doi:10.1017/S1446788700031062.
-\bibitem{FT40} L.~Fejes T\'oth, \emph{\"Uber einen geometrischen Satz}, Math.\ Z.\ \textbf{46} (1940)
-83--85, doi:10.1007/BF01181430.
-\bibitem{SvdW52} K.~Sch\"utte and B.~L.~van der Waerden, \emph{Das Problem der dreizehn Kugeln},
-Math.\ Ann.\ \textbf{125} (1952) 325--334, doi:10.1007/BF01343127.
-\bibitem{Pry94} J.~D.~Pryce, \emph{Numerical Solution of Sturm--Liouville Problems}, Oxford University
-Press, Oxford, 1993.
-\bibitem{DHR03} H.~Davoudiasl, J.~L.~Hewett and T.~G.~Rizzo, \emph{Brane localized kinetic terms in the
-Randall--Sundrum model}, Phys.\ Rev.\ D \textbf{68} (2003) 045002, doi:10.1103/PhysRevD.68.045002.
-\bibitem{SW64} R.~F.~Streater and A.~S.~Wightman, \emph{PCT, Spin and Statistics, and All That},
-Benjamin, New York, 1964.
-\bibitem{Wat44} G.~N.~Watson, \emph{A Treatise on the Theory of Bessel Functions}, 2nd ed., Cambridge
-University Press, 1944.
-\bibitem{Apo90} T.~M.~Apostol, \emph{Modular Functions and Dirichlet Series in Number Theory}, 2nd ed.,
-Springer, New York, 1990.
-\bibitem{PRV19} D.~Poland, S.~Rychkov and A.~Vichi, \emph{The conformal bootstrap: theory, numerical
-techniques, and applications}, Rev.\ Mod.\ Phys.\ \textbf{91} (2019) 015002,
-doi:10.1103/RevModPhys.91.015002.
-\bibitem{HPPS09} I.~Heemskerk, J.~Penedones, J.~Polchinski and J.~Sully, \emph{Holography from conformal
-field theory}, JHEP \textbf{0910} (2009) 079, doi:10.1088/1126-6708/2009/10/079.
-\bibitem{SSSY24} P.~Saad, S.~H.~Shenker, D.~Stanford and S.~Yao, \emph{Wormholes without averaging},
-JHEP \textbf{09} (2024) 133, doi:10.1007/JHEP09(2024)133.
-\bibitem{LPV19} D.~L\"ust, E.~Palti and C.~Vafa, \emph{AdS and the Swampland}, Phys.\ Lett.\ B
-\textbf{797} (2019) 134867, doi:10.1016/j.physletb.2019.134867.
-\bibitem{Hig87} A.~Higuchi, \emph{Forbidden mass range for spin-2 field theory in de Sitter
-spacetime}, Nucl.\ Phys.\ B \textbf{282} (1987) 397, doi:10.1016/0550-3213(87)90691-2.
-\bibitem{Bha75} R.~Bhaskar, \emph{A Realist Theory of Science}, Leeds Books, Leeds, 1975; Routledge,
-London, 2008.
-\bibitem{Mas15} P.~S.~Mason, \emph{Does quantum theory redefine realism? The neo-Copenhagen view},
-J.\ Crit.\ Realism \textbf{14} (2015) 137--163, doi:10.1179/1572513814Y.0000000009.
-\bibitem{EV25} D.~Elder-Vass, \emph{Segmenting ontology}, Synthese \textbf{206} (2025),
-doi:10.1007/s11229-025-05119-y.
-\bibitem{PK15} A.~Plotnitsky and A.~Khrennikov, \emph{Reality without realism: on the ontological and
-epistemological architecture of quantum mechanics}, Found.\ Phys.\ \textbf{45} (2015) 1269--1300,
-doi:10.1007/s10701-015-9942-1.
-\bibitem{Sch35} Th.~Schneider, \emph{Transzendenzuntersuchungen periodischer Funktionen. I.
-Transzendenz von Potenzen}, J.\ reine angew.\ Math.\ \textbf{172} (1935) 65--69,
-doi:10.1515/crll.1935.172.65.
-\bibitem{Gre79} J.~M.~Greene, \emph{A method for determining a stochastic transition}, J.\ Math.\
-Phys.\ \textbf{20} (1979) 1183.
-\bibitem{Ser71} J.-P.~Serre, \emph{Cohomologie des groupes discrets}, Ann.\ of Math.\ Studies
-\textbf{70} (1971) 77.
-\bibitem{OS73} K.~Osterwalder and R.~Schrader, \emph{Axioms for Euclidean Green's functions},
-Commun.\ Math.\ Phys.\ \textbf{31} (1973) 83.
-\bibitem{MW20} A.~Maloney and E.~Witten, \emph{Averaging over Narain moduli space}, JHEP \textbf{10} (2020) 187, doi:10.1007/JHEP10(2020)187.
-\bibitem{ACHT21} N.~Afkhami-Jeddi, H.~Cohn, T.~Hartman and A.~Tajdini, \emph{Free partition functions and an averaged holographic duality}, JHEP \textbf{01} (2021) 130, doi:10.1007/JHEP01(2021)130.
-\bibitem{Swi12} B.~Swingle, \emph{Entanglement renormalization and holography}, Phys.\ Rev.\ D \textbf{86} (2012) 065007, doi:10.1103/PhysRevD.86.065007.
-\bibitem{PYHP15} F.~Pastawski, B.~Yoshida, D.~Harlow and J.~Preskill, \emph{Holographic quantum error-correcting codes: toy models for the bulk/boundary correspondence}, JHEP \textbf{06} (2015) 149, doi:10.1007/JHEP06(2015)149.
-\bibitem{JE21} A.~Jahn and J.~Eisert, \emph{Holographic tensor network models and quantum error correction: a topical review}, Quantum Sci.\ Technol.\ \textbf{6} (2021) 033002, doi:10.1088/2058-9565/ac0293.
-\bibitem{JZE20} A.~Jahn, Z.~Zimbor\'as and J.~Eisert, \emph{Central charges of aperiodic holographic tensor-network models}, Phys.\ Rev.\ A \textbf{102} (2020) 042407, doi:10.1103/PhysRevA.102.042407.
-\bibitem{BDF20} L.~Boyle, M.~Dickens and F.~Flicker, \emph{Conformal quasicrystals and holography}, Phys.\ Rev.\ X \textbf{10} (2020) 011009, doi:10.1103/PhysRevX.10.011009.
-\bibitem{MH40} M.~Morse and G.~A.~Hedlund, \emph{Symbolic dynamics II. Sturmian trajectories}, Amer.\ J.\ Math.\ \textbf{62} (1940) 1--42, doi:10.2307/2371431.
-\bibitem{MM98} G.~A.~Margulis and S.~Mozes, \emph{Aperiodic tilings of the hyperbolic plane by convex polygons}, Israel J.\ Math.\ \textbf{107} (1998) 319--325, doi:10.1007/BF02764015.
-\bibitem{GS05} C.~Goodman-Strauss, \emph{A strongly aperiodic set of tiles in the hyperbolic plane}, Invent.\ Math.\ \textbf{159} (2005) 119--132, doi:10.1007/s00222-004-0384-1.
-\bibitem{Hux03} M.~N.~Huxley, \emph{Exponential sums and lattice points III}, Proc.\ London Math.\ Soc.\ \textbf{87} (2003) 591--609, doi:10.1112/S0024611503014485.
-\bibitem{San76} L.~A.~Santal\'o, \emph{Integral Geometry and Geometric Probability}, Addison-Wesley (1976).
-\bibitem{BKZ06} R.~Blume-Kohout and W.~H.~Zurek, \emph{Quantum Darwinism: entanglement, branches, and the emergent classicality of redundantly stored quantum information}, Phys.\ Rev.\ A \textbf{73} (2006) 062310, doi:10.1103/PhysRevA.73.062310.
-\bibitem{RZ10} C.~J.~Riedel and W.~H.~Zurek, \emph{Quantum Darwinism in an everyday environment: huge redundancy in scattered photons}, Phys.\ Rev.\ Lett.\ \textbf{105} (2010) 020404, arXiv:1001.3419.
-\end{thebibliography}
+\printbibliography
 
 \end{document}
