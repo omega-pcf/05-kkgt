@@ -1,12 +1,12 @@
-"""reproduce_v93.py: todos los números y las cuatro figuras de
-«The Kaluza–Klein spectrum of the golden throat», v65.
+"""reproduce_v108.py: todos los números y las cinco figuras de
+«The Kaluza–Klein spectrum of the golden throat», v108.
 
-Uso:  python3 reproduce_v93.py          todas las secciones
-      python3 reproduce_v93.py 2 14     solo esas secciones
+Uso:  python3 reproduce_v108.py          todas las secciones
+      python3 reproduce_v108.py 2 14     solo esas secciones
 
 Cada sección es uno de los scripts anteriores, sin cambios, en su propio espacio de
-nombres. Se ejecutan en este orden: la figura 3 de la sección 13 sustituye a la
-provisional que escribe la sección 12. Python 3.13, NumPy, SciPy, Matplotlib; la
+nombres. Figuras: 1 (sección 12), 2 (sección 13), 3 (sección 10), 4 (sección 39),
+5 (sección 41). Python 3.13, NumPy, SciPy, Matplotlib; la
 sección 2 necesita además mpmath.
 """
 import sys
@@ -602,7 +602,7 @@ def seccion_9():
 SECCIONES.append((9, 'Cocientes de huecos (Discusión 6.1)', seccion_9))
 
 # ======================================================================
-# 10. Figura 4: granularidad, con sus números
+# 10. Figura 3: granularidad, con sus números
 # ======================================================================
 def seccion_10():
     """Granularidad: niveles enteros, diádicos y áureos; fase de la línea de mundo."""
@@ -649,7 +649,7 @@ def seccion_10():
     fig.savefig("fig_granularity.pdf", bbox_inches="tight")
     print("figura: ok")
 
-SECCIONES.append((10, 'Figura 4: granularidad, con sus números', seccion_10))
+SECCIONES.append((10, 'Figura 3: granularidad, con sus números', seccion_10))
 
 # ======================================================================
 # 11. Configuraciones de contacto en 1D, 2D y 3D (6.1)
@@ -678,13 +678,25 @@ def seccion_11():
     m=min(((a-b)**2).sum() for a,b in itertools.combinations(W,2))**.5
     print("   contacto: 12 esferas unitarias tocando la central, distancia mínima entre ellas:", round(m,4), ">= 2:", m>=2)
     print("   holgura: 4 >= phi+2 <=> phi <= 2")
+    # J3 (v108): el 12 en 3D también lo alcanzan FCC y HCP, sin phi
+    fcc=[v for v in itertools.product([-1,0,1],repeat=3) if sorted(map(abs,v))==[0,1,1]]
+    Wf=[2*np.array(v)/np.sqrt(2) for v in fcc]
+    mf=min(np.linalg.norm(a-b) for a,b in itertools.combinations(Wf,2))
+    hc=[(2*np.cos(k*np.pi/3),2*np.sin(k*np.pi/3),0) for k in range(6)]
+    for s in (1,-1):
+        for k in range(3):
+            t=k*2*np.pi/3+np.pi/6; hc.append((2*np.cos(t)/np.sqrt(3),2*np.sin(t)/np.sqrt(3),2*s*np.sqrt(2/3)))
+    hc=np.array(hc); mh=min(np.linalg.norm(a-b) for a,b in itertools.combinations(hc,2))
+    assert len(fcc)==12 and abs(mf-2)<1e-12 and len(hc)==12 and np.allclose(np.linalg.norm(hc,axis=1),2) and abs(mh-2)<1e-12
+    print("   FCC y HCP: 12 esferas unitarias a distancia 2 de la central, sin phi; distancia mínima entre ellas:", round(mf,4), round(mh,4))
+    print("   el doce del icosaedro y el del fondo se prueban por separado (lectura [R])")
     # la cadena del 12
     print("cadena: |A5|/5 =", 60//5, "; pi(10)/5 = 60/5 =", 12, "; lcm(4,6) =", np.lcm(4,6), "; -1/zeta(-1) = 12")
 
 SECCIONES.append((11, 'Configuraciones de contacto en 1D, 2D y 3D (6.1)', seccion_11))
 
 # ======================================================================
-# 12. Figuras 1 y 2: toro, garganta y capas de la red, con sus comprobaciones
+# 12. Figura 1: una estructura vista de una vez; los puntos de Z[i] por nivel; comprobaciones
 # ======================================================================
 def seccion_12():
     """Geometría exacta de la garganta, el toro y la fibra (artículo 9, v9).
@@ -749,74 +761,165 @@ def seccion_12():
         ax.set_box_aspect((1, 1, (zlim[1]-zlim[0]) / (2*lim))); ax.set_axis_off()
         ax.view_init(elev=elev, azim=-58)
 
-    # 2. el toro tau=i y la garganta
-    fig = plt.figure(figsize=(8.4, 4.6))
-    ax = fig.add_subplot(1, 2, 1, projection="3d")
-    def cliff(a, b):
-        X = np.stack([np.cos(a), np.sin(a), np.cos(b), np.sin(b)]) / np.sqrt(2)
-        return X[:3] / (1 - X[3])
-    w = np.linspace(0, 2*np.pi, 400)
-    for c in np.linspace(0, 2*np.pi, 24, endpoint=False):
-        ax.plot(*cliff(w, 0*w+c), **K); ax.plot(*cliff(0*w+c, w), **K)
-    ax.plot(*cliff(w, 0*w+np.pi), color="k", lw=1.6)
-    ax.plot(*cliff(0*w, w), color="k", lw=1.6, ls="--")
-    ax.set_title(r"$T^2=\mathbb{C}/M\mathbb{Z}[i]$, $\tau=i$: cycles $M$ (solid), $Mi$ (dashed)", fontsize=8)
-    clean(ax, 2.5, (-1.3, 1.3), elev=28)
-    ax = fig.add_subplot(1, 2, 2, projection="3d")
-    throat_lines(ax, lab=False)
-    ax.set_title(r"$z(\sigma)=\varphi^{\sigma}$, $\tau(\sigma)=M\varphi^{-\sigma}$, $z\tau=M$", fontsize=8)
-    clean(ax, 1.0, (zb-0.4, 0.1))
-    fig.savefig("fig_torus_throat.pdf", bbox_inches="tight"); plt.close(fig)
+    # 2. los puntos de Z[i] dentro del anillo de cada nivel (texto de §10.1)
+    cnt=[sum(1 for a_ in range(-60,61) for b_ in range(-60,61) if a_*a_+b_*b_<=phi**s_) for s_ in range(7)]
+    assert cnt==[5,5,9,13,21,37,57]
+    assert [int(np.floor(np.pi*phi**s_)) for s_ in range(7)]==[3,5,8,13,21,34,56]
+    rat=[round(c/(np.pi*phi**s_),2) for s_,c in enumerate(cnt)]
+    assert rat==[1.59,0.98,1.09,0.98,0.98,1.06,1.01]
+    c22=sum(2*int(np.floor(np.sqrt(phi**22-a_*a_)))+1 for a_ in range(-int(phi**11)-1,int(phi**11)+2) if a_*a_<=phi**22)
+    assert round(c22/(np.pi*phi**22),4)==0.9998
+    c12=sum(2*int(np.floor(np.sqrt(phi**12-a_*a_)))+1 for a_ in range(-30,31) if a_*a_<=phi**12)
+    assert c12==1005 and int(np.floor(np.pi*phi**12))==1011
+    print("puntos de Z[i] en el disco de area S, sigma = 0..6:",cnt,"; razon a S:",rat,"; sigma = 22:",round(c22/(np.pi*phi**22),4),"; sigma = 12:",c12,"frente a",int(np.floor(np.pi*phi**12)))
 
-    # 3. las retículas por nivel, del ultravioleta al infrarrojo, frente a la garganta
-    fig = plt.figure(figsize=(8.4, 5.2))
-    ax = fig.add_subplot(1, 2, 1)
-    # nivel s = 0..6 de la torre: puntos de Z[i] dentro del círculo de radio phi^(s/2) (vista
-    # desde arriba, un nivel sobre otro); su número sigue a N(s) = floor(pi phi^s) (Gauss)
-    y0 = 0.0
-    for s_ in range(0, 7):
-        R = phi ** (s_ / 2)
-        pts = [(a, b) for a in range(-5, 6) for b in range(-5, 6) if a*a + b*b <= R*R]
-        ax.plot([a for a, b in pts], [b*0.35 + y0 for a, b in pts], "k.", ms=2.5)
-        ax.plot(R*np.cos(tt), R*np.sin(tt)*0.35 + y0, "k", lw=0.6)
-        ax.text(5.0, y0, rf"$\sigma={s_}$: {len(pts)} points;  $\lfloor\pi\varphi^{{\sigma}}\rfloor={int(np.floor(np.pi*phi**s_))}$", fontsize=7, va="center")
-        y0 += 2.2 + 0.35*R
-    ax.set_title(r"lattice points of $\mathbb{Z}[i]$ inside the ring of each level", fontsize=8)
-    ax.set_aspect("equal"); ax.axis("off"); ax.set_xlim(-5, 12)
-    ax = fig.add_subplot(1, 2, 2)
-    s = np.linspace(SIR, STOP, 400); R = r_of(s); Z = -h_of(R)
-    ax.plot(R, Z, "k", lw=1); ax.plot(-R, Z, "k", lw=1)
-    for k in lev:
-        r = r_of(k); ax.plot([-r, r], [-h_of(r)]*2, "k", lw=0.5)
-        ax.text(1.05, -h_of(r), rf"$\sigma={k}$", fontsize=7, va="center")
-    ax.set_aspect("equal"); ax.axis("off")
-    ax.set_title(r"throat profile (tractrix), radius $\propto\varphi^{\sigma}$", fontsize=8)
-    fig.savefig("fig_lattice_layers.pdf", bbox_inches="tight"); plt.close(fig)
+    # 3. la figura 1: una estructura vista de una vez (§10.1); cada panel dibuja un enunciado del texto
+    def _figura_1():
+        import numpy as np, matplotlib, itertools
+        import matplotlib.pyplot as plt
+        from matplotlib.patches import FancyArrowPatch
+        from matplotlib.lines import Line2D
+        plt.rcParams.update({"font.family":"serif","mathtext.fontset":"cm","font.size":10})
+        phi=(1+5**.5)/2
+        INK="#333333"; GOLD="#c99a2e"; BLUE="#2f6db3"; TEAL="#5aa6a6"; PURP="#6a3d9a"; KER="#b2182b"; DOT="#555555"; RRED="#c0392b"; GRN="#2e8b57"; VIO="#7b4fa0"
+        TRI=["#b2182b","#1b7837","#2166ac"]
+        t=np.linspace(0,2*np.pi,300); w=np.exp(2j*np.pi/3); V=[0.5*w**k for k in range(3)]
+        fig=plt.figure(figsize=(17,19))
+        def head(x,y,letter,title,sub,col=None):
+            fig.text(x,y,f"({letter})  {title}",ha="center",va="top",fontsize=11.5,color=col or INK)
+            fig.text(x,y-0.015,sub,ha="center",va="top",fontsize=9.5,color="0.4")
+        # ---------------- (a) toro (cliff, solo líneas)
+        K=dict(color="k",lw=0.35)
+        axT=fig.add_axes([0.01,0.80,0.32,0.15],projection="3d")
+        def cliff(a,b):
+            Xc=np.stack([np.cos(a),np.sin(a),np.cos(b),np.sin(b)])/np.sqrt(2); return Xc[:3]/(1-Xc[3])
+        wv=np.linspace(0,2*np.pi,400)
+        for c_ in np.linspace(0,2*np.pi,24,endpoint=False):
+            axT.plot(*cliff(wv,0*wv+c_),**K); axT.plot(*cliff(0*wv+c_,wv),**K)
+        axT.plot(*cliff(wv,0*wv+np.pi),color="k",lw=1.6)
+        axT.plot(*cliff(0*wv,wv),color="k",lw=1.6,ls="--")
+        axT.set_xlim(-2.1,2.1); axT.set_ylim(-2.1,2.1); axT.set_zlim(-1.1,1.1); axT.set_box_aspect((1,1,2.2/4.2)); axT.set_axis_off(); axT.view_init(elev=28,azim=-58)
+        head(0.17,0.985,"a","The angular direction is the torus","§10.1: $T^2=\\mathbb{C}/M_{\\rm PCF}\\mathbb{Z}[i]$, $\\tau=i$; cycles $M$ (solid), $Mi$ (dashed)")
+        # ---------------- (b) anillo normalizado
+        axR=fig.add_axes([0.38,0.805,0.24,0.135]); axR.set_aspect("equal"); axR.set_axis_off()
+        axR.plot(0.5*np.cos(t),0.5*np.sin(t),"k",lw=1.6)
+        axR.plot([p.real for p in V+[V[0]]],[p.imag for p in V+[V[0]]],"k",lw=0.5,ls="--")
+        for k in range(3):
+            v=V[k]; axR.plot([0,v.real],[0,v.imag],"k",lw=0.6); axR.plot(v.real,v.imag,"o",mfc="k",mec="k",ms=6)
+            axR.text(v.real+0.07 if k==0 else 1.3*v.real,v.imag if k==0 else 1.3*v.imag,f"$v_{k}=\\frac{{1}}{{2}}\\omega^{k}$" if k==0 else f"$v_{k}$",ha="left" if k==0 else "center",va="center",fontsize=11)
+        axR.plot(0,0,"o",mfc="white",mec="k",ms=4)
+        axR.set_xlim(-0.8,1.15); axR.set_ylim(-0.75,0.75)
+        head(0.50,0.985,"b","One microstate at every level","I12: $|\\Omega|_\\sigma=\\frac{1}{2}$; the eigenvalue triad $v_k=\\frac{1}{2}\\omega^{k}$, $V^\\dagger V=1$")
+        # ---------------- (c) tercera dirección: cilindro y plano en líneas
+        axC=fig.add_axes([0.67,0.80,0.32,0.15],projection="3d")
+        for a_ in np.linspace(0,2*np.pi,24,endpoint=False): axC.plot([0.5*np.cos(a_)]*2,[0.5*np.sin(a_)]*2,[-1.2,1.2],**K)
+        axC.plot(0.5*np.cos(t),0.5*np.sin(t),1.2+0*t,**K)
+        for g_ in np.linspace(-0.75,0.75,7):
+            axC.plot([g_,g_],[-0.75,0.75],[-phi*0.75,phi*0.75],color="k",lw=0.3,alpha=0.7)
+            axC.plot([-0.75,0.75],[g_,g_],[phi*g_,phi*g_],color="k",lw=0.3,alpha=0.7)
+        axC.plot(0.5*np.cos(t),0.5*np.sin(t),-1.2+0*t,"k",lw=1.0)
+        axC.plot(0.5*np.cos(t),0.5*np.sin(t),phi*0.5*np.sin(t),"k",lw=1.6)
+        for k in range(3):
+            x,y=V[k].real,V[k].imag
+            axC.scatter([x],[y],[-1.2],c="k",s=14,depthshade=False); axC.scatter([x],[y],[phi*y],c="k",s=26,depthshade=False)
+            axC.plot([x,x],[y,y],[-1.2,phi*y],"k",lw=0.6,ls=":"); axC.text(1.9*x,1.9*y,phi*y+0.05,f"$v_{k}$",fontsize=11,ha="center",bbox=dict(fc="white",ec="none",pad=0.5))
+        axC.view_init(elev=18,azim=-55); axC.set_box_aspect((1,1,1.4)); axC.set_axis_off()
+        head(0.83,0.985,"c","The golden coupling","I15: $z=\\varphi y$ carries the triangle onto $\\mathbb{Z}[i]$, $120^\\circ\\to90^\\circ$")
+        # ---------------- (d) la garganta: como la Fig. 4, solo líneas, frente sólido y fondo punteado
+        axG=fig.add_axes([0.02,0.555,0.96,0.205]); axG.set_aspect("equal"); axG.set_axis_off()
+        s0,s1=2,18
+        def hgt(r): return np.arccosh(1/r)-np.sqrt(1-r*r)
+        L=hgt(phi**(s0-18)); r=np.geomspace(phi**(s0-18),1,600); X=L-hgt(r)
+        for a_ in np.linspace(0,2*np.pi,24,endpoint=False):
+            front=np.sin(a_)<0
+            axG.plot(X,r*np.cos(a_),color="k",lw=0.45 if front else 0.3,ls="-" if front else ":")
+        axG.plot(X,r,"k",lw=1.0); axG.plot(X,-r,"k",lw=1.0)
+        ee=0.22; tb=np.linspace(0,np.pi,100)
+        ring={}
+        for s_ in range(s0,s1+1):
+            rr=phi**(s_-18); xs=L-hgt(rr); ring[s_]=(xs,rr)
+            col={6:GRN,9:RRED,15:GOLD,12:BLUE,18:VIO}.get(s_,"k"); hl=s_ in (6,9,12,15,18); lw=2.4 if hl else 1.0
+            axG.plot(xs+ee*rr*np.sin(tb),rr*np.cos(tb),c=col,lw=lw)
+            axG.plot(xs-ee*rr*np.sin(tb),rr*np.cos(tb),c=col,lw=0.8,ls="--")
+            axG.text(xs,-1.12,f"{s_}",ha="center",fontsize=9,color=col if hl else "0.3",weight="bold" if hl else "normal")
+        axG.text(L/2,-1.32,"level $\\sigma$",ha="center",fontsize=10,color="0.4")
+        axG.set_xlim(-0.1,L+0.4); axG.set_ylim(-1.40,1.08)
+        head(0.50,0.545,"d","The radial direction is the throat","§10.1: Beltrami's pseudosphere, $e^{A}=\\varphi^{\\sigma}$, rings in the ratio $\\varphi$ (ring_ratio); $\\sigma=6,9$, the bottom $\\sigma_{\\rm IR}=12$, $\\sigma=15,18$")
+        # ---------------- conectores: de cada anillo a un riel, del riel a cada panel
+        fig.canvas.draw()
+        F=lambda xy: fig.transFigure.inverted().transform(axG.transData.transform(xy))
+        yrail=0.768; ytop=0.797
+        pp={k_:F((ring[k_][0],ring[k_][1]+0.03)) for k_ in (6,9,12,15,18)}
+        for p,col in ((pp[6],GRN),(pp[9],RRED),(pp[12],BLUE),(pp[15],GOLD),(pp[18],VIO)):
+            fig.add_artist(Line2D([p[0],p[0]],[p[1],yrail],transform=fig.transFigure,color=col,lw=1.8,solid_capstyle="round"))
+            fig.add_artist(Line2D([p[0]],[yrail],transform=fig.transFigure,marker="o",ms=6,color=col))
+        fig.add_artist(Line2D([0.17,0.83],[yrail,yrail],transform=fig.transFigure,color=INK,lw=1.4))
+        for x in (0.17,0.50,0.83):
+            fig.add_artist(FancyArrowPatch((x,yrail),(x,ytop),transform=fig.transFigure,arrowstyle="-|>",mutation_scale=14,color=INK,lw=1.4,shrinkA=0,shrinkB=0))
+        # ---------------- (e), (f) Z^3 por su diagonal
+        def cubo(ax,Lc,c0v,lim,CC):
+            n3=np.array([1,1,1])/3**.5; pts=np.array(list(itertools.product(range(Lc),repeat=3)),float)
+            c0=np.array([c0v]*3); e1=np.array([1,-1,0])/2**.5; e2=np.cross(n3,e1)
+            uu,vv=np.meshgrid(np.linspace(-lim,lim,2),np.linspace(-lim,lim,2))
+            ax.plot_surface(c0[0]+uu*e1[0]+vv*e2[0],c0[1]+uu*e1[1]+vv*e2[1],c0[2]+uu*e1[2]+vv*e2[2],color=TEAL,alpha=0.15,shade=False)
+            proj=pts-((pts-c0)@n3)[:,None]*n3; g={}
+            for p,q in zip(pts,proj): g.setdefault(tuple(np.round(q,9)),[]).append(p)
+            for p,q in zip(pts,proj):
+                k=len(g[tuple(np.round(q,9))]); col=CC
+                ax.scatter(*p,s=12,c=col,depthshade=False,alpha=0.9); ax.plot(*np.c_[p,q],c=col,lw=0.3,alpha=0.30)
+            for q,ps in g.items(): ax.scatter(*q,s=6+9*len(ps),c=CC,edgecolor=INK if len(ps)>1 else 'none',linewidth=0.6,depthshade=False)
+            tt=np.linspace(c0v,Lc-0.4,2); ax.plot(tt,tt,tt,c=INK,lw=1.2)
+            ax.view_init(elev=14,azim=-20); ax.set_box_aspect((1,1,1)); ax.set_axis_off()
+            return len(pts),len(g)
+        CUB=[(2,-0.9,1.8,GRN,"e"),(3,-1.4,2.8,RRED,"f"),(5,-2.4,5.6,BLUE,"g"),(7,-3.4,8.4,GOLD,"h"),(9,-4.4,11.2,VIO,"i")]
+        res=[]
+        for k_,(Lc,c0v,lim,CC,let) in enumerate(CUB):
+            axk=fig.add_axes([0.2*k_,0.300,0.2,0.165],projection="3d"); n_,d_=cubo(axk,Lc,c0v,lim,CC); res.append((n_,d_))
+            assert n_==Lc**3 and d_==3*Lc*Lc-3*Lc+1   # sombras de {0..L-1}^3: 3L^2-3L+1
+            win="\\{0,1\\}" if Lc==2 else ("\\{0,1,2\\}" if Lc==3 else f"\\{{0,\\dots,{Lc-1}\\}}")
+            fig.text(0.1+0.2*k_,0.468,f"({let})  ${win}^3$:\n{n_} points, {d_} projected points",ha="center",va="top",fontsize=10.5,color=CC)
+        assert res==[(8,7),(27,19),(125,61),(343,127),(729,217)]
+        fig.add_artist(Line2D([0.04,0.96],[0.502,0.502],transform=fig.transFigure,color="0.85",lw=0.8))
+        fig.text(0.50,0.492,"The cube $\\mathbb{Z}^3$ seen along its diagonal",ha="center",va="top",fontsize=11.5,color=INK)
+        fig.text(0.50,0.296,"§10.1 (cube_diagonal_kernel): each axis projects to $e_k-\\frac{1}{3}(1,1,1)$, $|\\cdot|^2=\\frac{2}{3}$, at $120^\\circ$, onto a hexagonal lattice, $\\mathbb{Z}[\\omega]$ up to $\\sqrt{2/3}$;\nthe projection has a kernel, the diagonal: dot size = points projected to one point; outlined = more than one",ha="center",fontsize=9.5,color="0.4")
 
-    # 4. la fibra de Möbius en cada nivel (unidades del nivel: radio 1/2, media vuelta por vuelta)
-    fig = plt.figure(figsize=(4.8, 6.2)); ax = fig.add_subplot(projection="3d")
-    throat_lines(ax, meridians=12, rings=False)
-    U = np.linspace(0, 2*np.pi, 300)
-    for k in lev:
-        r = r_of(k); z0 = -h_of(r); half = 0.5*r
-        for wv in (-1, 1):
-            ax.plot((r+wv*half*np.cos(U/2))*np.cos(U), (r+wv*half*np.cos(U/2))*np.sin(U),
-                    z0+wv*half*np.sin(U/2), color="k", lw=0.9)
-        for u0 in np.linspace(0, 2*np.pi, 28, endpoint=False):
-            wv = np.linspace(-1, 1, 2)
-            ax.plot((r+wv*half*np.cos(u0/2))*np.cos(u0), (r+wv*half*np.cos(u0/2))*np.sin(u0),
-                    z0+wv*half*np.sin(u0/2), **K)
-    clean(ax, 1.5, (zb-0.6, 0.8))
-    fig.savefig("fig_mobius_throat.pdf", bbox_inches="tight"); plt.close(fig)
+        # ---------------- (g) la razón vectorial frente a la profundidad (§9), condición exacta de dos branas
+        from scipy.special import jn_zeros, j0, y0
+        from scipy.optimize import brentq
+        def ratio(D):
+            e=1/D; f=lambda x: j0(e*x)*y0(x)-y0(e*x)*j0(x)
+            xs=np.linspace(0.3,12,3000); v=f(xs); z=[brentq(f,xs[i],xs[i+1]) for i in range(len(xs)-1) if v[i]*v[i+1]<0]
+            return z[1]/z[0]
+        tab={6:2.093,12:2.171,24:2.228,30:2.241,81.74:2.275}
+        for d_,r_ in tab.items(): assert round(ratio(phi**d_),3)==r_
+        fig.add_artist(Line2D([0.04,0.96],[0.278,0.278],transform=fig.transFigure,color="0.85",lw=0.8))
+        head(0.50,0.264,"j","The vector ratio as a function of the depth (§9)","§9: $m_2/m_1$ from the exact two-brane conditions; only the depth, the position of the top, stays free")
+        axE=fig.add_axes([0.05,0.045,0.92,0.17])
+        dd=np.linspace(2,100,200); axE.plot(dd,[ratio(phi**x) for x in dd],c=INK,lw=1.8); axE.plot(list(tab),list(tab.values()),"o",c=INK,ms=5)
+        for x_,y_ in tab.items(): axE.text(x_+1.2,y_-0.03,f"$\\varphi^{{{x_}}}$",fontsize=9,color="0.35")
+        J0=jn_zeros(0,2); axE.axhline(J0[1]/J0[0],c="0.4",ls="--",lw=1); axE.text(99,J0[1]/J0[0]+0.01,"deep-throat limit $j_{0,2}/j_{0,1}=2.295$",fontsize=9,ha="right",color="0.35")
+        axE.axhspan(2.15,2.39,color=TEAL,alpha=0.12); axE.text(1,2.36,"gluon candidates [LYR26]: 2.15–2.39",fontsize=9,color="#2f7f7f")
+        axE.axvline(81.74,c="0.6",lw=0.8,ls=":"); axE.text(80.5,2.02,"depth $\\varphi^{81.74}$: the Planck scale from the level $12$",fontsize=8.5,color="0.45",ha="right")
+        axE.set_xlabel("depth of the throat, $\\varphi^{d}$: $d$ levels",color="0.3"); axE.set_ylabel("vector $m_2/m_1$",color="0.3")
+        axE.set_xlim(0,101); axE.set_ylim(2.0,2.40)
+        for s_ in ("top","right"): axE.spines[s_].set_visible(False)
+        for s_ in ("left","bottom"): axE.spines[s_].set_color("0.5")
+        axE.tick_params(colors="0.4",labelsize=9)
+        fig.savefig("fig_one_structure.pdf",bbox_inches="tight"); plt.close(fig)
+
+    _figura_1()
+    plt.rcParams.update(matplotlib.rcParamsDefault)
+
+
     print("figuras: ok")
 
-SECCIONES.append((12, 'Figuras 1 y 2: toro, garganta y capas de la red, con sus comprobaciones', seccion_12))
+SECCIONES.append((12, 'Figura 1: una estructura vista de una vez; los puntos de Z[i] por nivel; comprobaciones', seccion_12))
 
 # ======================================================================
-# 13. Figura 3: las dos familias recíprocas
+# 13. Figura 2: las dos familias recíprocas
 # ======================================================================
 def seccion_13():
-    """Figura 3 exacta: en cada nivel sigma = 12..18,
+    """Figura 2 exacta: en cada nivel sigma = 12..18,
      izquierda: el anillo de la garganta, radio proporcional a z(sigma) = phi^sigma (normalizado phi^(sigma-18));
      derecha: la fibra de Möbius sobre su propio lazo, el periodo de media vuelta tau(sigma) = M phi^-sigma
      (radio normalizado phi^-(sigma-12)), con media vuelta por vuelta (epsilon(sigma) tau(sigma) = pi,
@@ -852,7 +955,7 @@ def seccion_13():
     clean(ax,1.05)
     fig.savefig("fig_mobius_throat.pdf",bbox_inches="tight"); print("ok")
 
-SECCIONES.append((13, 'Figura 3: las dos familias recíprocas', seccion_13))
+SECCIONES.append((13, 'Figura 2: las dos familias recíprocas', seccion_13))
 
 # ======================================================================
 # 14. Tres huecos de las marcas en el anillo (6.1)
@@ -1159,6 +1262,18 @@ def seccion_29():
         p, dp = (1 - Om) * h * h, math.sqrt(a * a + b * b + 2 * a * b * r)
         print(f"Planck 2018, r(Omega_m, H0) = {r:+.0f}: Omega_L h^2 = {p:.4f} +- {dp:.4f}: {(OLh2-p)/dp:+.1f} sigma")
     print(f"con omega_m = {wm} +- {dwm} y planitud: H0 = {100*math.sqrt(OLh2+wm):.2f} +- {100*0.5*dwm/math.sqrt(OLh2+wm):.2f}")
+    # Planck solo en la variable del criterio (el nivel) y frente a DESI DR2 + CMB
+    HD, dHD, OmD, dOmD, rD = 0.6817, 0.0028, 0.3027, 0.0036, -0.975
+    aD, bD = -HD*HD*dOmD, 2*(1-OmD)*HD*dHD; pD = (1-OmD)*HD*HD; dpD = math.sqrt(aD*aD+bD*bD+2*aD*bD*rD)
+    Om, dOm = 0.3153, 0.0073; a, b = -h*h*dOm, 2*(1-Om)*h*dh; p = (1-Om)*h*h
+    lvl = lambda x: 584 + math.log(OLh2 / x) / L
+    ten = []
+    for r in (0.0, -1.0):
+        dp = math.sqrt(a*a + b*b + 2*a*b*r); sl = dp / (p * L)
+        ten.append((pD - p) / math.hypot(dpD, dp))
+        print(f"Planck solo, r = {r:+.0f}: nivel {lvl(p):.3f}, a {(584-lvl(p))/sl:.2f} sigma de 584 en el nivel; DESI+CMB frente a Planck: {ten[-1]:.2f} sigma en Omega_L h^2")
+    assert 1.3 < min(ten) < 1.5 and 1.7 < max(ten) < 1.9, ten
+    print(f"DESI DR2 + CMB: Omega_L h^2 = {pD:.4f} +- {dpD:.4f}; Planck y la combinacion concuerdan (1.4-1.8 sigma)")
     print(f"sensibilidad: d sigma / d ln H0 = {-2/L:.3f}; 1 % en H0 = {0.02/L:.3f} niveles")
     print(f"584 mod 24 = {584 % 24}; 584 = 2^3 * 73: no es un nivel distinguido de la red")
 
@@ -1349,6 +1464,23 @@ def seccion_37():
     for s_ in range(3,10):
         L0=round(phi**(2*s_)/2); X.append(math.pi*math.sqrt(2*L0)); Y.append(math.log(pp[L0])+1.5*math.log(L0))
     print(f"ln W + (3/2) ln L0 = a S + b: a = {np.polyfit(X,Y,1)[0]:.4f} (S en nats: dim = e^S; en bits seria a = 1/ln2 = 1.4427)")
+    # W2: la dimension entera del nivel, estados con L0 <= N/2 (sin redondeo)
+    cum=[0]
+    for v in pp: cum.append(cum[-1]+v)
+    Xs=[];Ys=[];Zs=[]; D={}
+    for s_ in range(1,10):
+        Lm=math.floor(phi**(2*s_)/2); D[s_]=cum[Lm+1]; Xs.append(math.pi*phi**s_); Ys.append(math.log(D[s_])); Zs.append(math.log(Lm))
+    assert D[3]==1654 and D[4]==3436182 and D[5]==820599769985, D
+    A_=np.vstack([Xs,Zs,np.ones(len(Xs))]).T[2:]; a_=np.linalg.lstsq(A_,np.array(Ys[2:]),rcond=None)[0][0]
+    assert abs(a_-0.9972)<5e-4, a_
+    print(f"W2: dimension entera (estados con L0 <= N/2): sigma=3,4,5 -> {D[3]}, {D[4]}, {D[5]}; ajuste lnD = a S + b ln L + c (sigma=3..9): a = {a_:.4f}")
+    from decimal import Decimal, getcontext; getcontext().prec=60
+    PHd=(1+Decimal(5).sqrt())/2; PId=Decimal("3.14159265358979323846264338327950288419716939937510582097494459")
+    vals=[(PId*PHd**s_/n_).exp() for s_ in range(0,13) for n_ in range(1,41)]
+    vals=[x for x in vals if x<Decimal(10)**40]     # con 60 digitos, la parte fraccionaria es fiable bajo 10^40
+    near=min(abs(x-x.to_integral_value()) for x in vals)
+    assert near>Decimal("1e-9"), near
+    print(f"e^(S/n) < 10^40 para sigma=0..12, n=1..40 ({len(vals)} casos): ninguno entero (distancia minima {float(near):.2e}); Gelfond-Schneider: trascendente siempre")
     # la medida y la fase: con peso e^{2A}, la medida e^{4A} da los ceros de J1; e^{6A}, un espaciado sin desfase
     from scipy.linalg import eigh
     def spec(pe, Q=32, lo=-6, hi=6, n=5):
@@ -1375,18 +1507,87 @@ def seccion_38():
 SECCIONES.append((38, 'El 1/2 de (B1): cuanto de area, unidad de Fisher y bit de Shannon', seccion_38))
 
 # ======================================================================
-# 39. El throat con un disco holografico por nivel (Figura 5)
+# 39. El throat con el teselado de Fibonacci de sus anillos (Figura 4)
 # ======================================================================
 def seccion_39():
-    """Cada enunciado que se dibuja se verifica antes: borde/4G = S con radio arcsinh z;
-    capas {7,3} 1, 7, 21, 56, 147, 385, 1008; teselas dentro de cada disco; anillos en razon phi;
-    z*tau constante. El teselado {7,3} es [R]; la perspectiva, la escala de los lazos y el reparto
-    de los puntos son convenciones del dibujo."""
+    """La seccion del throat es la cuspide; cada anillo se cubre con tejas largas (A) y cortas (B) por la
+    sustitucion A->AB, B->A, con semilla AAB en sigma=0. Antes de dibujar se comprueba: las fronteras de
+    un anillo continuan en el siguiente, y S = pi(A/phi^2 + B/phi^3) en cada nivel. La inclinacion de la
+    vista, el reparto de los puntos y la escala de los lazos son convenciones del dibujo."""
     import numpy as np, math
-    import matplotlib; matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
-    phi=(1+5**.5)/2; L=math.log(phi); G=0.5; LEV=list(range(0,7))
-    # ---------- geometria hiperbolica
+    import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
+    phi=(1+5**.5)/2; L=math.log(phi); LEV=list(range(7))
+    # ---- teselado: palabra de cada anillo (A larga, B corta), semilla AAB en sigma=0
+    words=["AAB"]
+    for _ in range(6): words.append("".join({"A":"AB","B":"A"}[c] for c in words[-1]))
+    def bounds(w):  # fronteras en fraccion de vuelta
+        wid=[1 if c=="A" else 1/phi for c in w]; c=np.cumsum([0]+wid); return c/c[-1]
+    for s in range(6):   # cada frontera de un anillo es frontera del siguiente (anidan)
+        b0,b1=bounds(words[s]),bounds(words[s+1]); assert all(np.min(abs(b1-x))<1e-12 for x in b0)
+    rows=[]
+    for s in LEV:
+        A=words[s].count("A"); B=words[s].count("B"); S=math.pi*phi**s
+        Sw=math.pi*(A/phi**2+B/phi**3); assert abs(Sw-S)<1e-9*S
+        rows.append(dict(s=s,S=S,modes=int(S),N=phi**(2*s),A=A,B=B,w=words[s]))
+    print("anillos:",[(r['A'],r['B']) for r in rows],"; S = pi(A/phi^2+B/phi^3) exacto; fronteras anidadas")
+    # ---- throat (pseudoesfera), igual que la Figura 4
+    ys=np.linspace((LEV[0]-6.6)*L,0,2000); r=np.exp(ys)
+    h=np.concatenate([[0],np.cumsum(np.sqrt(np.clip(1-r[1:]**2,0,None))*np.diff(ys))]); h=h-h[-1]
+    H=lambda y: np.interp(y,ys,h); k=0.16
+    def P3(rad,hh,th): return rad*np.cos(th), hh+k*rad*np.sin(th)
+    fig=plt.figure(figsize=(11.0,11.69)); ax=fig.add_axes([0.02,0.02,0.96,0.96]); ax.set_aspect('equal'); ax.axis('off')
+    ax.plot(np.exp(ys),h,'k',lw=1.2); ax.plot(-np.exp(ys),h,'k',lw=1.2)
+    hb=H((LEV[0]-6)*L); ht=H(0.0); dl=(ht-hb)/6
+    LAB={s:hb+(ht-hb)*s/6 for s in LEV}
+    XL=1.33; XD=2.05; WD=0.95; HD=0.42*dl
+    for row in rows:
+        s=row['s']; y=(s-6)*L; rad=math.exp(y); hh=H(y)
+        th=np.linspace(0,2*math.pi,400); x,yy=P3(rad,hh,th)
+        ax.plot(np.where(np.sin(th)<0,x,np.nan),yy,'k',lw=1.0); ax.plot(np.where(np.sin(th)>=0,x,np.nan),yy,'k',lw=0.6,alpha=0.6)
+        for j in range(row['modes']):                  # modos
+            a=2*math.pi*j/row['modes']; x0,y0=P3(rad*1.07,hh,a); ax.plot(x0,y0,'ko',ms=1.5)
+        # fronteras de las tejas: meridianos del anillo s al anillo s+1 sobre la superficie
+        if s<6:
+            yseg=np.linspace(y,y+L,30)
+            for bnd in bounds(row['w'])[:-1]:
+                a=2*math.pi*bnd-math.pi/2; xs,hs=np.exp(yseg)*np.cos(a),H(yseg)+k*np.exp(yseg)*np.sin(a)
+                ax.plot(xs,hs,'k',lw=0.45 if math.sin(a)<0 else 0.3,ls='-' if math.sin(a)<0 else ':')
+        ly=LAB[s]
+        ax.text(-2.05,ly,f"σ = {s}\nS = {row['S']:.2f},  ⌊S⌋ = {row['modes']}\nN = {row['N']:.1f}\ntiles = {row['A']+row['B']} ({row['A']} long, {row['B']} short)",fontsize=6.2,va='center',family='serif')
+        ax.plot([-1.32,-rad*1.08],[ly,hh],'k:',lw=0.4)
+        # el anillo desenrollado al mismo ancho: tejas largas sombreadas, cortas en blanco
+        b=bounds(row['w'])
+        for i,c in enumerate(row['w']):
+            x0=XD+WD*b[i]; x1=XD+WD*b[i+1]
+            ax.add_patch(plt.Rectangle((x0,ly-HD/2),x1-x0,HD,facecolor='0.75' if c=='A' else 'white',edgecolor='k',lw=0.3))
+    # la cuerda y los lazos, como en la Figura 4
+    sg=np.linspace(LEV[0],LEV[-1],600); yy=(sg-6)*L; thh=-math.pi/2+sg*L
+    xs=np.exp(yy)*np.cos(thh); hs=H(yy)+k*np.exp(yy)*np.sin(thh); front=np.sin(thh)<0
+    ax.plot(np.where(front,xs,np.nan),hs,'k',lw=1.1); ax.plot(np.where(~front,xs,np.nan),hs,'k--',lw=0.8)
+    for row in rows:
+        s=row['s']; y=(s-6)*L; t=-math.pi/2+s*L; px=math.exp(y)*math.cos(t); py=H(y)+k*math.exp(y)*math.sin(t)
+        rho=0.40*dl*phi**(-s); ly=LAB[s]; a=np.linspace(0,2*math.pi,100)
+        ax.plot(XL+rho*np.cos(a),ly+rho*np.sin(a),'k',lw=0.6); ax.plot([px,XL-rho],[py,ly],'k:',lw=0.4); ax.plot([XL+rho,XD-0.03],[ly,ly],'k:',lw=0.3)
+    xc=(-2.05+XD+WD)/2
+    ax.text(xc,H(0)+0.38,"The throat with the tiling of its rings",ha='center',fontsize=11,family='serif')
+    ax.text(XL,ht+0.62*dl,"half-turn loop",ha='center',fontsize=6.3,family='serif',style='italic')
+    ax.text(XD+WD/2,ht+0.62*dl,"the ring, unrolled at equal width",ha='center',fontsize=6.3,family='serif',style='italic')
+    ax.set_xlim(-2.1,XD+WD+0.05); ax.set_ylim(H((LEV[0]-6.6)*L)-0.05,H(0)+0.5)
+    fig.savefig("fig_throat_tiling.pdf",bbox_inches="tight",pad_inches=0.05)
+
+
+SECCIONES.append((39, 'El throat con el teselado de Fibonacci de sus anillos (Figura 4)', seccion_39))
+
+# ======================================================================
+# 40. El diccionario sobre un teselado regular frente a la cuspide
+# ======================================================================
+def seccion_40():
+    """Una red sobre un teselado regular {p,q} cortada en el nivel sigma: patas abiertas frente a S
+    (Crofton), pares (teselado, chi) que dan S en promedio; la cuspide: metrica, dos prototejas,
+    unicidad de la sustitucion, suma pesada exacta, chi equivalentes; la cuenta de puntos de Z[i] de §10.1."""
+    import numpy as np, math, itertools
+    from decimal import Decimal, getcontext; getcontext().prec=60
+    phi=(1+5**.5)/2
     def circ(a,b):
         A=np.array([[2*a.real,2*a.imag],[2*b.real,2*b.imag]]); c=complex(*np.linalg.solve(A,[abs(a)**2+1,abs(b)**2+1]))
         return c, math.sqrt(abs(c)**2-1)
@@ -1394,123 +1595,388 @@ def seccion_39():
         if abs((np.conj(a)*b).imag)<1e-12:
             u=(a if abs(a)>1e-12 else b); u=u/abs(u); return u*u*np.conj(z)
         c,r=circ(a,b); return c+r*r/np.conj(z-c)
-    def tiling(p=7,q=3,depth=9):
-        R=math.acosh(1/(math.tan(math.pi/p)*math.tan(math.pi/q))); e=math.tanh(R/2)
-        P0=np.array([e*np.exp(2j*math.pi*(k+.5)/p) for k in range(p)])
-        key=lambda P:(round(P.mean().real,7),round(P.mean().imag,7))
-        seen={key(P0)}; fr=[P0]; allp=[P0]; layers=[1]
+    def hcenter(P):
+        K=2*P/(1+abs(P)**2); k=K.mean(); return k/(1+math.sqrt(max(0,1-abs(k)**2)))
+    def hd(z): return 2*math.atanh(min(abs(z),1-1e-15))
+    def radii(p,q):
+        R=math.acosh(1/(math.tan(math.pi/p)*math.tan(math.pi/q)))   # circunradio
+        r=math.acosh(math.cos(math.pi/q)/math.sin(math.pi/p))         # inradio
+        e=2*math.acosh(math.cos(math.pi/p)/math.sin(math.pi/q))       # arista
+        return R,r,e
+    def P0(p,q,center='tile'):
+        R,_,_=radii(p,q); t=math.tanh(R/2)
+        P=np.array([t*np.exp(2j*math.pi*(k+.5)/p) for k in range(p)]) if center=='tile' else np.array([t*np.exp(2j*math.pi*k/p) for k in range(p)])
+        if center=='vertex':
+            v=P[0]; P=(P-v)/(1-np.conj(v)*P); P[0]=0j
+        return P
+    def key(P): c=hcenter(P); return (round(c.real,6),round(c.imag,6))
+    def tiles_within(p,q,Rmax,center='tile',with_centres=False):
+        """todas las teselas cuyo centro esta a distancia <= Rmax+margen (BFS por aristas con poda).
+        El centro de cada tesela se refleja junto con sus vertices, asi que es exacto."""
+        Rc,_,_=radii(p,q); A=P0(p,q,center)
+        c0=0j if center=='tile' else complex(-math.tanh(Rc/2),0)
+        A=np.append(A,c0); kf=lambda P:(round(P[-1].real,8),round(P[-1].imag,8))
+        seen={kf(A)}; fr=[A]; out=[A]; lim=Rmax+Rc+0.2
+        while fr:
+            new=[]
+            for P in fr:
+                for k in range(p):
+                    Q=np.array([refl(z,P[k],P[(k+1)%p]) for z in P]); kk=kf(Q)
+                    if kk in seen: continue
+                    seen.add(kk)
+                    if hd(Q[-1])<=lim: new.append(Q)
+            out+=new; fr=new
+        T=[P[:-1] for P in out]; C=np.array([P[-1] for P in out])
+        return (T,C) if with_centres else T
+    def edge_layers(p,q,depth=7,cap=6000):
+        A=P0(p,q); seen={key(A)}; fr=[A]; L=[1]
         for _ in range(depth):
             new=[]
             for P in fr:
                 for k in range(p):
-                    Q=np.array([refl(z,P[k],P[(k+1)%p]) for z in P])
-                    if key(Q) not in seen: seen.add(key(Q)); new.append(Q)
-            allp+=new; fr=new; layers.append(len(new))
-        return allp,layers
+                    Q=np.array([refl(z,P[k],P[(k+1)%p]) for z in P]); kk=key(Q)
+                    if kk not in seen: seen.add(kk); new.append(Q)
+            L.append(len(new)); fr=new
+            if len(new)>cap: break
+        return L
+
+    def edges(T):
+        E={}
+        for P in T:
+            for j in range(len(P)):
+                a,b=P[j],P[(j+1)%len(P)]
+                E[tuple(sorted([(round(a.real,7),round(a.imag,7)),(round(b.real,7),round(b.imag,7))]))]=(a,b)
+        return list(E.values())
+    def crossings(E,R):
+        n=0
+        for a,b in E:
+            da,db=hd(a),hd(b)
+            if (da<R)!=(db<R): n+=1; continue
+            if da>R and db>R and abs((np.conj(a)*b).imag)>1e-12:
+                c,rc=circ(a,b); ft=c/abs(c)*(abs(c)-rc); an=lambda z: np.angle((z-c)/(-c)); lo,hi=sorted([an(a),an(b)])
+                if lo<=0<=hi and hd(ft)<R: n+=2
+        return n
+    SIG=list(range(13)); RL=[math.asinh(phi**s) for s in SIG]; S=[math.pi*phi**s for s in SIG]
+    E=edges(tiles_within(7,3,RL[-1]+0.05)); n=[crossings(E,R) for R in RL]
+    assert n==[7,14,28,35,56,84,133,217,350,567,938,1484,2443], n
+    R_,r_,e_=radii(7,3); cro=4*(7*e_/2)/(math.pi/3)/math.pi
+    print("  {7,3}: patas abiertas",n); print("  patas/S",[round(a/b,3) for a,b in zip(n,S)],"; constante de Crofton",round(cro,4))
+    L=[]; best=(9,None)
+    for p in range(3,61):
+        for q in range(3,61):
+            if (p-2)*(q-2)<=4: continue
+            R_,r_,e_=radii(p,q); A=(p-2)*math.pi-p*2*math.pi/q; c=4*(p*e_/2)/A/math.pi
+            for chi in range(2,17):
+                d=abs(c*math.log(chi)-1); L.append(d)
+                if d<best[0]: best=(d,(p,q,chi))
+    tol=[sum(x<t for x in L) for t in (1e-2,1e-3,1e-4,1e-5,1e-6)]
+    assert len(L)==50340 and tol==[172,22,2,1,0] and best[1]==(20,3,3), (len(L),tol,best)
+    print("  pares (teselado, chi<=16), p,q<=60:",len(L),"; a menos de 1e-2..1e-6:",tol,"; mejor",best[1],f"a {best[0]:.2e}")
+    for yy in (-3.0,0.0,1.7): assert abs(math.exp(-yy)**2*math.exp(2*yy)-1)<1e-12
+    print("  cuspide: t=e^-y da (dth^2+dt^2)/t^2 = e^(2y)dth^2+dy^2; nivel s en t=phi^-s, longitud 2pi phi^s, distancia log phi")
+    a0=2*math.pi/phi**2
+    for s in (0,3,7):
+        t=phi**-s
+        for top,area in ((a0,a0/phi),(a0/phi,a0/phi**2)):
+            dx=top*t; assert abs(dx*(phi/t-1/t)-area)<1e-12 and abs(dx/(t/phi)-phi*top)<1e-12
+    print("  dos prototejas, iguales en todos los niveles: areas",round(a0/phi,6),"y",round(a0/phi**2,6))
+    subs=[m for m in itertools.product(range(10),repeat=4) if m[0]+m[3]==1 and m[0]*m[3]-m[1]*m[2]==-1]
+    assert subs==[(0,1,1,1),(1,1,1,0)]; print("  sustituciones de dos tejas con autovalor phi:",subs)
+    PI=Decimal("3.14159265358979323846264338327950288419716939937510582097494459"); ph=(1+Decimal(5).sqrt())/2
+    A,B=2,1
+    for s in range(41):
+        assert abs(PI/ph**2*A+PI/ph**3*B-PI*ph**s)<Decimal(10)**-45; A,B=A+B,A
+    print("  S = pi(A/phi^2 + B/phi^3) exacto (60 digitos) para s = 0..40; tejas/S ->",round(phi**4/5**.5/math.pi,4))
+    print("  chi equivalentes: e^(pi/phi^2) =",round(math.exp(math.pi/phi**2),3),", e^(pi/phi^3) =",round(math.exp(math.pi/phi**3),3))
+    # cuenta con pesos fijos: arcos entre cortes en los circulos de nivel del {7,3} (el throat: dos pesos)
+    def mob(z_,w): return (z_-w)/(1-np.conj(w)*z_)
+    def imob(z_,w): return (z_+w)/(1+np.conj(w)*z_)
+    E9=edges(tiles_within(7,3,RL[9]+0.05)); nw=[]; allw=set()
+    for sg in range(10):
+        R=RL[sg]; rho=math.tanh(R/2); ang=[]
+        for a,b in E9:
+            if min(hd(a),hd(b))>R+0.01 and abs((np.conj(a)*b).imag)>1e-12:
+                c,rc=circ(a,b)
+                if 2*math.atanh(min(abs(c)-rc,1-1e-15))>R+0.01: continue
+            bb=mob(b,a); zz=np.linspace(0,1,300); g=imob(zz*bb,a); sgn=np.sign(abs(g)-rho)
+            for kk in np.where(np.diff(sgn)!=0)[0]:
+                t0,t1=zz[kk],zz[kk+1]
+                for _ in range(50):
+                    tm=(t0+t1)/2
+                    if (abs(imob(t0*bb,a))-rho)*(abs(imob(tm*bb,a))-rho)<=0: t1=tm
+                    else: t0=tm
+                ang.append(np.angle(imob(t0*bb,a))%(2*math.pi))
+        ang=sorted(set(round(x,9) for x in ang)); d=np.diff(ang+[ang[0]+2*math.pi])
+        w=set(round(math.sinh(R)*x/2,6) for x in d); allw|=w; nw.append(len(w))
+        assert abs(sum(math.sinh(R)*x/2 for x in d)-S[sg])<1e-6
+    assert nw==[1,2,3,3,5,7,10,16,27,41] and len(allw)==115, (nw,len(allw))
+    print("  {7,3}: pesos distintos (arco entre cortes x 1/2) por nivel",nw,", 115 en total; el throat: 2 en todos los niveles")
+    # el 1/2 de cada enunciado: la constante de la definicion lo coloca
+    fstar={c_:[f for f in np.linspace(0.001,1,99901) if abs(1/math.sqrt(c_*f)-1)<1e-4] for c_ in (1.5,2,3)}
+    assert all(abs(np.mean(v)-1/c_)<1e-3 for c_,v in fstar.items())
+    mstar={k_:1/math.sqrt(k_) for k_ in (2,4,8)}; assert abs(mstar[4]-0.5)<1e-15
+    ps=np.linspace(0.01,0.99,9801); Hb=-(ps*np.log2(ps)+(1-ps)*np.log2(1-ps)); assert abs(ps[np.argmax(Hb)]-0.5)<1e-9
+    print("  tau_D/sqrt(c f)=tau_D da f=1/c (c=2 en CW6: 1/2); k mu^2=1 da mu=1/sqrt(k) (k=4, Fisher cuantica: 1/2); entropia binaria: 1/2 sin constante")
+    def lattice(r2):
+        R=int(math.isqrt(int(r2)))+1; return sum(1 for x in range(-R,R+1) for y in range(-R,R+1) if x*x+y*y<=r2)
+    cnt=[lattice(phi**s) for s in range(7)]; assert cnt==[5,5,9,13,21,37,57], cnt
+    c12=lattice(phi**12); assert c12==1005
+    rat=[round(c/(math.pi*phi**s),2) for s,c in enumerate(cnt)]; r22=lattice(phi**22)/(math.pi*phi**22)
+    print("  puntos de Z[i] (§10.1):",cnt,"; puntos/S",rat,"; sigma=12:",c12,"frente a floor S = 1011; sigma=22:",round(r22,4))
+
+SECCIONES.append((40, 'El diccionario sobre un teselado regular frente a la cuspide', seccion_40))
+
+# ======================================================================
+# 41. Cinco teselados regulares frente a los niveles (Figura 5)
+# ======================================================================
+def seccion_41():
+    """Cinco teselados {p,q} de discos de radio arcsinh phi^sigma, centros exactos (reflejados con los
+    vertices): teselas dentro de cada disco, tangencias del borde de un nivel con aristas, y por que una
+    cuenta no sigue a phi: las razones de Fibonacci se acercan a phi como 1/(sqrt5 q^2) y no mas."""
+    import math, numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
+    phi=(1+5**.5)/2
+    def circ(a,b):
+        A=np.array([[2*a.real,2*a.imag],[2*b.real,2*b.imag]]); c=complex(*np.linalg.solve(A,[abs(a)**2+1,abs(b)**2+1]))
+        return c, math.sqrt(abs(c)**2-1)
+    def refl(z,a,b):
+        if abs((np.conj(a)*b).imag)<1e-12:
+            u=(a if abs(a)>1e-12 else b); u=u/abs(u); return u*u*np.conj(z)
+        c,r=circ(a,b); return c+r*r/np.conj(z-c)
     def hcenter(P):
         K=2*P/(1+abs(P)**2); k=K.mean(); return k/(1+math.sqrt(max(0,1-abs(k)**2)))
-    def geod(a,b,n=14):
-        # geodesica de a a b: mover a al origen, segmento recto, devolver
+    def hd(z): return 2*math.atanh(min(abs(z),1-1e-15))
+    def radii(p,q):
+        R=math.acosh(1/(math.tan(math.pi/p)*math.tan(math.pi/q)))   # circunradio
+        r=math.acosh(math.cos(math.pi/q)/math.sin(math.pi/p))         # inradio
+        e=2*math.acosh(math.cos(math.pi/p)/math.sin(math.pi/q))       # arista
+        return R,r,e
+    def P0(p,q,center='tile'):
+        R,_,_=radii(p,q); t=math.tanh(R/2)
+        P=np.array([t*np.exp(2j*math.pi*(k+.5)/p) for k in range(p)]) if center=='tile' else np.array([t*np.exp(2j*math.pi*k/p) for k in range(p)])
+        if center=='vertex':
+            v=P[0]; P=(P-v)/(1-np.conj(v)*P); P[0]=0j
+        return P
+    def key(P): c=hcenter(P); return (round(c.real,6),round(c.imag,6))
+    def tiles_within(p,q,Rmax,center='tile',with_centres=False):
+        """todas las teselas cuyo centro esta a distancia <= Rmax+margen (BFS por aristas con poda).
+        El centro de cada tesela se refleja junto con sus vertices, asi que es exacto."""
+        Rc,_,_=radii(p,q); A=P0(p,q,center)
+        c0=0j if center=='tile' else complex(-math.tanh(Rc/2),0)
+        A=np.append(A,c0); kf=lambda P:(round(P[-1].real,8),round(P[-1].imag,8))
+        seen={kf(A)}; fr=[A]; out=[A]; lim=Rmax+Rc+0.2
+        while fr:
+            new=[]
+            for P in fr:
+                for k in range(p):
+                    Q=np.array([refl(z,P[k],P[(k+1)%p]) for z in P]); kk=kf(Q)
+                    if kk in seen: continue
+                    seen.add(kk)
+                    if hd(Q[-1])<=lim: new.append(Q)
+            out+=new; fr=new
+        T=[P[:-1] for P in out]; C=np.array([P[-1] for P in out])
+        return (T,C) if with_centres else T
+    def edge_layers(p,q,depth=7,cap=6000):
+        A=P0(p,q); seen={key(A)}; fr=[A]; L=[1]
+        for _ in range(depth):
+            new=[]
+            for P in fr:
+                for k in range(p):
+                    Q=np.array([refl(z,P[k],P[(k+1)%p]) for z in P]); kk=key(Q)
+                    if kk not in seen: seen.add(kk); new.append(Q)
+            L.append(len(new)); fr=new
+            if len(new)>cap: break
+        return L
+
+    REC={}
+    def geod(a,b,n=30):
         m=lambda z,w:(z-w)/(1-np.conj(w)*z); mi=lambda z,w:(z+w)/(1+np.conj(w)*z)
         bb=m(b,a); t=np.linspace(0,1,n); return mi(t*bb,a)
-    T,layers=tiling()
-    assert layers[:7]==[1,7,21,56,147,385,1008], layers
-    # el {7,3} es el unico teselado regular cuyas capas crecen por phi^2 contando por vertices y por aristas
-    phi2=phi**2; porvert=[]
-    for p in range(3,60):
-        for q in range(3,60):
-            if (p-2)*(q-2)<=4: continue
-            b=(p-2)*(q-2)-2; r=(b+math.sqrt(b*b-4))/2
-            if abs(r-phi2)<1e-9: porvert.append((p,q))
-    assert porvert==[(3,7),(7,3)], porvert          # r = phi^2  <=>  (p-2)(q-2) = 5 = 5*1
-    F=lambda n: round(phi**n/5**.5)
-    print("  {p,q}   por vertices   capas por aristas            cociente")
-    for p,q in [(7,3),(3,7),(5,4),(4,6),(8,3),(6,4),(5,5)]:
-        b=(p-2)*(q-2)-2; r=(b+math.sqrt(b*b-4))/2; Lq=tiling(p,q,depth=7)[1]
-        print(f"  {{{p},{q}}}   {r:.4f}        {Lq}   {Lq[-1]/Lq[-2]:.4f}")
-        if (p,q) in [(7,3),(5,4),(4,6)]: assert Lq[1:]==[p*F(2*k) for k in range(1,8)], Lq
-        if (p,q)==(3,7): assert abs(Lq[-1]/Lq[-2]-phi2)>0.5
-    print("  por vertices: solo {7,3} y {3,7}; por aristas {3,7} no crece por phi^2: queda solo {7,3}")
-    dist=np.array([2*math.atanh(min(abs(hcenter(P)),1-1e-12)) for P in T])
-    # ---------- verificaciones de los enunciados que se dibujan
-    rows=[]
-    for s in LEV:
-        z=phi**s; R=math.asinh(z); Lb=2*math.pi*math.sinh(R); A=2*math.pi*(math.cosh(R)-1)
-        S=math.pi*z; assert abs(Lb/(4*G)-S)<1e-9
-        ntiles=int((dist<=R).sum()); rows.append(dict(s=s,z=z,R=R,S=S,modes=int(S),N=phi**(2*s),ab=A/Lb,tiles=ntiles))
-    assert [r['tiles'] for r in rows]==[1,8,15,29,43,85,113], [r['tiles'] for r in rows]
-    for a,b in zip(rows,rows[1:]): assert abs(b['z']/a['z']-phi)<1e-12
-    tau=lambda s: phi**(-s); assert all(abs(phi**s*tau(s)-1)<1e-12 for s in LEV)
-    print("verificado: borde/4G=S; teselas", [r['tiles'] for r in rows], "; capas {7,3}", layers[:7], "; anillos en razon phi; z*tau constante")
-    # ---------- el throat (pseudoesfera): r = e^y, y=(s-6) log phi, dh = sqrt(1-r^2) dy
-    ys=np.linspace((LEV[0]-6.6)*L,0,2000); r=np.exp(ys)
-    h=np.concatenate([[0],np.cumsum(np.sqrt(np.clip(1-r[1:]**2,0,None))*np.diff(ys))]); h=h-h[-1]
-    H=lambda y: np.interp(y,ys,h); RR=lambda y: math.exp(y)
-    k=0.16   # inclinacion de la vista
-    def P3(rad,hh,u): return rad*u.real, hh+k*rad*u.imag
-    def draw_disk(ax,row,cx,cy,rad,lw=0.35,detail=True):
-        Rh=row['R']; sc=1/math.tanh(Rh/2)
-        for P,d in zip(T,dist):
-            if d>Rh+1.3: continue
-            for j in range(7):
-                g=geod(P[j],P[(j+1)%7])*sc
-                g=np.where(abs(g)<=1,g,np.nan)
-                x,y=P3(rad,cy,g); ax.plot(cx+x,y,'k',lw=lw*(0.6 if d>Rh else 1),alpha=1 if d<=Rh else 0.35)
-        th=np.linspace(0,2*math.pi,400); x,y=P3(rad,cy,np.exp(1j*th)); ax.plot(cx+x,y,'k',lw=1.0)
-        if detail:
-            N=row['N']; nmark=max(1,int(math.ceil(N)))
-            for j in range(1,nmark+1):            # marcas de media vuelta k/N de vuelta
-                a=2*math.pi*((j/N)%1); u=np.exp(1j*a); x0,y0=P3(rad,cy,u); x1,y1=P3(rad*1.035,cy,u)
-                ax.plot([cx+x0,cx+x1],[y0,y1],'k',lw=0.25)
-            for j in range(row['modes']):          # modos: una unidad de Fisher cada uno
-                a=2*math.pi*j/row['modes']; x0,y0=P3(rad*1.06,cy,np.exp(1j*a)); ax.plot(cx+x0,y0,'ko',ms=1.6)
-    # ================= FIGURA: throat (centro), lazos (columna), discos al mismo tamano (columna)
-    def draw_flat(ax,row,cx,cy,rad):
-        Rh=row['R']; sc=1/math.tanh(Rh/2)
-        for P,d in zip(T,dist):
-            if d>Rh+1.3: continue
-            for j in range(7):
-                g=geod(P[j],P[(j+1)%7])*sc; g=np.where(abs(g)<=1,g,np.nan)
-                ax.plot(cx+rad*g.real,cy+rad*g.imag,'k',lw=0.3 if d<=Rh else 0.18,alpha=1 if d<=Rh else 0.35)
-        t=np.linspace(0,2*math.pi,400); ax.plot(cx+rad*np.cos(t),cy+rad*np.sin(t),'k',lw=0.9)
-        N=row['N']
-        for j in range(1,int(math.ceil(N))+1):
-            a=2*math.pi*((j/N)%1); ax.plot([cx+rad*math.cos(a),cx+1.06*rad*math.cos(a)],[cy+rad*math.sin(a),cy+1.06*rad*math.sin(a)],'k',lw=0.22)
-        for j in range(row['modes']):
-            a=2*math.pi*j/row['modes']; ax.plot(cx+1.13*rad*math.cos(a),cy+1.13*rad*math.sin(a),'ko',ms=1.3)
-    fig=plt.figure(figsize=(11.0,11.69)); ax=fig.add_axes([0.02,0.02,0.96,0.96]); ax.set_aspect('equal'); ax.axis('off')
-    ax.plot(np.exp(ys),h,'k',lw=1.2); ax.plot(-np.exp(ys),h,'k',lw=1.2)
-    hb=H((LEV[0]-6)*L); ht=H(0.0); dl=(ht-hb)/6
-    LAB={r['s']:hb+(ht-hb)*r['s']/6 for r in rows}
-    XL=1.33; XD=2.0; RD=0.42*dl          # columna de lazos y columna de discos
-    for row in rows:
-        y=(row['s']-6)*L; rad=RR(y); hh=H(y)
-        draw_disk(ax,row,0,hh,rad,lw=0.3,detail=row['s']>=3)
-        ly=LAB[row['s']]
-        ax.text(-2.05,ly,f"σ = {row['s']}\nS = {row['S']:.2f},  ⌊S⌋ = {row['modes']}\nN = {row['N']:.1f},  tiles = {row['tiles']}\narea/boundary = {row['ab']:.2f}",fontsize=6.2,va='center',family='serif')
-        ax.plot([-1.32,-rad*1.08],[ly,hh],'k:',lw=0.4)
-        draw_flat(ax,row,XD,ly,RD)
-    # la cuerda: helice sobre la superficie, angulo s*log(phi); lazo de Mobius encogiendo como tau
-    sg=np.linspace(LEV[0],LEV[-1],600); yy=(sg-6)*L; th=-math.pi/2+sg*L
-    xs=np.exp(yy)*np.cos(th); hs=H(yy)+k*np.exp(yy)*np.sin(th)
-    front=np.sin(th)<0
-    ax.plot(np.where(front,xs,np.nan),hs,'k',lw=1.1); ax.plot(np.where(~front,xs,np.nan),hs,'k--',lw=0.8)
-    rho0=0.40*dl
-    for row in rows:
-        s=row['s']; y=(s-6)*L; t=-math.pi/2+s*L; px=math.exp(y)*math.cos(t); py=H(y)+k*math.exp(y)*math.sin(t)
-        rho=rho0*phi**(-s)          # radio del lazo ~ tau(s); z*rho constante
-        ly=LAB[s]; a=np.linspace(0,2*math.pi,100); ax.plot(XL+rho*np.cos(a),ly+rho*np.sin(a),'k',lw=0.6)
-        ax.plot([px,XL-rho],[py,ly],'k:',lw=0.4); ax.plot([XL+rho,XD-1.16*RD],[ly,ly],'k:',lw=0.3)
-    xc=(-2.05+XD+1.2*RD)/2
-    ax.text(xc,H(0)+0.38,"The throat with a holographic disk at each level",ha='center',fontsize=11,family='serif')
-    ax.text(XL,ht+0.62*dl,"half-turn loop",ha='center',fontsize=6.3,family='serif',style='italic')
-    ax.text(XD,ht+0.62*dl,"the disk at equal size",ha='center',fontsize=6.3,family='serif',style='italic')
-    ax.set_xlim(-2.1,XD+1.5*RD); ax.set_ylim(H((LEV[0]-6.6)*L)-0.05,H(0)+0.5)
-    fig.savefig("fig_throat_disks_page.pdf",bbox_inches="tight",pad_inches=0.05)
-    print("figuras escritas")
+    C=[(7,3,'{7,3}: heptagons'),(3,7,'{3,7}: triangles'),(5,4,'{5,4}: pentagons'),(12,5,'{12,5}: dodecagons'),(6,10,'{6,10}: hexagons')]
+    fig,axs=plt.subplots(5,7,figsize=(14,10.5))
+    for i,(p,q,nm) in enumerate(C):
+        T,Cc=tiles_within(p,q,math.asinh(phi**6)+0.5,'tile',True); d=[hd(x) for x in Cc]
+        for s in range(7):
+            ax=axs[i,s]; Rh=math.asinh(phi**s); sc=1/math.tanh(Rh/2); n=0
+            for P,dd in zip(T,d):
+                if dd<=Rh: n+=1
+                if dd>Rh+2.5: continue
+                for j in range(p):
+                    g=geod(P[j],P[(j+1)%p])*sc; g=np.where(abs(g)<=1,g,np.nan); ax.plot(g.real,g.imag,'k',lw=0.35)
+            t=np.linspace(0,2*math.pi,300); ax.plot(np.cos(t),np.sin(t),'k',lw=1)
+            S=math.pi*phi**s
+            for j in range(int(S)): a=2*math.pi*j/int(S); ax.plot(1.12*math.cos(a),1.12*math.sin(a),'ko',ms=1.5)
+            ax.set_aspect('equal'); ax.axis('off'); ax.set_xlim(-1.2,1.2); ax.set_ylim(-1.2,1.2)
+            tg=0
+            for P in T:
+                for j in range(p):
+                    a_,b_=P[j],P[(j+1)%p]
+                    if abs((np.conj(a_)*b_).imag)<1e-12: continue
+                    c_,rc_=circ(a_,b_); ft=c_/abs(c_)*(abs(c_)-rc_); an=lambda z: np.angle((z-c_)/(-c_)); lo,hi=sorted([an(a_),an(b_)])
+                    if lo-1e-12<=0<=hi+1e-12 and abs(hd(ft)-Rh)<1e-9: tg+=1
+            REC[(p,q,s)]=(n,tg//2)
+            ax.set_title(f"σ={s}, tiles={n}"+(f"\nboundary tangent to {tg//2} edges" if tg else ""),fontsize=7,family='serif',color='k')
+        axs[i,0].text(-1.5,0,nm,rotation=90,va='center',ha='right',fontsize=9,family='serif')
+    fig.tight_layout(); fig.savefig('fig_tilings_strip.pdf',bbox_inches='tight',pad_inches=0.05)
+
+    assert [REC[(7,3,s)][0] for s in range(7)]==[1,8,8,29,29,57,99]
+    assert [REC[(12,5,s)][0] for s in range(7)]==[1]*7
+    assert [REC[(6,10,s)][1] for s in range(7)]==[0,6,0,12,0,0,0], [REC[(6,10,s)][1] for s in range(7)]
+    assert all(REC[(p,q,s)][1]==0 for (p,q,s) in REC if (p,q)!=(6,10))
+    print("  teselas cuyo centro cae dentro de cada disco:")
+    for (p,q) in [(7,3),(3,7),(5,4),(12,5),(6,10)]: print(f"    {{{p},{q}}}:",[REC[(p,q,s)][0] for s in range(7)])
+    print("  borde de un nivel tangente a aristas: solo {6,10}, sigma=1 (6 aristas) y sigma=3 (12 aristas)")
+    F=[1,1]
+    for _ in range(40): F.append(F[-1]+F[-2])
+    dev=[abs(phi-F[n+1]/F[n])*5**.5*F[n]**2 for n in range(5,30)]
+    assert all(abs(x-1)<0.05 for x in dev[5:])
+    print("  razones de Fibonacci: |phi - F(n+1)/F(n)| * sqrt5 * F(n)^2 ->",round(dev[-1],6),"(Hurwitz: phi es el peor aproximado)")
+    T37,C37=tiles_within(3,7,7.5,'tile',True); vk=lambda z:(round(z.real,7),round(z.imag,7)); VV={}
+    for i_,P in enumerate(T37):
+        for z in P: VV.setdefault(vk(z),[]).append(i_)
+    lay=[{0}]; seen={0}
+    for _ in range(6):
+        nxt=set()
+        for i_ in lay[-1]:
+            for z in T37[i_]:
+                for j_ in VV[vk(z)]:
+                    if j_ not in seen: nxt.add(j_)
+        seen|=nxt; lay.append(nxt)
+    nl=[len(x) for x in lay]; assert nl==[1,15,45,120,315,825,2160], nl
+    print("  {3,7} por vertices compartidos:",nl,"-> phi^2; por aristas ~1.6")
+    from decimal import Decimal, getcontext; getcontext().prec=80
+    def hconst(X,N=60):
+        h0,h1,k0,k1=0,1,1,0; y=X; out=[]
+        for i_ in range(N):
+            a_=int(y); h0,h1=h1,a_*h1+h0; k0,k1=k1,a_*k1+k0
+            if i_>5: out.append(float(abs(X-Decimal(h1)/Decimal(k1))*k1*k1))
+            y=1/(y-a_)
+        return min(out[-10:])
+    PH=(1+Decimal(5).sqrt())/2
+    cls=[hconst(x) for x in (PH,1/PH,PH+1)]; assert all(abs(c-1/5**.5)<1e-4 for c in cls)
+    assert hconst(Decimal(2).sqrt())<0.36
+    print("  Hurwitz: phi, 1/phi, phi+1 ->",[round(c,5) for c in cls],"= 1/sqrt5; sqrt2 ->",round(hconst(Decimal(2).sqrt()),5))
+    gr={}
+    for (p_,q_) in [(7,3),(3,7),(5,4),(12,5),(6,10)]:
+        Lq=edge_layers(p_,q_,depth=7,cap=3000); gr[(p_,q_)]=Lq[-1]/Lq[-2]
+    assert abs(gr[(7,3)]-phi**2)<1e-3 and abs(gr[(5,4)]-phi**2)<1e-3 and abs(gr[(3,7)]-1.6)<0.05 and gr[(12,5)]>10 and abs(gr[(6,10)]-5)<0.05, gr
+    R_,r_,e_=radii(5,4); assert abs(math.cosh(e_)-phi)<1e-12
+    R_,r_,e_=radii(6,10); assert abs(math.sinh(r_)-phi)<1e-12
+    R_,r_,e_=radii(5,4); c54=4*(5*e_/2)/(math.pi/2)/math.pi; assert abs(c54*math.log(2)-1.4907)<1e-3
+    print("  crecimiento por capa (aristas):",{k:round(v,3) for k,v in gr.items()},"; {5,4}: cosh e = phi; {6,10}: sinh r = phi; {5,4} con qubits:",round(c54*math.log(2),4),"S")
 
 
-SECCIONES.append((39, 'El throat con un disco holografico por nivel (Figura 5)', seccion_39))
+SECCIONES.append((41, 'Cinco teselados regulares frente a los niveles (Figura 5)', seccion_41))
+
+# ======================================================================
+# 42. Las dos coordenadas, el paso de nivel, la ortogonalizacion, el paso racional y el operador de imp:A1
+# ======================================================================
+def seccion_42():
+    import math
+    phi = (1 + 5 ** 0.5) / 2; psi = -1 / phi; L = math.log(phi)
+    M = 6 * math.sqrt(3) * math.pi / L
+    F = [0, 1]
+    for _ in range(40): F.append(F[-1] + F[-2])
+    # I1: el tiempo del weld es la segunda coordenada de Galois
+    for s_ in (1, 2, 3, 6, 12):
+        a, b = F[s_ - 1], F[s_]
+        assert a * a + a * b - b * b == (-1) ** s_
+        assert abs(M * abs(a + b * psi) - M * phi ** -s_) < 1e-9
+    print(f"  I1: M|a + b phibar| = M phi^-s = tau(s) en s = 1, 2, 3, 6, 12; tau(12) = {M*phi**-12:.4f}, phi^12 = 89 + 144 phi, norma +1")
+    # I2: la matriz de la sustitucion es el intercambio por un corrimiento
+    ex = [[0, 1], [1, 0]]; sh = [[1, 0], [1, 1]]
+    prod = [[sum(ex[i][k] * sh[k][j] for k in range(2)) for j in range(2)] for i in range(2)]
+    assert prod == [[1, 1], [1, 0]]
+    print("  I2: [[0,1],[1,0]] [[1,0],[1,1]] =", prod, "= matriz de A -> AB, B -> A")
+    # I3: el anillo s se rotula por la unidad phi^{s+3} y es un aproximante periodico
+    def sub(w): return "".join("AB" if c == "A" else "A" for c in w)
+    w = "AAB"; ok = True
+    for s_ in range(12):
+        if (w.count("B"), w.count("A")) != (F[s_ + 2], F[s_ + 3]): ok = False
+        ap = "A"
+        for _ in range(s_ + 2): ap = sub(ap)
+        if not (len(ap) == len(w) and ap in w + w): ok = False
+        w = sub(w)
+    assert ok
+    print("  I3: anillo s, s = 0..11: (B, A) = (F_{s+2}, F_{s+3}), coeficientes de phi^{s+3}; palabra = rotacion de s^{s+2}(A)")
+    # I4: ortogonalizacion en el medio giro
+    for p_ in (0.3, 0.5, 0.7):
+        ov = abs((1 - p_) + p_ * complex(math.cos(math.pi), math.sin(math.pi)))
+        assert (ov < 1e-12) == (p_ == 0.5)
+    e0 = L / (6 * math.sqrt(3))
+    assert all(abs(e0 * phi ** s_ * M * phi ** -s_ - math.pi) < 1e-12 for s_ in range(20))
+    print("  I4: eps(s) tau(s) = pi en cada nivel; solapamiento en el medio giro 1 - 2p: 0.4, 0, 0.4 en p = 0.3, 0.5, 0.7")
+    # I5: el paso racional frente al contraste
+    out = []
+    for p_, q_ in [(21, 13), (34, 21), (55, 34), (89, 55), (144, 89), (233, 144)]:
+        f = L / math.log(p_ / q_)
+        out.append((p_, q_, abs(11.97 * f - 11.97) / 0.05, abs(583.789 * f - 583.789) / 0.028))
+    assert out[0][3] > 70 and out[3][3] > 3 and out[4][3] < 3
+    print("  I5: paso p/q -> desviaciones (fondo, observador):", ", ".join(f"{a}/{b}: {x:.1f}, {y:.1f}" for a, b, x, y in out))
+    # I6: la traza 3 y la geodesica mas corta
+    assert abs(phi ** 2 + phi ** -2 - 3) < 1e-12 and abs(2 * math.acosh(1.5) - 4 * L) < 1e-12
+    print(f"  I6: tr [[2,1],[1,1]] = 3 = phi^2 + phi^-2; largo 2 arccosh(3/2) = {2*math.acosh(1.5):.6f} = 4 log phi")
+    # I7: el operador de imp:A1 con n = 6
+    n = 6; m = [2 * math.sin(k * math.pi / (4 * (n + 1))) / L for k in range(1, 2 * n + 2)]
+    r = [m[k + 1] / m[k] for k in range(len(m) - 1)]
+    assert all(abs(x - phi) > 0.05 for x in r)
+    print("  I7: razones de masas sucesivas de imp:A1, n = 6:", [round(x, 2) for x in r], "; ninguna es phi")
+
+SECCIONES.append((42, 'Las dos coordenadas, el paso de nivel, la ortogonalizacion, el paso racional y el operador de imp:A1', seccion_42))
+
+# ======================================================================
+# 43. Las tres columnas y por que no encajaban: R11, la diagonal del cubo, el nucleo racional, Bragg
+# ======================================================================
+def seccion_43():
+    import math, itertools
+    import numpy as np
+    phi = (1 + 5 ** 0.5) / 2
+    # R11: sustituciones primitivas de dos letras con entradas <= 3
+    ok123 = set(); ok4 = set()
+    for a, b, c, d in itertools.product(range(4), repeat=4):
+        if b == 0 or c == 0: continue
+        tr, de = a + d, a * d - b * c; disc = tr * tr - 4 * de
+        if disc <= 0: continue
+        r = math.sqrt(disc); lam = (tr + r) / 2; mu = (tr - r) / 2
+        if int(round(r)) ** 2 != disc and abs(de) == 1 and abs(mu) < 1:
+            ok123.add(round(lam, 4))
+            if (tr, de) == (1, -1): ok4.add(round(lam, 4))
+    assert round(1 + 2 ** 0.5, 4) in ok123 and ok4 == {round(phi, 4)}
+    print("  C1-C3 (irracional, unimodular, Pisot):", sorted(ok123), "; con la ley aditiva:", sorted(ok4))
+    # la diagonal del cubo
+    n = np.array([1, 1, 1]) / 3 ** 0.5; P = [e - (e @ n) * n for e in np.eye(3)]
+    ang = {round(math.degrees(math.acos(P[i] @ P[j] / (np.linalg.norm(P[i]) * np.linalg.norm(P[j])))), 6) for i, j in [(0, 1), (1, 2), (0, 2)]}
+    assert ang == {120.0} and np.allclose(sum(P), 0)
+    print(f"  Z^3 por (1,1,1): tres ejes de largo {np.linalg.norm(P[0]):.4f} a 120 grados (red hexagonal, Z[omega] a escala sqrt(2/3)); el nucleo es Z(1,1,1)")
+    # nucleo de la proyeccion racional
+    def coll(slope):
+        seen = set(); c = 0
+        for m in range(-60, 61):
+            for k in range(-60, 61):
+                v = round(m + k * slope, 9)
+                if v in seen: c += 1
+                seen.add(v)
+        return c
+    c32, cphi = coll(1.5), coll(phi)
+    assert c32 == 14042 and cphi == 0
+    print(f"  Z^2 -> recta, pares en [-60,60]^2: pendiente 3/2 -> {c32} coincidencias; pendiente phi -> {cphi}")
+    # Bragg de la cadena de Fibonacci
+    w = "A"
+    for _ in range(22): w = "".join("AB" if ch == "A" else "A" for ch in w)
+    x = np.concatenate([[0], np.cumsum([phi if ch == "A" else 1.0 for ch in w])])[:-1]
+    amp = lambda k: abs(np.exp(2j * math.pi * k * x).sum()) / len(x)
+    D = phi + 2
+    pk = {(m_, n_): amp((m_ + n_ * phi) / D) for m_, n_ in [(2, 3), (1, 2), (1, 1)]}
+    rng = np.random.default_rng(1); rnd = max(amp(k) for k in rng.uniform(0.05, 2.5, 200))
+    assert pk[(2, 3)] > 0.9 and pk[(1, 2)] > 0.85 and pk[(1, 1)] > 0.65 and rnd < 0.02
+    F = [0, 1]
+    for _ in range(40): F.append(F[-1] + F[-2])
+    for sg in range(0, 25):
+        S = math.pi * phi ** sg; d_ = F[sg + 4] - phi ** 4 * S / (5 ** 0.5 * math.pi)
+        assert abs(abs(d_) - phi ** -(sg + 4) / 5 ** 0.5) < 1e-6
+    print("  cuenta de teselas: F_{s+4} - 0.9757 S = +-phi^-(s+4)/sqrt5 exacto (Binet, Pisot), s = 0..24")
+    print(f"  Bragg (N = {len(x)}): (2,3) {pk[(2,3)]:.2f}, (1,2) {pk[(1,2)]:.2f}, (1,1) {pk[(1,1)]:.2f}; 200 puntos al azar: max {rnd:.3f}")
+
+SECCIONES.append((43, 'Las tres columnas y por que no encajaban', seccion_43))
 
 if __name__ == "__main__":
     pedir = {int(a) for a in sys.argv[1:]}
