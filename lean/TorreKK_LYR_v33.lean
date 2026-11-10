@@ -26,11 +26,11 @@
 import Mathlib
 
 noncomputable section
+set_option linter.style.longLine false
+
 open Real Complex
 
 namespace TorreKK
-
-set_option linter.style.longLine false
 
 /-! ### 1–3. La métrica de la garganta -/
 
@@ -331,7 +331,7 @@ theorem golden_eq_two_cos_pi_div_five :
     cocientes parciales iguales a 1: es el irracional peor aproximado por fracciones (Hurwitz). -/
 theorem golden_self_reference (b : ℝ) (hb : 0 < b) (h : b ^ 2 = b + 1) : b = 1 + 1 / b := by
   have hb0 : b ≠ 0 := hb.ne'
-  field_simp; ring
+  field_simp; ring_nf
   nlinarith [h]
 
 /-- El ángulo y la escala son uno (CW6, Prop. 3.4): con α(σ) = arctan(ε₀ b^σ),
@@ -627,7 +627,7 @@ theorem stereographic_conformal (s c : ℝ) (hsc : s ^ 2 + c ^ 2 = 1) (hr : Real
     (c / (Real.sqrt 2 - s) ^ 2) ^ 2 + ((1 - Real.sqrt 2 * s) / (Real.sqrt 2 - s) ^ 2) ^ 2
       = (1 / (Real.sqrt 2 - s)) ^ 2 := by
   have h2 : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
-  field_simp; ring
+  field_simp; ring_nf
   nlinarith [h2, hsc]
 
 
