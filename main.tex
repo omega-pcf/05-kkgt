@@ -14,12 +14,6 @@
 \usepackage{graphicx}
 \graphicspath{{images/}}
 \usepackage{float}
-% amsart prints \address/\email material from \enddoc@text, i.e. at the very
-% end of the document (see amsart.cls: \AtEndDocument{\enddoc@text}).  The
-% CTAN package amsaddr is the documented way to move it to the front page:
-% affiliations print just below their authors on page 1 and the e-mail
-% addresses print as one unmarked footnote of page 1.
-\usepackage{amsaddr}
 \usepackage{xcolor}\definecolor{linkred}{rgb}{0.78,0.08,0.12}
 \usepackage[backend=biber,style=numeric,sorting=nyt,giveninits=true,doi=true,url=true,isbn=false]{biblatex}
 \addbibresource{src/bibliography.bib}
@@ -93,20 +87,24 @@
 \title[One object instead of a choice of vacuum]{\textbf{One object instead of a choice of vacuum to put the observer in de~Sitter space}\\[2pt]
 From wormholes, black holes and baby universes to the criteria for an observer in de~Sitter,
 contrasted with the Kaluza--Klein graviton candidates and with the cosmological constant}
-% The three authors of the institution share one address (printed once, under
-% the last of them) and one comma-separated line of e-mail addresses; the
-% independent author keeps her own address.  Byline order follows the sibling
-% manuscripts 01-04: Gonzalez Gonzalez, Gonzalez Gonzalez, Garcia Ordonez,
-% Dressler Perez.
+% amsart prints the \address/\email blocks from \enddoc@text, i.e. at the end
+% of the document (amsart.cls: \AtEndDocument{\enddoc@text}); that is the
+% placement the author chose, kept as the class default.  The byline follows
+% the manuscript (Gonzalez, Gonzalez, Dressler, Garcia), so the institutional
+% address is declared twice -- once for each group that carries it -- and the
+% three institutional e-mail addresses are listed together with the first
+% group; the independent author keeps her own address and e-mail.
 \author[J. A. González García et al.]{J.~A.~Gonz\'alez Garc\'ia}
 \author[]{V.~M.~Gonz\'alez Garc\'ia}
-\author[]{L.~M.~Garc\'ia Ord\'o\~nez}
 \address{TTAMAYO PUNTO COM, S.A.P.I.\ de C.V.; Research \& Development Division;
   Naucalpan de Juárez, State of Mexico, Mexico}
 \email{jorge@ttamayo.com, victor@ttamayo.com, luz@ttamayo.com}
 \author[]{I.~M.~Dressler P\'erez}
 \address{Independent Researcher}
 \email{itzel@omega-pcf.com}
+\author[]{L.~M.~Garc\'ia Ord\'o~nez}
+\address{TTAMAYO PUNTO COM, S.A.P.I.\ de C.V.; Research \& Development Division;
+  Naucalpan de Juárez, State of Mexico, Mexico}
 \date{November 6, 2026}
 
 \begin{document}
