@@ -14,6 +14,12 @@
 \usepackage{graphicx}
 \graphicspath{{images/}}
 \usepackage{float}
+% amsart prints \address/\email material from \enddoc@text, i.e. at the very
+% end of the document (see amsart.cls: \AtEndDocument{\enddoc@text}).  The
+% CTAN package amsaddr is the documented way to move it to the front page:
+% affiliations print just below their authors on page 1 and the e-mail
+% addresses print as one unmarked footnote of page 1.
+\usepackage{amsaddr}
 \usepackage{xcolor}\definecolor{linkred}{rgb}{0.78,0.08,0.12}
 \usepackage[backend=biber,style=numeric,sorting=nyt,giveninits=true,doi=true,url=true,isbn=false]{biblatex}
 \addbibresource{src/bibliography.bib}
@@ -49,13 +55,26 @@
 \newcommand{\tiercol}[1]{\expandafter\ifx\csname tiercol@#1\endcsname\relax\else\csname tiercol@#1\endcsname\fi}
 % inline status tag: [P], [N] ... unbreakable, its own colour and its own style
 \providecommand{\tier}[1]{{\normalfont\footnotesize\bfseries\tiercol{#1}[#1]}}
-% a witness with names, on a line of its own: P[name1, name2]
+% a witness with names, on a line of its own, flush right: P[name1, name2]
+% (the sibling manuscripts set their witness blocks with \hfill + \raggedleft,
+% see \ProofWitnessBlock in 03-crystalline-worldsheet)
 \newcommand{\witness}[2]{%
-  \par\noindent
-  {\normalfont\footnotesize\bfseries\tiercol{#1}#1\mdseries\ttfamily\let\_\brk@us[#2]}%
+  \par\noindent\hfill
+  \parbox{\dimexpr\linewidth-1em\relax}{\raggedleft
+    \normalfont\footnotesize\bfseries\tiercol{#1}#1\mdseries\ttfamily\let\_\brk@us[#2]}%
   \par}
 % witness label of the W list: W1[CLPW]
 \newcommand{\wtag}[2]{{\normalfont\bfseries\tiercol{W}#1\mdseries\ttfamily[#2]}}
+% unmarked footnote of the first page: amsart carries its own date, subject
+% classification and key words as unmarked first-page footnotes
+% (\@adminfootnotes), and the AMS Author Handbook (Author_Handbook_Journals,
+% sec. 1) asks for "unmarked, unnumbered footnotes on the first page"; the
+% tier legend is set there instead of in the body of the cover.
+\newcommand{\firstpagefootnote}[1]{%
+  \begingroup
+  \let\@makefnmark\relax \let\@thefnmark\relax
+  \@footnotetext{#1}%
+  \endgroup}
 \makeatother
 \setlength{\emergencystretch}{2em}
 
@@ -72,19 +91,22 @@
 \renewcommand{\theimported}{I\arabic{imported}}
 
 \title[One object instead of a choice of vacuum]{\textbf{One object instead of a choice of vacuum to put the observer in de~Sitter space}\\[2pt]
-\large From wormholes, black holes and baby universes to the criteria for an observer in de~Sitter,
+From wormholes, black holes and baby universes to the criteria for an observer in de~Sitter,
 contrasted with the Kaluza--Klein graviton candidates and with the cosmological constant}
+% The three authors of the institution share one address (printed once, under
+% the last of them) and one comma-separated line of e-mail addresses; the
+% independent author keeps her own address.  Byline order follows the sibling
+% manuscripts 01-04: Gonzalez Gonzalez, Gonzalez Gonzalez, Garcia Ordonez,
+% Dressler Perez.
 \author[J. A. González García et al.]{J.~A.~Gonz\'alez Garc\'ia}
-\address{TTAMAYO PUNTO COM, S.A.P.I.\ de C.V.; Research \& Development Division;
-  Naucalpan de Juárez, State of Mexico, Mexico}
 \author[]{V.~M.~Gonz\'alez Garc\'ia}
+\author[]{L.~M.~Garc\'ia Ord\'o\~nez}
 \address{TTAMAYO PUNTO COM, S.A.P.I.\ de C.V.; Research \& Development Division;
   Naucalpan de Juárez, State of Mexico, Mexico}
+\email{jorge@ttamayo.com, victor@ttamayo.com, luz@ttamayo.com}
 \author[]{I.~M.~Dressler P\'erez}
 \address{Independent Researcher}
-\author[]{L.~M.~Garc\'ia Ord\'o~nez}
-\address{TTAMAYO PUNTO COM, S.A.P.I.\ de C.V.; Research \& Development Division;
-  Naucalpan de Juárez, State of Mexico, Mexico}
+\email{itzel@omega-pcf.com}
 \date{November 6, 2026}
 
 \begin{document}
@@ -125,12 +147,17 @@ the note leaves open is one number, the ratio of the lepton scale to the Planck 
 \keywords{de Sitter space, wormholes, Kaluza--Klein gravitons, golden ratio,
 Randall--Sundrum model, cosmological constant, formal verification, Lean 4}
 
-\maketitle
-
-\noindent\emph{Tiers:} \tier{P} proved in Lean; \tier{P*} written in Lean, no theorem name cited
+% tier legend: unmarked footnote at the foot of the first page.  It is set
+% before \maketitle so that the insertion lands on page 1 (the abstract box
+% is unbreakable in amsart and, with the affiliations now on the cover,
+% starts on page 2; a footnote issued after \maketitle would follow it there).
+\firstpagefootnote{%
+\emph{Tiers:} \tier{P} proved in Lean; \tier{P*} written in Lean, no theorem name cited
 here; \tier{N} verified numerically; \tier{L} cited; \tier{R} a reading: a comparison of form, not
 an identification and not a contrast. A witness with names is set on a line of its own, in the form
-\code{P[name1, name2]}.
+\code{P[name1, name2]}.}
+
+\maketitle
 
 \section{Introduction}\label{sec:intro}
 
