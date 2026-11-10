@@ -31,7 +31,7 @@ def omega_l_required(level: int) -> float:
 
 # ══════════════════════════════════════════════════════════ section 29 ══
 class TestSection29LatticePointFromOmegaLambda:
-    """section 29 -- 'Lo que fija el punto de red: Omega_Lambda h^2'"""
+    """section 29 -- 'What fixes the lattice point: Omega_Lambda h^2'"""
 
     @staticmethod
     def planck(r: float, h=0.6736, dh=0.0054, om=0.3153, dom=0.0073):
@@ -62,7 +62,7 @@ class TestSection29LatticePointFromOmegaLambda:
 
     def test_the_script_asserts_the_window_it_quotes(self, run_section):
         run = run_section(29)
-        run.has("Planck y la combinacion concuerdan (1.4-1.8 sigma)")
+        run.has("Planck and the combination agree (1.4-1.8 sigma)")
         assert 1.3 < 1.43 < 1.5 and 1.7 < 1.81 < 1.9
 
     def test_sensitivity_and_arithmetic(self):
@@ -74,7 +74,7 @@ class TestSection29LatticePointFromOmegaLambda:
 
 # ══════════════════════════════════════════════════════════ section 30 ══
 class TestSection30SymmetricThroat:
-    """section 30 -- 'La garganta simetrica [-12, 12] y la escala UV'"""
+    """section 30 -- 'The symmetric throat [-12, 12] and the UV scale'"""
 
     def test_depth_of_the_clock(self):
         assert round(24 * LN_PHI, 2) == 11.55
@@ -97,7 +97,7 @@ class TestSection30SymmetricThroat:
 
 # ══════════════════════════════════════════════════════════ section 31 ══
 class TestSection31ModuliMetric:
-    """section 31 -- 'La metrica de moduli del anillo y las conjeturas'"""
+    """section 31 -- 'The moduli metric of the ring and the conjectures'"""
 
     def test_canonical_slope(self):
         d = math.sqrt(2) * LN_PHI
@@ -129,7 +129,7 @@ class TestSection31ModuliMetric:
 
 # ══════════════════════════════════════════════════════════ section 32 ══
 class TestSection32LevelVersusGridShape:
-    """section 32 -- 'El nivel leido del observador frente a la forma de red'"""
+    """section 32 -- 'The level read off the observer against the lattice shape'"""
 
     @pytest.mark.parametrize("level,printed",
                              [(583, 0.4737), (584, 0.2928), (585, 0.1809)])
@@ -145,20 +145,20 @@ class TestSection32LevelVersusGridShape:
     def test_the_worst_case_is_deci(self, run_section):
         """DESI r = -1 reads the level at 7.6 sigma from every integer."""
         run = run_section(32)
-        run.has("DESI DR2 + CMB, LCDM, r = -1 (peor caso)")
-        assert run.has("entero 584 a 7.6 sigma")
-        assert run.has("entero 584 a 3.1 sigma")
-        assert run.has("entero 583 a 5.0 sigma")
+        run.has("DESI DR2 + CMB, LCDM, r = -1 (worst case)")
+        assert run.has("integer 584 at 7.6 sigma")
+        assert run.has("integer 584 at 3.1 sigma")
+        assert run.has("integer 583 at 5.0 sigma")
 
     def test_the_criterion(self, run_section):
         run_section(32).has(
-            "criterio: el nivel leido a 3 sigma o mas de todo entero excluye la forma de red"
+            "criterion: a level read 3 sigma or more from every integer rules out the lattice shape"
         )
 
 
 # ══════════════════════════════════════════════════════════ section 33 ══
 class TestSection33ColourHole:
-    """section 33 -- 'El hueco de color: la tension soldada, Higuchi y la escala de Regge'"""
+    """section 33 -- 'The colour hole: the welded tension, Higuchi and the Regge scale'"""
 
     @pytest.mark.parametrize("q2,printed",
                              [(2 * math.pi, 0.9140), (1.0, 5.7429)])
@@ -207,7 +207,7 @@ class TestSection33ColourHole:
 
 # ══════════════════════════════════════════════════════════ section 34 ══
 class TestSection34Quintessence:
-    """section 34 -- 'La quintaesencia del anillo: lambda = 1/sqrt2 frente a los datos'"""
+    """section 34 -- 'The quintessence of the ring: lambda = 1/sqrt2 against the data'"""
 
     LAM = 1 / math.sqrt(2)
 
@@ -226,7 +226,7 @@ class TestSection34Quintessence:
         """The background solution projected on w0+wa(1-a) over z < 2."""
         run = run_section(34)
         m = run.match(
-            rf"Omega_m = {omega_m}: w\(0\) = ([-\d.]+); proyeccion CPL \(z < 2\): "
+            rf"Omega_m = {omega_m}: w\(0\) = ([-\d.]+); CPL projection \(z < 2\): "
             r"w0 = ([-\d.]+), wa = ([-\d.]+)"
         )
         got = [float(g) for g in m.groups()]
@@ -235,7 +235,7 @@ class TestSection34Quintessence:
 
 # ══════════════════════════════════════════════════════════ section 35 ══
 class TestSection35HalfThreshold:
-    """section 35 -- 'El umbral 1/2: tiempo de Fisher, entropia binaria, un bit por autovalor'"""
+    """section 35 -- 'The 1/2 threshold: Fisher time, binary entropy, one bit per eigenvalue'"""
 
     @pytest.mark.parametrize(
         "f,ratio,entropy",
@@ -258,7 +258,7 @@ class TestSection35HalfThreshold:
 
 # ══════════════════════════════════════════════════════════ section 36 ══
 class TestSection36BlackHoleWhereNeeded:
-    """section 36 -- 'El agujero negro donde hace falta: la orbita de la torre, el horizonte de S(12), el umbral'"""
+    """section 36 -- 'The black hole where needed: the orbit of the tower, the horizon of S(12), the threshold'"""
 
     def test_four_readings_of_s_of_12_agree(self):
         """Gibbons-Hawking, area/4G and Cardy all give pi phi^12 = 1011.58."""
@@ -284,13 +284,13 @@ class TestSection36BlackHoleWhereNeeded:
     def test_correlation_converges_only_for_the_irrational_step(self, run_section):
         """The tower step log(phi)/2pi equidistributes; 13/8 stalls at 1e-3."""
         run = run_section(36)
-        run.has("fase de la torre, log(phi)/2pi: N=10000: error de la parte conexa 9.1e-05")
-        run.has("racional 13/8: N=10000: error de la parte conexa 6.8e-03")
+        run.has("tower phase, log(phi)/2pi: N=10000: connected-part error 9.1e-05")
+        run.has("rational 13/8: N=10000: connected-part error 6.8e-03")
 
 
 # ══════════════════════════════════════════════════════════ section 37 ══
 class TestSection37Consistency:
-    """section 37 -- 'Consistencia: entropia, modos y bits; profundidad; gluones; unidad; 700/380'"""
+    """section 37 -- 'Consistency: entropy, modes and bits; depth; gluons; unit; 700/380'"""
 
     def test_entropy_modes_and_bits(self):
         s12 = math.pi * PHI**12
@@ -326,14 +326,14 @@ class TestSection37Consistency:
     @pytest.mark.parametrize("d,printed", [(24, 257), (81.74, 247)])
     def test_first_gluon_at_the_background(self, d, printed, run_section):
         run = run_section(37)
-        run.has(f"fondo 12, profundidad {d}: primer gluon {printed} GeV")
+        run.has(f"background 12, depth {d}: first gluon {printed} GeV")
 
     def test_w2_integer_dimension(self, run_section):
         """W2 of main.tex: dim H = 1654, 3436182, 820599769985 at sigma = 3,4,5."""
         run = run_section(37)
         run.has("sigma=3,4,5 -> 1654, 3436182, 820599769985")
         assert run.value(
-            r"ajuste lnD = a S \+ b ln L \+ c \(sigma=3\.\.9\): a = ([\d.]+)",
+            r"fit lnD = a S \+ b ln L \+ c \(sigma=3\.\.9\): a = ([\d.]+)",
             want=0.9972, tol=5e-4, label="W2 slope",
         )
 
@@ -348,7 +348,7 @@ class TestSection37Consistency:
     def test_e_to_the_s_is_never_an_integer(self, run_section):
         """Gelfond-Schneider: e^(S/n) is at least 6.76e-5 away from an integer."""
         run = run_section(37)
-        run.has("ninguno entero (distancia minima 6.76e-05)")
+        run.has("no integer (minimum distance 6.76e-05)")
 
     @pytest.mark.parametrize(
         "measure,printed",
@@ -357,14 +357,14 @@ class TestSection37Consistency:
     )
     def test_the_measure_that_gives_the_spectrum(self, run_section, measure, printed):
         run = run_section(37)
-        pattern = "medida " + re.escape(measure) + r": \[([^\]]+)\]"
+        pattern = "measure " + re.escape(measure) + r": \[([^\]]+)\]"
         got = [float(v) for v in run.match(pattern).group(1).split()]
         assert got == pytest.approx(printed, abs=5e-4), measure
 
 
 # ══════════════════════════════════════════════════════════ section 38 ══
 class TestSection38AreaLawHalf:
-    """section 38 -- 'El 1/2 de (B1): cuanto de area, unidad de Fisher y bit de Shannon'
+    """section 38 -- 'The 1/2 of (B1): area quantum, Fisher unit and Shannon bit'
 
     main.tex: "that would be $\\log2$ per area (section~38 of
     \\code{reproduce\\_v108.py})".
@@ -391,5 +391,5 @@ class TestSection38AreaLawHalf:
 
     def test_section38_stdout(self, run_section):
         run = run_section(38)
-        run.has("ley de area: 0.5 por ell^2 = 0.25 por ell_P^2 (Bekenstein-Hawking 1/4)")
-        run.has("un bit de Shannon por area de Planck frente a la ley de area: cociente 2.773")
+        run.has("area law: 0.5 per ell^2 = 0.25 per ell_P^2 (Bekenstein-Hawking 1/4)")
+        run.has("one Shannon bit per Planck area against the area law: ratio 2.773")

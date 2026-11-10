@@ -18,7 +18,7 @@ from kkgt.constants import LN_PHI, M_PCF, PHI
 
 # ══════════════════════════════════════════════════════════ section 39 ══
 class TestSection39FibonacciTiling:
-    """section 39 -- 'El throat con el teselado de Fibonacci de sus anillos (Figura 4)'"""
+    """section 39 -- 'The throat with the Fibonacci tiling of its rings (Figure 4)'"""
 
     @staticmethod
     def words(n=7):
@@ -67,12 +67,12 @@ class TestSection39FibonacciTiling:
     def test_section39_draws_figure_four(self, run_section):
         run = run_section(39)
         assert "fig_throat_tiling.pdf" in run.figures
-        run.has("S = pi(A/phi^2+B/phi^3) exacto; fronteras anidadas")
+        run.has("S = pi(A/phi^2+B/phi^3) exact; boundaries nested")
 
 
 # ══════════════════════════════════════════════════════════ section 40 ══
 class TestSection40DictionaryAgainstTheCusp:
-    """section 40 -- 'El diccionario sobre un teselado regular frente a la cuspide'"""
+    """section 40 -- 'The dictionary on a regular tiling against the cusp'"""
 
     @pytest.mark.parametrize(
         "s,legs",
@@ -82,7 +82,7 @@ class TestSection40DictionaryAgainstTheCusp:
     def test_open_legs_of_73(self, s, legs, run_section):
         """Open legs the {7,3} boundary cuts at each level (Crofton)."""
         run = run_section(40)
-        m = run.match(r"\{7,3\}: patas abiertas \[([^\]]+)\]")
+        m = run.match(r"\{7,3\}: open legs \[([^\]]+)\]")
         got = [int(v) for v in m.group(1).split(",")]
         assert got[s] == legs, (s, got)
 
@@ -90,7 +90,7 @@ class TestSection40DictionaryAgainstTheCusp:
         """Legs/S fluctuates about the constant 2.4097 of the tiling."""
         run = run_section(40)
         run.value(
-            r"constante de Crofton ([\d.]+)", want=2.4097, tol=5e-5,
+            r"Crofton constant ([\d.]+)", want=2.4097, tol=5e-5,
             label="Crofton",
         )
 
@@ -102,12 +102,12 @@ class TestSection40DictionaryAgainstTheCusp:
     def test_pairs_that_reproduce_s_on_average(self, s, pairs, best, run_section):
         """Of the 50340 (tiling, chi) pairs only 172 give S within 1%."""
         run = run_section(40)
-        assert run.has("pares (teselado, chi<=16), p,q<=60: 50340")
-        m = run.match(r"a menos de 1e-2\.\.1e-6: \[([^\]]+)\]")
+        assert run.has("pairs (tiling, chi<=16), p,q<=60: 50340")
+        m = run.match(r"closer than 1e-2\.\.1e-6: \[([^\]]+)\]")
         got = [int(v) for v in m.group(1).split(",")]
         assert got[s] == pairs, (s, got)
         if best is not None:
-            run.has("mejor (20, 3, 3) a 3.34e-06")
+            run.has("best (20, 3, 3) at 3.34e-06")
 
     def test_unweighted_count_tends_to_a_fixed_fraction(self):
         """F_{s+4} -> 0.9757 S: the limit is phi^4/(sqrt5 pi)."""
@@ -130,7 +130,7 @@ class TestSection40DictionaryAgainstTheCusp:
         """{7,3} needs 115 distinct arc weights over sigma = 0..9, the throat 2."""
         run = run_section(40)
         m = run.match(
-            r"por nivel \[([^\]]+)\] , 115 en total; el throat: 2 en todos los niveles"
+            r"per level \[([^\]]+)\] , 115 in total; the throat: 2 at every level"
         )
         got = [int(v) for v in m.group(1).split(",")]
         assert got == [1, 2, 3, 3, 5, 7, 10, 16, 27, 41], got
@@ -150,7 +150,7 @@ class TestSection40DictionaryAgainstTheCusp:
 
 # ══════════════════════════════════════════════════════════ section 41 ══
 class TestSection41FiveRegularTilings:
-    """section 41 -- 'Cinco teselados regulares frente a los niveles (Figura 5)'"""
+    """section 41 -- 'Five regular tilings against the levels (Figure 5)'"""
 
     def test_circumradius_inradius_and_edge(self):
         """cosh e = phi for {5,4}, sinh r = phi for {6,10} (exact)."""
@@ -191,7 +191,7 @@ class TestSection41FiveRegularTilings:
     def test_layer_growth(self, tiling, printed, run_section):
         """Only {7,3} and {5,4} grow by phi^2 per layer (the level step)."""
         run = run_section(41)
-        full = re.search(r"crecimiento por capa \(aristas\): (\{.*?\}) ;", run.stdout)
+        full = re.search(r"growth per layer \(edges\): (\{.*?\}) ;", run.stdout)
         assert full, run.stdout
         got = {
             (int(a), int(b)): float(v)
@@ -219,23 +219,23 @@ class TestSection41FiveRegularTilings:
         """Full stdout contract of the slow section 41 (figure 5)."""
         run = run_section(41)
         assert "fig_tilings_strip.pdf" in run.figures
-        run.has("{3,7} por vertices compartidos: [1, 15, 45, 120, 315, 825, 2160]")
-        run.has("0.999902 (Hurwitz: phi es el peor aproximado)")
-        run.has("borde de un nivel tangente a aristas: solo {6,10}")
-        run.has("{5,4} con qubits: 1.4907 S")
+        run.has("{3,7} by shared vertices: [1, 15, 45, 120, 315, 825, 2160]")
+        run.has("0.999902 (Hurwitz: phi is the worst approximant)")
+        run.has("boundary of a level tangent to edges: only {6,10}")
+        run.has("{5,4} with qubits: 1.4907 S")
 
     @pytest.mark.slow
     def test_qubit_bond_dimension_of_54(self, run_section):
         """One qubit per bond on {5,4} gives 1.4907 S (main.tex quotes it)."""
         run_section(41).value(
-            r"\{5,4\} con qubits: ([\d.]+) S", want=1.4907, tol=5e-4,
+            r"\{5,4\} with qubits: ([\d.]+) S", want=1.4907, tol=5e-4,
             label="{5,4} qubits",
         )
 
 
 # ══════════════════════════════════════════════════════════ section 42 ══
 class TestSection42TwoCoordinatesAndTheStep:
-    """section 42 -- 'Las dos coordenadas, el paso de nivel, la ortogonalizacion, el paso racional y el operador de imp:A1'"""
+    """section 42 -- 'The two coordinates, the level step, the orthogonalization, the rational step and the imp:A1 operator'"""
 
     F = [0, 1] + [0] * 40
 
@@ -345,7 +345,7 @@ class TestSection42TwoCoordinatesAndTheStep:
 
 # ══════════════════════════════════════════════════════════ section 43 ══
 class TestSection43ThreeColumns:
-    """section 43 -- 'Las tres columnas y por que no encajaban'"""
+    """section 43 -- 'The three columns and why they did not fit'"""
 
     @staticmethod
     def _collisions(slope):
@@ -441,8 +441,8 @@ class TestSection43ThreeColumns:
     @pytest.mark.parametrize(
         "block",
         [
-            "pendiente 3/2 -> 14042 coincidencias; pendiente phi -> 0",
-            "cuenta de teselas: F_{s+4} - 0.9757 S",
+            "slope 3/2 -> 14042 collisions; slope phi -> 0",
+            "tile count: F_{s+4} - 0.9757 S",
             "Bragg (N = 46368): (2,3) 0.95, (1,2) 0.88, (1,1) 0.70",
         ],
     )

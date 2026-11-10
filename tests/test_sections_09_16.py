@@ -17,7 +17,7 @@ from kkgt.constants import LN_PHI, PHI
 
 # ═══════════════════════════════════════════════════════════ section 9 ══
 class TestSection9GapRatios:
-    """section 9 -- 'Cocientes de huecos (Discusión 6.1)'"""
+    """section 9 -- 'Gap ratios (Discussion 6.1)'"""
 
     @staticmethod
     def _disc(a, n):
@@ -61,7 +61,7 @@ class TestSection9GapRatios:
 
 # ══════════════════════════════════════════════════════════ section 10 ══
 class TestSection10Granularity:
-    """section 10 -- 'Figura 3: granularidad, con sus números'"""
+    """section 10 -- 'Figure 3: granularity, with its numbers'"""
 
     @staticmethod
     def _gaps(x):
@@ -119,7 +119,7 @@ class TestSection10Granularity:
 
 # ══════════════════════════════════════════════════════════ section 11 ══
 class TestSection11ContactConfigurations:
-    """section 11 -- 'Configuraciones de contacto en 1D, 2D y 3D (6.1)'"""
+    """section 11 -- 'Contact configurations in 1D, 2D and 3D (6.1)'"""
 
     def test_sixth_roots_of_unity_are_a_2d_contact_set(self):
         u = np.exp(1j * np.pi * np.arange(6) / 3)
@@ -183,7 +183,7 @@ class TestSection11ContactConfigurations:
 
 # ══════════════════════════════════════════════════════════ section 12 ══
 class TestSection12FigureOneStatements:
-    """section 12 -- 'Figura 1: una estructura vista de una vez; los puntos de Z[i] por nivel; comprobaciones'"""
+    """section 12 -- 'Figure 1: one structure seen at once; the points of Z[i] per level; checks'"""
 
     def test_certainty_principle_eps0_times_m_is_pi(self):
         """eps0 = log phi/(6 sqrt3), M = 6 sqrt(3) pi/log phi -> eps0 M = pi."""
@@ -246,14 +246,14 @@ class TestSection12FigureOneStatements:
     @pytest.mark.slow
     def test_section12_runs_all_of_its_checks(self, run_section):
         run = run_section(12)
-        run.has("todas las verificaciones: ok")
+        run.has("all checks: ok")
         run.value(r"eps0\*M/pi = ([\d.]+)", want=1.0, tol=1e-12, label="eps0 M/pi")
         assert "fig_one_structure.pdf" in run.figures
 
 
 # ══════════════════════════════════════════════════════════ section 13 ══
 class TestSection13FigureTwoReciprocity:
-    """section 13 -- 'Figura 2: las dos familias recíprocas'"""
+    """section 13 -- 'Figure 2: the two reciprocal families'"""
 
     @pytest.mark.parametrize("s", range(12, 19))
     def test_radius_times_period_is_constant(self, s):
@@ -277,7 +277,7 @@ class TestSection13FigureTwoReciprocity:
 
 # ══════════════════════════════════════════════════════════ section 14 ══
 class TestSection14RingGaps:
-    """section 14 -- 'Tres huecos de las marcas en el anillo (6.1)'"""
+    """section 14 -- 'Three gaps of the marks on the ring (6.1)'"""
 
     @staticmethod
     def _gap_count(a, k):
@@ -315,7 +315,7 @@ class TestSection14RingGaps:
 
 # ══════════════════════════════════════════════════════════ section 15 ══
 class TestSection15StateCount:
-    """section 15 -- 'Cuenta exacta de estados con c=3 en el nivel N/2 frente a S (6.1)'"""
+    """section 15 -- 'Exact count of states with c=3 at the level N/2 against S (6.1)'"""
 
     @staticmethod
     def _partition(max_n=3000):
@@ -366,7 +366,7 @@ class TestSection15StateCount:
 
 # ══════════════════════════════════════════════════════════ section 16 ══
 class TestSection16KoideFromM:
-    """section 16 -- 'La escala M de (F1): reconstrucción de tipo Koide de las masas leptónicas'"""
+    """section 16 -- 'The scale M of (F1): Koide-type reconstruction of the lepton masses'"""
 
     OBS = {"e": 0.51099895, "mu": 105.6583755, "tau": 1776.86}
 
@@ -388,5 +388,5 @@ class TestSection16KoideFromM:
 
     def test_printed_values(self, run_section):
         run = run_section(16)
-        run.has("Koide desde M:  1776.8761")
+        run.has("Koide from M:  1776.8761")
         assert "rel. 6.1e-05" in run.stdout

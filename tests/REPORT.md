@@ -1,34 +1,34 @@
-# Reporte: `reproduce_v108.py` → suite pytest
+# Report: `reproduce_v108.py` → pytest suite
 
-## (a) Árbol de archivos creado / modificado
+## (a) Tree of files created / modified
 
 ```
 pyproject.toml                 M  [dependency-groups] dev = ["pytest>=8.0"]
                                        + [tool.pytest.ini_options] (testpaths,
                                          pythonpath, addopts, markers)
 uv.lock                        M  + pytest 9.2.0, colorama, iniconfig, pluggy, pygments
-package.json                   M  scripts: "test", "test:fast"  (bloque scripts sólo)
-reproduce_v108.py              –  SIN CAMBIOS (entry point citado por el tex)
+package.json                   M  scripts: "test", "test:fast"  (scripts block only)
+reproduce_v108.py              –  UNCHANGED (entry point cited by the tex)
 tests/                         N
-├── README.md                  N  estructura, política de tolerancias, mapa sección→test
-├── REPORT.md                  N  este informe
-├── conftest.py                N  backend Agg, fixtures repro/sections/run_section
+├── README.md                  N  structure, tolerance policy, section→test map
+├── REPORT.md                  N  this report
+├── conftest.py                N  Agg backend, fixtures repro/sections/run_section
 ├── src/kkgt/__init__.py       N
 ├── src/kkgt/constants.py      N  PHI, LN_PHI, M_PCF, EPS0, OBS_G, FIGURES, SLOW_SECTIONS
-├── src/kkgt/harness.py        N  SectionRun: ejecuta una sección, lee su stdout
-├── test_section_census.py     N  contrato registro ↔ main.tex (números y figuras)
-├── test_section_runs.py       N  las 43 secciones corren e imprimen su número
-├── test_sections_01_08.py     N  secciones 1-8
-├── test_sections_09_16.py     N  secciones 9-16
-├── test_sections_17_28.py     N  secciones 17-28
-├── test_sections_29_38.py     N  secciones 29-38
-└── test_sections_39_43.py     N  secciones 39-43
+├── src/kkgt/harness.py        N  SectionRun: runs one section, reads its stdout
+├── test_section_census.py     N  contract registry ↔ main.tex (numbers and figures)
+├── test_section_runs.py       N  the 43 sections run and print their number
+├── test_sections_01_08.py     N  sections 1-8
+├── test_sections_09_16.py     N  sections 9-16
+├── test_sections_17_28.py     N  sections 17-28
+├── test_sections_29_38.py     N  sections 29-38
+└── test_sections_39_43.py     N  sections 39-43
 ```
 
-No se tocaron `main.tex`, `citation.csl.json`, `scripts/`, `build/`, `lean/`; no
-hay commits ni push.
+`main.tex`, `citation.csl.json`, `scripts/`, `build/` and `lean/` were not
+touched; there are no commits nor pushes.
 
-## (b) Comandos, salida literal, runtime y conteos
+## (b) Commands, literal output, runtime and counts
 
 ```
 $ cd /mnt/media/dev/05-kk-golden-throat && uv run pytest tests/ -q
@@ -55,17 +55,17 @@ $ pnpm run test
 447 passed in 68.15s (0:01:08)      exit 0
 ```
 
-`uv lock` regeneró `uv.lock` (pytest 9.2.0) y `uv run python reproduce_v108.py 38`
-sigue funcionando igual que antes.
+`uv lock` regenerated `uv.lock` (pytest 9.2.0) and `uv run python reproduce_v108.py 38`
+still runs exactly as before.
 
-## (c) Mapa sección → test
+## (c) Map section → test
 
-Cada sección `N` tiene **como mínimo dos tests**: uno que la *ejecuta* (id
-`section-NN`, con los `assert` internos del script) y una clase profunda
-`TestSectionNN…` que recalcula sus números.  Detalle completo en
-`tests/README.md`; resumen (clase profunda → nº de tests):
+Every section `N` has **at least two tests**: one that *runs* it (id
+`section-NN`, with the script's internal `assert`s) and a deep class
+`TestSectionNN…` that recomputes its numbers. Full detail in
+`tests/README.md`; summary (deep class → number of tests):
 
-| § | clase | n | § | clase | n | § | clase | n |
+| § | class | n | § | class | n | § | class | n |
 |---|---|---|---|---|---|---|---|---|
 | 1 | TestSection1Numbers | 19 | 16 | TestSection16KoideFromM | 4 | 31 | TestSection31ModuliMetric | 11 |
 | 2 | TestSection2Casimir | 3 | 17 | TestSection17ObserverLevelFromLambda | 3 | 32 | TestSection32LevelVersusGridShape | 6 |
@@ -83,88 +83,87 @@ Cada sección `N` tiene **como mínimo dos tests**: uno que la *ejecuta* (id
 | 14 | TestSection14RingGaps | 12 | 29 | TestSection29LatticePointFromOmegaLambda | 7 | | | |
 | 15 | TestSection15StateCount | 6 | 30 | TestSection30SymmetricThroat | 4 | | | |
 
-Además `tests/test_section_census.py` (10 tests) fija la numeración: parsea
-`main.tex` y exige que `sections~N` citadas = {2,10,12,13,29,36,37,38,39,40,41,42,43}
-⊆ registro, que las 43 secciones son 1..43 contiguas, que cada `seccion_N`
-tiene banner `# N.` en el fuente, y que las cinco figuras incluidas por el tex
+On top of that `tests/test_section_census.py` (10 tests) pins the numbering: it parses
+`main.tex` and requires the cited `sections~N` = {2,10,12,13,29,36,37,38,39,40,41,42,43}
+⊆ registry, the 43 sections to be 1..43 contiguous, every `seccion_N` to
+carry a `# N.` banner in the source, and the five figures included by the tex
 (`fig_granularity`, `fig_one_structure`, `fig_mobius_throat`, `fig_throat_tiling`,
-`fig_tilings_strip`) las escribe su sección.
+`fig_tilings_strip`) to be written by their own section.
 
-Total: **447 tests** = 43 de ejecución + 394 profundos + 10 de censo.
+Total: **447 tests** = 43 execution + 394 deep + 10 census.
 
-## (d) Tolerancias heredadas vs estándar del hermano 03
+## (d) Inherited tolerances vs the standard of sibling 03
 
-**Heredadas del script** (los `assert` internos, ahora ejecutados por los run
-tests): `1e-12` (ε₀M=π, razón de anillos, normas, identidades de matriz),
-`1e-15` (media vuelta de la fibra), `1e-9` (cierre por nivel, z·τ, τ(12)),
-`1e-6·φ^{2s}` (fase sobre la celda), `atol=1e-9` (toro de Clifford),
-`1e-9` relativo (S = π(A/φ²+B/φ³)), `Decimal 10^-45` (§40, 60 dígitos),
-`1e-6` (desviación de Binet, §43), `1e-3` (Hurwitz <0.36, crecimientos),
-`5e-4` (pendiente W2 = 0.9972), `Decimal 1e-9` (no-enteralidad), `0.05`
-(crecimientos de teselados), y las ventanas ad-hoc `1.3<min<1.5`,
+**Inherited from the script** (the internal `assert`s, now exercised by the run
+tests): `1e-12` (ε₀M=π, ring ratio, norms, matrix identities),
+`1e-15` (half turn of the fibre), `1e-9` (closure per level, z·τ, τ(12)),
+`1e-6·φ^{2s}` (phase on the cell), `atol=1e-9` (Clifford torus),
+`1e-9` relative (S = π(A/φ²+B/φ³)), `Decimal 10^-45` (§40, 60 digits),
+`1e-6` (Binet deviation, §43), `1e-3` (Hurwitz <0.36, growths),
+`5e-4` (W2 slope = 0.9972), `Decimal 1e-9` (non-integrality), `0.05`
+(tiling growths), and the ad-hoc windows `1.3<min<1.5`,
 `1.7<max<1.9` (§29).
 
-**Estándar del hermano 03**: fixtures `np_1e12`/`np_1e9`, `mp25`/`mp40`,
-`tol = 10^{-(dps-6)}`, `tol_eig = 10^{-(dps//2)}` y comparaciones puntuales
+**Standard of sibling 03**: fixtures `np_1e12`/`np_1e9`, `mp25`/`mp40`,
+`tol = 10^{-(dps-6)}`, `tol_eig = 10^{-(dps//2)}` and pointwise comparisons
 `mpf('1e-20')`.
 
-**Lo que uso aquí** (mismo espíritu, sin fixtures de mpmath porque casi todo
-es float64): identidades exactas con `1e-12`/`1e-9` (las mismas que el
-script); tolerancias de redondeo = ancho de la precisión impresa (`.4f` →
-`5e-5`, `.3f`/`.2f` → `5e-4`); excepciones **documentadas en el docstring**:
+**What I use here** (same spirit, no mpmath fixtures because almost everything
+is float64): exact identities with `1e-12`/`1e-9` (the same ones as the
+script); rounding tolerances = the width of the printed precision (`.4f` →
+`5e-5`, `.3f`/`.2f` → `5e-4`); exceptions **documented in the docstring**:
 
-* `2e-3` para la cadena M=32 de §6 frente a los ceros de J1 (error de
-  discretización: el propio script reporta rms 0.54 %; el 4.º ratio difiere
-  en 1.5e-3);
-* `1e-4` para `x1_vec/x1_grav = 0.6381` de §3 (cuociente de dos ceros
-  impresos a 4 decimales: 2.4448/3.831706 = 0.63804, la propagación del
-  redondeo es ~1e-4);
-* `1e-5`/`5e-5` para las constantes de Hurwitz de §41, con la ventana de
-  `n` en el docstring (n=15..25 para φ, n=5..15 para √2): por debajo no
-  converge el convergente, por encima colapsa la resta en float64 (n=40 → 0);
-* `rel=1e-3` para las masas de Regge de §33 (impresas a 3 cifras).
+* `2e-3` for the M=32 chain of §6 against the J1 zeros (discretisation
+  error: the script itself reports rms 0.54 %; the 4th ratio differs by
+  1.5e-3);
+* `1e-4` for `x1_vec/x1_grav = 0.6381` of §3 (quotient of two zeros
+  printed to 4 decimals: 2.4448/3.831706 = 0.63804, the rounding
+  propagation is ~1e-4);
+* `1e-5`/`5e-5` for the Hurwitz constants of §41, with the window of
+  `n` in the docstring (n=15..25 for φ, n=5..15 for √2): below that the
+  convergent has not converged, above it the subtraction collapses in float64 (n=40 → 0);
+* `rel=1e-3` for the Regge masses of §33 (printed to 3 digits).
 
-Ninguna tolerancia se amplió para hacer pasar una comprobación que fallaba:
-de las 38 fallas de la primera ejecución, todas eran errores míos de
-regex/parámetro/expectativa (p. ej. `sigma\[[0,6]\]` con corchetes dobles,
-`assert run.has(...)` sobre una función que no devolvía nada, índices
-desplazados); se corrigieron los tests, no los umbrales.  Las cuatro
-excepciones de arriba ya estaban motivadas al escribirlas.
+No tolerance was widened to make a failing check pass: out of the 38 failures
+of the first run, all were my own regex/parameter/expectation mistakes (e.g.
+`sigma\[[0,6]\]` with double brackets, `assert run.has(...)` over a function
+that returned nothing, shifted indices); the tests were fixed, not the
+thresholds. The four exceptions above were already justified when written.
 
-## (e) Comprobaciones que fallan o que quedan marcadas
+## (e) Checks that fail or stay marked
 
-* **Fallas: 0** (`447 passed`) tras la primera ronda de corrección.
-* **`xfail`/`skip`: ninguno.** Ninguna sección del script falla: sus 64
-  `assert` internos pasan todos (§11, 12, 13, 29, 37, 39, 40, 41, 42, 43).
-* **Nota sobre `chk`**: no existe (`grep -c chk reproduce_v108.py` → 0).  Las
-  "comprobaciones ad-hoc" son 64 `assert` sin mensaje; al correr dentro de
-  pytest fallan con el número de sección y el stdout completo
-  (`SectionRun.match/has` los incluyen en el mensaje).
-* **`@pytest.mark.slow` (7 tests)**, por la regla de los 10 s:
-  * §12 (figura 1, 12.3 s): `test_section_writes_its_figure[section-12]`,
+* **Failures: 0** (`447 passed`) after the first round of fixes.
+* **`xfail`/`skip`: none.** No section of the script fails: its 64 internal
+  `assert`s all pass (§11, 12, 13, 29, 37, 39, 40, 41, 42, 43).
+* **Note on `chk`**: it does not exist (`grep -c chk reproduce_v108.py` → 0). The
+  "ad-hoc checks" are 64 message-less `assert`s; when run inside
+  pytest they fail with the section number and the full stdout
+  (`SectionRun.match/has` include them in the message).
+* **`@pytest.mark.slow` (7 tests)**, by the 10 s rule:
+  * §12 (figure 1, 12.3 s): `test_section_writes_its_figure[section-12]`,
     `test_section_runs_and_prints_its_number[section-12]`,
     `TestSection12FigureOneStatements::test_section12_runs_all_of_its_checks`
-  * §41 (figura 5, 35.7 s): `test_section_writes_its_figure[section-41]`,
+  * §41 (figure 5, 35.7 s): `test_section_writes_its_figure[section-41]`,
     `test_section_runs_and_prints_its_number[section-41]`,
     `TestSection41FiveRegularTilings::test_section41_prints_its_conclusions`,
     `::test_qubit_bond_dimension_of_54`
-  * §40 se midió en 9.5 s → queda **sin** marcar (bajo el umbral).
-* El backend es `Agg` y cada sección corre en un directorio temporal: los
-  cinco `fig_*.pdf` y `kk_vs_cw6_out.txt` no se escriben en el repo.
+  * §40 measured 9.5 s → left **un**marked (below the threshold).
+* The backend is `Agg` and every section runs in a temporary directory: the
+  five `fig_*.pdf` and `kk_vs_cw6_out.txt` are not written into the repo.
 
-## (f) Etiquetas de "testigo" / tier
+## (f) "Witness" / tier labels
 
-**`main.tex` (no renombradas aquí; censo previo a la estandarización de testigos):**
+**`main.tex` (not renamed here; census taken before the witness standardisation):**
 
-> Posterior a este informe, el sistema de testigos de `main.tex` se
-> estandarizó (color por clase, `\witness{P}{…}` en línea propia, etiquetas
-> `W1[CLPW]`, migración de 16 marcas `P*`→`P` con verificación de los 33
-> nombres contra `lean/TorreKK_LYR_v33.lean`). Estado vigente: 114 `\tier`
-> (P 12, P* 5, N 74, L 8, R 15) + 16 `\witness{P}` = 130 marcas, 12
-> `\wtag`, y "not yet compiled" = 0. La tabla siguiente documenta el estado
-> con el que se audita­ba el script.
+> After this report the witness system of `main.tex` was
+> standardised (colour by class, `\witness{P}{…}` on its own line, labels
+> `W1[CLPW]`, migration of 16 marks `P*`→`P` with verification of the 33
+> names against `lean/TorreKK_LYR_v33.lean`). Current state: 114 `\tier`
+> (P 12, P* 5, N 74, L 8, R 15) + 16 `\witness{P}` = 130 marks, 12
+> `\wtag`, and "not yet compiled" = 0. The table below documents the state
+> at which the script was audited.
 
-| etiqueta | apariciones |
+| label | occurrences |
 |---|---|
 | `\tier{N}` | 74 |
 | `\tier{P*}` | 21 |
@@ -172,53 +171,53 @@ excepciones de arriba ya estaban motivadas al escribirlas.
 | `\tier{P}` | 12 |
 | `\tier{L}` | 8 |
 
-Ítems testigo: `W1 (CLPW)`, `W2 (W01)`, `W3 (W01)`, `W4 (W01)`, `W5 (W01)`,
+Witness items: `W1 (CLPW)`, `W2 (W01)`, `W3 (W01)`, `W4 (W01)`, `W5 (W01)`,
 `W6 (W01)`, `W7 (W01)`, `W8 (W01)`, `W9 (GH)`, `W10 (W01)`, `W11 (CLPW)`,
-`W12 (CLPW)`.  Etiquetas de fórmula: `F1`…`F9`, `B1`…`B4`; de enunciado: `I12`.
+`W12 (CLPW)`. Formula labels: `F1`…`F9`, `B1`…`B4`; statement labels: `I12`.
 
-**`reproduce_v108.py` (mismos nombres que el tex):**
+**`reproduce_v108.py` (same names as the tex):**
 
-| etiqueta | dónde (línea) | texto |
+| label | where (line) | text |
 |---|---|---|
-| `W2` | 1467 (comentario), 1476 (§37) | `W2: dimension entera (estados con L0 <= N/2): sigma=3,4,5 -> 1654, …` |
-| `W4`, `W8` | 1048, 1051, 1058 (§18); 1131, 1132 (§22) | `nivel del observador (W4 = W8 en la unidad gravitacional l = sqrt2 l_P)`, `W8 en unidad l: 583.877; W4: 583.877`, `= W4 + log_phi 2` |
-| `(F1)` | 1003, 1007, 1014, 1017, 1023, 1031, 1042, 1059 (§16-18, §24) | `La escala M de (F1)…`, `M = 313.84 # MeV, (F1)`, `unidad de (F1): 4.6258 MeV` |
-| `(F9)` | 1017, 1034 (§17) | `El nivel del observador por el valor de Lambda, bajo (F9)…` |
-| `(B1)` | 1498, 1507 (§38) | `El 1/2 de (B1): cuanto de area, unidad de Fisher y bit de Shannon` |
+| `W2` | 1467 (comment), 1476 (§37) | `W2: integer dimension (states with L0 <= N/2): sigma=3,4,5 -> 1654, …` |
+| `W4`, `W8` | 1048, 1051, 1058 (§18); 1131, 1132 (§22) | `observer level (W4 = W8 in the gravitational unit l = sqrt2 l_P)`, `W8 in unit l: 583.877; W4: 583.877`, `= W4 + log_phi 2` |
+| `(F1)` | 1003, 1007, 1014, 1017, 1023, 1031, 1042, 1059 (§16-18, §24) | `The scale M of (F1)…`, `M = 313.84 # MeV, (F1)`, `unit of (F1): 4.6258 MeV` |
+| `(F9)` | 1017, 1034 (§17) | `The observer level from the value of Lambda, below (F9)…` |
+| `(B1)` | 1498, 1507 (§38) | `The 1/2 of (B1): area quantum, Fisher unit and Shannon bit` |
 | `I9` | 253 (§1) | `SL2(Z) facts of Imported statement I9` |
-| `I12` | 812 (§12, cabecera de figura), 1130 (§22) | `I12: $|\Omega|_\sigma=1/2$…`, `l = l_P/sqrt(G_N) = … (I12, tau = i)` |
+| `I12` | 812 (§12, figure header), 1130 (§22) | `I12: $|\Omega|_\sigma=1/2$…`, `l = l_P/sqrt(G_N) = … (I12, tau = i)` |
 | `I15` | 827 (§12) | `I15: $z=\varphi y$ carries the triangle onto Z[i]…` |
-| `[R]` | 692 (§11) | `el doce del icosaedro y el del fondo se prueban por separado (lectura [R])` |
-| `I1`…`I7` | §42 (impresiones `I1:`…`I7:`) | bloque de la sección 42 |
+| `[R]` | 692 (§11) | `the twelve of the icosahedron and that of the background are proved separately (reading [R])` |
+| `I1`…`I7` | §42 (prints `I1:`…`I7:`) | the block of section 42 |
 
-El script **no** contiene la macro `\tier{}` (grep `tier` → 0).  Los solapes
-`W2/W4/W8/F1/F9/B1/I9/I12/I15/[R]` son los que hay que estandarizar después;
-aquí no se renombró nada.
+The script does **not** contain the macro `\tier{}` (grep `tier` → 0). The
+overlaps `W2/W4/W8/F1/F9/B1/I9/I12/I15/[R]` are the ones to standardise later;
+nothing was renamed here.
 
-## (g) Desviaciones del estándar de 03 y por qué
+## (g) Deviations from the standard of 03 and why
 
-1. **`reproduce_v108.py` queda intacto** (no se convirtió en runner delgado
-   sobre un paquete reestructurado).  Motivo: las 43 secciones *son* el
-   código citado por el tex (`section~N of reproduce_v108.py`), están en su
-   propio espacio de nombres y son importables tal cual; mover 1990 líneas a
-   `tests/src/` arriesgaba romper el artefacto citado sin ganar cobertura —
-   los tests importan el módulo y lo ejecutan.  Si se quiere la reestructura
-   en módulos, el punto de partida ya está: `kkgt.harness.run_section` es el
-   único lugar que sabe cómo invocar una sección.
-2. **pytest en `[dependency-groups] dev`** en lugar de
-   `[project.optional-dependencies] test` como en 03 (lo pide la consigna).
-3. **`addopts = "--tb=short -p no:cacheprovider"`** sin `-v` (03 usa
-   `-v --tb=short …`), para que la línea de comando (`-q`) controle la
-   verbosidad.
-4. **Markers**: `slow`, `section`, `figure` (03 usa
-   `slow/symbolic/numerical/gauge/gravity/places`): aquí no hay sympy ni
-   sectores gauge, pero sí identidad de sección y figuras.
-5. **Sin `hypothesis` ni `rich`** (03 los declara como extras de test): no
-   aportan a comprobaciones numéricas cerradas.
-6. **Ejecuciones cacheadas por sesión en un directorio temporal**: las
-   secciones imprimen y escriben archivos (03 `cw6` es puro), así que
-   `run_section` las ejecuta una vez por sesión y comparte el stdout; los
-   tests lentos dependen de esa caché y por eso se marcan `slow` también.
-7. **`tests/src/kkgt`** contiene constantes de test + harness en vez de la
-   biblioteca del proyecto, porque la biblioteca *es* `reproduce_v108.py`
-   (importado con `pythonpath = [".", "tests/src"]`).
+1. **`reproduce_v108.py` stays intact** (it was not turned into a thin runner
+   over a restructured package). Reason: the 43 sections *are* the
+   code cited by the tex (`section~N of reproduce_v108.py`), they live in their
+   own namespace and are importable as they are; moving 1990 lines to
+   `tests/src/` risked breaking the cited artefact without gaining coverage —
+   the tests import the module and run it. If the restructure into
+   modules is wanted, the starting point is already there: `kkgt.harness.run_section` is the
+   only place that knows how to invoke a section.
+2. **pytest in `[dependency-groups] dev`** instead of
+   `[project.optional-dependencies] test` as in 03 (what the brief asks for).
+3. **`addopts = "--tb=short -p no:cacheprovider"`** without `-v` (03 uses
+   `-v --tb=short …`), so that the command line (`-q`) controls the
+   verbosity.
+4. **Markers**: `slow`, `section`, `figure` (03 uses
+   `slow/symbolic/numerical/gauge/gravity/places`): there is no sympy nor
+   gauge sectors here, but there is section identity and figures.
+5. **No `hypothesis` nor `rich`** (03 declares them as test extras): they do
+   not contribute to closed numerical checks.
+6. **Runs cached per session in a temporary directory**: the
+   sections print and write files (03 `cw6` is pure), so
+   `run_section` runs them once per session and shares the stdout; the
+   slow tests depend on that cache and are therefore marked `slow` too.
+7. **`tests/src/kkgt`** holds test constants + harness instead of the
+   project library, because the library *is* `reproduce_v108.py`
+   (imported with `pythonpath = [".", "tests/src"]`).

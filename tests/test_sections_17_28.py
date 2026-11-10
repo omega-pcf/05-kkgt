@@ -34,7 +34,7 @@ def lam_planck(h0: float, omega_l: float) -> float:
 
 # ══════════════════════════════════════════════════════════ section 17 ══
 class TestSection17ObserverLevelFromLambda:
-    """section 17 -- 'El nivel del observador por el valor de Lambda, bajo (F9) y la unidad de (F1)'"""
+    """section 17 -- 'The observer level from the value of Lambda, below (F9) and the unit of (F1)'"""
 
     @staticmethod
     def sigma_obs(h0: float, omega_l: float) -> float:
@@ -58,7 +58,7 @@ class TestSection17ObserverLevelFromLambda:
 
 # ══════════════════════════════════════════════════════════ section 18 ══
 class TestSection18TwoReadingsOfTheSameCurvature:
-    """section 18 -- 'El nivel del observador y la unidad de la curvatura'"""
+    """section 18 -- 'The observer level and the unit of the curvature'"""
 
     @staticmethod
     def readings(h0=67.36, omega_l=0.6847):
@@ -84,12 +84,12 @@ class TestSection18TwoReadingsOfTheSameCurvature:
     def test_lambda_times_s_is_six_pi(self, run_section):
         run = run_section(18)
         assert abs(6 * PHI**-7.3 * math.pi * PHI**7.3 - 6 * math.pi) < 1e-12
-        assert run.has("= 6 pi = 3 pi / G_N con G_N = 1/2: True")
+        assert run.has("= 6 pi = 3 pi / G_N with G_N = 1/2: True")
 
 
 # ══════════════════════════════════════════════════════════ section 19 ══
 class TestSection19TowerOffset:
-    """section 19 -- 'El desfase de la torre: ceros exactos frente a la asintótica, y la forma de Maldacena–Qi'"""
+    """section 19 -- 'The phase offset of the tower: exact zeros against the asymptotic form, and the Maldacena–Qi form'"""
 
     def test_offsets_against_the_printed_column(self):
         from scipy.special import jn_zeros
@@ -113,7 +113,7 @@ class TestSection19TowerOffset:
 
 # ══════════════════════════════════════════════════════════ section 20 ══
 class TestSection20TwoCandidates:
-    """section 20 -- 'El contraste con los dos candidatos observados (380 y 700 GeV)'"""
+    """section 20 -- 'The contrast with the two observed candidates (380 and 700 GeV)'"""
 
     @staticmethod
     def fit(masses, errors, m_scale=0.31384):
@@ -151,7 +151,7 @@ class TestSection20TwoCandidates:
 
 # ══════════════════════════════════════════════════════════ section 21 ══
 class TestSection21TwoBraneRival:
-    """section 21 -- 'El rival de dos branas ajustada a los mismos dos candidatos'"""
+    """section 21 -- 'The two-brane rival fitted to the same two candidates'"""
 
     def test_free_scale_versus_the_throat_scale(self):
         _sigma, _ds, lam = TestSection20TwoCandidates.fit([380, 700], [20, 20])
@@ -172,7 +172,7 @@ class TestSection21TwoBraneRival:
 
 # ══════════════════════════════════════════════════════════ section 22 ══
 class TestSection22CurvatureUnit:
-    """section 22 -- 'La unidad de la curvatura y el nivel del observador'"""
+    """section 22 -- 'The unit of the curvature and the observer level'"""
 
     def test_the_length_unit_is_sqrt2_planck(self):
         assert 1 / math.sqrt(0.5) == pytest.approx(math.sqrt(2), abs=1e-12)
@@ -203,7 +203,7 @@ class TestSection22CurvatureUnit:
 
 # ══════════════════════════════════════════════════════════ section 23 ══
 class TestSection23LatticeOfUnits:
-    """section 23 -- 'La red: unidades de Z[phi], el fondo y el observador'"""
+    """section 23 -- 'The lattice: units of Z[phi], the background and the observer'"""
 
     @pytest.mark.parametrize(
         "n,a,b,norm",
@@ -241,12 +241,12 @@ class TestSection23LatticeOfUnits:
         assert round((h - 73.04) / 1.04, 1) == -6.8
 
     def test_the_background_level_is_twelve(self, run_section):
-        run_section(23).has("fondo: 11.97 +- 0.05 frente al punto de red 12 (0.6 desviaciones)")
+        run_section(23).has("background: 11.97 +- 0.05 against lattice point 12 (0.6 standard deviations)")
 
 
 # ══════════════════════════════════════════════════════════ section 24 ══
 class TestSection24ScaleAndTop:
-    """section 24 -- 'Los dos datos con dimension y la cima'"""
+    """section 24 -- 'The two dimensionful data and the top'"""
 
     def test_koide_scale_and_unit(self):
         me, mmu, mtau = 0.51099895, 105.6583755, 1776.93
@@ -281,7 +281,7 @@ class TestSection24ScaleAndTop:
 
 # ══════════════════════════════════════════════════════════ section 25 ══
 class TestSection25AutodualWindow:
-    """section 25 -- 'El corte y proyeccion con la gaussiana autodual, en los dos espacios'"""
+    """section 25 -- 'The cut and projection with the self-dual Gaussian, in both spaces'"""
 
     PHI_BAR = (1 - 5 ** 0.5) / 2
 
@@ -330,7 +330,7 @@ class TestSection25AutodualWindow:
 
 # ══════════════════════════════════════════════════════════ section 26 ══
 class TestSection26WindowEdge:
-    """section 26 -- 'El borde de la ventana y sigma_G'"""
+    """section 26 -- 'The edge of the window and sigma_G'"""
 
     def test_the_two_crossings(self):
         n_weight = 0.5 * math.log(math.pi / math.log(2)) / LN_PHI
@@ -357,7 +357,7 @@ class TestSection26WindowEdge:
 
 # ══════════════════════════════════════════════════════════ section 27 ══
 class TestSection27WindowAsNome:
-    """section 27 -- 'La ventana como nome: la torre de toros y S como espejo'"""
+    """section 27 -- 'The window as a nome: the tower of tori and S as a mirror'"""
 
     @pytest.mark.parametrize(
         "n,tau_n,nome,inv",
@@ -387,7 +387,7 @@ class TestSection27WindowAsNome:
 
 # ══════════════════════════════════════════════════════════ section 28 ══
 class TestSection28PoissonTheta:
-    """section 28 -- 'Poisson: el tiempo propio y 1/N; theta_3 en tau = i'"""
+    """section 28 -- 'Poisson: the proper time and 1/N; theta_3 at tau = i'"""
 
     @pytest.mark.parametrize("n,printed", [(PHI**2, 2.6180), (PHI**4, 6.8541)])
     def test_modes_equal_windings(self, n, printed):

@@ -29,7 +29,7 @@ R4 = 5e-5   # .4f
 
 # ═══════════════════════════════════════════════════════════ section 1 ══
 class TestSection1Numbers:
-    """section 1 -- 'Todos los números en orden de aparición; alternativas para m0 (§9)'"""
+    """section 1 -- 'Every number in order of appearance; alternatives for m0 (§9)'"""
 
     def test_observed_ratios(self):
         obs = np.array(OBS_G)
@@ -120,7 +120,7 @@ class TestSection1Numbers:
 
 # ═══════════════════════════════════════════════════════════ section 2 ══
 class TestSection2Casimir:
-    """section 2 -- 'Energía del vacío de la torre, ceros exactos de J1 (§9)'"""
+    """section 2 -- 'Vacuum energy of the tower, exact zeros of J1 (§9)'"""
 
     def test_a_converges_with_the_number_of_exact_zeros(self, run_section):
         """A(K=20) and A(K=60) agree to 5e-5 (McMahon tail + Hurwitz zeta)."""
@@ -134,7 +134,7 @@ class TestSection2Casimir:
         run = run_section(2)
         b = run.value(r"K=60: A=[\d.]+\s+B=([\d.]+)", label="B K=60")
         assert b > 0
-        assert run.has("signo B: +")
+        assert run.has("sign B: +")
 
     def test_depth_is_minus_log_s_over_log_phi(self, run_section):
         """log_phi(1/s*) = -log s* / log phi, checked against the printed depth."""
@@ -142,7 +142,7 @@ class TestSection2Casimir:
         line = run.match(r"K=60:[^\n]*")
         ls = float(re.search(r"log s\*=([-\d.]+)", line.group(0)).group(1))
         depth = float(re.search(
-            r"profundidad log_phi\(1/s\*\) = ([\d.]+)", line.group(0)
+            r"depth log_phi\(1/s\*\) = ([\d.]+)", line.group(0)
         ).group(1))
         assert -ls / LN_PHI == pytest.approx(depth, abs=1e-6)
         assert depth == pytest.approx(1.0694864, abs=1e-6)
@@ -150,13 +150,13 @@ class TestSection2Casimir:
 
 # ═══════════════════════════════════════════════════════════ section 3 ══
 class TestSection3TwoBraneSpectra:
-    """section 3 -- 'Espectros de dos branas (Proposición del modelo de dos branas)'"""
+    """section 3 -- 'Two-brane spectra (Proposition of the two-brane model)'"""
 
     @pytest.mark.parametrize("depth,printed", [(6, 2.093), (12, 2.171), (30, 2.241)])
     def test_vector_ratio_grows_with_the_depth(self, run_section, depth, printed):
         """Exact two-brane condition: m2/m1 -> 2.295 as the throat deepens."""
         got = run_section(3).value(
-            rf"profundidad phi\^{depth}: vector m2/m1 = ([\d.]+)",
+            rf"depth phi\^{depth}: vector m2/m1 = ([\d.]+)",
             label=f"vector m2/m1 at phi^{depth}",
         )
         assert got == pytest.approx(printed, abs=R3)
@@ -184,7 +184,7 @@ class TestSection3TwoBraneSpectra:
     def test_uv_depth_in_levels(self, run_section):
         """k pi r = 39.33 = 81.74 levels, sigma_UV = 12 + 81.74 = 93.74."""
         run = run_section(3)
-        m = run.match(r"k pi r = ([\d.]+) = ([\d.]+) niveles; sigma_UV = ([\d.]+)")
+        m = run.match(r"k pi r = ([\d.]+) = ([\d.]+) levels; sigma_UV = ([\d.]+)")
         kpr, levels, sigma_uv = (float(g) for g in m.groups())
         assert levels * LN_PHI == pytest.approx(kpr, abs=0.01)
         assert 12 + levels == pytest.approx(sigma_uv, abs=0.01)
@@ -197,13 +197,13 @@ class TestSection3TwoBraneSpectra:
 
 # ═══════════════════════════════════════════════════════════ section 4 ══
 class TestSection4MetricPositivity:
-    """section 4 -- 'Métrica y positividad de reflexión (Proposición de la métrica, §4)'"""
+    """section 4 -- 'Metric and reflection positivity (Proposition of the metric, §4)'"""
 
     def test_standard_product_is_not_positive(self, run_section):
         """In the standard product sym(T) has a negative eigenvalue for a >= 0.2."""
         run = run_section(4)
         vals = [float(v) for v in re.findall(
-            r"min autovalor de sym\(T\)=([-\d.e+]+)", run.stdout
+            r"min eigenvalue of sym\(T\)=([-\d.e+]+)", run.stdout
         )]
         assert len(vals) == 3, vals
         assert vals[0] > 0 and vals[1] < 0 and vals[2] < 0, vals
@@ -212,7 +212,7 @@ class TestSection4MetricPositivity:
         """<f,Tf>_eta > 0 for a = 0.05, 0.2, 1.0: the metric restores positivity."""
         run = run_section(4)
         vals = [float(v) for v in re.findall(
-            r"<f,Tf>_eta minimo = ([\d.e+-]+)", run.stdout
+            r"<f,Tf>_eta min = ([\d.e+-]+)", run.stdout
         )]
         assert len(vals) == 3, vals
         assert all(v > 0 for v in vals), vals
@@ -223,19 +223,19 @@ class TestSection4MetricPositivity:
 
     def test_K_is_self_adjoint_in_the_eta_product_only(self, run_section):
         run = run_section(4)
-        assert re.search(r"K autoadjunto en el producto estandar:\s*False", run.stdout)
-        assert re.search(r"K autoadjunto en <u,v>_eta = u.eta.v :\s*True", run.stdout)
+        assert re.search(r"K self-adjoint in the standard product:\s*False", run.stdout)
+        assert re.search(r"K self-adjoint in <u,v>_eta = u.eta.v :\s*True", run.stdout)
 
 
 # ═══════════════════════════════════════════════════════════ section 5 ══
 class TestSection5QuarterPhase:
-    """section 5 -- 'Fase 1/4 (Corolario de la fase)'"""
+    """section 5 -- 'Phase 1/4 (Corollary of the phase)'"""
 
     def test_measured_phase_in_d4_is_a_quarter(self, run_section):
         """d=4: measured phase 0.233 against the asymptotic (d-3)/4 = 0.25."""
         run = run_section(5)
         m = run.match(
-            r"d=4: nu=1.0\s+fase asint\.\(d-3\)/4=([\d.]+)\s+fase medida=([\d.]+)"
+            r"d=4: nu=1.0\s+asympt\. phase \(d-3\)/4=([\d.]+)\s+measured phase=([\d.]+)"
             r"\s+rms=([\d.]+)%"
         )
         asym, measured, rms = (float(g) for g in m.groups())
@@ -246,7 +246,7 @@ class TestSection5QuarterPhase:
     def test_free_phase_fit_is_not_better(self, run_section):
         """Two parameters (theta free) give rms 0.57%, no better than the 1/4."""
         run = run_section(5)
-        m = run.match(r"theta optimo = ([\d.]+)\s+rms=([\d.]+)%")
+        m = run.match(r"optimal theta = ([\d.]+)\s+rms=([\d.]+)%")
         theta, rms = float(m.group(1)), float(m.group(2))
         assert theta == pytest.approx(0.217, abs=R3)
         assert rms <= 0.6, rms
@@ -254,7 +254,7 @@ class TestSection5QuarterPhase:
 
 # ═══════════════════════════════════════════════════════════ section 6 ══
 class TestSection6BesselChain:
-    """section 6 -- 'Cadena de Bessel (Teorema de Bessel, Observación de niveles)'"""
+    """section 6 -- 'Bessel chain (Bessel theorem, Observation of levels)'"""
 
     @pytest.mark.parametrize(
         "window,printed_rms", [("0,6", 1.00), ("-6,6", 0.54), ("-20,6", 0.54)]
@@ -286,7 +286,7 @@ class TestSection6BesselChain:
     def test_without_the_weight_the_chain_degrades(self, run_section):
         run = run_section(6)
         m = run.match(
-            r"sin peso e\^\{2A\} \(como A.7\), sigma\[-6,6\], M=32: \[([^\]]+)\]"
+            r"without the e\^\{2A\} weight \(as in A.7\), sigma\[-6,6\], M=32: \[([^\]]+)\]"
         )
         ratios = [float(v) for v in m.group(1).split()]
         assert ratios == pytest.approx([1.0, 2.227, 3.458, 4.687], abs=5e-4)
@@ -294,7 +294,7 @@ class TestSection6BesselChain:
 
 # ═══════════════════════════════════════════════════════════ section 7 ══
 class TestSection7Prediction:
-    """section 7 -- 'Predicción y lo no afirmado (§10, §11)'"""
+    """section 7 -- 'Prediction and what is not claimed (§10, §11)'"""
 
     @pytest.mark.parametrize(
         "m,dm,printed", [(700, 20, 0.110), (1000, 30, 0.159), (1322, 40, 0.211)]
@@ -309,11 +309,11 @@ class TestSection7Prediction:
     def test_gluon_scale_needs_three_levels(self, run_section):
         run = run_section(7)
         got = run.value(
-            r"gluon\s+escala=[^\n]*log_phi\(escala/graviton\)=([\d.]+)",
+            r"gluon\s+scale=[^\n]*log_phi\(scale/graviton\)=([\d.]+)",
             want=5.39, tol=R2, label="gluon delta sigma",
         )
         assert got == pytest.approx(5.39, abs=R2)
-        run.has("gluon/graviton pediria Delta sigma = 3")
+        run.has("gluon/graviton would require Delta sigma = 3")
 
 
 # ═══════════════════════════════════════════════════════════ section 8 ══
@@ -385,4 +385,4 @@ class TestSection8LookElsewhere:
             (-2 + 2 * np.cos(np.arange(1, n + 1) * np.pi / (n + 1))) / LN_PHI**2
         )[::-1]
         assert ev == pytest.approx(ana, abs=1e-10)
-        run_section(8).has("hopping simetrizado sqrt(phi^2*phi^-2) = 1.0")
+        run_section(8).has("hopping symmetrized sqrt(phi^2*phi^-2) = 1.0")

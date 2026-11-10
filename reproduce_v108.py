@@ -1,19 +1,19 @@
-"""reproduce_v108.py: todos los números y las cinco figuras de
+"""reproduce_v108.py: every number and the five figures of
 «The Kaluza–Klein spectrum of the golden throat», v108.
 
-Uso:  python3 reproduce_v108.py          todas las secciones
-      python3 reproduce_v108.py 2 14     solo esas secciones
+Usage:  python3 reproduce_v108.py          all sections
+        python3 reproduce_v108.py 2 14     only those sections
 
-Cada sección es uno de los scripts anteriores, sin cambios, en su propio espacio de
-nombres. Figuras: 1 (sección 12), 2 (sección 13), 3 (sección 10), 4 (sección 39),
-5 (sección 41). Python 3.13, NumPy, SciPy, Matplotlib; la
-sección 2 necesita además mpmath.
+Each section is one of the earlier scripts, unchanged, in its own namespace.
+Figures: 1 (section 12), 2 (section 13), 3 (section 10), 4 (section 39),
+5 (section 41). Python 3.13, NumPy, SciPy, Matplotlib; section 2
+also needs mpmath.
 """
 import sys
 SECCIONES = []
 
 # ======================================================================
-# 1. Todos los números en orden de aparición; alternativas para m0 (§9)
+# 1. Every number in order of appearance; alternatives for m0 (§9)
 # ======================================================================
 def seccion_1():
     """Reproduce every number of kk_golden_throat.tex, in order of appearance.
@@ -101,7 +101,7 @@ def seccion_1():
         P(f"{mm}/380 error (0.11..0.21)", round(mm/380 * np.hypot(dm/mm, 20/380), 2))
 
     print("== §6 the scale (orientation e^A = phi^sigma)")
-    def sl_r(a, b, M):                               # A = +w: rigidez e^{4A}, peso e^{2A}
+    def sl_r(a, b, M):                               # A = +w: stiffness e^{4A}, weight e^{2A}
         s = np.linspace(a, b, int(round((b - a) * M)) + 1); h = lp / M; n = len(s)
         p = phi ** (4 * (s[:-1] + 0.5 / M)); K = np.zeros((n, n))
         for i in range(n - 1):
@@ -262,24 +262,24 @@ def seccion_1():
     P("v6: phi^s + phi^(s+1) = phi^(s+2) at s = 0.37, -5, 12 (True)", all(abs(phi**s + phi**(s+1) - phi**(s+2)) < 1e-9*phi**(s+2) for s in (0.37, -5, 12)))
     P("v6: pi/phi is transcendental (phi algebraic, pi transcendental): pi/phi =", round(np.pi/phi, 6))
 
-SECCIONES.append((1, 'Todos los números en orden de aparición; alternativas para m0 (§9)', seccion_1))
+SECCIONES.append((1, 'Every number in order of appearance; alternatives for m0 (§9)', seccion_1))
 
 # ======================================================================
-# 2. Energía del vacío de la torre, ceros exactos de J1 (§9; requiere mpmath)
+# 2. Vacuum energy of the tower, exact zeros of J1 (§9; requires mpmath)
 # ======================================================================
 def seccion_2():
-    """Casimir (Coleman-Weinberg) de la torre del graviton con ceros EXACTOS de J1.
-    Sum f(j_k), f = j^4 log j^2 (A) y j^4 (B), regularizadas: K ceros exactos + cola de McMahon
-    (j = b + c1/b + c3/b^3 + c5/b^5, b = pi(k+1/4)) sumada con zeta de Hurwitz, a = 5/4."""
+    """Casimir (Coleman-Weinberg) energy of the graviton tower with EXACT zeros of J1.
+    Sum f(j_k), f = j^4 log j^2 (A) and j^4 (B), regularized: K exact zeros + McMahon tail
+    (j = b + c1/b + c3/b^3 + c5/b^5, b = pi(k+1/4)) summed with the Hurwitz zeta, a = 5/4."""
     import mpmath as mp
     mp.mp.dps = 30
     phi = (1 + mp.sqrt(5)) / 2
     c1, c3, c5 = mp.mpf(-3)/8, mp.mpf(36)/1536, -mp.mpf(32*3*1179)/(15*32768)
     eps = lambda u: c1*u**2 + c3*u**4 + c5*u**6
-    P = mp.taylor(lambda u: (1+eps(u))**4, 0, 8)                       # coef. de L
+    P = mp.taylor(lambda u: (1+eps(u))**4, 0, 8)                       # L coefficients
     Q = mp.taylor(lambda u: 2*(1+eps(u))**4*mp.log(1+eps(u)) if u != 0 else 0, 0, 8)
     a = mp.mpf(5)/4
-    def S(m, conlog):                    # sum_k beta^m (log beta^2 si conlog), regularizada
+    def S(m, conlog):                    # sum_k beta^m (log beta^2 if conlog), regularized
         z, dz = mp.zeta(-m, a), mp.zeta(-m, a, 1)
         return mp.pi**m * ((2*mp.log(mp.pi)*z - 2*dz) if conlog else z)
     def asym(beta, conlog):
@@ -287,7 +287,7 @@ def seccion_2():
         for n in range(0, 9, 2):
             out += beta**(4-n) * ((P[n]*L + Q[n]) if conlog else P[n])
         return out
-    def suma(conlog, K):
+    def regularized_sum(conlog, K):
         reg = sum((P[n]*S(4-n, True) + Q[n]*S(4-n, False)) if conlog else P[n]*S(4-n, False)
                   for n in range(0, 9, 2))
         corr = 0
@@ -297,20 +297,20 @@ def seccion_2():
             corr += f - asym(beta, conlog)
         return reg + corr
     for K in (20, 60):
-        A, B = suma(True, K), suma(False, K)
+        A, B = regularized_sum(True, K), regularized_sum(False, K)
         ls = -A/(2*B) - mp.mpf(1)/4
         print(f"K={K}: A={mp.nstr(A,8)}  B={mp.nstr(B,8)}  log s*={mp.nstr(ls,8)}  "
-              f"profundidad log_phi(1/s*) = {mp.nstr(-ls/mp.log(phi),8)}   signo B: {'+' if B>0 else '-'}")
+              f"depth log_phi(1/s*) = {mp.nstr(-ls/mp.log(phi),8)}   sign B: {'+' if B>0 else '-'}")
 
-SECCIONES.append((2, 'Energía del vacío de la torre, ceros exactos de J1 (§9; requiere mpmath)', seccion_2))
+SECCIONES.append((2, 'Vacuum energy of the tower, exact zeros of J1 (§9; requires mpmath)', seccion_2))
 
 # ======================================================================
-# 3. Espectros de dos branas (Proposición del modelo de dos branas)
+# 3. Two-brane spectra (Proposition of the two-brane model)
 # ======================================================================
 def seccion_3():
-    """Ecuaciones de RS y de la torre dorada, lado a lado: masas KK exactas con dos branas.
-    Gravitón:  J1(eps x) Y1(x) - Y1(eps x) J1(x) = 0 ;  vector: J0(eps x) Y0(x) - Y0(eps x) J0(x) = 0
-    con x = m z_IR, eps = z_UV/z_IR = e^{-k pi r} = phi^{-(sigma_UV - sigma_IR)}."""
+    """RS and golden-tower equations side by side: exact KK masses with two branes.
+    Graviton:  J1(eps x) Y1(x) - Y1(eps x) J1(x) = 0 ;  vector: J0(eps x) Y0(x) - Y0(eps x) J0(x) = 0
+    with x = m z_IR, eps = z_UV/z_IR = e^{-k pi r} = phi^{-(sigma_UV - sigma_IR)}."""
     import numpy as np
     from scipy.special import j0, y0, j1, y1
     from scipy.optimize import brentq
@@ -322,23 +322,23 @@ def seccion_3():
         return np.array(out[:n])
     def grav(eps): return roots(lambda x: j1(eps*x)*y1(x) - y1(eps*x)*j1(x))
     def vec(eps):  return roots(lambda x: j0(eps*x)*y0(x) - y0(eps*x)*j0(x))
-    print("validacion contra la cadena dorada (tabla del articulo):")
+    print("validation against the golden chain (article table):")
     for lev in (6, 12, 30):
-        v = vec(phi**-lev); print(f"  profundidad phi^{lev}: vector m2/m1 = {v[1]/v[0]:.3f}")
-    M = 0.31384; mKK = M*phi**12          # escala por cero en el fondo sigma_IR = 12 (GeV)
-    for nm, MP in (("M_Pl", 1.2209e19), ("M_Pl reducida", 2.435e18)):
+        v = vec(phi**-lev); print(f"  depth phi^{lev}: vector m2/m1 = {v[1]/v[0]:.3f}")
+    M = 0.31384; mKK = M*phi**12          # scale per zero on the background sigma_IR = 12 (GeV)
+    for nm, MP in (("M_Pl", 1.2209e19), ("reduced M_Pl", 2.435e18)):
         kpr = np.log(MP/mKK); levels = kpr/lp; eps = np.exp(-kpr)
         g, v = grav(eps), vec(eps)
-        print(f"\nUV en {nm}: k pi r = {kpr:.2f} = {levels:.2f} niveles; sigma_UV = {12+levels:.2f}")
-        print(f"  graviton x_n = {np.round(g,4)}  (J1 profundo: 3.8317, 7.0156)")
+        print(f"\nUV at {nm}: k pi r = {kpr:.2f} = {levels:.2f} levels; sigma_UV = {12+levels:.2f}")
+        print(f"  graviton x_n = {np.round(g,4)}  (deep J1: 3.8317, 7.0156)")
         print(f"  vector   x_n = {np.round(v,4)}  m2/m1 = {v[1]/v[0]:.4f}")
-        print(f"  gluon/graviton por cero universal: x1_vec/x1_grav = {v[0]/g[0]:.4f}")
+        print(f"  gluon/graviton per universal zero: x1_vec/x1_grav = {v[0]/g[0]:.4f}")
     print("\nLYR: gluon 3600-4000 GeV / graviton 380 GeV =", round(3600/380,2), "-", round(4000/380,2))
 
-SECCIONES.append((3, 'Espectros de dos branas (Proposición del modelo de dos branas)', seccion_3))
+SECCIONES.append((3, 'Two-brane spectra (Proposition of the two-brane model)', seccion_3))
 
 # ======================================================================
-# 4. Métrica y positividad de reflexión (Proposición de la métrica, §4)
+# 4. Metric and reflection positivity (Proposition of the metric, §4)
 # ======================================================================
 def seccion_4():
     import numpy as np
@@ -346,32 +346,32 @@ def seccion_4():
     phi=(1+5**.5)/2; l2=np.log(phi)**2; N=7; s=np.arange(N)
     L=np.diag(np.full(N,-2.))
     for i in range(1,N): L[i,i-1]=phi**2; L[i-1,i]=phi**-2
-    L/=l2; K=-L                                   # operador de masas^2, espectro >0
-    # 1. producto estandar <u,v> = u.v  (base |sigma> ortonormal, como en Prop 5.16/5.22)
-    print("K autoadjunto en el producto estandar:", np.allclose(K,K.T))
+    L/=l2; K=-L                                   # mass^2 operator, spectrum >0
+    # 1. standard product <u,v> = u.v  (basis |sigma> orthonormal, as in Prop 5.16/5.22)
+    print("K self-adjoint in the standard product:", np.allclose(K,K.T))
     for a in (0.05,0.2,1.0):
         T=expm(-a*K); m=eigvalsh((T+T.T)/2).min()
-        print(f"  a={a}: min autovalor de sym(T)={m:.3e}  -> <f,Tf> >= 0 para todo f: {m>-1e-12}")
-    # 2. metrica eta = D^T D con D = diag(phi^{-2 sigma})
+        print(f"  a={a}: min eigenvalue of sym(T)={m:.3e}  -> <f,Tf> >= 0 for all f: {m>-1e-12}")
+    # 2. metric eta = D^T D with D = diag(phi^{-2 sigma})
     eta=np.diag(phi**(-4.*s))
-    print("K autoadjunto en <u,v>_eta = u.eta.v :", np.allclose(eta@K,(eta@K).T))
+    print("K self-adjoint in <u,v>_eta = u.eta.v :", np.allclose(eta@K,(eta@K).T))
     for a in (0.05,0.2,1.0):
         T=expm(-a*K); G=eta@T
-        print(f"  a={a}: <f,Tf>_eta minimo = {eigvalsh((G+G.T)/2).min():.3e}")
-    # 3. eta contra el warp de la garganta (87): z = phi^sigma, A = -log z
+        print(f"  a={a}: <f,Tf>_eta min = {eigvalsh((G+G.T)/2).min():.3e}")
+    # 3. eta against the throat warp (87): z = phi^sigma, A = -log z
     A=-s*np.log(phi)
-    print("eta_sigma == e^{4A(sigma)} (sqrt(-g) de ds^2=e^{2A}eta dx dx + dz^2):",
+    print("eta_sigma == e^{4A(sigma)} (sqrt(-g) of ds^2=e^{2A}eta dx dx + dz^2):",
           np.allclose(np.diag(eta),np.exp(4*A)))
-    # 4. anchos en la metrica eta == biortogonales
+    # 4. widths in the eta metric == biorthogonal
     w,V=np.linalg.eig(K); o=np.argsort(w.real); w,V=w[o].real,V[:,o].real
-    V=V/np.sqrt(np.einsum('ij,ij->j',V,eta@V))     # normalizar en eta
+    V=V/np.sqrt(np.einsum('ij,ij->j',V,eta@V))     # normalize in eta
     p=np.array([eta[0,0]*V[0,j]**2 for j in range(4)])
-    print("peso en el borde (eta), relativo al modo 2 x20:",np.round(p/p[1]*20,1))
+    print("weight at the edge (eta), relative to mode 2 x20:",np.round(p/p[1]*20,1))
 
-SECCIONES.append((4, 'Métrica y positividad de reflexión (Proposición de la métrica, §4)', seccion_4))
+SECCIONES.append((4, 'Metric and reflection positivity (Proposition of the metric, §4)', seccion_4))
 
 # ======================================================================
-# 5. Fase 1/4 (Corolario de la fase)
+# 5. Phase 1/4 (Corollary of the phase)
 # ======================================================================
 def seccion_5():
     import numpy as np
@@ -384,52 +384,52 @@ def seccion_5():
             if f(a)*f(b)<0: r.append(brentq(f,a,b))
         return np.array(r[:n])
     def fit(m): A=(obs@m)/(m@m); return np.sqrt(np.mean(((obs-A*m)/obs)**2))*100, A
-    print("1) Fase libre: m = A (n + theta), 2 parametros")
+    print("1) Free phase: m = A (n + theta), 2 parameters")
     best=min((fit(np.arange(1,5)+t)[0],t) for t in np.linspace(-.5,1,3001))
-    print(f"   theta optimo = {best[1]:.3f}  rms={best[0]:.2f}%")
-    print("2) Ceros de J_nu con nu = d/2 - 1 (perfil de graviton en AdS_{d+1}), 1 parametro")
+    print(f"   optimal theta = {best[1]:.3f}  rms={best[0]:.2f}%")
+    print("2) Zeros of J_nu with nu = d/2 - 1 (graviton profile in AdS_{d+1}), 1 parameter")
     for d in (3,4,5,6):
         nu=d/2-1; z=zeros(nu); r,A=fit(z)
         ph=np.mean(z/np.pi-np.arange(1,5))
-        print(f"   d={d}: nu={nu:.1f}  fase asint.(d-3)/4={ (d-3)/4:.2f}  fase medida={ph:.3f}  rms={r:.2f}%")
-    print("3) Cadena discreta de A.7 (Dirichlet en ambos bordes): fase 0 -> rms",
+        print(f"   d={d}: nu={nu:.1f}  asympt. phase (d-3)/4={ (d-3)/4:.2f}  measured phase={ph:.3f}  rms={r:.2f}%")
+    print("3) Discrete chain of A.7 (Dirichlet at both edges): phase 0 -> rms",
           f"{fit(np.arange(1,5)*1.0)[0]:.2f}%")
 
-SECCIONES.append((5, 'Fase 1/4 (Corolario de la fase)', seccion_5))
+SECCIONES.append((5, 'Phase 1/4 (Corollary of the phase)', seccion_5))
 
 # ======================================================================
-# 6. Cadena de Bessel (Teorema de Bessel, Observación de niveles)
+# 6. Bessel chain (Bessel theorem, Observation of levels)
 # ======================================================================
 def seccion_6():
     import numpy as np
     from scipy.linalg import eigh
     from scipy.special import jn_zeros
     phi=(1+5**.5)/2; h0=np.log(phi); obs=np.array([380.,700,1000,1322]); j1=jn_zeros(1,4)
-    def cadena(s_uv,s_ir,M,peso=True):
-        # nodos sigma = s_uv .. s_ir con M subpasos por nivel dorado; Neumann en ambos bordes
+    def chain(s_uv,s_ir,M,peso=True):
+        # sigma nodes s_uv .. s_ir with M substeps per golden level; Neumann at both edges
         sig=np.linspace(s_uv,s_ir,int(round((s_ir-s_uv)*M))+1); h=h0/M; n=len(sig)
-        p=phi**(-4*(sig[:-1]+0.5/M))            # rigidez e^{4A} en los puntos medios
+        p=phi**(-4*(sig[:-1]+0.5/M))            # stiffness e^{4A} at the midpoints
         K=np.zeros((n,n))
         for i in range(n-1):
             K[i,i]+=p[i];K[i+1,i+1]+=p[i];K[i,i+1]-=p[i];K[i+1,i]-=p[i]
         K/=h*h
-        R=np.diag(phi**(-2*sig)) if peso else np.eye(n)   # peso de masa e^{2A}
-        R[0,0]/=2; R[-1,-1]/=2                # medio peso en los extremos (trapecio): segundo orden
+        R=np.diag(phi**(-2*sig)) if peso else np.eye(n)   # mass weight e^{2A}
+        R[0,0]/=2; R[-1,-1]/=2                # half weight at the ends (trapezoid): second order
         w=eigh(K,R,eigvals_only=True); m=np.sqrt(np.clip(w,0,None))
-        return m[1:5]                         # m[0]=0: el graviton sin masa (modo cero)
+        return m[1:5]                         # m[0]=0: the massless graviton (zero mode)
     def rms(m): A=(obs@m)/(m@m); return np.sqrt(np.mean(((obs-A*m)/obs)**2))*100
-    print("ceros J1 normalizados:",np.round(j1/j1[0],4),"  LYR:",np.round(obs/380,4))
+    print("normalized J1 zeros:",np.round(j1/j1[0],4),"  LYR:",np.round(obs/380,4))
     for (a,b) in [(0,6),(-6,6),(-20,6),(-60,6)]:
         for M in (1,4,32):
-            m=cadena(a,b,M); print(f"sigma[{a},{b}] M={M:2d}: m/m1={np.round(m/m[0],4)}  rms LYR={rms(m):.2f}%")
-    # sin peso: en [-20,6] el problema esta mal condicionado (pesos ~1e17) y el solver da modos espurios
-    # segun M; se muestra en [-6,6], donde es estable.
-    print("sin peso e^{2A} (como A.7), sigma[-6,6], M=32:",np.round((lambda m:m/m[0])(cadena(-6,6,32,False)),3))
+            m=chain(a,b,M); print(f"sigma[{a},{b}] M={M:2d}: m/m1={np.round(m/m[0],4)}  rms LYR={rms(m):.2f}%")
+    # without weight: on [-20,6] the problem is ill-conditioned (weights ~1e17) and the solver returns spurious modes
+    # depending on M; shown on [-6,6], where it is stable.
+    print("without the e^{2A} weight (as in A.7), sigma[-6,6], M=32:",np.round((lambda m:m/m[0])(chain(-6,6,32,False)),3))
 
-SECCIONES.append((6, 'Cadena de Bessel (Teorema de Bessel, Observación de niveles)', seccion_6))
+SECCIONES.append((6, 'Bessel chain (Bessel theorem, Observation of levels)', seccion_6))
 
 # ======================================================================
-# 7. Predicción y lo no afirmado (§10, §11)
+# 7. Prediction and what is not claimed (§10, §11)
 # ======================================================================
 def seccion_7():
     import numpy as np
@@ -440,26 +440,26 @@ def seccion_7():
         s=np.linspace(a,b,int((b-a)*M)+1); h=h0/M; n=len(s)
         p=phi**(-kp*(s[:-1]+.5/M)); K=np.zeros((n,n))
         for i in range(n-1): K[i,i]+=p[i];K[i+1,i+1]+=p[i];K[i,i+1]-=p[i];K[i+1,i]-=p[i]
-        r_=phi**(-kw*s); r_[0]/=2; r_[-1]/=2   # medio peso en los extremos (trapecio)
+        r_=phi**(-kw*s); r_[0]/=2; r_[-1]/=2   # half weight at the ends (trapezoid)
         w=eigh(K/h/h,np.diag(r_),eigvals_only=True); return np.sqrt(np.clip(w,0,None))[1:4]
     g=chain(-6,6,32,4,2); v=chain(-6,6,32,2,0)
-    print("graviton torre:",np.round(g/g[0],4)," J1:",np.round(jn_zeros(1,3)/jn_zeros(1,1),4))
-    print("vector   torre:",np.round(v/v[0],4)," J0:",np.round(jn_zeros(0,3)/jn_zeros(0,1),4))
-    print(" gluon LYR 8600/3600 =",round(8600/3600,3),"(torre vector",round(v[1]/v[0],3),")")
+    print("graviton tower:",np.round(g/g[0],4)," J1:",np.round(jn_zeros(1,3)/jn_zeros(1,1),4))
+    print("vector   tower:",np.round(v/v[0],4)," J0:",np.round(jn_zeros(0,3)/jn_zeros(0,1),4))
+    print(" gluon LYR 8600/3600 =",round(8600/3600,3),"(vector tower",round(v[1]/v[0],3),")")
     print(" quark LYR 2150/1040 =",round(2150/1040,3))
-    print("\n== E4: escala por sector (m1 / primer cero de su operador) ==")
+    print("\n== E4: scale per sector (m1 / first zero of its operator) ==")
     x1g=g[0]; x1v=v[0]
     Sg=380/x1g; Sgl=3600/x1v; Sq=1040/x1v
     for n_,S in (("graviton",Sg),("gluon",Sgl),("quark*",Sq)):
-        print(f"  {n_:8s} escala={S:9.2f}  log_phi(escala/graviton)={np.log(S/Sg)/np.log(phi):.2f}")
-    print("  CW6: sigma_G=2, U(1)=3, SU(2)=4, SU(3)=5  -> gluon/graviton pediria Delta sigma = 3")
-    print("  (*quark con normalizacion vectorial, solo orientativa)")
-    print("\n== E5: incertidumbre de los cocientes de LYR ==")
+        print(f"  {n_:8s} scale={S:9.2f}  log_phi(scale/graviton)={np.log(S/Sg)/np.log(phi):.2f}")
+    print("  CW6: sigma_G=2, U(1)=3, SU(2)=4, SU(3)=5  -> gluon/graviton would require Delta sigma = 3")
+    print("  (*quark with vector normalization, only indicative)")
+    print("\n== E5: uncertainty of the LYR ratios ==")
     for m,dm in ((700,20),(1000,30),(1322,40)):
         print(f"  {m}/380: {m/380:.3f} +- {m/380*np.hypot(dm/m,20/380):.3f}")
-    print("  torre finita sigma[0,6] vs J1 (infinita): m2/m1 1.8419 vs 1.8309, m4/m1 3.5284 vs 3.4772")
+    print("  finite tower sigma[0,6] vs J1 (infinite): m2/m1 1.8419 vs 1.8309, m4/m1 3.5284 vs 3.4772")
 
-SECCIONES.append((7, 'Predicción y lo no afirmado (§10, §11)', seccion_7))
+SECCIONES.append((7, 'Prediction and what is not claimed (§10, §11)', seccion_7))
 
 # ======================================================================
 # 8. Look-elsewhere (§6, §9)
@@ -469,10 +469,10 @@ def seccion_8():
     Comparativa: Le Yaouanc & Richard (2026), "Evidence for KK excitations of the
     graviton, gluon and quark at LHC"  vs  CW6_paper_v4.tex (Crystalline Worldsheet).
 
-    Pregunta: ¿qué estructura espectral describe mejor las masas KK reportadas,
-    la de Randall-Sundrum (ceros de Bessel, espaciado ~lineal) o la torre dorada
-    de CW6 (z = phi^sigma, espaciado geométrico)?  Y ¿qué dice el operador KK
-    discreto de CW6 (Prop. kk-discrete-spectrum) sobre los cocientes de masa?
+    Question: which spectral structure best describes the reported KK masses,
+    the Randall-Sundrum one (Bessel zeros, ~linear spacing) or the golden tower
+    of CW6 (z = phi^sigma, geometric spacing)?  And what does the discrete KK
+    operator of CW6 (Prop. kk-discrete-spectrum) say about the mass ratios?
     """
     import numpy as np
     from scipy.special import jn_zeros
@@ -483,22 +483,22 @@ def seccion_8():
     out = []
     P = lambda *a: out.append(" ".join(str(x) for x in a))
 
-    # ---------------------------------------------------------------- datos LYR
-    grav_obs = np.array([380., 700., 1000., 1322.])          # candidatos G_KK (GeV)
+    # ---------------------------------------------------------------- LYR data
+    grav_obs = np.array([380., 700., 1000., 1322.])          # G_KK candidates (GeV)
     grav_tab = np.array([380, 700, 1000, 1322, 1640, 1945, 2260, 2590, 2905.])
     gluon = np.array([3600., 8600.])                          # g_KK
     quark = np.array([1040., 2150.])                          # q_KK
     zkk = 3000.
 
-    # ------------------------------------------------ 1. gravitones: RS vs phi
-    x = np.concatenate([[0.], jn_zeros(1, 12)])               # ceros J1 (incl. 0)
-    P("== 1. Torre de gravitones ==")
-    P("ceros J1:", np.round(x[1:10], 2))
-    # RS: m_i = M * x_i  (1 parámetro).  Asignación: 380->x1, 700->x2, ...
+    # ------------------------------------------------ 1. gravitons: RS vs phi
+    x = np.concatenate([[0.], jn_zeros(1, 12)])               # J1 zeros (incl. 0)
+    P("== 1. Graviton tower ==")
+    P("J1 zeros:", np.round(x[1:10], 2))
+    # RS: m_i = M * x_i  (1 parameter).  Assignment: 380->x1, 700->x2, ...
     xi = x[1:5]
     M_rs = (grav_obs @ xi) / (xi @ xi)
     res_rs = grav_obs - M_rs * xi
-    # Dorada: m_k = m0 * phi^(k/2)  con k entero libre por punto (1 parámetro m0)
+    # Golden: m_k = m0 * phi^(k/2)  with k a free integer per point (1 parameter m0)
     def golden_fit(m, step):
         def cost(lm0):
             k = np.round((np.log(m) - lm0) / (step * lnphi))
@@ -511,15 +511,15 @@ def seccion_8():
     m0, k, pred_g = golden_fit(grav_obs, 1.0)
     rel_rs = res_rs / grav_obs
     rel_g = (grav_obs - pred_g) / grav_obs
-    P(f"RS   M={M_rs:.1f} GeV  pred={np.round(M_rs*xi)}  err rel={np.round(rel_rs*100,1)}%")
-    P(f"phi  m0={m0:.1f} GeV  k={k.astype(int)}  pred={np.round(pred_g)}  err rel={np.round(rel_g*100,1)}%")
+    P(f"RS   M={M_rs:.1f} GeV  pred={np.round(M_rs*xi)}  rel err={np.round(rel_rs*100,1)}%")
+    P(f"phi  m0={m0:.1f} GeV  k={k.astype(int)}  pred={np.round(pred_g)}  rel err={np.round(rel_g*100,1)}%")
     P(f"rms RS={np.sqrt(np.mean(rel_rs**2))*100:.1f}%   rms phi^k={np.sqrt(np.mean(rel_g**2))*100:.1f}%")
-    P("cocientes sucesivos obs:", np.round(grav_obs[1:]/grav_obs[:-1], 3),
+    P("successive observed ratios:", np.round(grav_obs[1:]/grav_obs[:-1], 3),
       "| RS:", np.round(xi[1:]/xi[:-1], 3), "| phi:", round(phi, 3))
-    # la tabla completa de LYR (predicciones) es exactamente RS:
-    P("tabla LYR / 100 :", np.round(grav_tab/100, 2), "vs ceros", np.round(x[1:10], 2))
+    # the full LYR table (predictions) is exactly RS:
+    P("LYR table / 100 :", np.round(grav_tab/100, 2), "vs zeros", np.round(x[1:10], 2))
 
-    # --------------------------------------------- 2. gluones y quarks KK
+    # --------------------------------------------- 2. KK gluons and quarks
     P("\n== 2. Gluones / quarks KK ==")
     rs_vec = np.array([2.45, 5.57, 8.70, 11.84])
     P(f"g: obs 8600/3600={8600/3600:.3f}  RS 5.57/2.45={5.57/2.45:.3f}  "
@@ -527,26 +527,26 @@ def seccion_8():
     P(f"q: obs 2150/1040={2150/1040:.3f}  RS(Abe et al.)=2  phi^(3/2)={phi**1.5:.3f}  "
       f"log_phi={np.log(2150/1040)/lnphi:.3f}")
     hier = np.array([380., 1000., 3600.])
-    P("jerarquía G:q:g =", hier/380, " log_phi cocientes:",
+    P("hierarchy G:q:g =", hier/380, " log_phi ratios:",
       np.round(np.log(hier[1:]/hier[:-1])/lnphi, 3))
     P(f"q/G 1000/380={1000/380:.3f} vs phi^2={phi**2:.3f} (dif {100*(1000/380/phi**2-1):.1f}%)")
     P(f"gluon1/grav1 RS ingenuo 2.45/3.83={2.45/3.83:.3f}^-1  obs 380/3600={380/3600:.3f}")
 
-    # --------------------------------- 3. look-elsewhere para 'coincidencias phi'
+    # --------------------------------- 3. look-elsewhere for 'phi coincidences'
     P("\n== 3. Look-elsewhere ==")
     rng = np.random.default_rng(1)
     r = np.exp(rng.uniform(np.log(1.3), np.log(4.5), 200000))
     grid = phi ** (np.arange(1, 9) / 2)          # phi^(k/2), k=1..8
     d = np.min(np.abs(r[:, None] / grid[None, :] - 1), axis=1)
     for tol in (0.01, 0.03, 0.05, 0.10):
-        P(f"P(ratio aleatorio en [1.3,4.5] a <{tol*100:.0f}% de algún phi^(k/2)) = {np.mean(d<tol):.2f}")
+        P(f"P(random ratio in [1.3,4.5] within {tol*100:.0f}% of some phi^(k/2)) = {np.mean(d<tol):.2f}")
     obs_ratios = {"q/G 1000/380": 1000/380, "g 8600/3600": 8600/3600,
                   "q 2150/1040": 2150/1040, "g/q 3600/1000": 3.6}
     for n_, v in obs_ratios.items():
         j = np.argmin(abs(v/grid-1)); P(f"  {n_}={v:.3f} -> phi^({j+1}/2)={grid[j]:.3f}  ({100*(v/grid[j]-1):+.1f}%)")
 
-    # ------------------------------ 4. operador KK discreto de CW6 (app:kk)
-    P("\n== 4. Operador KK discreto CW6 (7 niveles, sigma=0..6) ==")
+    # ------------------------------ 4. discrete KK operator of CW6 (app:kk)
+    P("\n== 4. Discrete KK operator of CW6 (7 levels, sigma=0..6) ==")
     n = 7
     L = np.diag(np.full(n, -2.0))
     for s in range(1, n):
@@ -554,26 +554,26 @@ def seccion_8():
         L[s-1, s] = phi**-2
     L /= lnphi**2
     ev = np.sort(np.linalg.eigvals(L).real)[::-1]
-    P("autovalores L:", np.round(ev, 3))
-    # L es tridiagonal no simétrica; similar a simétrica con hopping sqrt(phi^2*phi^-2)=1
-    P("hopping simetrizado sqrt(phi^2*phi^-2) =", 1.0, "-> espectro = (-2+2cos(k pi/8))/ln^2 phi")
+    P("eigenvalues L:", np.round(ev, 3))
+    # L is non-symmetric tridiagonal; similar to a symmetric one with hopping sqrt(phi^2*phi^-2)=1
+    P("hopping symmetrized sqrt(phi^2*phi^-2) =", 1.0, "-> spectrum = (-2+2cos(k pi/8))/ln^2 phi")
     ana = (-2 + 2*np.cos(np.arange(1, n+1)*np.pi/(n+1))) / lnphi**2
-    P("analítico     :", np.round(np.sort(ana)[::-1], 3))
-    m2 = -ev                                        # masas^2 >= 0
+    P("analytic     :", np.round(np.sort(ana)[::-1], 3))
+    m2 = -ev                                        # masses^2 >= 0
     m = np.sqrt(m2)
-    P("m_k (unid. 1/ln phi):", np.round(m, 3))
-    P("cocientes m_k/m_1:", np.round(m/m[0], 3))
-    P("RS (ceros J1) x_k/x_1:", np.round(x[1:8]/x[1], 3))
+    P("m_k (units 1/ln phi):", np.round(m, 3))
+    P("ratios m_k/m_1:", np.round(m/m[0], 3))
+    P("RS (J1 zeros) x_k/x_1:", np.round(x[1:8]/x[1], 3))
     P("obs grav m/380 :", np.round(grav_obs/380, 3))
 
-    # ------------------------------- 5. invariantes AdS5 compartidos
-    P("\n== 5. Geometría de fondo (ambos usan AdS5 con warp) ==")
+    # ------------------------------- 5. shared AdS5 invariants
+    P("\n== 5. Background geometry (both use AdS5 with warp) ==")
     rows = [("warp A(z)", "RS: A=-k|y|", "CW6: A=-log z, z=phi^sigma"),
             ("Lambda_5", "RS: -6k^2", "CW6: -6 (l=1)"),
             ("R", "RS: -20k^2", "CW6: -20"),
             ("BF", "-4", "-4"),
-            ("brana", "RS: tensión IR/UV (Israel)", "CW6: Israel por nivel, lambda=N_modes/M_PCF"),
-            ("escala abs.", "RS: k e^{-k pi r} ~ TeV", "CW6: no fijada (scale translation abierta)")]
+            ("brane", "RS: IR/UV tension (Israel)", "CW6: Israel per level, lambda=N_modes/M_PCF"),
+            ("abs. scale", "RS: k e^{-k pi r} ~ TeV", "CW6: not fixed (open scale translation)")]
     for a, b, c in rows:
         P(f"{a:12s} | {b:28s} | {c}")
 
@@ -583,11 +583,11 @@ def seccion_8():
 SECCIONES.append((8, 'Look-elsewhere (§6, §9)', seccion_8))
 
 # ======================================================================
-# 9. Cocientes de huecos (Discusión 6.1)
+# 9. Gap ratios (Discussion 6.1)
 # ======================================================================
 def seccion_9():
-    """Por qué phi para el ensamble: una órbita irracional sobre el círculo recorre todas las fases.
-    Discrepancia estrella D_N de {n alpha}, n=1..N, y número de huecos distintos (tres huecos)."""
+    """Why phi for the ensemble: an irrational orbit on the circle visits every phase.
+    Star discrepancy D_N of {n alpha}, n=1..N, and the number of distinct gaps (three gaps)."""
     import numpy as np
     phi=(1+5**.5)/2
     def disc(a,N):
@@ -599,32 +599,32 @@ def seccion_9():
     for name,a in [("phi",phi),("sqrt2",2**.5),("pi",np.pi),("e",np.e),("rational 13/8",13/8)]:
         print(f"{name:13s} N*D_N: N=100 {100*disc(a,100):.3f}  N=1000 {1000*disc(a,1000):.3f}  N=10000 {10000*disc(a,10000):.3f}   gaps N=1000: {gaps(a,1000)}")
 
-SECCIONES.append((9, 'Cocientes de huecos (Discusión 6.1)', seccion_9))
+SECCIONES.append((9, 'Gap ratios (Discussion 6.1)', seccion_9))
 
 # ======================================================================
-# 10. Figura 3: granularidad, con sus números
+# 10. Figure 3: granularity, with its numbers
 # ======================================================================
 def seccion_10():
-    """Granularidad: niveles enteros, diádicos y áureos; fase de la línea de mundo."""
+    """Granularity: integer, dyadic and golden levels; phase of the worldline."""
     import numpy as np
     phi=(1+5**.5)/2; lp=np.log(phi)
     def gaps(x):
         x=np.sort(np.r_[0,np.mod(x,1),1]); g=np.diff(x); g=g[g>1e-12]; return g
     F=[1,2,3,5,8,13,21,34,55,89,144,233,377,610,987]
-    print("niveles a+b*phi en [0,1): N puntos {n phi}, huecos distintos, razon max/min")
+    print("levels a+b*phi in [0,1): N points {n phi}, distinct gaps, max/min ratio")
     for N in F[3:]:
-        g=gaps(np.arange(1,N+1)*phi); print(N, len(np.unique(np.round(g,9))), round(g.max()/g.min(),4), "hueco max", round(g.max(),5))
-    print("diadicos: resolucion 2^-k exige k digitos binarios (k registros)")
+        g=gaps(np.arange(1,N+1)*phi); print(N, len(np.unique(np.round(g,9))), round(g.max()/g.min(),4), "max gap", round(g.max(),5))
+    print("dyadics: resolution 2^-k requires k binary digits (k registers)")
     for k in range(1,11): print(k, 2**k, 2.0**-k)
-    # fase: paso log(phi)/(2 pi) sobre el circulo; Gelfond: log(phi)/pi irracional
+    # phase: step log(phi)/(2 pi) on the circle; Gelfond: log(phi)/pi irrational
     a=lp/(2*np.pi)
-    print("rotacion de la fase por nivel (vueltas):", a)
-    print("peor razon de huecos, fase, N<=5000:", round(max(gaps(np.arange(1,N+1)*a).max()/gaps(np.arange(1,N+1)*a).min() for N in range(10,5001)),3))
-    print("peor razon de huecos, phi, N<=5000:", round(max(gaps(np.arange(1,N+1)*phi).max()/gaps(np.arange(1,N+1)*phi).min() for N in range(10,5001)),3))
+    print("phase rotation per level (turns):", a)
+    print("worst gap ratio, phase, N<=5000:", round(max(gaps(np.arange(1,N+1)*a).max()/gaps(np.arange(1,N+1)*a).min() for N in range(10,5001)),3))
+    print("worst gap ratio, phi, N<=5000:", round(max(gaps(np.arange(1,N+1)*phi).max()/gaps(np.arange(1,N+1)*phi).min() for N in range(10,5001)),3))
     exc=[N for N in range(3,5001) if abs(gaps(np.arange(1,N+1)*phi).max()/gaps(np.arange(1,N+1)*phi).min()-phi**2)>1e-6]
-    print("N <= 5000 con razon distinta de phi^2:", exc, "(N+1, las marcas con el origen, es de Fibonacci: dos longitudes, razon phi)")
+    print("N <= 5000 with ratio different from phi^2:", exc, "(N+1, marks including the origin, is Fibonacci: two lengths, ratio phi)")
 
-    # ---------- figura: granularidad, sin color ----------
+    # ---------- figure: granularity, no color ----------
     import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
     fig, ax = plt.subplots(1, 3, figsize=(10, 3.3), gridspec_kw=dict(width_ratios=[1.3, 1.3, 1]))
     for i, k in enumerate([1, 2, 3, 4, 5]):
@@ -647,38 +647,38 @@ def seccion_10():
     ax[2].set_aspect("equal")
     for a_ in ax: a_.axis("off")
     fig.savefig("fig_granularity.pdf", bbox_inches="tight")
-    print("figura: ok")
+    print("figure: ok")
 
-SECCIONES.append((10, 'Figura 3: granularidad, con sus números', seccion_10))
+SECCIONES.append((10, 'Figure 3: granularity, with its numbers', seccion_10))
 
 # ======================================================================
-# 11. Configuraciones de contacto en 1D, 2D y 3D (6.1)
+# 11. Contact configurations in 1D, 2D and 3D (6.1)
 # ======================================================================
 def seccion_11():
-    """Contacto en 1, 2 y 3 dimensiones desde pi y phi.
-    1D: dos vecinos; 2D: las seis unidades de Z[omega], omega = e^{2 pi i/3}; 3D: los doce vértices
-    (0, ±1, ±phi) y permutaciones cíclicas del icosaedro."""
+    """Contact in 1, 2 and 3 dimensions from pi and phi.
+    1D: two neighbours; 2D: the six units of Z[omega], omega = e^{2 pi i/3}; 3D: the twelve vertices
+    (0, ±1, ±phi) and the cyclic permutations of the icosahedron."""
     import numpy as np, itertools
     phi=(1+5**.5)/2
     # 2D
     u=np.exp(1j*np.pi*np.arange(6)/3)
     d2=[abs(a-b) for a,b in itertools.combinations(u,2)]
-    print("2D: 6 unidades, |u|=1:", np.allclose(abs(u),1), " distancia mínima entre vecinos:", round(min(d2),12))
+    print("2D: 6 units, |u|=1:", np.allclose(abs(u),1), " minimum distance between neighbours:", round(min(d2),12))
     # 3D
     V=[]
     for s1 in (1,-1):
         for s2 in (1,-1):
             p=(0,s1,s2*phi); V+= [p,(p[1],p[2],p[0]),(p[2],p[0],p[1])]
-    V=np.array(V,float); print("3D: vértices", len(V))
+    V=np.array(V,float); print("3D: vertices", len(V))
     r2=(V**2).sum(1); print("   |v|^2 = phi+2:", np.allclose(r2,phi+2))
     D=[((a-b)**2).sum() for a,b in itertools.combinations(V,2)]
-    vals=np.unique(np.round(D,9)); print("   distancias^2 distintas:", vals, " (4, 4phi+4? ->", 4*phi+4, ")")
-    print("   aristas (d^2=4):", sum(abs(x-4)<1e-9 for x in D), "; vecinos por vértice:", 2*sum(abs(x-4)<1e-9 for x in D)//12)
-    W=2*V/np.sqrt(phi+2)   # centros a distancia 2: esferas unitarias tocando la central
+    vals=np.unique(np.round(D,9)); print("   distinct squared distances:", vals, " (4, 4phi+4? ->", 4*phi+4, ")")
+    print("   edges (d^2=4):", sum(abs(x-4)<1e-9 for x in D), "; neighbours per vertex:", 2*sum(abs(x-4)<1e-9 for x in D)//12)
+    W=2*V/np.sqrt(phi+2)   # centres at distance 2: unit spheres touching the central one
     m=min(((a-b)**2).sum() for a,b in itertools.combinations(W,2))**.5
-    print("   contacto: 12 esferas unitarias tocando la central, distancia mínima entre ellas:", round(m,4), ">= 2:", m>=2)
-    print("   holgura: 4 >= phi+2 <=> phi <= 2")
-    # J3 (v108): el 12 en 3D también lo alcanzan FCC y HCP, sin phi
+    print("   contact: 12 unit spheres touching the central one, minimum distance between them:", round(m,4), ">= 2:", m>=2)
+    print("   slack: 4 >= phi+2 <=> phi <= 2")
+    # J3 (v108): in 3D the 12 is also reached by FCC and HCP, without phi
     fcc=[v for v in itertools.product([-1,0,1],repeat=3) if sorted(map(abs,v))==[0,1,1]]
     Wf=[2*np.array(v)/np.sqrt(2) for v in fcc]
     mf=min(np.linalg.norm(a-b) for a,b in itertools.combinations(Wf,2))
@@ -688,22 +688,22 @@ def seccion_11():
             t=k*2*np.pi/3+np.pi/6; hc.append((2*np.cos(t)/np.sqrt(3),2*np.sin(t)/np.sqrt(3),2*s*np.sqrt(2/3)))
     hc=np.array(hc); mh=min(np.linalg.norm(a-b) for a,b in itertools.combinations(hc,2))
     assert len(fcc)==12 and abs(mf-2)<1e-12 and len(hc)==12 and np.allclose(np.linalg.norm(hc,axis=1),2) and abs(mh-2)<1e-12
-    print("   FCC y HCP: 12 esferas unitarias a distancia 2 de la central, sin phi; distancia mínima entre ellas:", round(mf,4), round(mh,4))
-    print("   el doce del icosaedro y el del fondo se prueban por separado (lectura [R])")
-    # la cadena del 12
-    print("cadena: |A5|/5 =", 60//5, "; pi(10)/5 = 60/5 =", 12, "; lcm(4,6) =", np.lcm(4,6), "; -1/zeta(-1) = 12")
+    print("   FCC and HCP: 12 unit spheres at distance 2 from the central one, without phi; minimum distance between them:", round(mf,4), round(mh,4))
+    print("   the twelve of the icosahedron and that of the background are proved separately (reading [R])")
+    # the chain of the twelve
+    print("chain: |A5|/5 =", 60//5, "; pi(10)/5 = 60/5 =", 12, "; lcm(4,6) =", np.lcm(4,6), "; -1/zeta(-1) = 12")
 
-SECCIONES.append((11, 'Configuraciones de contacto en 1D, 2D y 3D (6.1)', seccion_11))
+SECCIONES.append((11, 'Contact configurations in 1D, 2D and 3D (6.1)', seccion_11))
 
 # ======================================================================
-# 12. Figura 1: una estructura vista de una vez; los puntos de Z[i] por nivel; comprobaciones
+# 12. Figure 1: one structure seen at once; the points of Z[i] per level; checks
 # ======================================================================
 def seccion_12():
-    """Geometría exacta de la garganta, el toro y la fibra (artículo 9, v9).
-    Cada figura sale de un enunciado demostrado en TorreKK_LYR_v8.lean; este script verifica
-    numéricamente esos enunciados y dibuja solo lo que verifican.
+    """Exact geometry of the throat, the torus and the fibre (article 9, v9).
+    Every figure comes from a statement proved in TorreKK_LYR_v8.lean; this script checks
+    those statements numerically and draws only what they verify.
 
-    Fuentes: CW6 eq. (torus), Prop. (fibre independent of base), eq. (worldline), eq. (throat);
+    Sources: CW6 eq. (torus), Prop. (fibre independent of base), eq. (worldline), eq. (throat);
     HP Def. (tower parameters), Prop. (certainty principle).
     """
     import numpy as np
@@ -715,9 +715,9 @@ def seccion_12():
     lp = np.log(phi)
     eps0 = lp / (6 * np.sqrt(3))
     M = 6 * np.sqrt(3) * np.pi / lp
-    SIR, STOP = 12, 18          # fondo (half-turn) y nivel donde se normaliza el dibujo (r = 1)
+    SIR, STOP = 12, 18          # background (half-turn) and level where the drawing is normalized (r = 1)
 
-    # ---------- verificaciones (una por teorema de Lean) ----------
+    # ---------- checks (one per Lean theorem) ----------
     assert abs(eps0 * M - np.pi) < 1e-12                                   # certainty_principle
     for s in np.linspace(-3, 20, 47):
         assert abs((eps0 * phi**s) * (M * phi**-s) - np.pi) < 1e-9           # closure_each_level
@@ -728,18 +728,18 @@ def seccion_12():
     th = np.linspace(0, 7, 50); assert np.allclose(abs(0.5*np.exp(1j*th)), .5)  # worldline_modulus
     y = np.linspace(-8, 0, 400)
     assert np.allclose(np.exp(y)**2 + (1 - np.exp(y)**2), 1)               # pseudosphere_unit_speed
-    # toro de Clifford: proyección estereográfica desde (0,0,0,1) -> toro de revolución R = sqrt2, r = 1
+    # Clifford torus: stereographic projection from (0,0,0,1) -> surface of revolution R = sqrt2, r = 1
     a, b = np.meshgrid(np.linspace(0, 2*np.pi, 60), np.linspace(0, 2*np.pi, 60))
     X = np.stack([np.cos(a), np.sin(a), np.cos(b), np.sin(b)]) / np.sqrt(2)
     P = X[:3] / (1 - X[3])
     rho = np.hypot(P[0], P[1])
-    assert np.allclose((rho - np.sqrt(2))**2 + P[2]**2, 1, atol=1e-9)        # clifford_square + estereográfica
+    assert np.allclose((rho - np.sqrt(2))**2 + P[2]**2, 1, atol=1e-9)        # clifford_square + stereographic
     print("eps0 =", eps0, " M_PCF =", M, " eps0*M/pi =", eps0*M/np.pi)
-    print("fase sobre la celda en sigma=12: pi *", phi**24)
-    print("todas las verificaciones: ok")
+    print("phase on the cell at sigma=12: pi *", phi**24)
+    print("all checks: ok")
 
 
-    # ---------- dibujo: solo líneas, sin color ----------
+    # ---------- drawing: lines only, no colour ----------
     def r_of(s): return phi ** (s - STOP)
     def h_of(r):
         q = np.sqrt(1 - r**2); return np.log((1 + q) / r) - q
@@ -761,7 +761,7 @@ def seccion_12():
         ax.set_box_aspect((1, 1, (zlim[1]-zlim[0]) / (2*lim))); ax.set_axis_off()
         ax.view_init(elev=elev, azim=-58)
 
-    # 2. los puntos de Z[i] dentro del anillo de cada nivel (texto de §10.1)
+    # 2. the points of Z[i] inside the disc of each level (text of §10.1)
     cnt=[sum(1 for a_ in range(-60,61) for b_ in range(-60,61) if a_*a_+b_*b_<=phi**s_) for s_ in range(7)]
     assert cnt==[5,5,9,13,21,37,57]
     assert [int(np.floor(np.pi*phi**s_)) for s_ in range(7)]==[3,5,8,13,21,34,56]
@@ -771,9 +771,9 @@ def seccion_12():
     assert round(c22/(np.pi*phi**22),4)==0.9998
     c12=sum(2*int(np.floor(np.sqrt(phi**12-a_*a_)))+1 for a_ in range(-30,31) if a_*a_<=phi**12)
     assert c12==1005 and int(np.floor(np.pi*phi**12))==1011
-    print("puntos de Z[i] en el disco de area S, sigma = 0..6:",cnt,"; razon a S:",rat,"; sigma = 22:",round(c22/(np.pi*phi**22),4),"; sigma = 12:",c12,"frente a",int(np.floor(np.pi*phi**12)))
+    print("points of Z[i] in the disc of area S, sigma = 0..6:",cnt,"; ratio to S:",rat,"; sigma = 22:",round(c22/(np.pi*phi**22),4),"; sigma = 12:",c12,"against",int(np.floor(np.pi*phi**12)))
 
-    # 3. la figura 1: una estructura vista de una vez (§10.1); cada panel dibuja un enunciado del texto
+    # 3. figure 1: one structure seen at once (§10.1); each panel draws a statement of the text
     def _figura_1():
         import numpy as np, matplotlib, itertools
         import matplotlib.pyplot as plt
@@ -788,7 +788,7 @@ def seccion_12():
         def head(x,y,letter,title,sub,col=None):
             fig.text(x,y,f"({letter})  {title}",ha="center",va="top",fontsize=11.5,color=col or INK)
             fig.text(x,y-0.015,sub,ha="center",va="top",fontsize=9.5,color="0.4")
-        # ---------------- (a) toro (cliff, solo líneas)
+        # ---------------- (a) torus (cliff, lines only)
         K=dict(color="k",lw=0.35)
         axT=fig.add_axes([0.01,0.80,0.32,0.15],projection="3d")
         def cliff(a,b):
@@ -800,7 +800,7 @@ def seccion_12():
         axT.plot(*cliff(0*wv,wv),color="k",lw=1.6,ls="--")
         axT.set_xlim(-2.1,2.1); axT.set_ylim(-2.1,2.1); axT.set_zlim(-1.1,1.1); axT.set_box_aspect((1,1,2.2/4.2)); axT.set_axis_off(); axT.view_init(elev=28,azim=-58)
         head(0.17,0.985,"a","The angular direction is the torus","§10.1: $T^2=\\mathbb{C}/M_{\\rm PCF}\\mathbb{Z}[i]$, $\\tau=i$; cycles $M$ (solid), $Mi$ (dashed)")
-        # ---------------- (b) anillo normalizado
+        # ---------------- (b) normalized ring
         axR=fig.add_axes([0.38,0.805,0.24,0.135]); axR.set_aspect("equal"); axR.set_axis_off()
         axR.plot(0.5*np.cos(t),0.5*np.sin(t),"k",lw=1.6)
         axR.plot([p.real for p in V+[V[0]]],[p.imag for p in V+[V[0]]],"k",lw=0.5,ls="--")
@@ -810,7 +810,7 @@ def seccion_12():
         axR.plot(0,0,"o",mfc="white",mec="k",ms=4)
         axR.set_xlim(-0.8,1.15); axR.set_ylim(-0.75,0.75)
         head(0.50,0.985,"b","One microstate at every level","I12: $|\\Omega|_\\sigma=\\frac{1}{2}$; the eigenvalue triad $v_k=\\frac{1}{2}\\omega^{k}$, $V^\\dagger V=1$")
-        # ---------------- (c) tercera dirección: cilindro y plano en líneas
+        # ---------------- (c) third direction: cylinder and plane in lines
         axC=fig.add_axes([0.67,0.80,0.32,0.15],projection="3d")
         for a_ in np.linspace(0,2*np.pi,24,endpoint=False): axC.plot([0.5*np.cos(a_)]*2,[0.5*np.sin(a_)]*2,[-1.2,1.2],**K)
         axC.plot(0.5*np.cos(t),0.5*np.sin(t),1.2+0*t,**K)
@@ -825,7 +825,7 @@ def seccion_12():
             axC.plot([x,x],[y,y],[-1.2,phi*y],"k",lw=0.6,ls=":"); axC.text(1.9*x,1.9*y,phi*y+0.05,f"$v_{k}$",fontsize=11,ha="center",bbox=dict(fc="white",ec="none",pad=0.5))
         axC.view_init(elev=18,azim=-55); axC.set_box_aspect((1,1,1.4)); axC.set_axis_off()
         head(0.83,0.985,"c","The golden coupling","I15: $z=\\varphi y$ carries the triangle onto $\\mathbb{Z}[i]$, $120^\\circ\\to90^\\circ$")
-        # ---------------- (d) la garganta: como la Fig. 4, solo líneas, frente sólido y fondo punteado
+        # ---------------- (d) the throat: as in Fig. 4, lines only, solid front and dotted background
         axG=fig.add_axes([0.02,0.555,0.96,0.205]); axG.set_aspect("equal"); axG.set_axis_off()
         s0,s1=2,18
         def hgt(r): return np.arccosh(1/r)-np.sqrt(1-r*r)
@@ -845,7 +845,7 @@ def seccion_12():
         axG.text(L/2,-1.32,"level $\\sigma$",ha="center",fontsize=10,color="0.4")
         axG.set_xlim(-0.1,L+0.4); axG.set_ylim(-1.40,1.08)
         head(0.50,0.545,"d","The radial direction is the throat","§10.1: Beltrami's pseudosphere, $e^{A}=\\varphi^{\\sigma}$, rings in the ratio $\\varphi$ (ring_ratio); $\\sigma=6,9$, the bottom $\\sigma_{\\rm IR}=12$, $\\sigma=15,18$")
-        # ---------------- conectores: de cada anillo a un riel, del riel a cada panel
+        # ---------------- connectors: from each ring to a rail, from the rail to each panel
         fig.canvas.draw()
         F=lambda xy: fig.transFigure.inverted().transform(axG.transData.transform(xy))
         yrail=0.768; ytop=0.797
@@ -856,7 +856,7 @@ def seccion_12():
         fig.add_artist(Line2D([0.17,0.83],[yrail,yrail],transform=fig.transFigure,color=INK,lw=1.4))
         for x in (0.17,0.50,0.83):
             fig.add_artist(FancyArrowPatch((x,yrail),(x,ytop),transform=fig.transFigure,arrowstyle="-|>",mutation_scale=14,color=INK,lw=1.4,shrinkA=0,shrinkB=0))
-        # ---------------- (e), (f) Z^3 por su diagonal
+        # ---------------- (e), (f) Z^3 along its diagonal
         def cubo(ax,Lc,c0v,lim,CC):
             n3=np.array([1,1,1])/3**.5; pts=np.array(list(itertools.product(range(Lc),repeat=3)),float)
             c0=np.array([c0v]*3); e1=np.array([1,-1,0])/2**.5; e2=np.cross(n3,e1)
@@ -875,7 +875,7 @@ def seccion_12():
         res=[]
         for k_,(Lc,c0v,lim,CC,let) in enumerate(CUB):
             axk=fig.add_axes([0.2*k_,0.300,0.2,0.165],projection="3d"); n_,d_=cubo(axk,Lc,c0v,lim,CC); res.append((n_,d_))
-            assert n_==Lc**3 and d_==3*Lc*Lc-3*Lc+1   # sombras de {0..L-1}^3: 3L^2-3L+1
+            assert n_==Lc**3 and d_==3*Lc*Lc-3*Lc+1   # shadows of {0..L-1}^3: 3L^2-3L+1
             win="\\{0,1\\}" if Lc==2 else ("\\{0,1,2\\}" if Lc==3 else f"\\{{0,\\dots,{Lc-1}\\}}")
             fig.text(0.1+0.2*k_,0.468,f"({let})  ${win}^3$:\n{n_} points, {d_} projected points",ha="center",va="top",fontsize=10.5,color=CC)
         assert res==[(8,7),(27,19),(125,61),(343,127),(729,217)]
@@ -883,7 +883,7 @@ def seccion_12():
         fig.text(0.50,0.492,"The cube $\\mathbb{Z}^3$ seen along its diagonal",ha="center",va="top",fontsize=11.5,color=INK)
         fig.text(0.50,0.296,"§10.1 (cube_diagonal_kernel): each axis projects to $e_k-\\frac{1}{3}(1,1,1)$, $|\\cdot|^2=\\frac{2}{3}$, at $120^\\circ$, onto a hexagonal lattice, $\\mathbb{Z}[\\omega]$ up to $\\sqrt{2/3}$;\nthe projection has a kernel, the diagonal: dot size = points projected to one point; outlined = more than one",ha="center",fontsize=9.5,color="0.4")
 
-        # ---------------- (g) la razón vectorial frente a la profundidad (§9), condición exacta de dos branas
+        # ---------------- (g) the vector ratio against the depth (§9), exact two-brane condition
         from scipy.special import jn_zeros, j0, y0
         from scipy.optimize import brentq
         def ratio(D):
@@ -911,20 +911,21 @@ def seccion_12():
     plt.rcParams.update(matplotlib.rcParamsDefault)
 
 
-    print("figuras: ok")
+    print("figures: ok")
 
-SECCIONES.append((12, 'Figura 1: una estructura vista de una vez; los puntos de Z[i] por nivel; comprobaciones', seccion_12))
+SECCIONES.append((12, 'Figure 1: one structure seen at once; the points of Z[i] per level; checks', seccion_12))
 
 # ======================================================================
-# 13. Figura 2: las dos familias recíprocas
+# 13. Figure 2: the two reciprocal families
 # ======================================================================
 def seccion_13():
-    """Figura 2 exacta: en cada nivel sigma = 12..18,
-     izquierda: el anillo de la garganta, radio proporcional a z(sigma) = phi^sigma (normalizado phi^(sigma-18));
-     derecha: la fibra de Möbius sobre su propio lazo, el periodo de media vuelta tau(sigma) = M phi^-sigma
-     (radio normalizado phi^-(sigma-12)), con media vuelta por vuelta (epsilon(sigma) tau(sigma) = pi,
-     closure_each_level) y semiancho 1/2 del radio de su lazo (|Omega| = 1/2, convención de dibujo de B1).
-     El producto de los dos radios es constante, phi^-6: z tau = M."""
+    """Exact figure 2: at each level sigma = 12..18,
+     left: the ring of the throat, radius proportional to z(sigma) = phi^sigma (normalized phi^(sigma-18));
+     right: the Möbius fibre over its own loop, the half-turn period tau(sigma) = M phi^-sigma
+     (radius normalized phi^-(sigma-12)), with half a turn per loop (epsilon(sigma) tau(sigma) = pi,
+     closure_each_level) and half-width 1/2 of the radius of its loop (|Omega| = 1/2, the B1 drawing
+     convention).
+     The product of the two radii is constant, phi^-6: z tau = M."""
     import numpy as np, matplotlib
     matplotlib.use("Agg"); import matplotlib.pyplot as plt
     phi=(1+5**.5)/2; lev=np.arange(12,19); tt=np.linspace(0,2*np.pi,400)
@@ -946,7 +947,7 @@ def seccion_13():
     ax=fig.add_subplot(1,2,2,projection="3d")
     U=np.linspace(0,2*np.pi,300)
     for s in lev:
-        R=rt(s)*0.6; h=0.5*R            # semiancho 1/2 del radio del lazo
+        R=rt(s)*0.6; h=0.5*R            # half-width 1/2 of the radius of the loop
         for wv in (-1,1):
             ax.plot((R+wv*h*np.cos(U/2))*np.cos(U),(R+wv*h*np.cos(U/2))*np.sin(U),s+wv*h*np.sin(U/2),"k",lw=0.9)
         for u0 in np.linspace(0,2*np.pi,26,endpoint=False):
@@ -955,10 +956,10 @@ def seccion_13():
     clean(ax,1.05)
     fig.savefig("fig_mobius_throat.pdf",bbox_inches="tight"); print("ok")
 
-SECCIONES.append((13, 'Figura 2: las dos familias recíprocas', seccion_13))
+SECCIONES.append((13, 'Figure 2: the two reciprocal families', seccion_13))
 
 # ======================================================================
-# 14. Tres huecos de las marcas en el anillo (6.1)
+# 14. Three gaps of the marks on the ring (6.1)
 # ======================================================================
 def seccion_14():
     import math
@@ -970,12 +971,12 @@ def seccion_14():
             out.append(len(set(round(v,9) for v in g)))
         K=10000; x=[(k*a)%1 for k in range(K)]
         D=max(abs(sum(1 for v in x if v<t)/K-t) for t in [i/50 for i in range(51)])
-        print(f"σ={s} N={phi**(2*s):.3f} huecos(100,1e3,1e4)={out} discrepancia={D:.4f}")
+        print(f"σ={s} N={phi**(2*s):.3f} gaps(100,1e3,1e4)={out} discrepancy={D:.4f}")
 
-SECCIONES.append((14, 'Tres huecos de las marcas en el anillo (6.1)', seccion_14))
+SECCIONES.append((14, 'Three gaps of the marks on the ring (6.1)', seccion_14))
 
 # ======================================================================
-# 15. Cuenta exacta de estados con c = 3 en el nivel N/2 frente a S (6.1)
+# 15. Exact count of states with c = 3 at the level N/2 against S (6.1)
 # ======================================================================
 def seccion_15():
     import math
@@ -984,23 +985,23 @@ def seccion_15():
     sig=[0]*(M+1)
     for d in range(1,M+1):
         for k in range(d,M+1,d): sig[k]+=d
-    p=[0]*(M+1); p[0]=1          # estados de c=3 bosones: prod (1-q^n)^-3 ; n p(n) = 3 sum sigma(k) p(n-k)
+    p=[0]*(M+1); p[0]=1          # c=3 boson states: prod (1-q^n)^-3 ; n p(n) = 3 sum sigma(k) p(n-k)
     for n in range(1,M+1):
         p[n]=3*sum(sig[k]*p[n-k] for k in range(1,n+1))//n
-    print("σ   N=φ^2σ   L0=N/2  ln#estados   S=π√N   cociente  cota πz   N/πz")
+    print("σ   N=φ^2σ   L0=N/2  ln#states   S=π√N   ratio  bound πz   N/πz")
     for s in range(1,10):
         N=phi**(2*s); L0=round(N/2); z=phi**s
         lnW=math.log(p[L0]); S=math.pi*math.sqrt(2*L0)
         print(f"{s}  {N:9.2f} {L0:6d}  {lnW:10.3f}  {S:8.3f}  {lnW/S:.4f}   {math.pi*z:8.2f}  {N/(math.pi*z):6.2f}")
-    print("\nCon la corrección de Cardy de orden siguiente, ln W ≈ S − (c+3)/4·ln L0 + C, c=3:")
+    print("\nWith the next-order Cardy correction, ln W ≈ S − (c+3)/4·ln L0 + C, c=3:")
     for s in range(3,10):
         L0=round(phi**(2*s)/2); S=math.pi*math.sqrt(2*L0)
         print(f"σ={s}  S − ln W − (3/2) ln L0 = {S-math.log(p[L0])-1.5*math.log(L0):.4f}")
 
-SECCIONES.append((15, 'Cuenta exacta de estados con c = 3 en el nivel N/2 frente a S (6.1)', seccion_15))
+SECCIONES.append((15, 'Exact count of states with c = 3 at the level N/2 against S (6.1)', seccion_15))
 
 # ======================================================================
-# 16. La escala M de (F1): reconstrucción de tipo Koide de las masas leptónicas
+# 16. The scale M of (F1): Koide-type reconstruction of the lepton masses
 # ======================================================================
 def seccion_16():
     import math
@@ -1009,18 +1010,18 @@ def seccion_16():
     obs = {"e": 0.51099895, "mu": 105.6583755, "tau": 1776.86}
     m = sorted(M * (1 + math.sqrt(2) * math.cos(d + 2 * math.pi * k / 3)) ** 2 for k in range(3))
     for (name, o), x in zip(obs.items(), m):
-        print(f"{name:4s} Koide desde M: {x:10.4f} MeV   observada: {o:10.4f}   rel. {abs(x-o)/o:.1e}")
+        print(f"{name:4s} Koide from M: {x:10.4f} MeV   observed: {o:10.4f}   rel. {abs(x-o)/o:.1e}")
 
-SECCIONES.append((16, 'La escala M de (F1): reconstrucción de tipo Koide de las masas leptónicas', seccion_16))
+SECCIONES.append((16, 'The scale M of (F1): Koide-type reconstruction of the lepton masses', seccion_16))
 
 # ======================================================================
-# 17. El nivel del observador por el valor de Lambda, bajo (F9) y la unidad de (F1)
+# 17. The observer level from the value of Lambda, below (F9) and the unit of (F1)
 # ======================================================================
 def seccion_17():
     import math, random
     phi = (1 + 5 ** 0.5) / 2
     L = math.log(phi)
-    u = 313.84e6 / (6 * 3 ** 0.5 * math.pi / L)        # eV, la unidad de (F1)
+    u = 313.84e6 / (6 * 3 ** 0.5 * math.pi / L)        # eV, the unit of (F1)
     hbar, Mpc = 6.582119569e-16, 3.0856775814913673e19   # eV s, km
     def sigma_obs(H0, OL):                              # Lambda = 3 H0^2 Omega_L, curvatura
         lam = 3 * (hbar * H0 / Mpc) ** 2 * OL
@@ -1028,58 +1029,58 @@ def seccion_17():
     random.seed(1)
     v = [sigma_obs(random.gauss(67.36, 0.54), random.gauss(0.6847, 0.0073)) for _ in range(200000)]
     m = sum(v) / len(v); sd = (sum((x - m) ** 2 for x in v) / len(v)) ** 0.5
-    print(f"unidad de (F1): {u/1e6:.4f} MeV")
+    print(f"unit of (F1): {u/1e6:.4f} MeV")
     print(f"sigma_obs = {sigma_obs(67.36, 0.6847):.3f} +- {sd:.3f}  (Planck 2018: H0 = 67.36 +- 0.54, Omega_L = 0.6847 +- 0.0073)")
 
-SECCIONES.append((17, 'El nivel del observador por el valor de Lambda, bajo (F9) y la unidad de (F1)', seccion_17))
+SECCIONES.append((17, 'The observer level from the value of Lambda, below (F9) and the unit of (F1)', seccion_17))
 
 # ======================================================================
-# 18. El nivel del observador y la unidad de la curvatura
+# 18. The observer level and the unit of the curvature
 # ======================================================================
 def seccion_18():
     import math, random
     phi = (1 + 5 ** 0.5) / 2; L = math.log(phi)
-    u = 313.84e6 / (6 * 3 ** 0.5 * math.pi / L)      # eV, unidad de (F1)
+    u = 313.84e6 / (6 * 3 ** 0.5 * math.pi / L)      # eV, unit of (F1)
     M = 313.84e6; MP = 1.220890e28                    # eV
     hbar, Mpc_km = 6.582119569e-16, 3.0856775814913673e19
     lP2, c, Mpc_m = (1.616255e-35) ** 2, 2.99792458e8, 3.0856775814913673e22
     def readings(H0, OL):
-        lam_eV2 = 3 * (hbar * H0 / Mpc_km) ** 2 * OL                 # curvatura, eV^2
-        s_curv = math.log(6 * u ** 2 / lam_eV2) / L                  # W8, unidad de (F1)
+        lam_eV2 = 3 * (hbar * H0 / Mpc_km) ** 2 * OL                 # curvature, eV^2
+        s_curv = math.log(6 * u ** 2 / lam_eV2) / L                  # W8, unit of (F1)
         lam_m = 3 * (H0 * 1e3 / Mpc_m) ** 2 * OL / c ** 2            # m^-2
-        S = 3 * math.pi / (lam_m * lP2)                              # entropia de de Sitter
-        s_ent = math.log(S / math.pi) / L                            # W4, sin unidad
+        S = 3 * math.pi / (lam_m * lP2)                              # de Sitter entropy
+        s_ent = math.log(S / math.pi) / L                            # W4, dimensionless
         return s_curv, s_ent, S
     random.seed(2)
     v = [readings(random.gauss(67.36, 0.54), random.gauss(0.6847, 0.0073)) for _ in range(100000)]
     def ms(i):
         x = [t[i] for t in v]; m = sum(x) / len(x); return m, (sum((y - m) ** 2 for y in x) / len(x)) ** 0.5
     sc, se, S = readings(67.36, 0.6847)
-    print(f"nivel del observador (W4 = W8 en la unidad gravitacional l = sqrt2 l_P): sigma = {se:.3f} +- {ms(1)[1]:.3f};  S = {S:.3e}")
-    print(f"la misma curvatura medida en la unidad de particulas (F1), eliminada: {sc:.3f}; diferencia {se - sc:.3f} = 2 log_phi(M_Pl/u) - log_phi 2 = {2*math.log(MP/u)/L - math.log(2)/L:.3f}, una conversion de unidad")
-    print(f"Lambda(sigma) S(sigma) = 6 pi = 3 pi / G_N con G_N = 1/2:", abs(6*phi**-7.3*math.pi*phi**7.3 - 6*math.pi) < 1e-12)
+    print(f"observer level (W4 = W8 in the gravitational unit l = sqrt2 l_P): sigma = {se:.3f} +- {ms(1)[1]:.3f};  S = {S:.3e}")
+    print(f"the same curvature measured in the particle unit (F1), removed: {sc:.3f}; difference {se - sc:.3f} = 2 log_phi(M_Pl/u) - log_phi 2 = {2*math.log(MP/u)/L - math.log(2)/L:.3f}, a unit conversion")
+    print(f"Lambda(sigma) S(sigma) = 6 pi = 3 pi / G_N with G_N = 1/2:", abs(6*phi**-7.3*math.pi*phi**7.3 - 6*math.pi) < 1e-12)
 
-SECCIONES.append((18, 'El nivel del observador y la unidad de la curvatura', seccion_18))
+SECCIONES.append((18, 'The observer level and the unit of the curvature', seccion_18))
 
 # ======================================================================
-# 19. El desfase de la torre: ceros exactos frente a la asintótica, y la forma de Maldacena–Qi
+# 19. The phase offset of the tower: exact zeros against the asymptotic form, and the Maldacena–Qi form
 # ======================================================================
 def seccion_19():
     import math
     from scipy.special import jn_zeros
     j = jn_zeros(1, 8)
-    print("k  j_1,k/pi - k   (asintota 1/4 = 1/d en d = 4; el k = 0 exacto es j_1,0 = 0)")
-    print("0  exacto: j_1,0 = 0;  la asintota daria 0.25")
+    print("k  j_1,k/pi - k   (asymptote 1/4 = 1/d at d = 4; the exact k = 0 is j_1,0 = 0)")
+    print("0  exact: j_1,0 = 0;  the asymptote would give 0.25")
     for k, x in enumerate(j, 1):
         print(f"{k}  {x/math.pi - k:.4f}")
     for d in range(2, 9):
         print(f"d = {d}: d/4 - 3/4 = {d/4-0.75:+.3f},  1/d = {1/d:.3f}", "  iguales" if abs(d/4-0.75-1/d) < 1e-12 else "")
-    print("Maldacena-Qi: E_n = t'(n + 1/4); torre: m_k ~ pi M phi^12 (k + 1/4), con k = 0 sustituido por el modo cero")
+    print("Maldacena-Qi: E_n = t'(n + 1/4); tower: m_k ~ pi M phi^12 (k + 1/4), with k = 0 replaced by the zero mode")
 
-SECCIONES.append((19, 'El desfase de la torre: ceros exactos frente a la asintótica, y la forma de Maldacena–Qi', seccion_19))
+SECCIONES.append((19, 'The phase offset of the tower: exact zeros against the asymptotic form, and the Maldacena–Qi form', seccion_19))
 
 # ======================================================================
-# 20. El contraste con los dos candidatos observados (380 y 700 GeV)
+# 20. The contrast with the two observed candidates (380 and 700 GeV)
 # ======================================================================
 def seccion_20():
     import math
@@ -1092,14 +1093,14 @@ def seccion_20():
         dl = 1 / math.sqrt(sum(a * c * c for a, c in zip(w, mu)))
         return math.log(lam / M) / math.log(phi), dl / lam / math.log(phi)
     s, ds = fit([380, 700], [20, 20])
-    print(f"dos datos: sigma_IR = {s:.2f} +- {ds:.2f}  ({abs(s-12)/ds:.1f} desviaciones de 12)")
-    print(f"cociente 700/380 = {700/380:.3f};  j_1,2/j_1,1 = {j[1]/j[0]:.3f}")
-    print("predicciones con sigma = 12 (GeV):", [round(x * M * phi ** 12) for x in j[2:6]], " frente a RS (LYR): 1000, 1322")
+    print(f"two data points: sigma_IR = {s:.2f} +- {ds:.2f}  ({abs(s-12)/ds:.1f} standard deviations from 12)")
+    print(f"ratio 700/380 = {700/380:.3f};  j_1,2/j_1,1 = {j[1]/j[0]:.3f}")
+    print("predictions with sigma = 12 (GeV):", [round(x * M * phi ** 12) for x in j[2:6]], " against RS (LYR): 1000, 1322")
 
-SECCIONES.append((20, 'El contraste con los dos candidatos observados (380 y 700 GeV)', seccion_20))
+SECCIONES.append((20, 'The contrast with the two observed candidates (380 and 700 GeV)', seccion_20))
 
 # ======================================================================
-# 21. El rival de dos branas ajustado a los mismos dos candidatos
+# 21. The two-brane rival fitted to the same two candidates
 # ======================================================================
 def seccion_21():
     import math
@@ -1109,14 +1110,14 @@ def seccion_21():
     w = [1 / x ** 2 for x in e]
     lam = sum(a * b * c for a, b, c in zip(w, m, j)) / sum(a * c * c for a, c in zip(w, j))
     lg = M * phi ** 12
-    print(f"escala libre ajustada: {lam:.2f} GeV -> modos 3 y 4: {j[2]*lam:.0f}, {j[3]*lam:.0f} GeV")
-    print(f"garganta (sigma = 12): {lg:.2f} GeV -> {j[2]*lg:.0f}, {j[3]*lg:.0f} GeV; diferencia {100*(lg/lam-1):.1f} %")
-    print(f"separacion: {j[2]*(lg-lam):.0f} y {j[3]*(lg-lam):.0f} GeV, frente a +-30 y +-40 GeV supuestos en la sec. 2")
+    print(f"fitted free scale: {lam:.2f} GeV -> modes 3 and 4: {j[2]*lam:.0f}, {j[3]*lam:.0f} GeV")
+    print(f"throat (sigma = 12): {lg:.2f} GeV -> {j[2]*lg:.0f}, {j[3]*lg:.0f} GeV; difference {100*(lg/lam-1):.1f} %")
+    print(f"split: {j[2]*(lg-lam):.0f} and {j[3]*(lg-lam):.0f} GeV, against the +-30 and +-40 GeV assumed in section 2")
 
-SECCIONES.append((21, 'El rival de dos branas ajustado a los mismos dos candidatos', seccion_21))
+SECCIONES.append((21, 'The two-brane rival fitted to the same two candidates', seccion_21))
 
 # ======================================================================
-# 22. La unidad de la curvatura y el nivel del observador
+# 22. The unit of the curvature and the observer level
 # ======================================================================
 _C = dict(hbar=1.054571817e-34, c=299792458.0, G=6.67430e-11, Mpc=3.0856775814913673e22)
 def _LamP(H0, OL):
@@ -1128,15 +1129,15 @@ def seccion_22():
     lp = _LamP(67.36, 0.6847)
     s_l = math.log(6 / (lp / GN)) / L; s_S = math.log(3 / lp) / L; s_cw6 = math.log(6 / lp) / L
     print(f"l = l_P/sqrt(G_N) = {1/math.sqrt(GN):.4f} l_P (I12, tau = i)")
-    print(f"W8 en unidad l: {s_l:.3f};  W4: {s_S:.3f}  (iguales por Lambda S = 6 pi)")
-    print(f"eq. sigma-obs de CW6 (Lambda en l_P con el 6 de G_N = 1/2): {s_cw6:.3f} = W4 + log_phi 2")
-    for name, H0, OL in [("Planck 2018", 67.36, 0.6847), ("SH0ES, omega_m fijo", 73.04, 1 - 0.1430 / 0.7304 ** 2)]:
+    print(f"W8 in unit l: {s_l:.3f};  W4: {s_S:.3f}  (equal because Lambda S = 6 pi)")
+    print(f"sigma-obs eq. of CW6 (Lambda in l_P with the 6 of G_N = 1/2): {s_cw6:.3f} = W4 + log_phi 2")
+    for name, H0, OL in [("Planck 2018", 67.36, 0.6847), ("SH0ES, fixed omega_m", 73.04, 1 - 0.1430 / 0.7304 ** 2)]:
         print(f"  {name:20s}: sigma_obs = {math.log(3/_LamP(H0, OL))/L:.3f}")
 
-SECCIONES.append((22, 'La unidad de la curvatura y el nivel del observador', seccion_22))
+SECCIONES.append((22, 'The unit of the curvature and the observer level', seccion_22))
 
 # ======================================================================
-# 23. La red: unidades de Z[phi], el fondo y el observador
+# 23. The lattice: units of Z[phi], the background and the observer
 # ======================================================================
 def seccion_23():
     import math
@@ -1144,8 +1145,8 @@ def seccion_23():
     for _ in range(30): F.append(F[-1] + F[-2])
     for n in (1, 2, 3, 6, 12):
         a, b = F[n - 1], F[n]
-        print(f"  phi^{n} = {a} + {b} phi, norma {a*a + a*b - b*b:+d}")
-    print("fondo: 11.97 +- 0.05 frente al punto de red 12 (0.6 desviaciones)")
+        print(f"  phi^{n} = {a} + {b} phi, norm {a*a + a*b - b*b:+d}")
+    print("background: 11.97 +- 0.05 against lattice point 12 (0.6 standard deviations)")
     wm = 0.1430
     def H0_for(n, mode):
         lo, hi = 40.0, 120.0
@@ -1155,14 +1156,14 @@ def seccion_23():
             else: hi = h
         return h
     for n in (583, 584, 585):
-        print(f"  observador en el punto {n}: H0 = {H0_for(n,'wm'):.2f} (omega_m fijo), {H0_for(n,'OL'):.2f} (Omega_Lambda fijo)")
+        print(f"  observer at point {n}: H0 = {H0_for(n,'wm'):.2f} (omega_m fijo), {H0_for(n,'OL'):.2f} (Omega_Lambda fijo)")
     h = H0_for(584, 'wm')
-    print(f"  584: {(h-67.36)/0.54:+.1f} sigma de Planck (67.36 +- 0.54), {(h-73.04)/1.04:+.1f} sigma de SH0ES (73.04 +- 1.04)")
+    print(f"  584: {(h-67.36)/0.54:+.1f} sigma from Planck (67.36 +- 0.54), {(h-73.04)/1.04:+.1f} sigma from SH0ES (73.04 +- 1.04)")
 
-SECCIONES.append((23, 'La red: unidades de Z[phi], el fondo y el observador', seccion_23))
+SECCIONES.append((23, 'The lattice: units of Z[phi], the background and the observer', seccion_23))
 
 # ======================================================================
-# 24. Los dos datos con dimension y la cima
+# 24. The two dimensionful data and the top
 # ======================================================================
 def seccion_24():
     import math
@@ -1174,13 +1175,13 @@ def seccion_24():
     Mpcf = 6 * math.sqrt(3) * math.pi / L; u = M / Mpcf
     r = 2 * math.log(MPl * math.sqrt(0.5) / u) / L
     print(f"M = {M*1e3:.3f} MeV (Koide-Brannen), u = {u*1e3:.4f} MeV, M_Pl = {MPl:.5e} GeV")
-    print(f"2 log_phi(l_u / l), l = sqrt2 l_P: {r:.3f}  (a {abs(r-round(r)):.2f} del entero): la red no fija la cima")
+    print(f"2 log_phi(l_u / l), l = sqrt2 l_P: {r:.3f}  (a {abs(r-round(r)):.2f} from the integer): the lattice does not fix the top")
     print(f"sigma_UV = log_phi(M_Pl/M) = {math.log(MPl/M)/L:.3f}")
 
-SECCIONES.append((24, 'Los dos datos con dimension y la cima', seccion_24))
+SECCIONES.append((24, 'The two dimensionful data and the top', seccion_24))
 
 # ======================================================================
-# 25. El corte y proyeccion con la gaussiana autodual, en los dos espacios
+# 25. The cut and projection with the self-dual Gaussian, in both spaces
 # ======================================================================
 def seccion_25():
     import math
@@ -1195,29 +1196,29 @@ def seccion_25():
                     c = a + b * pb; out.append((math.exp(-math.pi * c * c), a, b, v))
         return sorted(out, reverse=True)[:2]
     for x in (11.97, 583.88):
-        print(f"indice sigma, cerca de {x}: " + "; ".join(f"{a}+{b}phi = {v:.2f} (peso {w:.2g})" for w, a, b, v in best(x)))
-    print(f"  el entero 12 tiene conjugado 12: peso 10^{-math.pi*144/math.log(10):.0f}  -> el corte sobre sigma se elimina")
-    print("escala: unidades phi^n, conjugado (-1)^n phi^-n, peso e^(-pi phi^-2n):",
+        print(f"sigma index, near {x}: " + "; ".join(f"{a}+{b}phi = {v:.2f} (weight {w:.2g})" for w, a, b, v in best(x)))
+    print(f"  the integer 12 has conjugate 12: weight 10^{-math.pi*144/math.log(10):.0f}  -> the cut on sigma disappears")
+    print("scale: units phi^n, conjugate (-1)^n phi^-n, weight e^(-pi phi^-2n):",
           ", ".join(f"n={n}: {math.exp(-math.pi*phi**(-2*n)):.2f}" for n in range(0, 7)))
 
-SECCIONES.append((25, 'El corte y proyeccion con la gaussiana autodual, en los dos espacios', seccion_25))
+SECCIONES.append((25, 'The cut and projection with the self-dual Gaussian, in both spaces', seccion_25))
 
 # ======================================================================
-# 26. El borde de la ventana y sigma_G
+# 26. The edge of the window and sigma_G
 # ======================================================================
 def seccion_26():
     import math
     phi = (1 + 5 ** 0.5) / 2; L = math.log(phi)
-    print(f"cruce del peso 1/2: n = {0.5*math.log(math.pi/math.log(2))/L:.3f}; cruce de H l = 1: n = {math.log(2)/L:.3f}")
-    print(f"umbrales que dan n = 2 como primer nivel: ({math.exp(-math.pi*phi**-2):.3f}, {math.exp(-math.pi*phi**-4):.3f})")
+    print(f"weight 1/2 crossing: n = {0.5*math.log(math.pi/math.log(2))/L:.3f}; H l = 1 crossing: n = {math.log(2)/L:.3f}")
+    print(f"thresholds that make n = 2 the first level: ({math.exp(-math.pi*phi**-2):.3f}, {math.exp(-math.pi*phi**-4):.3f})")
     for n in range(0, 4):
         print(f"  n = {n}: peso {math.exp(-math.pi*phi**(-2*n)):.3f}, H l = {math.sqrt(2*phi**(-n)):.3f}")
-    print("primer nivel entero activo por las dos rutas: 2 = sigma_G = n - 1 (CW6)")
+    print("first active integer level along both routes: 2 = sigma_G = n - 1 (CW6)")
 
-SECCIONES.append((26, 'El borde de la ventana y sigma_G', seccion_26))
+SECCIONES.append((26, 'The edge of the window and sigma_G', seccion_26))
 
 # ======================================================================
-# 27. La ventana como nome: la torre de toros y S como espejo
+# 27. The window as a nome: the tower of tori and S as a mirror
 # ======================================================================
 def seccion_27():
     import math
@@ -1226,27 +1227,27 @@ def seccion_27():
         t = phi ** (-2 * n)
         print(f"  n={n}: tau_n = {t:.4f} i, nome q = e^(i pi tau) = {math.exp(-math.pi*t):.4f};  S: -1/tau_n = {1/t:.4f} i = tau_{-n}")
     nh = 0.5 * math.log(math.pi / math.log(2)) / math.log(phi)
-    print(f"cruce del peso 1/2: n = {nh:.6f}; cuarto de vuelta pi/2 = {math.pi/2:.6f}; w(pi/2) = {math.exp(-math.pi*phi**(-math.pi)):.6f}")
-    print(f"ancho que haria exacto el cruce en pi/2: log2 * phi^pi = {math.log(2)*phi**math.pi:.6f} (autodual: pi = {math.pi:.6f})")
+    print(f"weight 1/2 crossing: n = {nh:.6f}; quarter turn pi/2 = {math.pi/2:.6f}; w(pi/2) = {math.exp(-math.pi*phi**(-math.pi)):.6f}")
+    print(f"width that would make the crossing exact at pi/2: log2 * phi^pi = {math.log(2)*phi**math.pi:.6f} (self-dual: pi = {math.pi:.6f})")
 
-SECCIONES.append((27, 'La ventana como nome: la torre de toros y S como espejo', seccion_27))
+SECCIONES.append((27, 'The window as a nome: the tower of tori and S as a mirror', seccion_27))
 
 # ======================================================================
-# 28. Poisson: el tiempo propio y 1/N; theta_3 en tau = i
+# 28. Poisson: the proper time and 1/N; theta_3 at tau = i
 # ======================================================================
 def seccion_28():
     import math
     for N in (2.618033988749895, 6.854101966249685):
         lhs = sum(math.exp(-math.pi * k * k * N) for k in range(-60, 61))
         rhs = N ** -0.5 * sum(math.exp(-math.pi * m * m / N) for m in range(-60, 61))
-        print(f"  N = {N:.4f}: modos {lhs:.12f}, enrollamientos {rhs:.12f}; primer enrollamiento e^(-pi/N) = {math.exp(-math.pi/N):.4f}")
+        print(f"  N = {N:.4f}: modes {lhs:.12f}, windings {rhs:.12f}; first winding e^(-pi/N) = {math.exp(-math.pi/N):.4f}")
     t3 = sum(math.exp(-math.pi * k * k) for k in range(-30, 31))
     print(f"theta_3(e^-pi) = {t3:.12f};  pi^(1/4)/Gamma(3/4) = {math.pi**0.25/math.gamma(0.75):.12f}")
 
-SECCIONES.append((28, 'Poisson: el tiempo propio y 1/N; theta_3 en tau = i', seccion_28))
+SECCIONES.append((28, 'Poisson: the proper time and 1/N; theta_3 at tau = i', seccion_28))
 
 # ======================================================================
-# 29. Lo que fija el punto de red: Omega_Lambda h^2
+# 29. What fixes the lattice point: Omega_Lambda h^2
 # ======================================================================
 def seccion_29():
     import math
@@ -1255,14 +1256,14 @@ def seccion_29():
     Lam = 3 * phi ** -584 / lP2
     OLh2 = Lam * _C['c'] ** 2 / (3 * H100 ** 2)
     h, dh, wm, dwm = 0.6736, 0.0054, 0.1430, 0.0011
-    print(f"punto 584: Lambda l_P^2 = 3 phi^-584 = {3*phi**-584:.4e};  Omega_L h^2 = {OLh2:.4f}")
-    for r in (0.0, -1.0):        # Omega_m y H0 de Planck 2018, correlacion entre las dos cotas
+    print(f"point 584: Lambda l_P^2 = 3 phi^-584 = {3*phi**-584:.4e};  Omega_L h^2 = {OLh2:.4f}")
+    for r in (0.0, -1.0):        # Omega_m and H0 from Planck 2018, correlation between the two bounds
         Om, dOm = 0.3153, 0.0073
         a, b = -h * h * dOm, 2 * (1 - Om) * h * dh
         p, dp = (1 - Om) * h * h, math.sqrt(a * a + b * b + 2 * a * b * r)
         print(f"Planck 2018, r(Omega_m, H0) = {r:+.0f}: Omega_L h^2 = {p:.4f} +- {dp:.4f}: {(OLh2-p)/dp:+.1f} sigma")
-    print(f"con omega_m = {wm} +- {dwm} y planitud: H0 = {100*math.sqrt(OLh2+wm):.2f} +- {100*0.5*dwm/math.sqrt(OLh2+wm):.2f}")
-    # Planck solo en la variable del criterio (el nivel) y frente a DESI DR2 + CMB
+    print(f"with omega_m = {wm} +- {dwm} and flatness: H0 = {100*math.sqrt(OLh2+wm):.2f} +- {100*0.5*dwm/math.sqrt(OLh2+wm):.2f}")
+    # Planck only in the variable of the criterion (the level) and against DESI DR2 + CMB
     HD, dHD, OmD, dOmD, rD = 0.6817, 0.0028, 0.3027, 0.0036, -0.975
     aD, bD = -HD*HD*dOmD, 2*(1-OmD)*HD*dHD; pD = (1-OmD)*HD*HD; dpD = math.sqrt(aD*aD+bD*bD+2*aD*bD*rD)
     Om, dOm = 0.3153, 0.0073; a, b = -h*h*dOm, 2*(1-Om)*h*dh; p = (1-Om)*h*h
@@ -1271,28 +1272,28 @@ def seccion_29():
     for r in (0.0, -1.0):
         dp = math.sqrt(a*a + b*b + 2*a*b*r); sl = dp / (p * L)
         ten.append((pD - p) / math.hypot(dpD, dp))
-        print(f"Planck solo, r = {r:+.0f}: nivel {lvl(p):.3f}, a {(584-lvl(p))/sl:.2f} sigma de 584 en el nivel; DESI+CMB frente a Planck: {ten[-1]:.2f} sigma en Omega_L h^2")
+        print(f"Planck only, r = {r:+.0f}: level {lvl(p):.3f}, {(584-lvl(p))/sl:.2f} sigma from 584 in the level; DESI+CMB against Planck: {ten[-1]:.2f} sigma in Omega_L h^2")
     assert 1.3 < min(ten) < 1.5 and 1.7 < max(ten) < 1.9, ten
-    print(f"DESI DR2 + CMB: Omega_L h^2 = {pD:.4f} +- {dpD:.4f}; Planck y la combinacion concuerdan (1.4-1.8 sigma)")
-    print(f"sensibilidad: d sigma / d ln H0 = {-2/L:.3f}; 1 % en H0 = {0.02/L:.3f} niveles")
-    print(f"584 mod 24 = {584 % 24}; 584 = 2^3 * 73: no es un nivel distinguido de la red")
+    print(f"DESI DR2 + CMB: Omega_L h^2 = {pD:.4f} +- {dpD:.4f}; Planck and the combination agree (1.4-1.8 sigma)")
+    print(f"sensitivity: d sigma / d ln H0 = {-2/L:.3f}; 1 % in H0 = {0.02/L:.3f} levels")
+    print(f"584 mod 24 = {584 % 24}; 584 = 2^3 * 73: not a distinguished level of the lattice")
 
-SECCIONES.append((29, 'Lo que fija el punto de red: Omega_Lambda h^2', seccion_29))
+SECCIONES.append((29, 'What fixes the lattice point: Omega_Lambda h^2', seccion_29))
 
 # ======================================================================
-# 30. La garganta simetrica [-12, 12] y la escala UV
+# 30. The symmetric throat [-12, 12] and the UV scale
 # ======================================================================
 def seccion_30():
     import math
     phi = (1 + 5 ** 0.5) / 2; M = 0.313851
-    print(f"profundidad 24 niveles (el reloj): k pi r = 24 log phi = {24*math.log(phi):.2f}  (cima en Planck: 39.33)")
-    print(f"escala IR = M phi^12 = {M*phi**12:.2f} GeV; escala UV = M phi^36 = {M*phi**36:.3e} GeV")
-    print("cociente vectorial: 2.228 (simetrica) frente a 2.275 (Planck); rango actual 2.15-2.39")
+    print(f"depth 24 levels (the clock): k pi r = 24 log phi = {24*math.log(phi):.2f}  (top at Planck: 39.33)")
+    print(f"IR scale = M phi^12 = {M*phi**12:.2f} GeV; UV scale = M phi^36 = {M*phi**36:.3e} GeV")
+    print("vector ratio: 2.228 (symmetric) against 2.275 (Planck); current range 2.15-2.39")
 
-SECCIONES.append((30, 'La garganta simetrica [-12, 12] y la escala UV', seccion_30))
+SECCIONES.append((30, 'The symmetric throat [-12, 12] and the UV scale', seccion_30))
 
 # ======================================================================
-# 31. La metrica de moduli del anillo y las conjeturas
+# 31. The moduli metric of the ring and the conjectures
 # ======================================================================
 def seccion_31():
     import math
@@ -1300,48 +1301,48 @@ def seccion_31():
     d = math.sqrt(2) * L
     print("K = -ln(2 Im tau), K_tt = 1/(4 Im^2); tau = i t: L_kin = (dt)^2/(4t^2), Phi = ln t / sqrt2")
     print(f"dPhi/dn = sqrt2 log phi = {d:.4f};  |dV/dPhi|/V = {L/d:.4f}")
-    print(f"de Sitter (OOSV): c ~ O(1);  TCC (Bedroya-Vafa) en 4D: c >= sqrt(2/3) = {math.sqrt(2/3):.4f}")
-    print(f"  pendiente {L/d:.4f} < cota {math.sqrt(2/3):.4f}: el contraste con la TCC falla con estos supuestos")
+    print(f"de Sitter (OOSV): c ~ O(1);  TCC (Bedroya-Vafa) in 4D: c >= sqrt(2/3) = {math.sqrt(2/3):.4f}")
+    print(f"  slope {L/d:.4f} < bound {math.sqrt(2/3):.4f}: the comparison with the TCC fails under these assumptions")
     for n in (2, 12, 584):
-        print(f"  distancia canonica en el nivel {n}: Phi = sqrt2 n log phi = {math.sqrt(2)*n*L:.1f} M_Pl (sin cota a lo largo de la torre)")
-    print("  con K = -k ln Im tau la pendiente es 1/sqrt(2k); la cota se cumple si y solo si k <= 3/4")
+        print(f"  canonical distance at the level {n}: Phi = sqrt2 n log phi = {math.sqrt(2)*n*L:.1f} M_Pl (no bound along the tower)")
+    print("  with K = -k ln Im tau the slope is 1/sqrt(2k); the bound holds if and only if k <= 3/4")
     for s in (2, 12, 100):
-        print(f"  norma de las dos escalas en sigma = {s}: (phi^s)(phi^-s) = {phi**s*phi**-s:.3f}")
+        print(f"  norm of the two scales at sigma = {s}: (phi^s)(phi^-s) = {phi**s*phi**-s:.3f}")
 
-SECCIONES.append((31, 'La metrica de moduli del anillo y las conjeturas', seccion_31))
+SECCIONES.append((31, 'The moduli metric of the ring and the conjectures', seccion_31))
 
 # ======================================================================
-# 32. El nivel leido del observador frente a la forma de red
+# 32. The level read off the observer against the lattice shape
 # ======================================================================
 def seccion_32():
     import math
     phi = (1 + 5 ** 0.5) / 2; L = math.log(phi)
     lP2 = _C['hbar'] * _C['G'] / _C['c'] ** 3; H100 = 100e3 / _C['Mpc']
     def req(n): return 3 * phi ** -n / lP2 * _C['c'] ** 2 / (3 * H100 ** 2)
-    print("Omega_L h^2 requerido por los puntos 583, 584, 585: " + ", ".join(f"{req(n):.4f}" for n in (583, 584, 585)))
+    print("Omega_L h^2 required by points 583, 584, 585: " + ", ".join(f"{req(n):.4f}" for n in (583, 584, 585)))
     def det(Om, dOm, H0, dH0, r):
         h, dh = H0 / 100, dH0 / 100
         a, b = -h * h * dOm, 2 * (1 - Om) * h * dh
         return (1 - Om) * h * h, math.sqrt(a * a + b * b + 2 * a * b * r)
-    def nivel(v, dv):
+    def read_level(v, dv):
         n = 584 - math.log(v / req(584)) / L; dn = dv / v / L; k = round(n)
         return n, dn, k, abs(n - k) / dn
-    casos = [("Planck 2018, LCDM, r = 0", 0.3153, 0.0073, 67.36, 0.54, 0.0),
+    cases = [("Planck 2018, LCDM, r = 0", 0.3153, 0.0073, 67.36, 0.54, 0.0),
              ("Planck 2018, LCDM, r = -1", 0.3153, 0.0073, 67.36, 0.54, -1.0),
-             ("DESI DR2 + CMB, LCDM, r = -1 (peor caso)", 0.3027, 0.0036, 68.17, 0.28, -1.0),
+             ("DESI DR2 + CMB, LCDM, r = -1 (worst case)", 0.3027, 0.0036, 68.17, 0.28, -1.0),
              ("DESI DR2 + CMB, LCDM, r = -0.975", 0.3027, 0.0036, 68.17, 0.28, -0.975),
              ("DESI DR2 + CMB, LCDM, r = 0", 0.3027, 0.0036, 68.17, 0.28, 0.0)]
-    for nm, Om, dOm, H0, dH0, r in casos:
-        v, dv = det(Om, dOm, H0, dH0, r); n, dn, k, z = nivel(v, dv)
-        print(f"{nm:34s} Omega_L h^2 = {v:.4f} +- {dv:.4f}; nivel {n:.3f} +- {dn:.3f}; entero {k} a {z:.1f} sigma")
-    v = 0.7304 ** 2 - 0.1430; dv = math.hypot(2 * 0.7304 * 0.0104, 0.0011); n, dn, k, z = nivel(v, dv)
-    print(f"{'H0 local con omega_m de Planck':34s} Omega_L h^2 = {v:.4f} +- {dv:.4f}; nivel {n:.3f} +- {dn:.3f}; entero {k} a {z:.1f} sigma")
-    print("criterio: el nivel leido a 3 sigma o mas de todo entero excluye la forma de red")
+    for nm, Om, dOm, H0, dH0, r in cases:
+        v, dv = det(Om, dOm, H0, dH0, r); n, dn, k, z = read_level(v, dv)
+        print(f"{nm:34s} Omega_L h^2 = {v:.4f} +- {dv:.4f}; level {n:.3f} +- {dn:.3f}; integer {k} at {z:.1f} sigma")
+    v = 0.7304 ** 2 - 0.1430; dv = math.hypot(2 * 0.7304 * 0.0104, 0.0011); n, dn, k, z = read_level(v, dv)
+    print(f"{'H0 local with omega_m from Planck':34s} Omega_L h^2 = {v:.4f} +- {dv:.4f}; level {n:.3f} +- {dn:.3f}; integer {k} at {z:.1f} sigma")
+    print("criterion: a level read 3 sigma or more from every integer rules out the lattice shape")
 
-SECCIONES.append((32, 'El nivel leido del observador frente a la forma de red', seccion_32))
+SECCIONES.append((32, 'The level read off the observer against the lattice shape', seccion_32))
 
 # ======================================================================
-# 33. El hueco de color: la tension soldada, Higuchi y la escala de Regge
+# 33. The colour hole: the welded tension, Higuchi and the Regge scale
 # ======================================================================
 def seccion_33():
     import math
@@ -1354,27 +1355,27 @@ def seccion_33():
         print(f"{nm}: sigma_t * S en s = 0, 5, 12: " + ", ".join(f"{v:.4f}" for v in vals)
               + f"  (4 pi^4/(q^2 MPCF) = {4*math.pi**4/(q2*MPCF):.4f})")
         r = math.pi ** 3 / (q2 * MPCF)
-        print(f"   Delta^2/(2 H^2) = pi^3/(q^2 MPCF) = {r:.4f}; espin dos de masa kappa Delta: kappa >= {1/math.sqrt(r):.2f}")
-    print(f"Higuchi para kappa = 1 si y solo si q^2 <= pi^3/MPCF = {math.pi**3/MPCF:.4f}")
+        print(f"   Delta^2/(2 H^2) = pi^3/(q^2 MPCF) = {r:.4f}; spin two of mass kappa Delta: kappa >= {1/math.sqrt(r):.2f}")
+    print(f"Higuchi for kappa = 1 if and only if q^2 <= pi^3/MPCF = {math.pi**3/MPCF:.4f}")
     m1 = 3.8317 * M * phi ** 12
     for nm, E in (("u (particulas)", u), ("sqrt2 l_P (curvatura)", Ecurv)):
         Ms = E / math.sqrt(MPCF)
-        print(f"Regge, alpha' = MPCF en {nm}: M_1 = {Ms:.3e} GeV frente a m_KK,1 = {m1:.1f} GeV")
-    print(f"conversion entre las dos unidades: {2*math.log(MPl/u)/L - math.log(2)/L:.2f} niveles")
+        print(f"Regge, alpha' = MPCF in {nm}: M_1 = {Ms:.3e} GeV against m_KK,1 = {m1:.1f} GeV")
+    print(f"conversion between the two units: {2*math.log(MPl/u)/L - math.log(2)/L:.2f} levels")
     from scipy.special import jn_zeros
     j = jn_zeros(1, 5000); mk = j * M * phi ** 12
-    print(f"modos de graviton bajo 1000 TeV: {int((mk < 1e6).sum())}; estimacion lineal 1e6/(pi M phi^12) = {1e6/(math.pi*M*phi**12):.1f}")
+    print(f"graviton modes below 1000 TeV: {int((mk < 1e6).sum())}; linear estimate 1e6/(pi M phi^12) = {1e6/(math.pi*M*phi**12):.1f}")
 
-SECCIONES.append((33, 'El hueco de color: la tension soldada, Higuchi y la escala de Regge', seccion_33))
+SECCIONES.append((33, 'The colour hole: the welded tension, Higuchi and the Regge scale', seccion_33))
 
 # ======================================================================
-# 34. La quintaesencia del anillo: lambda = 1/sqrt2 frente a los datos
+# 34. The quintessence of the ring: lambda = 1/sqrt2 against the data
 # ======================================================================
 def seccion_34():
     import numpy as np
     from scipy.integrate import solve_ivp
     from scipy.optimize import brentq
-    lam = 1 / np.sqrt(2)          # pendiente del modulo (10.1), Phi en masa de Planck reducida
+    lam = 1 / np.sqrt(2)          # slope of the modulus (10.1), Phi in reduced Planck mass
     def run(y_i, N0=-8.0):
         def f(N, s):
             x, y = s; tot = 2 * x * x + (1 - x * x - y * y)
@@ -1387,26 +1388,26 @@ def seccion_34():
         x, y = sol.sol(N); w = (x * x - y * y) / (x * x + y * y); a = 1 / (1 + z); wt = x * x + y * y
         A = np.vstack([np.ones_like(a), 1 - a]).T * wt[:, None]
         w0, wa = np.linalg.lstsq(A, w * wt, rcond=None)[0]
-        print(f"Omega_m = {Om}: w(0) = {w[0]:.3f}; proyeccion CPL (z < 2): w0 = {w0:.3f}, wa = {wa:.3f}")
+        print(f"Omega_m = {Om}: w(0) = {w[0]:.3f}; CPL projection (z < 2): w0 = {w0:.3f}, wa = {wa:.3f}")
     c, up = 0.698, 0.173
     print(f"Akrami-Alestas-Nesseris (DESI DR2 + CMB + DESY5): lambda = 0.698 +0.173/-0.202")
-    print(f"  1/sqrt2 a {(lam - c) / up:+.2f} sigma; sqrt(2/3) a {(np.sqrt(2/3) - c) / up:+.2f}; sqrt2 a {(np.sqrt(2) - c) / up:+.2f}")
+    print(f"  1/sqrt2 at {(lam - c) / up:+.2f} sigma; sqrt(2/3) at {(np.sqrt(2/3) - c) / up:+.2f}; sqrt2 at {(np.sqrt(2) - c) / up:+.2f}")
 
-SECCIONES.append((34, 'La quintaesencia del anillo: lambda = 1/sqrt2 frente a los datos', seccion_34))
+SECCIONES.append((34, 'The quintessence of the ring: lambda = 1/sqrt2 against the data', seccion_34))
 
 # ======================================================================
-# 35. El umbral 1/2: tiempo de Fisher, entropia binaria, un bit por autovalor
+# 35. The 1/2 threshold: Fisher time, binary entropy, one bit per eigenvalue
 # ======================================================================
 def seccion_35():
     import math
     for f in (0.25, 0.5, 1.0):
         print(f"f = {f}: tau_F/tau_D = 1/sqrt(2f) = {1/math.sqrt(2*f):.4f};  H(f) = {-(f*math.log2(f)+(1-f)*math.log2(1-f)) if 0<f<1 else 0:.4f} bits")
-    print("tau_F = tau_D si y solo si f = 1/2; H(1/2) = 1 bit es el maximo; 4 mu^2 = 1 si y solo si mu = 1/2")
+    print("tau_F = tau_D if and only if f = 1/2; H(1/2) = 1 bit is the maximum; 4 mu^2 = 1 if and only if mu = 1/2")
 
-SECCIONES.append((35, 'El umbral 1/2: tiempo de Fisher, entropia binaria, un bit por autovalor', seccion_35))
+SECCIONES.append((35, 'The 1/2 threshold: Fisher time, binary entropy, one bit per eigenvalue', seccion_35))
 
 # ======================================================================
-# 36. El agujero negro, tocado donde hace falta: la orbita de la torre, el horizonte de S(12), el umbral
+# 36. The black hole, touched where needed: the orbit of the tower, the horizon of S(12), the threshold
 # ======================================================================
 def seccion_36():
     import numpy as np
@@ -1415,21 +1416,21 @@ def seccion_36():
     a = L / (2 * np.pi)
     f = lambda t: np.exp(np.cos(2 * np.pi * t)); g = lambda t: np.exp(2 * np.cos(2 * np.pi * t) + 0.5 * np.sin(4 * np.pi * t))
     th = np.arange(1 << 16) / (1 << 16); F, G = f(th), g(th); P = (F * G).mean(); C = P - F.mean() * G.mean()
-    for nombre, al in (("fase de la torre, log(phi)/2pi", a), ("racional 13/8", 13 / 8)):
+    for name, al in (("tower phase, log(phi)/2pi", a), ("rational 13/8", 13 / 8)):
         for N in (100, 1000, 10000):
             t = (np.arange(N) * al) % 1; x, y = f(t), g(t); R = x * y - P
-            print(f"{nombre}: N={N}: error de la parte conexa {abs((x*y).mean()-x.mean()*y.mean()-C)/C:.1e}; media del resto/rms {abs(R.mean())/np.sqrt((R*R).mean()):.1e}")
+            print(f"{name}: N={N}: connected-part error {abs((x*y).mean()-x.mean()*y.mean()-C)/C:.1e}; mean of the rest/rms {abs(R.mean())/np.sqrt((R*R).mean()):.1e}")
     s = 12; H = np.sqrt(2) * phi ** (-s / 2)
     print(f"S(12) = {np.pi*phi**s:.2f}; Lambda(12) = {6*phi**(-s):.4f} > 0; Gibbons-Hawking pi/(G H^2) = {np.pi/(0.5*H*H):.2f}; "
-          f"area del anillo/4G = {2*np.pi*phi**s/2:.2f}; Cardy c=3 = {2*np.pi*np.sqrt(3*phi**(2*s)/12):.2f}")
+          f"ring area/4G = {2*np.pi*phi**s/2:.2f}; Cardy c=3 = {2*np.pi*np.sqrt(3*phi**(2*s)/12):.2f}")
     x1 = jn_zeros(1, 1)[0]
     for k in (0.1, 0.05, 0.01):
-        print(f"k/M_Pl = {k}: umbral de agujero negro / m1 = {1/(x1*k*k):.0f}")
+        print(f"k/M_Pl = {k}: black-hole threshold / m1 = {1/(x1*k*k):.0f}")
 
-SECCIONES.append((36, 'El agujero negro donde hace falta: la orbita de la torre, el horizonte de S(12), el umbral', seccion_36))
+SECCIONES.append((36, 'The black hole where needed: the orbit of the tower, the horizon of S(12), the threshold', seccion_36))
 
 # ======================================================================
-# 37. Consistencia: entropia, modos y bits; razon vectorial y profundidad; gluones; unidad; 700/380
+# 37. Consistency: entropy, modes and bits; vector ratio and depth; gluons; unit; 700/380
 # ======================================================================
 def seccion_37():
     import numpy as np
@@ -1437,23 +1438,23 @@ def seccion_37():
     from scipy.optimize import brentq
     phi = (1 + 5 ** 0.5) / 2; L = np.log(phi); M = 0.31384
     S = np.pi * phi ** 12
-    print(f"S(12) = {S:.2f} (nats, como Gibbons-Hawking y Cardy); modos = {int(S)}; como bits de Shannon: {int(S)*np.log(2):.1f} nats, fraccion log2 = {np.log(2):.4f}")
+    print(f"S(12) = {S:.2f} (nats, as in Gibbons-Hawking and Cardy); modes = {int(S)}; as Shannon bits: {int(S)*np.log(2):.1f} nats, log2 fraction = {np.log(2):.4f}")
     def ratio(depth):
         eps = phi ** (-depth); f = lambda x: j0(eps*x)*y0(x) - y0(eps*x)*j0(x)
         xs = np.linspace(0.5, 15, 6000); v = f(xs)
         r = [brentq(f, xs[i], xs[i+1]) for i in range(len(xs)-1) if v[i]*v[i+1] < 0]
         return r[1]/r[0], r[0]
     for lo, hi in ((-12, 12), (12, 36)):
-        print(f"[{lo},{hi}]: m2/m1 = {ratio(hi-lo)[0]:.3f} (solo depende de la profundidad)")
+        print(f"[{lo},{hi}]: m2/m1 = {ratio(hi-lo)[0]:.3f} (it depends only on the depth)")
     for d in (24, 81.74):
-        r, x = ratio(d); print(f"fondo 12, profundidad {d}: primer gluon {x*M*phi**12:.0f} GeV, graviton {jn_zeros(1,1)[0]*M*phi**12:.0f} GeV")
+        r, x = ratio(d); print(f"background 12, depth {d}: first gluon {x*M*phi**12:.0f} GeV, graviton {jn_zeros(1,1)[0]*M*phi**12:.0f} GeV")
     for m in (3600, 4000):
-        print(f"gluon de {m} GeV: su fondo = {np.log(m/(jn_zeros(0,1)[0]*M))/L:.2f}")
+        print(f"{m} GeV gluon: its background = {np.log(m/(jn_zeros(0,1)[0]*M))/L:.2f}")
     print(f"m_p/3 = 0.3128 GeV: sigma_IR = {np.log(99.6/0.3128)/L:.2f}")
     t = jn_zeros(1, 2); t = t[1]/t[0]; r = 700/380; e = r*np.hypot(20/700, 20/380)
-    print(f"700/380 = {r:.4f} frente a {t:.4f}: {100*(r/t-1):.2f} %, {(r-t)/e:.2f} desviaciones estandar")
+    print(f"700/380 = {r:.4f} against {t:.4f}: {100*(r/t-1):.2f} %, {(r-t)/e:.2f} standard deviations")
 
-    # el espacio de Hilbert: el conteo exacto crece como e^S (S en nats)
+    # the Hilbert space: the exact count grows as e^S (S in nats)
     import math
     Mx=3000; sg=[0]*(Mx+1)
     for d in range(1,Mx+1):
@@ -1463,8 +1464,8 @@ def seccion_37():
     X=[];Y=[]
     for s_ in range(3,10):
         L0=round(phi**(2*s_)/2); X.append(math.pi*math.sqrt(2*L0)); Y.append(math.log(pp[L0])+1.5*math.log(L0))
-    print(f"ln W + (3/2) ln L0 = a S + b: a = {np.polyfit(X,Y,1)[0]:.4f} (S en nats: dim = e^S; en bits seria a = 1/ln2 = 1.4427)")
-    # W2: la dimension entera del nivel, estados con L0 <= N/2 (sin redondeo)
+    print(f"ln W + (3/2) ln L0 = a S + b: a = {np.polyfit(X,Y,1)[0]:.4f} (S in nats: dim = e^S; in bits it would be a = 1/ln2 = 1.4427)")
+    # W2: the integer dimension of the level, states with L0 <= N/2 (no rounding)
     cum=[0]
     for v in pp: cum.append(cum[-1]+v)
     Xs=[];Ys=[];Zs=[]; D={}
@@ -1473,15 +1474,15 @@ def seccion_37():
     assert D[3]==1654 and D[4]==3436182 and D[5]==820599769985, D
     A_=np.vstack([Xs,Zs,np.ones(len(Xs))]).T[2:]; a_=np.linalg.lstsq(A_,np.array(Ys[2:]),rcond=None)[0][0]
     assert abs(a_-0.9972)<5e-4, a_
-    print(f"W2: dimension entera (estados con L0 <= N/2): sigma=3,4,5 -> {D[3]}, {D[4]}, {D[5]}; ajuste lnD = a S + b ln L + c (sigma=3..9): a = {a_:.4f}")
+    print(f"W2: integer dimension (states with L0 <= N/2): sigma=3,4,5 -> {D[3]}, {D[4]}, {D[5]}; fit lnD = a S + b ln L + c (sigma=3..9): a = {a_:.4f}")
     from decimal import Decimal, getcontext; getcontext().prec=60
     PHd=(1+Decimal(5).sqrt())/2; PId=Decimal("3.14159265358979323846264338327950288419716939937510582097494459")
     vals=[(PId*PHd**s_/n_).exp() for s_ in range(0,13) for n_ in range(1,41)]
-    vals=[x for x in vals if x<Decimal(10)**40]     # con 60 digitos, la parte fraccionaria es fiable bajo 10^40
+    vals=[x for x in vals if x<Decimal(10)**40]     # with 60 digits the fractional part is reliable below 10^40
     near=min(abs(x-x.to_integral_value()) for x in vals)
     assert near>Decimal("1e-9"), near
-    print(f"e^(S/n) < 10^40 para sigma=0..12, n=1..40 ({len(vals)} casos): ninguno entero (distancia minima {float(near):.2e}); Gelfond-Schneider: trascendente siempre")
-    # la medida y la fase: con peso e^{2A}, la medida e^{4A} da los ceros de J1; e^{6A}, un espaciado sin desfase
+    print(f"e^(S/n) < 10^40 for sigma=0..12, n=1..40 ({len(vals)} cases): no integer (minimum distance {float(near):.2e}); Gelfond-Schneider: always transcendental")
+    # the measure and the phase: with weight e^{2A}, the measure e^{4A} gives the zeros of J1; e^{6A}, a spacing with no offset
     from scipy.linalg import eigh
     def spec(pe, Q=32, lo=-6, hi=6, n=5):
         h=L/Q; w=np.arange(lo*Q,hi*Q+1)/Q*L; pm=np.exp(-pe*(w[:-1]+w[1:])/2); N=len(w); K=np.zeros((N,N))
@@ -1489,48 +1490,49 @@ def seccion_37():
             c=pm[i]/h**2; K[i,i]+=c; K[i+1,i+1]+=c; K[i,i+1]-=c; K[i+1,i]-=c
         r=np.exp(-2*w); r[0]/=2; r[-1]/=2
         m=np.sqrt(np.clip(eigh(K,np.diag(r),eigvals_only=True),0,None)); return m[1:n+1]/m[1]
-    z=jn_zeros(1,5); print("medida e^{4A}:", np.round(spec(4),4), " ceros de J1:", np.round(z/z[0],4))
-    print("medida e^{6A}:", np.round(spec(6),4), " (enteros: sin desfase)")
+    z=jn_zeros(1,5); print("measure e^{4A}:", np.round(spec(4),4), " J1 zeros:", np.round(z/z[0],4))
+    print("measure e^{6A}:", np.round(spec(6),4), " (integers: no offset)")
 
-SECCIONES.append((37, 'Consistencia: entropia, modos y bits; profundidad; gluones; unidad; 700/380', seccion_37))
+SECCIONES.append((37, 'Consistency: entropy, modes and bits; depth; gluons; unit; 700/380', seccion_37))
 
 # ======================================================================
-# 38. El 1/2 de (B1): cuanto de area, unidad de Fisher y bit de Shannon
+# 38. The 1/2 of (B1): area quantum, Fisher unit and Shannon bit
 # ======================================================================
 def seccion_38():
     import math
     G = 0.5; a = 1 / (4 * G)
-    print(f"ley de area: {a} por ell^2 = {a/2} por ell_P^2 (Bekenstein-Hawking 1/4); bit de Shannon ln2 = {math.log(2):.4f}")
-    print(f"un bit de Shannon por area de Planck frente a la ley de area: cociente {math.log(2)/(a/2):.3f}; por ell^2: {math.log(2)/a:.3f}")
-    print(f"area por unidad de S (un modo): {1/a} ell^2 = {2/a} ell_P^2")
+    print(f"area law: {a} per ell^2 = {a/2} per ell_P^2 (Bekenstein-Hawking 1/4); Shannon bit ln2 = {math.log(2):.4f}")
+    print(f"one Shannon bit per Planck area against the area law: ratio {math.log(2)/(a/2):.3f}; per ell^2: {math.log(2)/a:.3f}")
+    print(f"area per unit of S (one mode): {1/a} ell^2 = {2/a} ell_P^2")
 
-SECCIONES.append((38, 'El 1/2 de (B1): cuanto de area, unidad de Fisher y bit de Shannon', seccion_38))
+SECCIONES.append((38, 'The 1/2 of (B1): area quantum, Fisher unit and Shannon bit', seccion_38))
 
 # ======================================================================
-# 39. El throat con el teselado de Fibonacci de sus anillos (Figura 4)
+# 39. The throat with the Fibonacci tiling of its rings (Figure 4)
 # ======================================================================
 def seccion_39():
-    """La seccion del throat es la cuspide; cada anillo se cubre con tejas largas (A) y cortas (B) por la
-    sustitucion A->AB, B->A, con semilla AAB en sigma=0. Antes de dibujar se comprueba: las fronteras de
-    un anillo continuan en el siguiente, y S = pi(A/phi^2 + B/phi^3) en cada nivel. La inclinacion de la
-    vista, el reparto de los puntos y la escala de los lazos son convenciones del dibujo."""
+    """The section of the throat is the cusp; each ring is covered with long tiles (A) and short
+    ones (B) by the substitution A->AB, B->A, with seed AAB at sigma=0. Before drawing it is
+    checked: the boundaries of one ring continue into the next, and S = pi(A/phi^2 + B/phi^3) at
+    every level. The tilt of the view, the distribution of the points and the scale of the loops
+    are drawing conventions."""
     import numpy as np, math
     import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
     phi=(1+5**.5)/2; L=math.log(phi); LEV=list(range(7))
-    # ---- teselado: palabra de cada anillo (A larga, B corta), semilla AAB en sigma=0
+    # ---- tiling: word of each ring (A long, B short), seed AAB at sigma=0
     words=["AAB"]
     for _ in range(6): words.append("".join({"A":"AB","B":"A"}[c] for c in words[-1]))
     def bounds(w):  # fronteras en fraccion de vuelta
         wid=[1 if c=="A" else 1/phi for c in w]; c=np.cumsum([0]+wid); return c/c[-1]
-    for s in range(6):   # cada frontera de un anillo es frontera del siguiente (anidan)
+    for s in range(6):   # every boundary of a ring is a boundary of the next (they nest)
         b0,b1=bounds(words[s]),bounds(words[s+1]); assert all(np.min(abs(b1-x))<1e-12 for x in b0)
     rows=[]
     for s in LEV:
         A=words[s].count("A"); B=words[s].count("B"); S=math.pi*phi**s
         Sw=math.pi*(A/phi**2+B/phi**3); assert abs(Sw-S)<1e-9*S
         rows.append(dict(s=s,S=S,modes=int(S),N=phi**(2*s),A=A,B=B,w=words[s]))
-    print("anillos:",[(r['A'],r['B']) for r in rows],"; S = pi(A/phi^2+B/phi^3) exacto; fronteras anidadas")
-    # ---- throat (pseudoesfera), igual que la Figura 4
+    print("rings:",[(r['A'],r['B']) for r in rows],"; S = pi(A/phi^2+B/phi^3) exact; boundaries nested")
+    # ---- throat (pseudosphere), as in Figure 4
     ys=np.linspace((LEV[0]-6.6)*L,0,2000); r=np.exp(ys)
     h=np.concatenate([[0],np.cumsum(np.sqrt(np.clip(1-r[1:]**2,0,None))*np.diff(ys))]); h=h-h[-1]
     H=lambda y: np.interp(y,ys,h); k=0.16
@@ -1544,9 +1546,9 @@ def seccion_39():
         s=row['s']; y=(s-6)*L; rad=math.exp(y); hh=H(y)
         th=np.linspace(0,2*math.pi,400); x,yy=P3(rad,hh,th)
         ax.plot(np.where(np.sin(th)<0,x,np.nan),yy,'k',lw=1.0); ax.plot(np.where(np.sin(th)>=0,x,np.nan),yy,'k',lw=0.6,alpha=0.6)
-        for j in range(row['modes']):                  # modos
+        for j in range(row['modes']):                  # modes
             a=2*math.pi*j/row['modes']; x0,y0=P3(rad*1.07,hh,a); ax.plot(x0,y0,'ko',ms=1.5)
-        # fronteras de las tejas: meridianos del anillo s al anillo s+1 sobre la superficie
+        # boundaries of the tiles: meridians of ring s to ring s+1 over the surface
         if s<6:
             yseg=np.linspace(y,y+L,30)
             for bnd in bounds(row['w'])[:-1]:
@@ -1555,12 +1557,12 @@ def seccion_39():
         ly=LAB[s]
         ax.text(-2.05,ly,f"σ = {s}\nS = {row['S']:.2f},  ⌊S⌋ = {row['modes']}\nN = {row['N']:.1f}\ntiles = {row['A']+row['B']} ({row['A']} long, {row['B']} short)",fontsize=6.2,va='center',family='serif')
         ax.plot([-1.32,-rad*1.08],[ly,hh],'k:',lw=0.4)
-        # el anillo desenrollado al mismo ancho: tejas largas sombreadas, cortas en blanco
+        # the ring unrolled at the same width: long tiles shaded, short ones white
         b=bounds(row['w'])
         for i,c in enumerate(row['w']):
             x0=XD+WD*b[i]; x1=XD+WD*b[i+1]
             ax.add_patch(plt.Rectangle((x0,ly-HD/2),x1-x0,HD,facecolor='0.75' if c=='A' else 'white',edgecolor='k',lw=0.3))
-    # la cuerda y los lazos, como en la Figura 4
+    # the string and the loops, as in Figure 4
     sg=np.linspace(LEV[0],LEV[-1],600); yy=(sg-6)*L; thh=-math.pi/2+sg*L
     xs=np.exp(yy)*np.cos(thh); hs=H(yy)+k*np.exp(yy)*np.sin(thh); front=np.sin(thh)<0
     ax.plot(np.where(front,xs,np.nan),hs,'k',lw=1.1); ax.plot(np.where(~front,xs,np.nan),hs,'k--',lw=0.8)
@@ -1576,15 +1578,16 @@ def seccion_39():
     fig.savefig("fig_throat_tiling.pdf",bbox_inches="tight",pad_inches=0.05)
 
 
-SECCIONES.append((39, 'El throat con el teselado de Fibonacci de sus anillos (Figura 4)', seccion_39))
+SECCIONES.append((39, 'The throat with the Fibonacci tiling of its rings (Figure 4)', seccion_39))
 
 # ======================================================================
-# 40. El diccionario sobre un teselado regular frente a la cuspide
+# 40. The dictionary on a regular tiling against the cusp
 # ======================================================================
 def seccion_40():
-    """Una red sobre un teselado regular {p,q} cortada en el nivel sigma: patas abiertas frente a S
-    (Crofton), pares (teselado, chi) que dan S en promedio; la cuspide: metrica, dos prototejas,
-    unicidad de la sustitucion, suma pesada exacta, chi equivalentes; la cuenta de puntos de Z[i] de §10.1."""
+    """A lattice on a regular tiling {p,q} cut at the level sigma: open legs against S
+    (Crofton), pairs (tiling, chi) that give S on average; the cusp: metric, two prototiles,
+    uniqueness of the substitution, exact weighted sum, equivalent chi; the count of points of
+    Z[i] from §10.1."""
     import numpy as np, math, itertools
     from decimal import Decimal, getcontext; getcontext().prec=60
     phi=(1+5**.5)/2
@@ -1599,9 +1602,9 @@ def seccion_40():
         K=2*P/(1+abs(P)**2); k=K.mean(); return k/(1+math.sqrt(max(0,1-abs(k)**2)))
     def hd(z): return 2*math.atanh(min(abs(z),1-1e-15))
     def radii(p,q):
-        R=math.acosh(1/(math.tan(math.pi/p)*math.tan(math.pi/q)))   # circunradio
-        r=math.acosh(math.cos(math.pi/q)/math.sin(math.pi/p))         # inradio
-        e=2*math.acosh(math.cos(math.pi/p)/math.sin(math.pi/q))       # arista
+        R=math.acosh(1/(math.tan(math.pi/p)*math.tan(math.pi/q)))   # circumradius
+        r=math.acosh(math.cos(math.pi/q)/math.sin(math.pi/p))         # inradius
+        e=2*math.acosh(math.cos(math.pi/p)/math.sin(math.pi/q))       # edge
         return R,r,e
     def P0(p,q,center='tile'):
         R,_,_=radii(p,q); t=math.tanh(R/2)
@@ -1611,8 +1614,8 @@ def seccion_40():
         return P
     def key(P): c=hcenter(P); return (round(c.real,6),round(c.imag,6))
     def tiles_within(p,q,Rmax,center='tile',with_centres=False):
-        """todas las teselas cuyo centro esta a distancia <= Rmax+margen (BFS por aristas con poda).
-        El centro de cada tesela se refleja junto con sus vertices, asi que es exacto."""
+        """all tiles whose centre is at distance <= Rmax+margin (BFS over edges with pruning).
+        The centre of each tile is reflected together with its vertices, so it is exact."""
         Rc,_,_=radii(p,q); A=P0(p,q,center)
         c0=0j if center=='tile' else complex(-math.tanh(Rc/2),0)
         A=np.append(A,c0); kf=lambda P:(round(P[-1].real,8),round(P[-1].imag,8))
@@ -1660,7 +1663,7 @@ def seccion_40():
     E=edges(tiles_within(7,3,RL[-1]+0.05)); n=[crossings(E,R) for R in RL]
     assert n==[7,14,28,35,56,84,133,217,350,567,938,1484,2443], n
     R_,r_,e_=radii(7,3); cro=4*(7*e_/2)/(math.pi/3)/math.pi
-    print("  {7,3}: patas abiertas",n); print("  patas/S",[round(a/b,3) for a,b in zip(n,S)],"; constante de Crofton",round(cro,4))
+    print("  {7,3}: open legs",n); print("  legs/S",[round(a/b,3) for a,b in zip(n,S)],"; Crofton constant",round(cro,4))
     L=[]; best=(9,None)
     for p in range(3,61):
         for q in range(3,61):
@@ -1671,24 +1674,24 @@ def seccion_40():
                 if d<best[0]: best=(d,(p,q,chi))
     tol=[sum(x<t for x in L) for t in (1e-2,1e-3,1e-4,1e-5,1e-6)]
     assert len(L)==50340 and tol==[172,22,2,1,0] and best[1]==(20,3,3), (len(L),tol,best)
-    print("  pares (teselado, chi<=16), p,q<=60:",len(L),"; a menos de 1e-2..1e-6:",tol,"; mejor",best[1],f"a {best[0]:.2e}")
+    print("  pairs (tiling, chi<=16), p,q<=60:",len(L),"; closer than 1e-2..1e-6:",tol,"; best",best[1],f"at {best[0]:.2e}")
     for yy in (-3.0,0.0,1.7): assert abs(math.exp(-yy)**2*math.exp(2*yy)-1)<1e-12
-    print("  cuspide: t=e^-y da (dth^2+dt^2)/t^2 = e^(2y)dth^2+dy^2; nivel s en t=phi^-s, longitud 2pi phi^s, distancia log phi")
+    print("  cusp: t=e^-y gives (dth^2+dt^2)/t^2 = e^(2y)dth^2+dy^2; level s at t=phi^-s, length 2pi phi^s, distance log phi")
     a0=2*math.pi/phi**2
     for s in (0,3,7):
         t=phi**-s
         for top,area in ((a0,a0/phi),(a0/phi,a0/phi**2)):
             dx=top*t; assert abs(dx*(phi/t-1/t)-area)<1e-12 and abs(dx/(t/phi)-phi*top)<1e-12
-    print("  dos prototejas, iguales en todos los niveles: areas",round(a0/phi,6),"y",round(a0/phi**2,6))
+    print("  two prototiles, equal at every level: areas",round(a0/phi,6),"and",round(a0/phi**2,6))
     subs=[m for m in itertools.product(range(10),repeat=4) if m[0]+m[3]==1 and m[0]*m[3]-m[1]*m[2]==-1]
-    assert subs==[(0,1,1,1),(1,1,1,0)]; print("  sustituciones de dos tejas con autovalor phi:",subs)
+    assert subs==[(0,1,1,1),(1,1,1,0)]; print("  two-tile substitutions with eigenvalue phi:",subs)
     PI=Decimal("3.14159265358979323846264338327950288419716939937510582097494459"); ph=(1+Decimal(5).sqrt())/2
     A,B=2,1
     for s in range(41):
         assert abs(PI/ph**2*A+PI/ph**3*B-PI*ph**s)<Decimal(10)**-45; A,B=A+B,A
-    print("  S = pi(A/phi^2 + B/phi^3) exacto (60 digitos) para s = 0..40; tejas/S ->",round(phi**4/5**.5/math.pi,4))
-    print("  chi equivalentes: e^(pi/phi^2) =",round(math.exp(math.pi/phi**2),3),", e^(pi/phi^3) =",round(math.exp(math.pi/phi**3),3))
-    # cuenta con pesos fijos: arcos entre cortes en los circulos de nivel del {7,3} (el throat: dos pesos)
+    print("  S = pi(A/phi^2 + B/phi^3) exact (60 digits) for s = 0..40; tiles/S ->",round(phi**4/5**.5/math.pi,4))
+    print("  equivalent chi: e^(pi/phi^2) =",round(math.exp(math.pi/phi**2),3),", e^(pi/phi^3) =",round(math.exp(math.pi/phi**3),3))
+    # count with fixed weights: arcs between cuts on the level circles of {7,3} (the throat: two weights)
     def mob(z_,w): return (z_-w)/(1-np.conj(w)*z_)
     def imob(z_,w): return (z_+w)/(1+np.conj(w)*z_)
     E9=edges(tiles_within(7,3,RL[9]+0.05)); nw=[]; allw=set()
@@ -1710,29 +1713,29 @@ def seccion_40():
         w=set(round(math.sinh(R)*x/2,6) for x in d); allw|=w; nw.append(len(w))
         assert abs(sum(math.sinh(R)*x/2 for x in d)-S[sg])<1e-6
     assert nw==[1,2,3,3,5,7,10,16,27,41] and len(allw)==115, (nw,len(allw))
-    print("  {7,3}: pesos distintos (arco entre cortes x 1/2) por nivel",nw,", 115 en total; el throat: 2 en todos los niveles")
-    # el 1/2 de cada enunciado: la constante de la definicion lo coloca
+    print("  {7,3}: distinct weights (arc between cuts x 1/2) per level",nw,", 115 in total; the throat: 2 at every level")
+    # the 1/2 of each statement: the constant of the definition places it
     fstar={c_:[f for f in np.linspace(0.001,1,99901) if abs(1/math.sqrt(c_*f)-1)<1e-4] for c_ in (1.5,2,3)}
     assert all(abs(np.mean(v)-1/c_)<1e-3 for c_,v in fstar.items())
     mstar={k_:1/math.sqrt(k_) for k_ in (2,4,8)}; assert abs(mstar[4]-0.5)<1e-15
     ps=np.linspace(0.01,0.99,9801); Hb=-(ps*np.log2(ps)+(1-ps)*np.log2(1-ps)); assert abs(ps[np.argmax(Hb)]-0.5)<1e-9
-    print("  tau_D/sqrt(c f)=tau_D da f=1/c (c=2 en CW6: 1/2); k mu^2=1 da mu=1/sqrt(k) (k=4, Fisher cuantica: 1/2); entropia binaria: 1/2 sin constante")
+    print("  tau_D/sqrt(c f)=tau_D gives f=1/c (c=2 in CW6: 1/2); k mu^2=1 gives mu=1/sqrt(k) (k=4, quantum Fisher: 1/2); binary entropy: 1/2 without the constant")
     def lattice(r2):
         R=int(math.isqrt(int(r2)))+1; return sum(1 for x in range(-R,R+1) for y in range(-R,R+1) if x*x+y*y<=r2)
     cnt=[lattice(phi**s) for s in range(7)]; assert cnt==[5,5,9,13,21,37,57], cnt
     c12=lattice(phi**12); assert c12==1005
     rat=[round(c/(math.pi*phi**s),2) for s,c in enumerate(cnt)]; r22=lattice(phi**22)/(math.pi*phi**22)
-    print("  puntos de Z[i] (§10.1):",cnt,"; puntos/S",rat,"; sigma=12:",c12,"frente a floor S = 1011; sigma=22:",round(r22,4))
+    print("  points of Z[i] (§10.1):",cnt,"; points/S",rat,"; sigma=12:",c12,"against floor S = 1011; sigma=22:",round(r22,4))
 
-SECCIONES.append((40, 'El diccionario sobre un teselado regular frente a la cuspide', seccion_40))
+SECCIONES.append((40, 'The dictionary on a regular tiling against the cusp', seccion_40))
 
 # ======================================================================
-# 41. Cinco teselados regulares frente a los niveles (Figura 5)
+# 41. Five regular tilings against the levels (Figure 5)
 # ======================================================================
 def seccion_41():
-    """Cinco teselados {p,q} de discos de radio arcsinh phi^sigma, centros exactos (reflejados con los
-    vertices): teselas dentro de cada disco, tangencias del borde de un nivel con aristas, y por que una
-    cuenta no sigue a phi: las razones de Fibonacci se acercan a phi como 1/(sqrt5 q^2) y no mas."""
+    """Five {p,q} tilings of discs of radius arcsinh phi^sigma, exact centres (reflected with the
+    vertices): tiles inside each disc, tangencies of one level's boundary with edges, and why a
+    count does not follow phi: the Fibonacci ratios approach phi as 1/(sqrt5 q^2) and no further."""
     import math, numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
     phi=(1+5**.5)/2
     def circ(a,b):
@@ -1746,9 +1749,9 @@ def seccion_41():
         K=2*P/(1+abs(P)**2); k=K.mean(); return k/(1+math.sqrt(max(0,1-abs(k)**2)))
     def hd(z): return 2*math.atanh(min(abs(z),1-1e-15))
     def radii(p,q):
-        R=math.acosh(1/(math.tan(math.pi/p)*math.tan(math.pi/q)))   # circunradio
-        r=math.acosh(math.cos(math.pi/q)/math.sin(math.pi/p))         # inradio
-        e=2*math.acosh(math.cos(math.pi/p)/math.sin(math.pi/q))       # arista
+        R=math.acosh(1/(math.tan(math.pi/p)*math.tan(math.pi/q)))   # circumradius
+        r=math.acosh(math.cos(math.pi/q)/math.sin(math.pi/p))         # inradius
+        e=2*math.acosh(math.cos(math.pi/p)/math.sin(math.pi/q))       # edge
         return R,r,e
     def P0(p,q,center='tile'):
         R,_,_=radii(p,q); t=math.tanh(R/2)
@@ -1758,8 +1761,8 @@ def seccion_41():
         return P
     def key(P): c=hcenter(P); return (round(c.real,6),round(c.imag,6))
     def tiles_within(p,q,Rmax,center='tile',with_centres=False):
-        """todas las teselas cuyo centro esta a distancia <= Rmax+margen (BFS por aristas con poda).
-        El centro de cada tesela se refleja junto con sus vertices, asi que es exacto."""
+        """all tiles whose centre is at distance <= Rmax+margin (BFS over edges with pruning).
+        The centre of each tile is reflected together with its vertices, so it is exact."""
         Rc,_,_=radii(p,q); A=P0(p,q,center)
         c0=0j if center=='tile' else complex(-math.tanh(Rc/2),0)
         A=np.append(A,c0); kf=lambda P:(round(P[-1].real,8),round(P[-1].imag,8))
@@ -1822,14 +1825,14 @@ def seccion_41():
     assert [REC[(12,5,s)][0] for s in range(7)]==[1]*7
     assert [REC[(6,10,s)][1] for s in range(7)]==[0,6,0,12,0,0,0], [REC[(6,10,s)][1] for s in range(7)]
     assert all(REC[(p,q,s)][1]==0 for (p,q,s) in REC if (p,q)!=(6,10))
-    print("  teselas cuyo centro cae dentro de cada disco:")
+    print("  tiles whose centre falls inside each disc:")
     for (p,q) in [(7,3),(3,7),(5,4),(12,5),(6,10)]: print(f"    {{{p},{q}}}:",[REC[(p,q,s)][0] for s in range(7)])
-    print("  borde de un nivel tangente a aristas: solo {6,10}, sigma=1 (6 aristas) y sigma=3 (12 aristas)")
+    print("  boundary of a level tangent to edges: only {6,10}, sigma=1 (6 edges) and sigma=3 (12 edges)")
     F=[1,1]
     for _ in range(40): F.append(F[-1]+F[-2])
     dev=[abs(phi-F[n+1]/F[n])*5**.5*F[n]**2 for n in range(5,30)]
     assert all(abs(x-1)<0.05 for x in dev[5:])
-    print("  razones de Fibonacci: |phi - F(n+1)/F(n)| * sqrt5 * F(n)^2 ->",round(dev[-1],6),"(Hurwitz: phi es el peor aproximado)")
+    print("  Fibonacci ratios: |phi - F(n+1)/F(n)| * sqrt5 * F(n)^2 ->",round(dev[-1],6),"(Hurwitz: phi is the worst approximant)")
     T37,C37=tiles_within(3,7,7.5,'tile',True); vk=lambda z:(round(z.real,7),round(z.imag,7)); VV={}
     for i_,P in enumerate(T37):
         for z in P: VV.setdefault(vk(z),[]).append(i_)
@@ -1842,7 +1845,7 @@ def seccion_41():
                     if j_ not in seen: nxt.add(j_)
         seen|=nxt; lay.append(nxt)
     nl=[len(x) for x in lay]; assert nl==[1,15,45,120,315,825,2160], nl
-    print("  {3,7} por vertices compartidos:",nl,"-> phi^2; por aristas ~1.6")
+    print("  {3,7} by shared vertices:",nl,"-> phi^2; by edges ~1.6")
     from decimal import Decimal, getcontext; getcontext().prec=80
     def hconst(X,N=60):
         h0,h1,k0,k1=0,1,1,0; y=X; out=[]
@@ -1862,13 +1865,13 @@ def seccion_41():
     R_,r_,e_=radii(5,4); assert abs(math.cosh(e_)-phi)<1e-12
     R_,r_,e_=radii(6,10); assert abs(math.sinh(r_)-phi)<1e-12
     R_,r_,e_=radii(5,4); c54=4*(5*e_/2)/(math.pi/2)/math.pi; assert abs(c54*math.log(2)-1.4907)<1e-3
-    print("  crecimiento por capa (aristas):",{k:round(v,3) for k,v in gr.items()},"; {5,4}: cosh e = phi; {6,10}: sinh r = phi; {5,4} con qubits:",round(c54*math.log(2),4),"S")
+    print("  growth per layer (edges):",{k:round(v,3) for k,v in gr.items()},"; {5,4}: cosh e = phi; {6,10}: sinh r = phi; {5,4} with qubits:",round(c54*math.log(2),4),"S")
 
 
-SECCIONES.append((41, 'Cinco teselados regulares frente a los niveles (Figura 5)', seccion_41))
+SECCIONES.append((41, 'Five regular tilings against the levels (Figure 5)', seccion_41))
 
 # ======================================================================
-# 42. Las dos coordenadas, el paso de nivel, la ortogonalizacion, el paso racional y el operador de imp:A1
+# 42. The two coordinates, the level step, the orthogonalization, the rational step and the imp:A1 operator
 # ======================================================================
 def seccion_42():
     import math
@@ -1876,18 +1879,18 @@ def seccion_42():
     M = 6 * math.sqrt(3) * math.pi / L
     F = [0, 1]
     for _ in range(40): F.append(F[-1] + F[-2])
-    # I1: el tiempo del weld es la segunda coordenada de Galois
+    # I1: the time of the weld is the second Galois coordinate
     for s_ in (1, 2, 3, 6, 12):
         a, b = F[s_ - 1], F[s_]
         assert a * a + a * b - b * b == (-1) ** s_
         assert abs(M * abs(a + b * psi) - M * phi ** -s_) < 1e-9
-    print(f"  I1: M|a + b phibar| = M phi^-s = tau(s) en s = 1, 2, 3, 6, 12; tau(12) = {M*phi**-12:.4f}, phi^12 = 89 + 144 phi, norma +1")
-    # I2: la matriz de la sustitucion es el intercambio por un corrimiento
+    print(f"  I1: M|a + b phibar| = M phi^-s = tau(s) at s = 1, 2, 3, 6, 12; tau(12) = {M*phi**-12:.4f}, phi^12 = 89 + 144 phi, norm +1")
+    # I2: the matrix of the substitution is the exchange followed by a shift
     ex = [[0, 1], [1, 0]]; sh = [[1, 0], [1, 1]]
     prod = [[sum(ex[i][k] * sh[k][j] for k in range(2)) for j in range(2)] for i in range(2)]
     assert prod == [[1, 1], [1, 0]]
-    print("  I2: [[0,1],[1,0]] [[1,0],[1,1]] =", prod, "= matriz de A -> AB, B -> A")
-    # I3: el anillo s se rotula por la unidad phi^{s+3} y es un aproximante periodico
+    print("  I2: [[0,1],[1,0]] [[1,0],[1,1]] =", prod, "= matrix of A -> AB, B -> A")
+    # I3: ring s is labelled by the unit phi^{s+3} and is a periodic approximant
     def sub(w): return "".join("AB" if c == "A" else "A" for c in w)
     w = "AAB"; ok = True
     for s_ in range(12):
@@ -1897,40 +1900,40 @@ def seccion_42():
         if not (len(ap) == len(w) and ap in w + w): ok = False
         w = sub(w)
     assert ok
-    print("  I3: anillo s, s = 0..11: (B, A) = (F_{s+2}, F_{s+3}), coeficientes de phi^{s+3}; palabra = rotacion de s^{s+2}(A)")
-    # I4: ortogonalizacion en el medio giro
+    print("  I3: ring s, s = 0..11: (B, A) = (F_{s+2}, F_{s+3}), coefficients of phi^{s+3}; word = rotation of s^{s+2}(A)")
+    # I4: orthogonalization at the half turn
     for p_ in (0.3, 0.5, 0.7):
         ov = abs((1 - p_) + p_ * complex(math.cos(math.pi), math.sin(math.pi)))
         assert (ov < 1e-12) == (p_ == 0.5)
     e0 = L / (6 * math.sqrt(3))
     assert all(abs(e0 * phi ** s_ * M * phi ** -s_ - math.pi) < 1e-12 for s_ in range(20))
-    print("  I4: eps(s) tau(s) = pi en cada nivel; solapamiento en el medio giro 1 - 2p: 0.4, 0, 0.4 en p = 0.3, 0.5, 0.7")
-    # I5: el paso racional frente al contraste
+    print("  I4: eps(s) tau(s) = pi at every level; overlap at the half turn 1 - 2p: 0.4, 0, 0.4 at p = 0.3, 0.5, 0.7")
+    # I5: the rational step against the comparison
     out = []
     for p_, q_ in [(21, 13), (34, 21), (55, 34), (89, 55), (144, 89), (233, 144)]:
         f = L / math.log(p_ / q_)
         out.append((p_, q_, abs(11.97 * f - 11.97) / 0.05, abs(583.789 * f - 583.789) / 0.028))
     assert out[0][3] > 70 and out[3][3] > 3 and out[4][3] < 3
-    print("  I5: paso p/q -> desviaciones (fondo, observador):", ", ".join(f"{a}/{b}: {x:.1f}, {y:.1f}" for a, b, x, y in out))
-    # I6: la traza 3 y la geodesica mas corta
+    print("  I5: step p/q -> deviations (background, observer):", ", ".join(f"{a}/{b}: {x:.1f}, {y:.1f}" for a, b, x, y in out))
+    # I6: the trace 3 and the shortest geodesic
     assert abs(phi ** 2 + phi ** -2 - 3) < 1e-12 and abs(2 * math.acosh(1.5) - 4 * L) < 1e-12
-    print(f"  I6: tr [[2,1],[1,1]] = 3 = phi^2 + phi^-2; largo 2 arccosh(3/2) = {2*math.acosh(1.5):.6f} = 4 log phi")
-    # I7: el operador de imp:A1 con n = 6
+    print(f"  I6: tr [[2,1],[1,1]] = 3 = phi^2 + phi^-2; length 2 arccosh(3/2) = {2*math.acosh(1.5):.6f} = 4 log phi")
+    # I7: the imp:A1 operator with n = 6
     n = 6; m = [2 * math.sin(k * math.pi / (4 * (n + 1))) / L for k in range(1, 2 * n + 2)]
     r = [m[k + 1] / m[k] for k in range(len(m) - 1)]
     assert all(abs(x - phi) > 0.05 for x in r)
-    print("  I7: razones de masas sucesivas de imp:A1, n = 6:", [round(x, 2) for x in r], "; ninguna es phi")
+    print("  I7: ratios of successive masses of imp:A1, n = 6:", [round(x, 2) for x in r], "; none is phi")
 
-SECCIONES.append((42, 'Las dos coordenadas, el paso de nivel, la ortogonalizacion, el paso racional y el operador de imp:A1', seccion_42))
+SECCIONES.append((42, 'The two coordinates, the level step, the orthogonalization, the rational step and the imp:A1 operator', seccion_42))
 
 # ======================================================================
-# 43. Las tres columnas y por que no encajaban: R11, la diagonal del cubo, el nucleo racional, Bragg
+# 43. The three columns and why they did not fit: R11, the diagonal of the cube, the rational kernel, Bragg
 # ======================================================================
 def seccion_43():
     import math, itertools
     import numpy as np
     phi = (1 + 5 ** 0.5) / 2
-    # R11: sustituciones primitivas de dos letras con entradas <= 3
+    # R11: primitive two-letter substitutions with entries <= 3
     ok123 = set(); ok4 = set()
     for a, b, c, d in itertools.product(range(4), repeat=4):
         if b == 0 or c == 0: continue
@@ -1941,13 +1944,13 @@ def seccion_43():
             ok123.add(round(lam, 4))
             if (tr, de) == (1, -1): ok4.add(round(lam, 4))
     assert round(1 + 2 ** 0.5, 4) in ok123 and ok4 == {round(phi, 4)}
-    print("  C1-C3 (irracional, unimodular, Pisot):", sorted(ok123), "; con la ley aditiva:", sorted(ok4))
-    # la diagonal del cubo
+    print("  C1-C3 (irrational, unimodular, Pisot):", sorted(ok123), "; with the additive law:", sorted(ok4))
+    # the diagonal of the cube
     n = np.array([1, 1, 1]) / 3 ** 0.5; P = [e - (e @ n) * n for e in np.eye(3)]
     ang = {round(math.degrees(math.acos(P[i] @ P[j] / (np.linalg.norm(P[i]) * np.linalg.norm(P[j])))), 6) for i, j in [(0, 1), (1, 2), (0, 2)]}
     assert ang == {120.0} and np.allclose(sum(P), 0)
-    print(f"  Z^3 por (1,1,1): tres ejes de largo {np.linalg.norm(P[0]):.4f} a 120 grados (red hexagonal, Z[omega] a escala sqrt(2/3)); el nucleo es Z(1,1,1)")
-    # nucleo de la proyeccion racional
+    print(f"  Z^3 along (1,1,1): three axes of length {np.linalg.norm(P[0]):.4f} at 120 degrees (hexagonal lattice, Z[omega] at scale sqrt(2/3)); the kernel is Z(1,1,1)")
+    # kernel of the rational projection
     def coll(slope):
         seen = set(); c = 0
         for m in range(-60, 61):
@@ -1958,8 +1961,8 @@ def seccion_43():
         return c
     c32, cphi = coll(1.5), coll(phi)
     assert c32 == 14042 and cphi == 0
-    print(f"  Z^2 -> recta, pares en [-60,60]^2: pendiente 3/2 -> {c32} coincidencias; pendiente phi -> {cphi}")
-    # Bragg de la cadena de Fibonacci
+    print(f"  Z^2 -> line, pairs in [-60,60]^2: slope 3/2 -> {c32} collisions; slope phi -> {cphi}")
+    # Bragg of the Fibonacci chain
     w = "A"
     for _ in range(22): w = "".join("AB" if ch == "A" else "A" for ch in w)
     x = np.concatenate([[0], np.cumsum([phi if ch == "A" else 1.0 for ch in w])])[:-1]
@@ -1973,18 +1976,18 @@ def seccion_43():
     for sg in range(0, 25):
         S = math.pi * phi ** sg; d_ = F[sg + 4] - phi ** 4 * S / (5 ** 0.5 * math.pi)
         assert abs(abs(d_) - phi ** -(sg + 4) / 5 ** 0.5) < 1e-6
-    print("  cuenta de teselas: F_{s+4} - 0.9757 S = +-phi^-(s+4)/sqrt5 exacto (Binet, Pisot), s = 0..24")
-    print(f"  Bragg (N = {len(x)}): (2,3) {pk[(2,3)]:.2f}, (1,2) {pk[(1,2)]:.2f}, (1,1) {pk[(1,1)]:.2f}; 200 puntos al azar: max {rnd:.3f}")
+    print("  tile count: F_{s+4} - 0.9757 S = +-phi^-(s+4)/sqrt5 exact (Binet, Pisot), s = 0..24")
+    print(f"  Bragg (N = {len(x)}): (2,3) {pk[(2,3)]:.2f}, (1,2) {pk[(1,2)]:.2f}, (1,1) {pk[(1,1)]:.2f}; 200 random points: max {rnd:.3f}")
 
-SECCIONES.append((43, 'Las tres columnas y por que no encajaban', seccion_43))
+SECCIONES.append((43, 'The three columns and why they did not fit', seccion_43))
 
 if __name__ == "__main__":
-    pedir = {int(a) for a in sys.argv[1:]}
-    for n, nombre, f in SECCIONES:
-        if pedir and n not in pedir:
+    requested = {int(a) for a in sys.argv[1:]}
+    for n, title, f in SECCIONES:
+        if requested and n not in requested:
             continue
-        print(f"\n{'#' * 72}\n# {n}. {nombre}\n{'#' * 72}")
+        print(f"\n{'#' * 72}\n# {n}. {title}\n{'#' * 72}")
         try:
             f()
         except ModuleNotFoundError as e:
-            print(f"[sección {n} omitida: falta el módulo {e.name}]")
+            print(f"[section {n} skipped: missing module {e.name}]")
