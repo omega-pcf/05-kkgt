@@ -6,7 +6,7 @@ title: "One object instead of a choice of vacuum to put the observer in de
   candidates and with the cosmological constant"
 type: software
 version: 0.1.0
-date-released: 2026-11-09
+date-released: 2026-11-10
 authors:
   - family-names: González García
     given-names: Jorge Armando
@@ -158,7 +158,8 @@ references:
     year: 2026
     issue: "26"
     journal: International Journal of Modern Physics A
-    notes: arXiv:2412.14014
+    notes: arXiv:2412.14014; 2024 preprint, key Mal24 keeps the preprint year
+      (journal publication 2026)
     type: article
     volume: "41"
   - authors:
@@ -492,7 +493,7 @@ references:
         value: 10.1016/0550-3213(89)90353-2
       - type: url
         value: https://doi.org/10.1016/0550-3213(89)90353-2
-    title: Baby universes, third quantization and the cosmological constant
+    title: Baby universe, third quantization and the cosmological constant
     url: https://doi.org/10.1016/0550-3213(89)90353-2
     date-published: 1989-01-01
     year: 1989
@@ -947,7 +948,10 @@ references:
         given-names: Lev
       - family-names: Vafa
         given-names: Cumrun
+    doi: 10.48550/arXiv.1806.08362
     identifiers:
+      - type: doi
+        value: 10.48550/arXiv.1806.08362
       - type: url
         value: https://arxiv.org/abs/1806.08362
     title: De Sitter space and the swampland
@@ -985,7 +989,10 @@ references:
         given-names: George
       - family-names: Nesseris
         given-names: Savvas
+    doi: 10.48550/arXiv.2504.04226
     identifiers:
+      - type: doi
+        value: 10.48550/arXiv.2504.04226
       - type: url
         value: https://arxiv.org/abs/2504.04226
     title: Has DESI detected exponential quintessence?
@@ -1279,7 +1286,10 @@ references:
         given-names: Alain
       - family-names: Richard
         given-names: François
+    doi: 10.48550/arXiv.2506.09490
     identifiers:
+      - type: doi
+        value: 10.48550/arXiv.2506.09490
       - type: url
         value: https://arxiv.org/abs/2506.09490
     title: "Evidence for BSM spin 0 and spin 2 resonances at LHC: possible
@@ -1323,8 +1333,8 @@ references:
     identifiers:
       - type: doi
         value: 10.5281/zenodo.19492791
-    title: "Odd zeta values from pentagonal 𝔽₁-descent: a Λ-structure on ℤ[φ], the
-      character χ₅, and GRH for L(s,χ₅) in equivalent forms"
+    title: "Odd Zeta Values from the PCF Torus: φ and π as Arithmetic-Geometric
+      Sources"
     date-published: 2026-01-01
     year: 2026
     publisher:
@@ -1337,7 +1347,10 @@ references:
         given-names: Stephen H.
       - family-names: Stanford
         given-names: Douglas
+    doi: 10.48550/arXiv.1903.11115
     identifiers:
+      - type: doi
+        value: 10.48550/arXiv.1903.11115
       - type: url
         value: https://arxiv.org/abs/1903.11115
     title: JT gravity as a matrix integral
@@ -1837,6 +1850,8 @@ references:
     title: PCT, Spin and Statistics, and All That
     date-published: 1964-01-01
     year: 1964
+    notes: No DOI for the 1964 Benjamin edition (Crossref lists only the 2001
+      Princeton reprint)
     publisher:
       name: Benjamin
     type: book
@@ -1965,7 +1980,8 @@ references:
     title: A Realist Theory of Science
     date-published: 1975-01-01
     year: 1975
-    notes: Routledge, London, 2008
+    notes: Routledge, London, 2008; no DOI for the 1975 edition (Crossref lists only
+      the Routledge e-book)
     publisher:
       name: Leeds Books
     type: book
@@ -2062,7 +2078,8 @@ references:
     date-published: 1971-01-01
     year: 1971
     journal: Prospects in Mathematics
-    notes: Annals of Mathematics Studies 70
+    notes: Annals of Mathematics Studies 70; print volume dated 1971 (Crossref's De
+      Gruyter e-book record says 1972)
     publisher:
       name: Princeton University Press
     start: "77"
@@ -2101,8 +2118,8 @@ references:
     identifiers:
       - type: doi
         value: 10.5281/zenodo.21712308
-    title: "The Hilbert–Pólya operator and the primitive structure of the complex
-      plane: between 𝔽₁, string theory, and ancient geometry"
+    title: "The Hilbert-Pólya Operator and the Primitive Structure of the Complex
+      Plane: Between 𝔽₁, String Theory, and Ancient Geometry"
     date-published: 2026-01-01
     year: 2026
     notes: Preprint, version 2.5.4
@@ -2119,7 +2136,7 @@ references:
     date-published: 1945-01-01
     year: 1945
     journal: Journal of Physics USSR
-    notes: No DOI (1945 journal not in Crossref)
+    notes: No DOI for the 1945 article (Crossref lists only a 1991 Springer reprint)
     start: "249"
     end: "254"
     type: article

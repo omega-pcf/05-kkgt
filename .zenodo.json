@@ -2,7 +2,7 @@
   "title": "One object instead of a choice of vacuum to put the observer in de Sitter space: From wormholes, black holes and baby universes to the criteria for an observer in de Sitter, contrasted with the Kaluza–Klein graviton candidates and with the cosmological constant",
   "description": "In de Sitter space an observer must be inside the universe it observes, and in string theory placing it has become a choice: of a vacuum among some 10^500. The same choice returns where wormholes, black holes and baby universes meet. The baby universes that branch off through wormholes carry parameters that fix the constants of nature, the cosmological constant among them, and the same parameters label the boundary theories over which the gravity of a black-hole throat is averaged; in both the question is which value, and the answer is sought in what a throat contains. The programme to which this note belongs, written within critical realism, reads the difficulty as one of representation rather than of selection: what is missing is one object that meets the criteria Witten and Chandrasekaran, Longo, Penington and Witten set for an observer in de Sitter, not a choice among values. This note does not test that claim itself; it tests two of its consequences where data can reach them, on the particles of one throat and on the cosmological constant. The object, in the framework of the programme, is a microstate whose levels form a tower built from two numbers, π and the golden ratio φ; read as a warped extra dimension it is a throat, the golden throat, whose Kaluza–Klein modes are its particles. The question becomes whether the tower fixes what a throat model otherwise chooses. The two-brane model of Randall and Sundrum assumes the dimension and chooses the infrared scale and the depth. The golden throat has the same equations, so the same mass ratios, and four independent conditions of the tower, reflection positivity, four-dimensional gravity, the arity of the framework and the clock of φ, fix its spectrum with no free parameter, to leading order π(k+1/4) times Mφ^12 in the unit M of the framework. The arity gives the dimension that the two-brane model assumes; with M identified with the scale of the charged leptons and the level 12 with the bottom of the throat, the spectrum fixes the infrared scale that it chooses. Identified with the graviton candidates reported at 380 and 700 GeV, they place the bottom of the throat at 11.97±0.05, 0.6 standard deviations from 12, and give the next modes at 1028 and 1346 GeV, against 1014 and 1328 GeV for the two-brane model fitted to the same candidates. Only the depth, the position of the top, stays free, and the ratio of the vector modes can decide it if they share the throat. The same tower carries the observer of de Sitter space. In the gravitational unit of the framework the observed cosmological constant gives the observer's level, 583.79±0.03: the level is read from the data, not chosen, and the hypothesis that it sits at an integer level is excluded within ΛCDM at 7.6 standard deviations. What the note leaves open is one number, the ratio of the lepton scale to the Planck scale.",
   "version": "0.1.0",
-  "publication_date": "2026-11-09",
+  "publication_date": "2026-11-10",
   "creators": [
     {
       "name": "González García, Jorge Armando",
@@ -43,7 +43,7 @@
     "A. G. Riess et al. (2022). A comprehensive measurement of the local value of the Hubble constant with 1 km s⁻<sup>1</sup> Mpc⁻<sup>1</sup> uncertainty from the Hubble Space Telescope and the SH0ES team. The Astrophysical Journal Letters. 934(1), L7. https://doi.org/10.3847/2041-8213/ac5c5b",
     "Afkhami-Jeddi, Nima; Cohn, Henry; Hartman, Thomas; Tajdini, Amirhossein (2021). Free partition functions and an averaged holographic duality. Journal of High Energy Physics. 2021(1), 130. https://doi.org/10.1007/JHEP01(2021)130",
     "Agashe, Kaustubh; Davoudiasl, Hooman; Perez, Gilad; Soni, Amarjit (2007). Warped gravitons at the CERN LHC and beyond. Physical Review D. 76, 036006. https://doi.org/10.1103/PhysRevD.76.036006",
-    "Akrami, Yashar; Alestas, George; Nesseris, Savvas (2025). Has DESI detected exponential quintessence?. arXiv. https://arxiv.org/abs/2504.04226",
+    "Akrami, Yashar; Alestas, George; Nesseris, Savvas (2025). Has DESI detected exponential quintessence?. arXiv. https://doi.org/10.48550/arXiv.2504.04226 https://arxiv.org/abs/2504.04226",
     "Apostol, Tom M. (1990). Modular Functions and Dirichlet Series in Number Theory. Graduate Texts in Mathematics. https://doi.org/10.1007/978-1-4612-0999-7",
     "Avila, Artur (2015). Global theory of one-frequency Schrödinger operators. Acta Mathematica. 215(1), 1–54. https://doi.org/10.1007/s11511-015-0128-7",
     "Avila, Artur; Jitomirskaya, Svetlana (2009). The Ten Martini Problem. Annals of Mathematics. 170(1), 303–342. https://doi.org/10.4007/annals.2009.170.303",
@@ -78,10 +78,10 @@
     "Garriga, J.; Tanaka, T. (2000). Gravity in the Randall--Sundrum brane world. Physical Review Letters. 84(13), 2778–2781. https://doi.org/10.1103/PhysRevLett.84.2778",
     "Gibbons, G. W.; Hawking, S. W. (1977). Cosmological event horizons, thermodynamics, and particle creation. Physical Review D. 15(10), 2738–2751. https://doi.org/10.1103/PhysRevD.15.2738",
     "Giddings, S. B.; Strominger, A. (1988). Loss of incoherence and determination of coupling constants in quantum gravity. Nuclear Physics B. 307(4), 854–866. https://doi.org/10.1016/0550-3213(88)90109-5",
-    "Giddings, S. B.; Strominger, A. (1989). Baby universes, third quantization and the cosmological constant. Nuclear Physics B. 321(2), 481–508. https://doi.org/10.1016/0550-3213(89)90353-2",
+    "Giddings, S. B.; Strominger, A. (1989). Baby universe, third quantization and the cosmological constant. Nuclear Physics B. 321(2), 481–508. https://doi.org/10.1016/0550-3213(89)90353-2",
     "Goldberger, Walter D.; Wise, Mark B. (1999). Modulus stabilization with bulk fields. Physical Review Letters. 83, 4922–4925. https://doi.org/10.1103/PhysRevLett.83.4922",
-    "González García, Jorge Armando; González García, Víctor Manuel; Dressler Pérez, Itzel Marion; García Ordóñez, Luz María (2026). Odd zeta values from pentagonal 𝔽₁-descent: a Λ-structure on ℤ[φ], the character χ₅, and GRH for L(s,χ₅) in equivalent forms. Zenodo. https://doi.org/10.5281/zenodo.19492791",
-    "González García, Jorge Armando; González García, Víctor Manuel; Dressler Pérez, Itzel Marion; García Ordóñez, Luz María; Moreno, M. (2026). The Hilbert–Pólya operator and the primitive structure of the complex plane: between 𝔽₁, string theory, and ancient geometry. Zenodo. https://doi.org/10.5281/zenodo.21712308",
+    "González García, Jorge Armando; González García, Víctor Manuel; Dressler Pérez, Itzel Marion; García Ordóñez, Luz María (2026). Odd Zeta Values from the PCF Torus: φ and π as Arithmetic-Geometric Sources. Zenodo. https://doi.org/10.5281/zenodo.19492791",
+    "González García, Jorge Armando; González García, Víctor Manuel; Dressler Pérez, Itzel Marion; García Ordóñez, Luz María; Moreno, M. (2026). The Hilbert-Pólya Operator and the Primitive Structure of the Complex Plane: Between 𝔽₁, String Theory, and Ancient Geometry. Zenodo. https://doi.org/10.5281/zenodo.21712308",
     "González García, Jorge Armando; González García, Víctor Manuel; García Ordóñez, Luz María; Dressler Pérez, Itzel Marion (2026). The Crystalline Worldsheet: a string theoretical framework based on 𝔽₁, for the de Sitter observer problem. Zenodo. https://doi.org/10.5281/zenodo.21343602",
     "González, J. (2026). ¿Cómo representar un agujero de gusano? Presentación de un programa de investigación sobre modelos de juguete en gravedad cuántica desde una perspectiva de tendencia realista crítica.",
     "González, J. (2026). Representación y representado en la física teórica.",
@@ -111,7 +111,7 @@
     "Koide, Y. (1983). A fermion-boson composite model of quarks and leptons. Physics Letters B. 120(1-3), 161–165. https://doi.org/10.1016/0370-2693(83)90644-5",
     "Le Yaouanc, A.; Richard, F. (2026). Evidence for Kaluza--Klein excitations of the graviton, gluon and quark at LHC. https://doi.org/10.48550/arXiv.2610.31458 https://arxiv.org/abs/2610.31458",
     "Le Yaouanc, A.; Richard, F. (2026). Influence of the KK graviton decay into hh on the triple Higgs measurement at LHC. https://doi.org/10.48550/arXiv.2606.29922 https://arxiv.org/abs/2606.29922",
-    "Le Yaouanc, Alain; Richard, François (2025). Evidence for BSM spin 0 and spin 2 resonances at LHC: possible interpretations. arXiv. https://arxiv.org/abs/2506.09490",
+    "Le Yaouanc, Alain; Richard, François (2025). Evidence for BSM spin 0 and spin 2 resonances at LHC: possible interpretations. arXiv. https://doi.org/10.48550/arXiv.2506.09490 https://arxiv.org/abs/2506.09490",
     "Lüst, Dieter; Palti, Eran; Vafa, Cumrun (2019). AdS and the Swampland. Physics Letters B. 797, 134867. https://doi.org/10.1016/j.physletb.2019.134867",
     "Maldacena, J. M. (2026). Real observers solving some imaginary problems. International Journal of Modern Physics A. 41(26). https://doi.org/10.1142/S0217751X2647010X",
     "Maldacena, J.; Qi, X.-L. (2018). Eternal traversable wormhole. https://doi.org/10.48550/arXiv.1804.00491 https://arxiv.org/abs/1804.00491",
@@ -131,7 +131,7 @@
     "National Institute of Standards and Technology (). NIST Digital Library of Mathematical Functions, §10.21(vii), McMahon's expansion. https://dlmf.nist.gov/10.21.vii",
     "Neukirch, J. (1999). Algebraic Number Theory. Springer. https://doi.org/10.1007/978-3-662-03983-0",
     "Nguyen, J. (2026). Scientific representation. The Stanford Encyclopedia of Philosophy. https://plato.stanford.edu/entries/scientific-representation/",
-    "Obied, Georges; Ooguri, Hirosi; Spodyneiko, Lev; Vafa, Cumrun (2018). De Sitter space and the swampland. arXiv. https://arxiv.org/abs/1806.08362",
+    "Obied, Georges; Ooguri, Hirosi; Spodyneiko, Lev; Vafa, Cumrun (2018). De Sitter space and the swampland. arXiv. https://doi.org/10.48550/arXiv.1806.08362 https://arxiv.org/abs/1806.08362",
     "Odlyzko, A. M. (1987). On the distribution of spacings between zeros of the zeta function. Mathematics of Computation. 48(177), 273–308. https://doi.org/10.1090/s0025-5718-1987-0866115-0",
     "Ooguri, Hirosi; Palti, Eran; Shiu, Gary; Vafa, Cumrun (2019). Distance and de Sitter conjectures on the swampland. Physics Letters B. 788, 180–184. https://doi.org/10.1016/j.physletb.2018.11.018",
     "Osterwalder, Konrad; Schrader, Robert (1973). Axioms for Euclidean Green's functions. Communications in Mathematical Physics. 31(2), 83–112. https://doi.org/10.1007/BF01645738",
@@ -147,7 +147,7 @@
     "Riedel, C. Jess; Zurek, Wojciech H. (2010). Quantum Darwinism in an everyday environment: huge redundancy in scattered photons. Physical Review Letters. 105(2), 020404. https://doi.org/10.1103/PhysRevLett.105.020404",
     "Rivero, A.; Gsponer, A. (2005). The strange formula of Dr. Koide. https://doi.org/10.48550/arXiv.hep-ph/0505220 https://arxiv.org/abs/hep-ph/0505220",
     "Ryu, Shinsei; Takayanagi, Tadashi (2006). Holographic derivation of entanglement entropy from the anti-de Sitter space/conformal field theory correspondence. Physical Review Letters. 96(18), 181602. https://doi.org/10.1103/PhysRevLett.96.181602",
-    "Saad, Phil; Shenker, Stephen H.; Stanford, Douglas (2019). JT gravity as a matrix integral. arXiv. https://arxiv.org/abs/1903.11115",
+    "Saad, Phil; Shenker, Stephen H.; Stanford, Douglas (2019). JT gravity as a matrix integral. arXiv. https://doi.org/10.48550/arXiv.1903.11115 https://arxiv.org/abs/1903.11115",
     "Saad, Phil; Shenker, Stephen H.; Stanford, Douglas; Yao, Shunyu (2024). Wormholes without averaging. Journal of High Energy Physics. 2024(9), 133. https://doi.org/10.1007/JHEP09(2024)133",
     "Sakharov, A. D. (2000). Vacuum quantum fluctuations in curved space and the theory of gravitation. General Relativity and Gravitation. 32(2), 365–367. https://doi.org/10.1023/A:1001947813563",
     "Santaló, L. A. (1976). Integral Geometry and Geometric Probability. Addison-Wesley.",
@@ -403,9 +403,19 @@
       "resource_type": "publication-article"
     },
     {
+      "identifier": "10.48550/arXiv.1806.08362",
+      "relation": "cites",
+      "resource_type": "publication"
+    },
+    {
       "identifier": "10.1016/j.physletb.2018.11.018",
       "relation": "cites",
       "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.48550/arXiv.2504.04226",
+      "relation": "cites",
+      "resource_type": "publication"
     },
     {
       "identifier": "10.3390/axioms13120862",
@@ -483,12 +493,22 @@
       "resource_type": "publication-article"
     },
     {
+      "identifier": "10.48550/arXiv.2506.09490",
+      "relation": "cites",
+      "resource_type": "publication"
+    },
+    {
       "identifier": "10.5281/zenodo.21343602",
       "relation": "cites",
       "resource_type": "publication"
     },
     {
       "identifier": "10.5281/zenodo.19492791",
+      "relation": "cites",
+      "resource_type": "publication"
+    },
+    {
+      "identifier": "10.48550/arXiv.1903.11115",
       "relation": "cites",
       "resource_type": "publication"
     },
