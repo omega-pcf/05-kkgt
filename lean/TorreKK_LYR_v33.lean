@@ -30,6 +30,8 @@ open Real Complex
 
 namespace TorreKK
 
+set_option linter.style.longLine false
+
 /-! ### 1–3. La métrica de la garganta -/
 
 /-- Métrica del nivel σ: η_σ = b^(−4σ). -/
@@ -37,7 +39,7 @@ def etaMetric (b : ℝ) (σ : ℤ) : ℝ := b ^ (-(4 : ℤ) * σ)
 
 /-- Salto hacia abajo (σ → σ−1) y hacia arriba (σ → σ+1) del operador de A.7. -/
 def hopDown (b : ℝ) : ℝ := b ^ (2 : ℤ)
-def hopUp   (b : ℝ) : ℝ := b ^ (-(2 : ℤ))
+def hopUp (b : ℝ) : ℝ := b ^ (-(2 : ℤ))
 
 /-- E1: η·K es simétrica. El elemento (σ, σ+1) de η·K es η_σ·b⁻²; el (σ+1, σ)
     es η_{σ+1}·b². Son iguales para toda base no nula. -/
@@ -179,9 +181,7 @@ theorem rs_scale_is_H_at_bottom (b m₀ : ℝ) (hb : 0 < b) (σIR σUV : ℝ) :
     (m₀ * b ^ σUV) * Real.exp (-((σUV - σIR) * Real.log b)) = m₀ * b ^ σIR := by
   rw [rs_warp_is_golden b hb σIR σUV]
   have : b ^ σUV ≠ 0 := (Real.rpow_pos_of_pos hb σUV).ne'
-  first
-  | (field_simp; done)
-  | (field_simp; ring)
+  field_simp
 
 /-- Con el UV en una escala M_UV > 0: kπr = log(M_UV/m₀) − σ_IR·log b, es decir, kπr es la
     distancia en niveles entre el fondo y el UV, por log b. -/
@@ -278,7 +278,7 @@ theorem lattice_radius_conjugate (b M σ : ℝ) (hb : 0 < b) :
     b ^ σ * (M * b ^ (-σ)) = M := by
   rw [Real.rpow_neg hb.le]
   have : b ^ σ ≠ 0 := (Real.rpow_pos_of_pos hb σ).ne'
-  field_simp <;> ring
+  field_simp
 
 /-- CW6 (31), F1 `eps0_relates_log_and_geometry`: con ε₀ = log b/(6√3) y M = 6√3·π/log b,
     ε₀·M = π (el principio de certeza), y log b = 6√3·π/M. -/
@@ -286,13 +286,13 @@ theorem certainty_principle (b : ℝ) (hb : 1 < b) :
     (Real.log b / (6 * Real.sqrt 3)) * (6 * Real.sqrt 3 * Real.pi / Real.log b) = Real.pi := by
   have hl : Real.log b ≠ 0 := (Real.log_pos hb).ne'
   have hs : Real.sqrt 3 ≠ 0 := by positivity
-  field_simp <;> ring
+  field_simp
 
 theorem log_from_scale (b : ℝ) (hb : 1 < b) :
     Real.log b = 6 * Real.sqrt 3 * Real.pi / (6 * Real.sqrt 3 * Real.pi / Real.log b) := by
   have hl : Real.log b ≠ 0 := (Real.log_pos hb).ne'
   have hp : 6 * Real.sqrt 3 * Real.pi ≠ 0 := by positivity
-  field_simp <;> ring
+  field_simp
 
 /-- F1 `prop:tower-disc-val`: la valuación dorada v(x) = log x / log b vale n en b^n. -/
 theorem golden_valuation_on_tower (b : ℝ) (hb : 1 < b) (n : ℤ) :
@@ -331,7 +331,7 @@ theorem golden_eq_two_cos_pi_div_five :
     cocientes parciales iguales a 1: es el irracional peor aproximado por fracciones (Hurwitz). -/
 theorem golden_self_reference (b : ℝ) (hb : 0 < b) (h : b ^ 2 = b + 1) : b = 1 + 1 / b := by
   have hb0 : b ≠ 0 := hb.ne'
-  field_simp <;> ring
+  field_simp; ring
   nlinarith [h]
 
 /-- El ángulo y la escala son uno (CW6, Prop. 3.4): con α(σ) = arctan(ε₀ b^σ),
@@ -340,7 +340,7 @@ theorem spectral_angle_ratio (b ε σ : ℝ) (hb : 0 < b) (hε : 0 < ε) :
     Real.tan (Real.arctan (ε * b ^ (σ + 1))) / Real.tan (Real.arctan (ε * b ^ σ)) = b := by
   rw [Real.tan_arctan, Real.tan_arctan, Real.rpow_add hb, Real.rpow_one]
   have : 0 < b ^ σ := Real.rpow_pos_of_pos hb σ
-  field_simp <;> ring
+  field_simp
 
 /-- Las raíces periódicas del anillo que usa el artículo: la cuarta vuelta i (el desfase ¼) y
     la media vuelta −1 (el fondo), con i² = −1 e i⁴ = 1. -/
@@ -362,7 +362,7 @@ salvo la escala. -/
 theorem lattice_tower_tau (s M : ℝ) (hs : 0 < s) (hM : 0 < M) :
     ((s * M : ℝ) * Complex.I) / ((s * M : ℝ) : ℂ) = Complex.I := by
   have h : ((s * M : ℝ) : ℂ) ≠ 0 := by exact_mod_cast (mul_pos hs hM).ne'
-  field_simp <;> ring
+  field_simp
 
 /-- La media vuelta cierra en cada nivel sobre la longitud de onda `τ(σ) = M b^{−σ}`:
 `ε(σ)·τ(σ) = (ε₀ b^σ)(M b^{−σ}) = ε₀ M = π`. -/
@@ -421,7 +421,7 @@ están en razón `b`. -/
 theorem ring_ratio (b σ : ℝ) (hb : 0 < b) : b ^ (σ + 1) / b ^ σ = b := by
   rw [Real.rpow_add hb, Real.rpow_one]
   have : 0 < b ^ σ := Real.rpow_pos_of_pos hb σ
-  field_simp <;> ring
+  field_simp
 
 /-- El toro cuadrado `τ = i` en el toro de Clifford: `(a,b) ↦ (cos a, sin a, cos b, sin b)/√2`
 tiene sus dos derivadas parciales de igual norma, `½`, y ortogonales: es la métrica plana
@@ -510,7 +510,7 @@ theorem mass_is_bottom_information (b M k : ℝ) :
 /-- Prop. «The scale is the scale operator at the bottom»: `j·b^σ = j·H(σ)/m₀`, con `H = m₀ b^σ`. -/
 theorem scale_operator_at_bottom (j m₀ b σ : ℝ) (hm : m₀ ≠ 0) :
     j * b ^ σ = j * (m₀ * b ^ σ) / m₀ := by
-  field_simp <;> ring
+  field_simp
 
 /-- Prop. «The bottom is the half-turn», punto 2: `χ(SL₂ℤ) = ¼ + ⅙ − ½ = −1/12` desde la
 amalgama `ℤ/4 *_{ℤ/2} ℤ/6`. -/
@@ -586,7 +586,7 @@ theorem log_golden_div_pi_irrational :
   have hlog : 0 < Real.log b := Real.log_pos hb1
   have hp : 0 < p := by
     rcases Nat.eq_zero_or_pos p with h0 | h0
-    · subst h0; simp at h
+    · subst h0; simp only [CharP.cast_eq_zero, zero_mul, mul_eq_zero, Nat.cast_eq_zero, log_eq_zero] at h
       rcases h with h | h
       · exact absurd h (by exact_mod_cast hq.ne')
       · rcases h with h | h | h <;> linarith
@@ -609,7 +609,7 @@ theorem clifford_stereographic_torus (s c : ℝ) (hsc : s ^ 2 + c ^ 2 = 1)
   rw [hden]
   have hd' : Real.sqrt 2 - s ≠ 0 := by
     intro h0; apply hd; field_simp; linarith
-  field_simp <;> nlinarith [h2, hsc]
+  field_simp; nlinarith [h2, hsc]
 
 /-- **Axioma (derivadas de la proyección).** Con `r(b) = √2 − sin b`, el meridiano proyectado
 `ρ(b) = 1/r`, `z(b) = cos b / r` tiene derivadas `ρ' = cos b / r²` y `z' = (1 − √2 sin b) / r²`.
@@ -627,7 +627,7 @@ theorem stereographic_conformal (s c : ℝ) (hsc : s ^ 2 + c ^ 2 = 1) (hr : Real
     (c / (Real.sqrt 2 - s) ^ 2) ^ 2 + ((1 - Real.sqrt 2 * s) / (Real.sqrt 2 - s) ^ 2) ^ 2
       = (1 / (Real.sqrt 2 - s)) ^ 2 := by
   have h2 : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
-  field_simp <;> ring
+  field_simp; ring
   nlinarith [h2, hsc]
 
 
@@ -974,7 +974,7 @@ theorem half_gt_quarter : (1 / 2 : ℝ) > 1 / 4 := by norm_num
 theorem pairing_FP_modulus_half :
     (Real.sqrt 3 / 2) * (1 / Real.sqrt 3) / 1 = (1 / 2 : ℝ) := by
   have h : Real.sqrt 3 ≠ 0 := (Real.sqrt_pos.mpr (by norm_num)).ne'
-  field_simp <;> ring
+  field_simp
 
 /-- **W6.** La conjugación de Galois de `ℤ[φ]`, `a + bφ ↦ a + bφ̄ = (a+b) − bφ`. -/
 def galoisConj (p : ℤ × ℤ) : ℤ × ℤ := (p.1 + p.2, -p.2)
@@ -1008,7 +1008,7 @@ theorem antipodal_involution (z : ℂ) (hz : z ≠ 0) :
     -1 / (starRingEnd ℂ) (-1 / (starRingEnd ℂ) z) = z := by
   have hc : (starRingEnd ℂ) z ≠ 0 := by simpa using hz
   simp only [map_div₀, map_neg, map_one, Complex.conj_conj]
-  field_simp <;> ring
+  field_simp
 
 /-- **La ley de la theta bajo `S`** (Mathlib, sin axioma): `θ(−1/τ) = (−iτ)^{1/2} θ(τ)`. -/
 theorem theta_S_law (τ : UpperHalfPlane) :
@@ -1038,7 +1038,7 @@ theorem gibbons_hawking_entropy (b σ : ℝ) (hb : 0 < b) :
     rw [← Real.rpow_natCast, ← Real.rpow_mul hb.le]; congr 1; push_cast; ring
   have hp : b ^ σ ≠ 0 := (Real.rpow_pos_of_pos hb σ).ne'
   rw [mul_pow, h2, hh, Real.rpow_neg hb.le]
-  field_simp <;> ring
+  field_simp
 
 /-! ## La red de la torre: entero y real a la vez (v22)
 
