@@ -128,7 +128,7 @@
     },
     "DOI": "10.1142/S0217751X2647010X",
     "URL": "https://doi.org/10.1142/S0217751X2647010X",
-    "note": "arXiv:2412.14014"
+    "note": "arXiv:2412.14014; 2024 preprint, key Mal24 keeps the preprint year (journal publication 2026)"
   },
   {
     "id": "Sus21",
@@ -588,7 +588,7 @@
   {
     "id": "GS89",
     "type": "article-journal",
-    "title": "Baby universes, third quantization and the cosmological constant",
+    "title": "Baby universe, third quantization and the cosmological constant",
     "author": [
       {
         "family": "Giddings",
@@ -1242,6 +1242,7 @@
     },
     "container-title": "arXiv",
     "note": "arXiv:1806.08362",
+    "DOI": "10.48550/arXiv.1806.08362",
     "URL": "https://arxiv.org/abs/1806.08362"
   },
   {
@@ -1305,6 +1306,7 @@
     },
     "container-title": "arXiv",
     "note": "arXiv:2504.04226",
+    "DOI": "10.48550/arXiv.2504.04226",
     "URL": "https://arxiv.org/abs/2504.04226"
   },
   {
@@ -1766,6 +1768,7 @@
     },
     "container-title": "arXiv",
     "note": "arXiv:2506.09490 (v7, 2026)",
+    "DOI": "10.48550/arXiv.2506.09490",
     "URL": "https://arxiv.org/abs/2506.09490"
   },
   {
@@ -1803,7 +1806,7 @@
   {
     "id": "F1",
     "type": "posted-content",
-    "title": "Odd zeta values from pentagonal 𝔽₁-descent: a Λ-structure on ℤ[φ], the character χ₅, and GRH for L(s,χ₅) in equivalent forms",
+    "title": "Odd Zeta Values from the PCF Torus: φ and π as Arithmetic-Geometric Sources",
     "author": [
       {
         "given": "Jorge Armando",
@@ -1859,6 +1862,7 @@
     },
     "container-title": "arXiv",
     "note": "arXiv:1903.11115",
+    "DOI": "10.48550/arXiv.1903.11115",
     "URL": "https://arxiv.org/abs/1903.11115"
   },
   {
@@ -2610,7 +2614,8 @@
         ]
       ]
     },
-    "publisher": "Benjamin"
+    "publisher": "Benjamin",
+    "note": "No DOI for the 1964 Benjamin edition (Crossref lists only the 2001 Princeton reprint)"
   },
   {
     "id": "Wat44",
@@ -2825,7 +2830,7 @@
       ]
     },
     "publisher": "Leeds Books",
-    "note": "Routledge, London, 2008"
+    "note": "Routledge, London, 2008; no DOI for the 1975 edition (Crossref lists only the Routledge e-book)"
   },
   {
     "id": "Mas15",
@@ -2965,7 +2970,7 @@
     "container-title": "Prospects in Mathematics",
     "publisher": "Princeton University Press",
     "page": "77-170",
-    "note": "Annals of Mathematics Studies 70",
+    "note": "Annals of Mathematics Studies 70; print volume dated 1971 (Crossref's De Gruyter e-book record says 1972)",
     "DOI": "10.1515/9781400881697-005"
   },
   {
@@ -2998,7 +3003,7 @@
   {
     "id": "HP26",
     "type": "posted-content",
-    "title": "The Hilbert–Pólya operator and the primitive structure of the complex plane: between 𝔽₁, string theory, and ancient geometry",
+    "title": "The Hilbert-Pólya Operator and the Primitive Structure of the Complex Plane: Between 𝔽₁, String Theory, and Ancient Geometry",
     "author": [
       {
         "given": "Jorge Armando",
@@ -3056,7 +3061,7 @@
     "container-title": "Journal of Physics USSR",
     "volume": "9",
     "page": "249-254",
-    "note": "No DOI (1945 journal not in Crossref)"
+    "note": "No DOI for the 1945 article (Crossref lists only a 1991 Springer reprint)"
   },
   {
     "id": "ML98",
