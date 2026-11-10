@@ -1,10 +1,12 @@
-"""reproduce_v108.py: every number and the five figures of
+"""kkgt.sections: every number and the five figures of
 «The Kaluza–Klein spectrum of the golden throat», v108.
 
-Usage:  python3 reproduce_v108.py          all sections
-        python3 reproduce_v108.py 2 14     only those sections
+Usage:  PYTHONPATH=tests/src python -m kkgt.sections          all sections
+        PYTHONPATH=tests/src python -m kkgt.sections 2 14     only those sections
 
-Each section is one of the earlier scripts, unchanged, in its own namespace.
+Each section is one of the earlier scripts, unchanged, in its own namespace,
+registered in ``SECCIONES`` as ``(number, title, function)``; the test suite
+runs them one at a time through ``kkgt.harness.run_section``.
 Figures: 1 (section 12), 2 (section 13), 3 (section 10), 4 (section 39),
 5 (section 41). Python 3.13, NumPy, SciPy, Matplotlib; section 2
 also needs mpmath.
@@ -16,8 +18,8 @@ SECCIONES = []
 # 1. Every number in order of appearance; alternatives for m0 (§9)
 # ======================================================================
 def seccion_1():
-    """Reproduce every number of kk_golden_throat.tex, in order of appearance.
-    Python 3.13, NumPy 2.5.3, SciPy 1.18.1.  Run:  python3 reproduce_all.py"""
+    """Recompute every number of kk_golden_throat.tex, in order of appearance.
+    Python 3.13, NumPy 2.5.3, SciPy 1.18.1.  Run:  python -m kkgt.sections 1"""
     import numpy as np
     from scipy.linalg import eigh, expm, eigvalsh
     from scipy.special import jn_zeros, jv
@@ -173,7 +175,7 @@ def seccion_1():
         w_ = eigh(K/h**2, trap(np.exp(-kw*y)), eigvals_only=True); return np.sqrt(np.clip(w_,0,None))[1:4]
     mg = np.sqrt(sl_r(0, 6, 32)[1:4]); mr = rs_chain(6*lp, 32/lp, 4, 2)
     P("RS chain (y) vs golden chain (sigma), graviton m_k", (np.round(mr*phi**6, 4), np.round(mg, 4)))
-    # (2) exact two-brane condition reproduces the golden-chain vector table
+    # (2) exact two-brane condition matches the golden-chain vector table
     P("exact vector m2/m1 at phi^6, phi^12, phi^30 (2.093, 2.171, 2.241)",
       [round((lambda v: v[1]/v[0])(vec2(phi**-L)), 3) for L in (6, 12, 30)])
     # (3) bottom at 12, top at Planck

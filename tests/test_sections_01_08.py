@@ -1,7 +1,8 @@
-"""Deep numeric tests for sections 1-8 of reproduce_v108.py.
+"""Deep numeric tests for sections 1-8 of kkgt.sections.
 
-Section identity: every test docstring names the section number the
-manuscript cites (``section~N of \\code{reproduce_v108.py}``).
+Section identity: the manuscript cites the tests that check a number
+(``\testref{...}``), and every test docstring here names the section of
+``kkgt.sections`` it checks.
 
 Two kinds of check:
   * independent -- the quantity is recomputed here from the closed form,
@@ -269,7 +270,7 @@ class TestSection6BesselChain:
         assert rms == pytest.approx(printed_rms, abs=R2)
         assert len(ratios) == 4
 
-    def test_deep_chain_reproduces_the_j1_zeros(self, run_section):
+    def test_deep_chain_yields_the_j1_zeros(self, run_section):
         """sigma[-6,6], M=32 -> 1.8308, 2.6545, 3.4757: within 0.05% of J1.
 
         The residual 1.5e-3 on the fourth ratio is the discretisation error

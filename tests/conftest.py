@@ -1,7 +1,8 @@
-"""pytest configuration for the reproduce_v108.py suite.
+"""pytest configuration for the suite of the manuscript.
 
 Mirrors 03-crystalline-worldsheet/tests/conftest.py: shared fixtures live
-here, the importable support code lives in tests/src/kkgt.
+here, the importable support code lives in tests/src/kkgt, and the
+computation itself is ``kkgt.sections`` -- no test imports a script.
 
 The suite is headless: the backend is forced to Agg before any section can
 import pyplot, and every section runs inside a temporary directory so the
@@ -17,34 +18,37 @@ from pathlib import Path
 os.environ.setdefault("MPLBACKEND", "Agg")
 
 TESTS_DIR = Path(__file__).resolve().parent
-REPO_ROOT = TESTS_DIR.parent
-for _p in (str(REPO_ROOT), str(TESTS_DIR / "src")):
+for _p in (str(TESTS_DIR / "src"),):
     if _p not in sys.path:
         sys.path.insert(0, _p)
 
 import pytest  # noqa: E402
 
-from kkgt.harness import SectionRun, load_repro, run_section as _run_section  # noqa: E402
+from kkgt.harness import (  # noqa: E402
+    SectionRun,
+    load_sections,
+    run_section as _run_section,
+)
 
 
 @pytest.fixture(scope="session")
-def repro():
-    """The manuscript's script, imported once per session."""
-    return load_repro()
+def sections_module():
+    """The ``kkgt.sections`` module, imported once per session."""
+    return load_sections()
 
 
 @pytest.fixture(scope="session")
-def sections(repro):
+def sections(sections_module):
     """``SECCIONES`` registry: [(number, title, function), ...]."""
-    return list(repro.SECCIONES)
+    return list(sections_module.SECCIONES)
 
 
 @pytest.fixture(scope="session")
-def run_section(repro, tmp_path_factory):
+def run_section(sections_module, tmp_path_factory):
     """Run one numbered section, once per session, in a temp directory.
 
     Sections are deterministic (all random generators are seeded inside the
-    script), so the captured stdout is cached and shared by every test that
+    package), so the captured stdout is cached and shared by every test that
     needs it.  Returns ``SectionRun``.
     """
     base = tmp_path_factory.mktemp("section_runs")
@@ -52,7 +56,7 @@ def run_section(repro, tmp_path_factory):
 
     def _run(n: int) -> SectionRun:
         if n not in cache:
-            cache[n] = _run_section(repro, n, base / f"section_{n:02d}")
+            cache[n] = _run_section(sections_module, n, base / f"section_{n:02d}")
         return cache[n]
 
     return _run

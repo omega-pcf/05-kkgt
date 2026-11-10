@@ -1,4 +1,4 @@
-"""Execution contract: all 43 sections of reproduce_v108.py run clean.
+"""Execution contract: all 43 sections of kkgt.sections run clean.
 
 Each case is one numbered section, identified as ``section-NN`` (the id is
 what the mapping table in the report uses).  Running a section executes the

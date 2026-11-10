@@ -1,4 +1,4 @@
-"""Deep numeric tests for sections 17-28 of reproduce_v108.py.
+"""Deep numeric tests for sections 17-28 of kkgt.sections.
 
 Observer level, unit conversions, window and nome: every number here is
 recomputed from the closed form with an explicit tolerance, or read from

@@ -1,13 +1,13 @@
-"""Harness for the ``reproduce_v108.py`` test suite.
+"""Harness for the test suite of the manuscript.
 
-The manuscript cites the script by section number (``section~38 of
-\\code{reproduce_v108.py}``), so the tests keep a 1:1 identity with the
-original sections: every number is read from the stdout of the section that
+The manuscript cites the tests that check each number (``\\testref{...}``),
+so the tests keep a 1:1 identity with the forty-three numbered sections of
+``kkgt.sections``: every number is read from the stdout of the section that
 produces it, or recomputed independently and compared with an explicit
 tolerance.
 
-``SectionRun.expect/value`` replace the ad-hoc checks of the original
-script: a missing pattern or a violated tolerance fails with the section
+``SectionRun.value/has`` replace the ad-hoc checks of the original
+sections: a missing pattern or a violated tolerance fails with the section
 number, the label, expected, got and the diff instead of a bare ``False``.
 """
 
@@ -17,33 +17,29 @@ import contextlib
 import io
 import os
 import re
-import sys
 import time
 from dataclasses import dataclass
 from pathlib import Path
 
-# tests/src/kkgt/harness.py -> repo root is four levels up
+# tests/src/kkgt/harness.py -> repo root = Path(...).parents[3]
 REPO_ROOT = Path(__file__).resolve().parents[3]
 
 
-def load_repro():
-    """Import the manuscript's script (module level only builds SECCIONES)."""
-    root = str(REPO_ROOT)
-    if root not in sys.path:
-        sys.path.insert(0, root)
-    import reproduce_v108  # noqa: PLC0415  (path set above)
+def load_sections():
+    """The ``kkgt.sections`` module (its top level only builds SECCIONES)."""
+    from kkgt import sections  # noqa: PLC0415  (importable via tests/src)
 
-    return reproduce_v108
+    return sections
 
 
-def section_registry(repro) -> dict:
+def section_registry(module) -> dict:
     """Number -> (title, function), in file order."""
-    return {num: (title, fn) for num, title, fn in repro.SECCIONES}
+    return {num: (title, fn) for num, title, fn in module.SECCIONES}
 
 
 @dataclass
 class SectionRun:
-    """Result of executing one numbered section of reproduce_v108.py."""
+    """Result of executing one numbered section of ``kkgt.sections``."""
 
     number: int
     title: str
@@ -92,9 +88,9 @@ class SectionRun:
         return True
 
 
-def run_section(repro, n: int, cwd: Path | str) -> SectionRun:
-    """Run section ``n`` with cwd set to ``cwd`` (figures land there)."""
-    registry = section_registry(repro)
+def run_section(module, n: int, cwd: Path | str) -> SectionRun:
+    """Run section ``n`` of ``kkgt.sections`` with cwd set to ``cwd``."""
+    registry = section_registry(module)
     assert n in registry, f"section {n} does not exist (1..{len(registry)})"
     title, fn = registry[n]
     cwd = Path(cwd)

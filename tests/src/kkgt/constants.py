@@ -1,9 +1,9 @@
-"""Constants shared by the tests of ``reproduce_v108.py``.
+"""Constants shared by the tests of the manuscript.
 
 Every value here is either a closed form (golden ratio, M_PCF, ...) or a
-number the script prints and ``main.tex`` cites; the comment on each line
-records the section that produces it, so the section->test mapping of the
-suite stays auditable.
+number ``kkgt.sections`` prints and ``main.tex`` cites; the comment on each
+line records the section that produces it, so the section->test mapping of
+the suite stays auditable.
 """
 
 from __future__ import annotations

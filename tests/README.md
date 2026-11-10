@@ -1,26 +1,34 @@
-# Tests for `reproduce_v108.py`
+# Tests for the note (package `kkgt`)
 
-`main.tex` cites the reproduction script **by section number**
-(`section~38 of \code{reproduce_v108.py}`), so the numbering is part of the
-paper.  This suite keeps a strict 1:1 identity with those sections: every
-test names its section, and `tests/test_section_census.py` parses `main.tex`
-to prove that every `section~N` the manuscript quotes still exists.
+The computation of the note lives in the importable package
+`tests/src/kkgt`, in the module `kkgt.sections`: forty-three numbered
+sections registered in `SECCIONES`.  Nothing is a script any more: the
+tests import the package, and `main.tex` cites the tests that check its
+numbers with `\testref{...}` (a test name of the suite), which
+`tests/test_section_census.py` parses to prove that every reference the
+manuscript makes exists in the suite, that no numbered `section~N`
+citation is left, and that each of the five figures names the test that
+writes it.
 
 ```bash
-uv run pytest tests/ -q                 # whole suite   (447 tests, ~68 s)
-uv run pytest tests/ -q -m 'not slow'   # without >10 s (440 tests, ~55 s)
+uv run pytest tests/ -q                 # whole suite   (451 tests, ~70 s)
+uv run pytest tests/ -q -m 'not slow'   # without >10 s (444 tests, ~61 s)
 pnpm run test                           # same, through package.json
+
+PYTHONPATH=tests/src uv run python -m kkgt.sections        # the 43 sections
+PYTHONPATH=tests/src uv run python -m kkgt.sections 38     # only section 38
 ```
 
 ## Layout (mirrors `03-crystalline-worldsheet/tests/`)
 
 ```
 tests/
-├── conftest.py                # Agg backend, `repro`, `sections`, cached `run_section`
+├── conftest.py                # Agg backend, `sections_module`, `sections`, `run_section`
 ├── src/kkgt/
+│   ├── sections.py            # the computation: 43 numbered sections (SECCIONES)
 │   ├── constants.py           # PHI, M_PCF, OBS_G, FIGURES, SLOW_SECTIONS
 │   └── harness.py             # SectionRun: run a section, read its stdout
-├── test_section_census.py     # registry <-> main.tex contract (numbers, figures)
+├── test_section_census.py     # \testref{...} <-> main.tex contract (numbers, figures)
 ├── test_section_runs.py       # all 43 sections run clean and print their number
 ├── test_sections_01_08.py     # tower, spectra, phase, Bessel chain, look-elsewhere
 ├── test_sections_09_16.py     # granularity, contact, figures 1-2, gaps, Koide
@@ -85,7 +93,7 @@ author's own `assert`s execute) and one or more that recompute its numbers.
 * **independent** -- the quantity is recomputed in the test from the closed
   form (Bessel zeros, Fibonacci words, lattice counts, weighted fits) and
   compared with an explicit tolerance.  This is the regression net: it does
-  not depend on the script being right.
+  not depend on the section being right.
 * **contract** -- the number is read from the section's stdout with an
   explicit tolerance, for quantities whose computation lives only inside the
   section (discretised chains, the 50 340-pair search of section 40, the

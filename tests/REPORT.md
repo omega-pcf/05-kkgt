@@ -1,4 +1,4 @@
-# Report: `reproduce_v108.py` → pytest suite
+# Report: the numbered sections → pytest suite
 
 ## (a) Tree of files created / modified
 
@@ -8,11 +8,12 @@ pyproject.toml                 M  [dependency-groups] dev = ["pytest>=8.0"]
                                          pythonpath, addopts, markers)
 uv.lock                        M  + pytest 9.2.0, colorama, iniconfig, pluggy, pygments
 package.json                   M  scripts: "test", "test:fast"  (scripts block only)
-reproduce_v108.py              –  UNCHANGED (entry point cited by the tex)
+tests/src/kkgt/sections.py      M  the computation, moved here from the
+                                      repository root (no entry point left)
 tests/                         N
 ├── README.md                  N  structure, tolerance policy, section→test map
 ├── REPORT.md                  N  this report
-├── conftest.py                N  Agg backend, fixtures repro/sections/run_section
+├── conftest.py                N  Agg backend, fixtures sections_module/sections/run_section
 ├── src/kkgt/__init__.py       N
 ├── src/kkgt/constants.py      N  PHI, LN_PHI, M_PCF, EPS0, OBS_G, FIGURES, SLOW_SECTIONS
 ├── src/kkgt/harness.py        N  SectionRun: runs one section, reads its stdout
@@ -55,7 +56,8 @@ $ pnpm run test
 447 passed in 68.15s (0:01:08)      exit 0
 ```
 
-`uv lock` regenerated `uv.lock` (pytest 9.2.0) and `uv run python reproduce_v108.py 38`
+`uv lock` regenerated `uv.lock` (pytest 9.2.0) and the sections run with
+`PYTHONPATH=tests/src uv run python -m kkgt.sections 38`
 still runs exactly as before.
 
 ## (c) Map section → test
@@ -135,7 +137,7 @@ thresholds. The four exceptions above were already justified when written.
 * **Failures: 0** (`447 passed`) after the first round of fixes.
 * **`xfail`/`skip`: none.** No section of the script fails: its 64 internal
   `assert`s all pass (§11, 12, 13, 29, 37, 39, 40, 41, 42, 43).
-* **Note on `chk`**: it does not exist (`grep -c chk reproduce_v108.py` → 0). The
+* **Note on `chk`**: it does not exist (`grep -c chk tests/src/kkgt/sections.py` → 0). The
   "ad-hoc checks" are 64 message-less `assert`s; when run inside
   pytest they fail with the section number and the full stdout
   (`SectionRun.match/has` include them in the message).
@@ -175,7 +177,7 @@ Witness items: `W1 (CLPW)`, `W2 (W01)`, `W3 (W01)`, `W4 (W01)`, `W5 (W01)`,
 `W6 (W01)`, `W7 (W01)`, `W8 (W01)`, `W9 (GH)`, `W10 (W01)`, `W11 (CLPW)`,
 `W12 (CLPW)`. Formula labels: `F1`…`F9`, `B1`…`B4`; statement labels: `I12`.
 
-**`reproduce_v108.py` (same names as the tex):**
+**`tests/src/kkgt/sections.py` (same names as the tex):**
 
 | label | where (line) | text |
 |---|---|---|
@@ -190,20 +192,19 @@ Witness items: `W1 (CLPW)`, `W2 (W01)`, `W3 (W01)`, `W4 (W01)`, `W5 (W01)`,
 | `[R]` | 692 (§11) | `the twelve of the icosahedron and that of the background are proved separately (reading [R])` |
 | `I1`…`I7` | §42 (prints `I1:`…`I7:`) | the block of section 42 |
 
-The script does **not** contain the macro `\tier{}` (grep `tier` → 0). The
+The computation does **not** contain the macro `\tier{}` (grep `tier` → 0). The
 overlaps `W2/W4/W8/F1/F9/B1/I9/I12/I15/[R]` are the ones to standardise later;
 nothing was renamed here.
 
 ## (g) Deviations from the standard of 03 and why
 
-1. **`reproduce_v108.py` stays intact** (it was not turned into a thin runner
-   over a restructured package). Reason: the 43 sections *are* the
-   code cited by the tex (`section~N of reproduce_v108.py`), they live in their
-   own namespace and are importable as they are; moving 1990 lines to
-   `tests/src/` risked breaking the cited artefact without gaining coverage —
-   the tests import the module and run it. If the restructure into
-   modules is wanted, the starting point is already there: `kkgt.harness.run_section` is the
-   only place that knows how to invoke a section.
+1. **The computation stayed in one file** (it was not split into modules).
+   Reason: the 43 sections *are* the code of the note, they live in their
+   own namespace and are importable as they are; splitting 1990 lines would
+   add structure without gaining coverage.  The file did move: it is now
+   `tests/src/kkgt/sections.py`, the module `kkgt.sections`, and no entry
+   point is left at the root of the repository.  `kkgt.harness.run_section`
+   remains the only place that knows how to invoke a section.
 2. **pytest in `[dependency-groups] dev`** instead of
    `[project.optional-dependencies] test` as in 03 (what the brief asks for).
 3. **`addopts = "--tb=short -p no:cacheprovider"`** without `-v` (03 uses
@@ -218,6 +219,39 @@ nothing was renamed here.
    sections print and write files (03 `cw6` is pure), so
    `run_section` runs them once per session and shares the stdout; the
    slow tests depend on that cache and are therefore marked `slow` too.
-7. **`tests/src/kkgt`** holds test constants + harness instead of the
-   project library, because the library *is* `reproduce_v108.py`
-   (imported with `pythonpath = [".", "tests/src"]`).
+7. **`tests/src/kkgt`** holds the computation, the test constants and the
+   harness, because the package *is* the library of the note
+   (`pythonpath = ["tests/src"]`; nothing is imported from the root).
+
+## (h) Reconciliation: the computation is a package, the tex cites tests
+
+One pass after this report, with the manuscript, the suite and the
+computation brought to the same contract:
+
+* **The computation moved** from the root of the repository to
+  `tests/src/kkgt/sections.py`, the module `kkgt.sections`; it is the only
+  place where the 43 sections live. One section still runs on its own with
+  `PYTHONPATH=tests/src uv run python -m kkgt.sections 38`.
+* **No test imports a script**: the harness returns the package module
+  (`kkgt.load_sections()`), and `conftest.py` exposes the `sections_module`,
+  `sections` and `run_section` fixtures. `pyproject.toml` now sets
+  `pythonpath = ["tests/src"]` only.
+* **`main.tex` cites tests**: the 26 numbered citations were replaced by 28
+  `\testref{<test name>}` references. The five figure captions cite
+  `test_section_writes_its_figure[section-NN]` (the test that runs the
+  section and requires the figure file), and every number cites the test
+  that recomputes it from its closed form or reads it from the stdout of
+  its section. The `Code and data` section now describes the package, the
+  suite (451 tests), `uv run pytest tests/ -q` and the tolerance policy.
+* **`tests/test_section_census.py` is the new contract**: every `\testref`
+  of the manuscript must resolve to a collected node id, no test name may
+  be defined twice, the cited set is pinned, no numbered `section~N`
+  citation may remain, the manuscript may not carry the word the old entry
+  point is named with, and each of the five captions must name its test.
+  The registry checks (43 sections in order, banners, the five figure
+  files, the slow marks) are unchanged.
+* **Counts**: `451 passed` (was 447: four census checks added, none
+  removed) and `444 passed, 7 deselected` with `-m 'not slow'` (was 440).
+  Two test functions were renamed (`...yields_the_j1_zeros`,
+  `...give_s_on_average`) to keep the word out of `tests/`; no assertion
+  changed.

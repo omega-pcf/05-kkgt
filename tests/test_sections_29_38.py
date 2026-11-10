@@ -1,7 +1,8 @@
-"""Deep numeric tests for sections 29-38 of reproduce_v108.py.
+"""Deep numeric tests for sections 29-38 of kkgt.sections.
 
 Lattice point of the observer, quintessence, entropy consistency and the
-area law of section 38 (the one main.tex cites as ``section~38``).
+area law of section 38 (the one main.tex cites as
+test_shannon_bit_against_the_area_law).
 """
 
 from __future__ import annotations
@@ -366,8 +367,8 @@ class TestSection37Consistency:
 class TestSection38AreaLawHalf:
     """section 38 -- 'The 1/2 of (B1): area quantum, Fisher unit and Shannon bit'
 
-    main.tex: "that would be $\\log2$ per area (section~38 of
-    \\code{reproduce\\_v108.py})".
+    main.tex: "that would be $\\log2$ per area (test
+    test_shannon_bit_against_the_area_law)".
     """
 
     G_N = 0.5

@@ -1,7 +1,7 @@
-"""Deep numeric tests for sections 39-43 of reproduce_v108.py.
+"""Deep numeric tests for sections 39-43 of kkgt.sections.
 
 The tilings (figures 4 and 5), the dictionary of section 40 and the three
-columns of section 43 -- the last section main.tex cites (``section~43``).
+columns of section 43 -- the last section main.tex cites.
 """
 
 from __future__ import annotations
@@ -99,7 +99,7 @@ class TestSection40DictionaryAgainstTheCusp:
         [(0, 172, (20, 3, 3)), (1, 22, None), (2, 2, None), (3, 1, None),
          (4, 0, None)],
     )
-    def test_pairs_that_reproduce_s_on_average(self, s, pairs, best, run_section):
+    def test_pairs_that_give_s_on_average(self, s, pairs, best, run_section):
         """Of the 50340 (tiling, chi) pairs only 172 give S within 1%."""
         run = run_section(40)
         assert run.has("pairs (tiling, chi<=16), p,q<=60: 50340")

@@ -18,10 +18,10 @@ dev = [
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = [".", "tests/src"]
+pythonpath = ["tests/src"]
 addopts = "--tb=short -p no:cacheprovider"
 markers = [
     "slow: marks tests that take >10 s (deselect with '-m \"not slow\"')",
     "figure: tests that render one of the five figures cited by main.tex",
-    "section: contract test bound to one numbered section of reproduce_v108.py",
+    "section: contract test bound to one numbered section of kkgt.sections",
 ]

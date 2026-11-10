@@ -1,4 +1,4 @@
-"""Deep numeric tests for sections 9-16 of reproduce_v108.py.
+"""Deep numeric tests for sections 9-16 of kkgt.sections.
 
 Sections 9-11 (granularity and contact configurations), 12-13 (figures 1
 and 2, with their exact statements), 14-16 (gaps, state count, Koide).

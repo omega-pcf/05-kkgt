@@ -40,9 +40,10 @@ González García, J. A., González García, V. M., Dressler Pérez, I. M., & Ga
 - **`lean/lakefile.toml`**: lake build configuration with the Mathlib dependency (`v4.33.1`).
 - **`lean/lean-toolchain`**: `leanprover/lean4:v4.33.1`.
 
-### Numerical reproduction
+### Numerical checks
 
-- **`reproduce_v93.py`**: reproduces every number and every figure of the note, in thirty-nine sections that run together or one at a time (`uv run python reproduce_v93.py`).
+- **`tests/src/kkgt/sections.py`** (module `kkgt.sections`): every number and every figure of the note, in forty-three sections that run together or one at a time (`PYTHONPATH=tests/src uv run python -m kkgt.sections`).
+- **`tests/`**: the suite that checks them, `uv run pytest tests/ -q` (451 tests); `main.tex` cites the test behind each number with `\testref{...}`.
 
 ### Figures (`images/`)
 
