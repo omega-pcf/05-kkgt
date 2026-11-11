@@ -606,10 +606,9 @@ The order of $\golden$ in $(\mathbb{Z}[\golden]/N)^\times$ is $24$ for $N=16$, $
 $72$, $20$ for $N=5$ and $60$ for $N=10$. In $\mathrm{SL}_2(\mathbb{Z})$, $S$ has order $4$ and $ST$ order $6$,
 $ST\equiv\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)\pmod2$, $S^2=(ST)^3=-1$, and
 $\chi(\mathrm{SL}_2(\mathbb{Z}))=\tfrac14+\tfrac16-\tfrac12=\zeta(-1)$. The orders are Pisano
-periods~\cite{Wall60}, computed here; $S=\left(\begin{smallmatrix}0&-1\\1&0\end{smallmatrix}\right)$
+periods~\cite{Wall60}, computed here \tier{N}; $S=\left(\begin{smallmatrix}0&-1\\1&0\end{smallmatrix}\right)$
 and $T=\left(\begin{smallmatrix}1&1\\0&1\end{smallmatrix}\right)$ generate
 $\mathrm{SL}_2(\mathbb{Z})$~\cite{Ser73}, and the Euler characteristic is classical~\cite{Ser71}.
-\tier{N}
 The orders modulo $16$, $9$, $5$ and $10$, and those of $S$ and $ST$, are computed in Lean \Lean{pisano\_orders, modular\_orders}.
 \end{imported}
 
@@ -1017,9 +1016,10 @@ The weight is what produces the phase. The operator~\eqref{eq:K} has no weight $
 spectrum is the one~\cite{CW6} gives (Imported statement~\ref{imp:A1}). Conjugated by $D$ each hopping is $1$, so $DKD^{-1}$ is the symmetric chain with diagonal
 $2/(\log\golden)^2$ and hoppings $-1/(\log\golden)^2$, whose eigenvalues are
 $(2-2\cos(\pi k/8))/(\log\golden)^2$, $k=1,\dots,7$: a Dirichlet sine band, $m_k\propto\sin(\pi k/16)$,
-linear in $k$ without offset. Its phase is $0$, the phase of the case $d=3$ of
+linear in $k$ without offset \tier{N}. Its phase is $0$, the phase of the case $d=3$ of
 Corollary~\ref{cor:phase}, although its measure has exponent $4$; the weight $e^{2A}$ is what
-brings the phase to $\tfrac14$. \witness{P}{D\_conjugated\_hop\_is\_one} \tier{N}
+brings the phase to $\tfrac14$.
+\witness{P}{D\_conjugated\_hop\_is\_one}
 
 \subsection*{The factor $\pi$, and where the golden ratio is}
 
