@@ -90,10 +90,25 @@ class TestSection30SymmetricThroat:
         else:
             assert got == pytest.approx(printed, abs=5e-3)
 
-    def test_vector_ratio_range(self):
-        """2.228 (symmetric) against 2.275 (Planck top): inside the observed band."""
-        assert 2.15 <= 2.228 <= 2.39
-        assert 2.15 <= 2.275 <= 2.39
+    def test_vector_ratio_range(self, run_section):
+        """2.228 (symmetric) against 2.275 (Planck top): inside the observed band.
+
+        The band is the gluon candidates of section 1, 8600/(4000..3600);
+        2.275 is the quotient of the two vector zeros that
+        test_vector_zeros_against_the_lyr_table pins at four decimals, and
+        2.228 is the same quotient at the depth phi^24, as section 37
+        prints it for the symmetric window.
+        """
+        low, high = 8600 / 4000, 8600 / 3600
+        assert (low, high) == pytest.approx((2.15, 2.39), abs=5e-3)
+        vec = [2.4448, 5.5615, 8.6958]   # from test_vector_zeros_against_the_lyr_table
+        planck_top = vec[1] / vec[0]
+        assert planck_top == pytest.approx(2.275, abs=5e-4)
+        symmetric = run_section(37).value(
+            r"\[-12,12\]: m2/m1 = ([\d.]+)", tol=5e-4, label="[-12,12]"
+        )
+        assert low <= symmetric <= high, symmetric
+        assert low <= planck_top <= high, planck_top
 
 
 # ══════════════════════════════════════════════════════════ section 31 ══

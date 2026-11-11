@@ -194,7 +194,7 @@ class TestTexTestRefs:
             "test_black_hole_threshold",
             # the tiers: the test that witnesses a \tier{N} in the text
             "test_offset_of_j1_zeros_tends_to_one_quarter",
-            "test_ratio_against_the_bessel_ratio",
+            "test_predictions_at_sigma_12",
             "test_vector_ratio_range",
             "test_boundaries_nest",
             "test_hurwitz_constant_of_phi",

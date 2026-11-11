@@ -1,5 +1,13 @@
 # Witness decisions — gates for the principal author
 
+**Applied, pending commit** — the rows marked `[x]` below are already edited
+into `main.tex`, `docs/citations.md` and `tests/`: the unified witness form
+`\tier[\testref{…}]{N}` → `N[test_name]` (tag first, its reference inside
+the brackets; documented in `docs/citations.md` §8), the 16 tag moves of C5,
+the lost periods of C1/C2 and of old L997, the T4 testref swap at L1234,
+the T1 rewrite of `test_vector_ratio_range`, D20/C15's `11.97`, and C9, C10,
+C16. Everything else in this file is still the author's to mark.
+
 **Repository:** `05-kk-golden-throat` · **HEAD:** `d68386f` · **scope of this file:** decisions only.
 Nothing in `main.tex`, `citation.csl.json`, `lean/` or `tests/` has been touched; this document is the
 only artefact produced by the review.
@@ -391,7 +399,7 @@ scale `99.12`, whereas §37 prints `11.98` from `99.6/0.3128` (`sections.py:1455
 New test `test_placement_face_of_the_unit`: `assert round(log(99.6/(0.938272/3))/LN_PHI, 2) == 11.98`.
 Rewrite: "The placement face of $M$, $m_p/3$, gives the same value to two digits,
 $11.98$ (\eqref{eq:sigmaIR}) (\testref{test\_placement\_face\_of\_the\_unit}) \tier{N}."
-`[ ] ✓` *(author: keep `11.98`, or change the sentence to `11.97` and drop the new test?)*
+`[x]` *(11.97 applied, per the equation at `eq:sigmaIR`; no new test)*
 
 ---
 
@@ -682,8 +690,8 @@ Gate A closed on all 30; **four need action** (T4 already listed in §1.5), the 
 | L775 | `test_w2_integer_dimension` | ✓ | none |
 | L987 | `test_the_measure_that_gives_the_spectrum` | ✓ | none |
 | L997 | `test_offset_of_j1_zeros_tends_to_one_quarter` | ✓ | none |
-| **L1234** | `test_ratio_against_the_bessel_ratio` | **✗ wrong test** | see T4: replace by `(\testref{test\_predictions\_at\_sigma\_12})` — **also add the missing period** (§3 C1). `[ ] ✓` |
-| **L1262** | `test_vector_ratio_range` | **✗ tautology** | see T1/D25: repair the test, keep the tag. `[ ] ✓` |
+| **L1234** | `test_ratio_against_the_bessel_ratio` | **✗ wrong test** | see T4: replace by `(\testref{test\_predictions\_at\_sigma\_12})` — **also add the missing period** (§3 C1). `[x] ✓` |
+| **L1262** | `test_vector_ratio_range` | **✗ tautology** | see T1/D25: repair the test, keep the tag. `[x] ✓` |
 | L1265 | `test_gluon_background_level` | ✓ | none |
 | L1329 (1st) | `test_boundaries_nest` | ✓ | none |
 | L1331 (b) | `test_hurwitz_constant_of_phi` | ✓ | none |
@@ -727,7 +735,7 @@ for the seed-2 variant (needs a test), *or* accept that only one of the two twin
 | **C2** | **1262** | **Missing period**, same cause: `…(\testref{test\_vector\_ratio\_range}) \tier{N} Read as a measure of the graviton throat…` | `…\tier{N}. Read as a measure of the graviton throat…` |
 | **C3** | **595** | **Orphan tag.** `\tier{N}` sits alone on its own line (it used to be `\tier{N} \tier{L}`); its witness is in the *next* sentence and the class is wrong. | see D03: delete the line, put `\tier{P}` at the end of the Lean sentence |
 | **C4** | **1115** | Tag after a full stop, then a capital with no punctuation: `…of second order. \tier{N} The scale is one side of a pair:` | see D19: `…of second order (\testref{…}) \tier{N}. The scale is one side of a pair:` |
-| **C5** | **338, 864, 917, 931, 953, 958, 983, 1016, 1022, 1052, 1093, 1115, 1203, 1223, 1238, 1280** (16 sites) | **Two placement conventions.** 16 tags sit *after* the final period (outside the sentence they mark) while 38 sit *before* it. `docs/citations.md` §8.2 rule 3 says the witness lives "in the prose of the same sentence" — the 16 are outside theirs. | Move each tag inside the sentence it marks, before the final punctuation, the way L531, L1432, L1480 already do. One mechanical pass, no wording change. `[ ] ✓` |
+| **C5** | **338, 864, 917, 931, 953, 958, 983, 1016, 1022, 1052, 1093, 1115, 1203, 1223, 1238, 1280** (16 sites) | **Two placement conventions.** 16 tags sit *after* the final period (outside the sentence they mark) while 38 sit *before* it. `docs/citations.md` §8.2 rule 3 says the witness lives "in the prose of the same sentence" — the 16 are outside theirs. | Move each tag inside the sentence it marks, before the final punctuation, the way L531, L1432, L1480 already do. One mechanical pass, no wording change. `[x] ✓` |
 | **C6** | **1280, 1238, 1674** | Tags that end a paragraph with nothing after them (`1280` is followed by a blank line), so the reader cannot tell which claim they annotate. | covered by C5 + D24/D25/D37 |
 | **C7** | **1713** | The `R`-removal introduced `\textemdash{}` **with a space after and none before** (`observe it \textemdash{} a reading…`), while the manuscript's only other em dashes are closed `---` (`main.tex:299-300`). | `…the particles of a level observe it---a reading of the records, not a result about them.` |
 
@@ -736,8 +744,8 @@ for the seed-2 variant (needs a test), *or* accept that only one of the two twin
 | # | Where | Problem | Exact fix |
 |---|---|---|---|
 | **C8** | `main.tex:169` vs 41 tags | The legend promises *"`\tier{N}` verified numerically, **with the name of the test that checks it**"*, but 41 of the 72 free tags carry no test name. The legend is currently false for 57 % of its instances. | Resolved automatically by applying §2.1; if any `✓` lands on (iii)/(iv), re-read the legend once afterwards to make sure it still describes what is left. `[ ] ✓` |
-| **C9** | `docs/citations.md:213` | The standard explains **"Why there is no `L`"** but says nothing about **`R`**, which `d68386f` removed at 15 sites (its rationale is only in the commit message). The document and the history disagree about what the alphabet used to be. | Add after §8.3's `L` paragraph: *"**Why there is no `R`.** `R` marked the direction of a reading rather than how a claim is established; eleven of its sites repeated what the prose already said, and a reading is now written as prose (`a reading of the records, not a result about them`), so the class carried no information the sentence does not."* `[ ] ✓` |
-| **C10** | `main.tex:53-55` vs `docs/citations.md:174` | The preamble comment lists **`a \cite`** among the valid witnesses of a bare tag; §8.2 rule 2 says *"An external source is the citation, not a tag"* and rule 3's witness list is `\testref{}` / `\Lean{}` / `\eqref`/`\ref` / `\witness{}`. The two standards contradict each other. | Rewrite the comment to: `%   \tier{X}        -> [X]      the witness lives in the prose of the same\n%                               sentence (a \Lean name, a \testref, an\n%                               \eqref/\ref or a \witness; a \cite is\n%                               never the witness of a bare tag)` `[ ] ✓` |
+| **C9** | `docs/citations.md:213` | The standard explains **"Why there is no `L`"** but says nothing about **`R`**, which `d68386f` removed at 15 sites (its rationale is only in the commit message). The document and the history disagree about what the alphabet used to be. | Add after §8.3's `L` paragraph: *"**Why there is no `R`.** `R` marked the direction of a reading rather than how a claim is established; eleven of its sites repeated what the prose already said, and a reading is now written as prose (`a reading of the records, not a result about them`), so the class carried no information the sentence does not."* `[x] ✓` |
+| **C10** | `main.tex:53-55` vs `docs/citations.md:174` | The preamble comment lists **`a \cite`** among the valid witnesses of a bare tag; §8.2 rule 2 says *"An external source is the citation, not a tag"* and rule 3's witness list is `\testref{}` / `\Lean{}` / `\eqref`/`\ref` / `\witness{}`. The two standards contradict each other. | Rewrite the comment to: `%   \tier{X}        -> [X]      the witness lives in the prose of the same\n%                               sentence (a \Lean name, a \testref, an\n%                               \eqref/\ref or a \witness; a \cite is\n%                               never the witness of a bare tag)` `[x] ✓` |
 | **C11** | `main.tex:520,528,554,613,644,652,658,702,707,730,1817` (11 sites) | `\tier{P} in~\cite{…}` — a `P` tag whose witness is a citation, printed as **two brackets** `[P] in [CW6]`. §8.2 rule 5 says a `P` *without* a bracket means "proved here, with no theorem name quoted at that point", and the grammar exists precisely so a fused tag shows one bracket. | Either fuse — `\tier[CW6]{P} in~\cite{…}` becomes `P[n]` with a single bracket — or, if these are meant as "proved here", drop `in~\cite{…}` from the sentence. **Author decision** (they all sit inside `imported` blocks, so the intended reading matters). `[ ] ✓` |
 
 ### 3.3 Uneven use of the alphabet
@@ -748,7 +756,7 @@ for the seed-2 variant (needs a test), *or* accept that only one of the two twin
 | **C13** | **1016 vs 1215-1216** | Two structurally identical look-elsewhere claims (`P = 0.08`, `2×10⁵` samples): the first carries `[N]`, the second carries nothing. | see §2.2, untagged twin |
 | **C14** | **1234, 1238** | Two tags in one paragraph; the second dangles after `\S\ref{sec:data}.` at the paragraph end while the first is mid-sentence. | C5 + D24 |
 | **C15** | **1135 vs 1127** | "gives the same value, $11.98$ (\eqref{eq:sigmaIR})" while the referenced equation says `11.97`. | D20 |
-| **C16** | **1232-1236** | "the next two" is used twice in one paragraph for two different pairs (`1664/1982`, then `1014/1328`). | `…the two-brane model gives $1014$ and $1328$~GeV for **its** next two modes;` *(one word)* `[ ] ✓` |
+| **C16** | **1232-1236** | "the next two" is used twice in one paragraph for two different pairs (`1664/1982`, then `1014/1328`). | `…the two-brane model gives $1014$ and $1328$~GeV for **its** next two modes;` *(one word)* `[x] ✓` |
 | **C17** | **893, 1005** | A `\witness{P}{…}` block immediately followed by `\tier{N}`: two statuses for one sentence. | D06, D13 |
 | **C18** | **1336, 1363, 1379, 1380** (4 tags in captions) vs **1344-1354, 1357-1364** | Captions are tagged inconsistently: four carry `[N]`, while the `fig:mobius` caption (L1344-1354) and the first half of the `fig:granularity` caption (`three gap lengths, in the ratio φ and φ²`, L1358-1359) state computed numbers with no tag. | Either tag the parallel claims (`(\testref{test\_three\_gaps\_of\_the\_marks}) \tier{N}` also at L1359) or state in §8.2 that *captions carry no tags* and remove the four. **Author decision.** `[ ] ✓` |
 | **C19** | **1331** | Four tags in a single paragraph (two already cited, two in D27/D28). Not a rule-1 violation (they are not adjacent) but it is the densest spot in the article. | no action unless C18 decides against caption/body tags |
