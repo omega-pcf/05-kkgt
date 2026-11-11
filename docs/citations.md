@@ -4,7 +4,7 @@ This document describes how citations flow from a single source of truth to
 the PDF, CITATION.cff, and .zenodo.json, and the conventions for adding new
 references. It applies to every paper repository in this family
 (01-hilbert-polya, 02-odd-zeta, 03-crystalline-worldsheet, 04-mersenne-cr,
-05-granularity, 05-kk-golden-throat); the pipeline scripts are byte-identical
+05-kk-golden-throat); the pipeline scripts are byte-identical
 across them.
 
 ## 1. Single source of truth
@@ -131,6 +131,7 @@ fails the build otherwise.
   `feat(pipeline): adopt biblatex bibliography from CSL`.
 - Never push without an explicit instruction from the author.
 
+
 ## 7. Settled style decisions
 
 - URL duplication with DOI in the rendered bibliography: **suppressed** via
@@ -138,3 +139,91 @@ fails the build otherwise.
   identically to all five repositories.
 - Reference ordering: **alphabetical** (`sorting=nyt`) per AMS convention;
   rendered author names: **initials** (`giveninits=true`).
+
+
+## 8. Witnesses (tiers)
+
+The manuscript marks the status of each claim inline, with an unbreakable
+tag set in footnotesize and in its own colour. This section is the contract
+of that device, written down here for whoever writes or edits the text.
+
+### 8.1 Grammar — one macro, one optional argument
+
+```latex
+\tier{X}         -> [X]      the witness lives in the prose of the SAME
+                             sentence: a \Lean name, a \testref, an
+                             \eqref/\ref or a \witness
+\tier[KEY]{X}    -> X[n]     the claim rests on an external source: KEY is
+                             ALWAYS a \cite key (never a theorem name), and
+                             the bracket is printed by \cite itself, outside
+                             the coloured group and in the paragraph's own
+                             font, so a fused tag never shows two brackets
+\witness{X}{a,b} -> a block of its own, flush right, with the names
+\wtag{W1}{CLPW}  -> the label of the W list (unchanged)
+```
+
+Names never go inside `\tier[...]`: a name is expressed with `\Lean{}`,
+`\witness{}` or `\testref{}` in prose, which keeps the distinction between
+"a citation key" and "a theorem name" unambiguous and avoids saying the same
+thing twice.
+
+### 8.2 Rules for whoever writes or edits the text
+
+1. **One claim, one tag.** No two tags are ever adjacent — `\tier{P}
+   \tier{N}` is a bug, not a summary.
+2. **An external source is the citation, not a tag.** The source of a claim
+   is its `\cite`, set immediately after the claim it supports: no tag says
+   "this is cited", because the bracket of the citation already says it, and
+   in numeric style a repeat carries its number like any other reference.
+   What a tag carries is an *internal* witness, by identifier: `\Lean{}`,
+   `\witness{}` or `\testref{}`. Where an `N` rests on comparing the claim
+   against an external source, the source goes in the optional argument —
+   `\tier[BV20]{N}` — and prints as `N[n]` through the citation itself.
+3. **A bare tag needs a witness in its sentence.** If the sentence has none,
+   add the most honest one (the `\testref{}` of the test that checks the
+   number, the `\Lean` name, an `\eqref`/`\ref`); never invent a citation.
+4. **Every `\tier{N}` carries a `\testref{}`** when a test verifies it.
+   The set of cited tests is pinned by `tests/test_section_census.py`, so a
+   new witness is added there too, after checking the test really recomputes
+   the number next to it.
+5. **`\tier{P}` without a bracket** means proved here, with no theorem name
+   quoted at that point; the name, when it is quoted, goes in `\witness{}`.
+6. **The legend** (the unmarked first-page footnote) defines the classes and
+   nothing else — one sentence each. It is exempt from rule 3 — it defines,
+   it does not claim — and it never mentions `P*`.
+7. **`P*` is available; the released text uses `P`.** The class is fully
+   functional in the preamble — the dispatch `\@namedef{tiercol@P*}` and the
+   ochre `tierPs` colour — so `\tier{P*}` renders `[P*]` exactly like any
+   other class, and it is there for intermediate commits between builds (an
+   agent without Lean, in draft) that need to tag a claim as written but not
+   yet named. The printed text never invokes it: the body marks those claims
+   `P`, the legend does not mention it and the prose no longer speaks of it.
+
+### 8.3 Alphabet
+
+| Tag | Meaning |
+|---|---|
+| `\tier{P}` | proved and verified by machine (Lean) |
+| `\tier{N}` | verified numerically, with the name of the test that checks it |
+| `\tier[KEY]{N}` | an `N` resting on an external source: `KEY` is a `\cite` key, printed as `N[n]` by the citation itself |
+| `\tier{P*}` | internal: renders `[P*]` in ochre, available between builds; the released text never uses it (rule 7) |
+| `\witness{P}{names}` | the names of the proof, on a line of its own |
+| `\wtag{W1}{CLPW}` | the label of a witness of the W list |
+
+**Why there is no `L`.** A witness stresses that there *is* a reference, and
+`P` and `N` earn their compactness by referencing by identifier — a theorem
+name, a test name — while `L` only encodes "is cited", which the citation
+itself already expresses and which costs a bracket more than it saves.
+
+### 8.4 Conventions of the device
+
+- **Inline status is a convention of this project.** Each claim carries, next
+  to it, how it was established — proved by machine, or computed and checked
+  against a named test or an external source. That is a
+  decision of this project and not an AMS or Chicago one; the real precedents
+  are blueprints with a status per statement (`leanblueprint`), status tables
+  and artefact seals. The first-page legend therefore states the classes and
+  nothing else: the notes that explain the device belong to this standard, not
+  to page 1.
+- **Colour is redundant with the letter** (WCAG 1.4.1): a tag reads the same
+  in greyscale, so the letter alone always carries the meaning.

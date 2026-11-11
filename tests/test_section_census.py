@@ -192,6 +192,25 @@ class TestTexTestRefs:
             "test_three_sigma_criterion",
             "test_vector_ratio_depends_only_on_the_depth",
             "test_black_hole_threshold",
+            # the tiers: the test that witnesses a \tier{N} in the text
+            "test_offset_of_j1_zeros_tends_to_one_quarter",
+            "test_ratio_against_the_bessel_ratio",
+            "test_vector_ratio_range",
+            "test_boundaries_nest",
+            "test_hurwitz_constant_of_phi",
+            "test_section41_prints_its_conclusions",
+            "test_three_gaps_of_the_marks",
+            "test_discrepancy_stays_below_half_a_percent",
+            "test_three_golds_with_ratio_phi_squared",
+            "test_icosaedral_contact_spheres_do_not_touch",
+            "test_best_lattice_index",
+            "test_weight_crossing_is_a_quarter_turn",
+            "test_offsets_against_the_printed_column",
+            "test_data_readings",
+            "test_cpl_projection",
+            "test_distance_to_the_measured_lambda",
+            "test_theta3_at_tau_i",
+            "test_higuchi_bound",
         }
 
     def test_the_manuscript_cites_no_numbered_section(self):

@@ -160,18 +160,20 @@ thresholds. The four exceptions above were already justified when written.
 > After this report the witness system of `main.tex` was
 > standardised (colour by class, `\witness{P}{…}` on its own line, labels
 > `W1[CLPW]`, migration of 16 marks `P*`→`P` with verification of the 33
-> names against `lean/TorreKK_LYR_v33.lean`). Current state: 114 `\tier`
-> (P 12, P* 5, N 74, L 8, R 15) + 16 `\witness{P}` = 130 marks, 12
-> `\wtag`, and "not yet compiled" = 0. The table below documents the state
-> at which the script was audited.
+> names against `lean/TorreKK_LYR_v33.lean`), and then reduced to the
+> grammar approved by the author: one macro `\tier{X}` / `\tier[KEY]{X}`,
+> the classes `L` and `R` removed, `P*` kept as an internal macro that the
+> released text never invokes. Current state: 89 `\tier` (P 15, N 72,
+> fused `\tier[KEY]{N}` 2) + 16 `\witness{P}` = 105 marks, 12 `\wtag`,
+> and "not yet compiled" = 0. The table below documents the state at which
+> the script was audited.
 
 | label | occurrences |
 |---|---|
-| `\tier{N}` | 74 |
-| `\tier{P*}` | 21 |
-| `\tier{R}` | 15 |
-| `\tier{P}` | 12 |
-| `\tier{L}` | 8 |
+| `\tier{N}` | 72 |
+| `\tier{P}` | 15 |
+| `\tier[KEY]{N}` (fused with a citation) | 2 |
+| `\tier{P*}` | 0 (internal macro, never invoked in the released text) |
 
 Witness items: `W1 (CLPW)`, `W2 (W01)`, `W3 (W01)`, `W4 (W01)`, `W5 (W01)`,
 `W6 (W01)`, `W7 (W01)`, `W8 (W01)`, `W9 (GH)`, `W10 (W01)`, `W11 (CLPW)`,
@@ -189,11 +191,10 @@ Witness items: `W1 (CLPW)`, `W2 (W01)`, `W3 (W01)`, `W4 (W01)`, `W5 (W01)`,
 | `I9` | 253 (§1) | `SL2(Z) facts of Imported statement I9` |
 | `I12` | 812 (§12, figure header), 1130 (§22) | `I12: $|\Omega|_\sigma=1/2$…`, `l = l_P/sqrt(G_N) = … (I12, tau = i)` |
 | `I15` | 827 (§12) | `I15: $z=\varphi y$ carries the triangle onto Z[i]…` |
-| `[R]` | 692 (§11) | `the twelve of the icosahedron and that of the background are proved separately (reading [R])` |
 | `I1`…`I7` | §42 (prints `I1:`…`I7:`) | the block of section 42 |
 
 The computation does **not** contain the macro `\tier{}` (grep `tier` → 0). The
-overlaps `W2/W4/W8/F1/F9/B1/I9/I12/I15/[R]` are the ones to standardise later;
+overlaps `W2/W4/W8/F1/F9/B1/I9/I12/I15` are the ones to standardise later;
 nothing was renamed here.
 
 ## (g) Deviations from the standard of 03 and why

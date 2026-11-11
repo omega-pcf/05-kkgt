@@ -691,7 +691,7 @@ def seccion_11():
     hc=np.array(hc); mh=min(np.linalg.norm(a-b) for a,b in itertools.combinations(hc,2))
     assert len(fcc)==12 and abs(mf-2)<1e-12 and len(hc)==12 and np.allclose(np.linalg.norm(hc,axis=1),2) and abs(mh-2)<1e-12
     print("   FCC and HCP: 12 unit spheres at distance 2 from the central one, without phi; minimum distance between them:", round(mf,4), round(mh,4))
-    print("   the twelve of the icosahedron and that of the background are proved separately (reading [R])")
+    print("   the twelve of the icosahedron and that of the background are proved separately")
     # the chain of the twelve
     print("chain: |A5|/5 =", 60//5, "; pi(10)/5 = 60/5 =", 12, "; lcm(4,6) =", np.lcm(4,6), "; -1/zeta(-1) = 12")
 

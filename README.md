@@ -33,6 +33,7 @@ González García, J. A., González García, V. M., Dressler Pérez, I. M., & Ga
 ### Citations
 
 - **`citation.csl.json`**: CSL JSON array — the single source of truth for every reference. See [`docs/citations.md`](docs/citations.md).
+- **Witness conventions**: see [`docs/citations.md`](docs/citations.md#8-witnesses-tiers), section *Witnesses (tiers)*.
 
 ### Formal Verification (`lean/`)
 

@@ -31,8 +31,6 @@
 \definecolor{tierP}{rgb}{0.15,0.35,0.65}   % blue   -- proved in Lean
 \definecolor{tierPs}{rgb}{0.70,0.45,0.05}  % ochre  -- written in Lean, no name cited
 \definecolor{tierN}{rgb}{0.05,0.40,0.20}   % green  -- verified numerically
-\definecolor{tierL}{rgb}{0.45,0.45,0.45}   % grey   -- cited
-\definecolor{tierR}{rgb}{0.45,0.15,0.55}   % purple -- a reading
 \definecolor{tierW}{rgb}{0.00,0.35,0.45}   % teal   -- witness item
 % allow line breaks after underscores, commas and dots inside code names
 \makeatletter
@@ -45,14 +43,28 @@
 % tests/test_section_census.py requires every one of them to exist
 \newcommand{\testref}[1]{{\upshape\small\ttfamily\let\_\brk@us #1}}
 \@namedef{tiercol@P}{\color{tierP}}
+% internal/protected: draft-stage marker between builds; functional and rendering, but not used in the final/release text
 \@namedef{tiercol@P*}{\color{tierPs}}
 \@namedef{tiercol@N}{\color{tierN}}
-\@namedef{tiercol@L}{\color{tierL}}
-\@namedef{tiercol@R}{\color{tierR}}
 \@namedef{tiercol@W}{\color{tierW}}
 \newcommand{\tiercol}[1]{\expandafter\ifx\csname tiercol@#1\endcsname\relax\else\csname tiercol@#1\endcsname\fi}
-% inline status tag: [P], [N] ... unbreakable, its own colour and its own style
-\providecommand{\tier}[1]{{\normalfont\footnotesize\bfseries\tiercol{#1}[#1]}}
+% inline status tag: [P], [N] ... unbreakable, its own colour and its own
+% style.  One macro, one optional argument, one grammar:
+%   \tier{X}        -> [X]      the witness lives in the prose of the same
+%                               sentence (a \cite, a \Lean name, a
+%                               \testref, an \eqref/\ref or a \witness);
+%   \tier[KEY]{X}   -> X[n]     fused with the citation: KEY is always a
+%                               \cite key, never a theorem name, and the
+%                               bracket is printed by \cite itself, in the
+%                               paragraph's own font, outside the coloured
+%                               group -- so a fused tag never shows two
+%                               brackets.  \witness keeps the names.
+\providecommand{\tier}[2][]{%
+\ifx\relax#1\relax
+{\normalfont\footnotesize\bfseries\tiercol{#2}[#2]}%
+\else
+{\normalfont\footnotesize\bfseries\tiercol{#2}#2}\cite{#1}%
+\fi}
 % a witness with names, on a line of its own, flush right: P[name1, name2]
 % (the sibling manuscripts set their witness blocks with \hfill + \raggedleft,
 % see \ProofWitnessBlock in 03-crystalline-worldsheet)
@@ -154,10 +166,8 @@ Randall--Sundrum model, cosmological constant, formal verification, Lean 4}
 % is unbreakable in amsart and, with the affiliations now on the cover,
 % starts on page 2; a footnote issued after \maketitle would follow it there).
 \firstpagefootnote{%
-\emph{Tiers:} \tier{P} proved in Lean; \tier{P*} written in Lean, no theorem name cited
-here; \tier{N} verified numerically; \tier{L} cited; \tier{R} a reading: a comparison of form, not
-an identification and not a contrast. A witness with names is set on a line of its own, in the form
-\code{P[name1, name2]}.}
+\emph{Tiers:} \tier{P} proved in Lean, machine-checked; \tier{N} verified numerically, with the
+name of the test that checks it.}
 
 \maketitle
 
@@ -246,7 +256,7 @@ work~\cite{Bha75}. The two questions of the baby universes, which value of the p
 questions of selection; what is missing is one object that meets the criteria of an
 observer in de~Sitter and so represents the vacuum we are in, not a choice among values. The throat of this note is not the throat of the black hole: it is the
 five-dimensional throat of the two-brane model~\cite{RS99}, whose particles are its Kaluza--Klein
-modes, and its relation to the $AdS_2$ throat is a comparison of form \tier{R}. What the note can test is narrower, two of its consequences: whether, for the particles of one
+modes, and its relation to the $AdS_2$ throat is a comparison of form. What the note can test is narrower, two of its consequences: whether, for the particles of one
 throat, the parameters that the two-brane model chooses are fixed by one object rather than chosen;
 and whether the level that the cosmological constant gives the observer is chosen, fixed or read.
 
@@ -501,7 +511,7 @@ they are imposed, derived or re-derived where they appear.
 The construction uses the following statements of
 the Crystalline Worldsheet~\cite{CW6} and of the pentagonal $\mathbb{F}_1$-descent~\cite{F1}, which
 are theorems there of the axioms (B1)--(B3). They are collected here so that the note can be read on its
-own; those marked \tier{P*} are proved again in this note's Lean module.
+own, and this note's Lean module proves several of them again.
 
 \begin{imported}[The tower and its scale operator; \cite{CW6}, eqs.~(81)--(82), Remark~3.7]\label{imp:tower}
 The levels $\sigma$ carry the throat coordinate $z(\sigma)=\golden^{\sigma}$ and the self-adjoint scale
@@ -582,7 +592,7 @@ $\chi(\mathrm{SL}_2(\mathbb{Z}))=\tfrac14+\tfrac16-\tfrac12=\zeta(-1)$. The orde
 periods~\cite{Wall60}, computed here; $S=\left(\begin{smallmatrix}0&-1\\1&0\end{smallmatrix}\right)$
 and $T=\left(\begin{smallmatrix}1&1\\0&1\end{smallmatrix}\right)$ generate
 $\mathrm{SL}_2(\mathbb{Z})$~\cite{Ser73}, and the Euler characteristic is classical~\cite{Ser71}.
-\tier{N} \tier{L}
+\tier{N}
 The orders modulo $16$, $9$, $5$ and $10$, and those of $S$ and $ST$, are computed in Lean \Lean{pisano\_orders, modular\_orders}.
 \end{imported}
 
@@ -663,7 +673,7 @@ so $\eta=\tfrac12$ everywhere \Lean{area\_coefficient\_every\_level};
 (b) the law is the same at every level: with $\varepsilon(\sigma)=\varepsilon_0\golden^{\sigma}$ and
 $\varepsilon_0M_{\mathrm{PCF}}=\pi$, the energy per bit is
 $\varepsilon(\sigma)/S(\sigma)=\varepsilon_0/\pi=1/M_{\mathrm{PCF}}$ at every level, a temperature that
-does not depend on $\sigma$ \Lean{energy\_per\_bit\_constant}; and $\varepsilon(\sigma)\tau(\sigma)=\pi$ \Lean{closure\_each\_level} is the shortest time in which a state of two levels with gap $\varepsilon(\sigma)$ becomes orthogonal to itself, the bound of Mandelstam and Tamm and of Margolus and Levitin~\cite{MT45,ML98}: at the half-turn the overlap with its start of a state with weights $1-p$ and $p$ on the two levels is $1-2p$, zero only for $p=\tfrac12$ \Lean{orthogonal\_at\_half\_turn}, so each level reaches a distinguishable state in exactly its own time, and only with the weight $\tfrac12$ \tier{R};
+does not depend on $\sigma$ \Lean{energy\_per\_bit\_constant}; and $\varepsilon(\sigma)\tau(\sigma)=\pi$ \Lean{closure\_each\_level} is the shortest time in which a state of two levels with gap $\varepsilon(\sigma)$ becomes orthogonal to itself, the bound of Mandelstam and Tamm and of Margolus and Levitin~\cite{MT45,ML98}: at the half-turn the overlap with its start of a state with weights $1-p$ and $p$ on the two levels is $1-2p$, zero only for $p=\tfrac12$ \Lean{orthogonal\_at\_half\_turn}, so each level reaches a distinguishable state in exactly its own time, and only with the weight $\tfrac12$;
 (c) each mode carries exactly one bit, a unit of Fisher information: the Fisher information per
 eigenvalue is $4\mu^2$, and $4\mu^2=1$ if and only if $\mu=\tfrac12$ \Lean{fisher\_unit\_iff}, which
 is why the count of modes and the count of bits are one number and not merely close; the bit of this
@@ -736,8 +746,8 @@ $\tau\mapsto-1/\tau$, the quarter-turn, carries $\tau_n$ to $\tau_{-n}$ \Lean{S\
 tower it is the Galois mirror. By Poisson summation, the law of the theta series under $S$ (M1),
 $\sum_ke^{-\pi k^2N}=N^{-1/2}\sum_me^{-\pi m^2/N}$, so the weight $e^{-\pi/N}$ is the first winding term of
 the heat kernel on the ring whose modes are the left side \Lean{theta\_S\_law} \tier{N}. At $\tau=i$, the
-level $0$, $\vartheta_3(e^{-\pi})=\pi^{1/4}/\Gamma(\tfrac34)$, the lemniscatic value~\cite{WW27} \tier{L}
-\tier{N}.
+level $0$, $\vartheta_3(e^{-\pi})=\pi^{1/4}/\Gamma(\tfrac34)$, the lemniscatic value
+\tier[WW27]{N} (\testref{test\_theta3\_at\_tau\_i}).
 
 \subsubsection*{The criteria a single object must meet}
 
@@ -924,8 +934,7 @@ $\sigma=-60$. With Dirichlet conditions instead, the lowest $m^2$ on $[0,12]$ is
 The nonzero eigenvalues of~\eqref{eq:sl} on a deep throat are $m_k\propto j_{1,k}$, the zeros of
 $J_1$, and the lowest eigenvalue is $0$, the massless four-dimensional graviton. The operator is
 self-adjoint and positive semidefinite in $\langle u,v\rangle_{e^{2A}}$, so $m^2\ge0$ for every mode:
-the spectral condition of Wightman's axioms~\cite{SW64} holds for the tower.
-\tier{L} for the continuum statement~\cite{RS99,DHR00}; on a finite throat the problem is a
+the spectral condition of Wightman's axioms~\cite{SW64} holds for the tower. For the continuum statement see~\cite{RS99,DHR00}; on a finite throat the problem is a
 regular Sturm--Liouville problem, with smooth positive coefficients, and the second-order
 convergence of the three-point scheme to its eigenvalues is classical~\cite{Pry94}; \tier{N} for the
 values on the golden grid. The zeros of $J_1$ enter Lean as an axiom with their source
@@ -984,7 +993,8 @@ $j_{1,k}=\pi(k+\tfrac14)-3/\bigl(8\pi(k+\tfrac14)\bigr)+O(k^{-3})$~\cite{DLMF}, 
 asymptotically, those of a twisted sector with $\theta=\tfrac14$, modes $\pi(k+\theta)$, whose vacuum
 energy per boson is $\tfrac12\zeta(-1,\theta)=-B_2(\theta)/4$: $-\tfrac1{24}$ for the untwisted string
 and $\tfrac1{192}$ at $\theta=\tfrac14$~\cite{Pol98}. The twist $\theta=\tfrac14$ is a quarter-turn, of
-order $4$. The value $\zeta(-1)$ thus enters the spectrum through its angle. \tier{N}
+order $4$. The value $\zeta(-1)$ thus enters the spectrum through its angle
+(\testref{test\_offset\_of\_j1\_zeros\_tends\_to\_one\_quarter}) \tier{N}
 
 The weight is what produces the phase. The operator~\eqref{eq:K} has no weight $e^{2A}$, and its
 spectrum is the one~\cite{CW6} gives (Imported statement~\ref{imp:A1}). Conjugated by $D$ each hopping is $1$, so $DKD^{-1}$ is the symmetric chain with diagonal
@@ -1018,7 +1028,7 @@ spacings checked.
 
 The widths do not separate the golden throat from the warped model. Equation~\eqref{eq:sl} is the warped graviton
 equation written on the golden grid, so its widths are those of the warped model,
-$\Gamma\propto x^{3}$~\cite{DHR00}. \tier{L}
+$\Gamma\propto x^{3}$~\cite{DHR00}.
 \section{The factor $\golden$: the scale}\label{sec:scale}
 
 \cite{CW6} distinguishes two radial coordinates: the Poincar\'e $z$, whose boundary $z\to0$ is the
@@ -1093,9 +1103,9 @@ independently of $\sigma_{\mathrm{UV}}$.
 \end{proposition}
 
 \begin{proof}
-The two-brane masses on a deep throat are $m_k=j_{1,k}\,k\,e^{-k\pi r}$~\cite{RS99,DHR00}
-\tier{L}; by Proposition~\ref{prop:rs}, $k\,e^{-k\pi r}=m_0b^{\sigma_{\mathrm{IR}}}=H(\sigma_{\mathrm{IR}})$
-\tier{P*}.
+The two-brane masses on a deep throat are $m_k=j_{1,k}\,k\,e^{-k\pi r}$~\cite{RS99,DHR00};
+by Proposition~\ref{prop:rs}, $k\,e^{-k\pi r}=m_0b^{\sigma_{\mathrm{IR}}}=H(\sigma_{\mathrm{IR}})$
+\tier{P}.
 \end{proof}
 
 \noindent On $[0,12]$, $[2,14]$ and $[4,16]$ with $32$ nodes per level,
@@ -1122,7 +1132,7 @@ determination.
 The left side is the golden valuation of the scale (Imported statement~\ref{imp:valuation}); with
 $\lambda=\log_\golden2=1.4404$ the same number is $8.30$ in powers of $2$, and integrality is a
 statement in powers of $\golden$, the grading of the tower. The placement face of $M$, $m_p/3$, gives the same value,
-$11.98$ \tier{N}. The unit was fixed by (F1) before the data, and no other scale is tried against
+$11.98$ (\eqref{eq:sigmaIR}) \tier{N}. The unit was fixed by (F1) before the data, and no other scale is tried against
 them.
 
 \emph{The clock.} We call the \emph{clock of $\golden$ modulo $N$} the order of
@@ -1141,10 +1151,10 @@ The following hold.
   $\mathrm{SL}_2(\mathbb{Z})$ of order $24=-2/\zeta(-1)$, and $\Delta=\eta^{24}$ has weight
   $12=-1/\zeta(-1)$. In the bosonic string the same count is $(D-2)\tfrac12\zeta(-1)=-1$~\cite{Pol98},
   whence $D-2=24$ and $D=c=26$ \Lean{critical\_dimension}. Under $T$ the multiplier of $\eta^{k}$ is
-  $e^{2\pi ik/24}$, so the torus partition function $(\operatorname{Im}\tau)^{-12}|\eta|^{-48}$ is
+  $e^{2\pi ik/24}$~\cite{Apo90}, so the torus partition function $(\operatorname{Im}\tau)^{-12}|\eta|^{-48}$ is
   invariant under all of $\mathrm{SL}_2(\mathbb{Z})$ because its exponent is the clock $24$, and
   $\eta^{12}$ picks up exactly $e^{i\pi}=-1$ \Lean{eta\_T, eta\_power\_T\_phase,
-  partition\_T\_invariant}~\cite{Apo90}. \tier{L} for the transformation law of $\eta$
+  partition\_T\_invariant}.
 \item $\zeta(-1)=\chi(\mathrm{SL}_2(\mathbb{Z}))=\tfrac14+\tfrac16-\tfrac12$, from
   $\mathrm{SL}_2(\mathbb{Z})=\mathbb{Z}/4*_{\mathbb{Z}/2}\mathbb{Z}/6$: $S$, of order $4$, fixes
   $\tau=i$, the self-dual point where~\cite{CW6} places its torus (Proposition~2.47 there); $ST$, of order $6$, fixes $\rho=e^{2\pi i/3}$, the eigenvalue
@@ -1220,7 +1230,8 @@ With $\sigma_{\mathrm{IR}}=12$ exactly the graviton masses are
 \]
 and $1028$ and $1346$~GeV against the $1000$ and $1322$~GeV that~\cite{LYR26} expect in the two-brane reading; the
 next two are $j_{1,5}M\golden^{12}=1664$~GeV and
-$j_{1,6}M\golden^{12}=1982$~GeV, with no free parameter. \tier{N} Fitted to the same two observed
+$j_{1,6}M\golden^{12}=1982$~GeV, with no free parameter
+(\testref{test\_ratio\_against\_the\_bessel\_ratio}) \tier{N} Fitted to the same two observed
 candidates with its scale free, the two-brane model gives $1014$ and $1328$~GeV for the next two
 modes; the golden throat differs from it by $1.4\%$, so those modes separate the two only at a mass
 resolution better than about $15$~GeV, against the $\pm30$ and $\pm40$~GeV assumed in
@@ -1248,7 +1259,7 @@ The ratio therefore measures the depth of the throat in which the vector modes l
 candidates of~\cite{LYR26} give $8600/(3600\text{--}4000)=2.15$--$2.39$. The lower end lies between
 the values for depths $\golden^{6}$ and $\golden^{12}$; the upper end lies above the deep-throat
 limit $2.295=j_{0,2}/j_{0,1}$, the ratio of the first two zeros of $J_0$, which no pure depth
-reaches; brane-localised kinetic terms shift the vector spectrum and can~\cite{DHR03}. The present data do not discriminate. \tier{N} Read as a measure of the graviton throat, the gluon
+reaches; brane-localised kinetic terms shift the vector spectrum and can~\cite{DHR03}. The present data do not discriminate (\testref{test\_vector\_ratio\_range}) \tier{N} Read as a measure of the graviton throat, the gluon
 ratio assumes that the gluons share its depth; they do not share its bottom: in that throat the
 first gluon would lie at about $250$~GeV, and the candidates place their own bottom at the levels
 $17.6$--$17.8$ (\testref{test\_gluon\_background\_level}) \tier{N}.
@@ -1278,7 +1289,8 @@ of the shallower rows of that table.
 
 \section{Discussion}\label{sec:discussion}
 
-The method of the programme to which this note belongs led from the question of how a wormhole is represented~\cite{PRES} to the study of a bias~\cite{REPR}: the discipline discusses quantum gravity as a question of what exists and of which vacuum, and seldom as a question of how its mathematics represents what exists, a question that does not replace the first. One consequence of that study is to read the dualities of physics, T-duality and the holographic correspondence, not as equivalences between two descriptions but as instances of classification under equivalence, the operation by which mathematics recognises one object in different forms. Its best-known instance is Weil's Rosetta stone, in which number fields, function fields over finite fields and Riemann surfaces are read as three columns of one text~\cite{Wei40}. Seen from there, what string theory seeks by dimensional emergence and holography by the encoding of information has a mathematical form: a translation between arithmetic, arithmetic geometry and algebraic geometry that loses nothing of what is counted \tier{R}. The programme asks three things of such a translation, read from the structure it studies rather than imposed by classification under equivalence in general: that it be invertible on what is counted, the same at every level, and exact at each level rather than on average. The two retroductions that follow say what of the throat meets them in mathematics (\S\ref{ssec:math}) and what that mathematics represents (\S\ref{ssec:phys}); since the conditions were stated with this structure in view, that it meets them is a description, not a contrast.
+The method of the programme to which this note belongs led from the question of how a wormhole is represented~\cite{PRES} to the study of a bias~\cite{REPR}: the discipline discusses quantum gravity as a question of what exists and of which vacuum, and seldom as a question of how its mathematics represents what exists, a question that does not replace the first. One consequence of that study is to read the dualities of physics, T-duality and the holographic correspondence, not as equivalences between two descriptions but as instances of classification under equivalence, the operation by which mathematics recognises one object in different forms. Its best-known instance is Weil's Rosetta stone, in which number fields, function fields over finite fields and Riemann surfaces are read as three columns of one text~\cite{Wei40}. Seen from there, what string theory seeks by dimensional emergence and holography by the encoding of information has a mathematical form: a translation between arithmetic, arithmetic geometry and algebraic geometry that loses nothing of what is counted, in Weil's three
+columns~\cite{Wei40}. The programme asks three things of such a translation, read from the structure it studies rather than imposed by classification under equivalence in general: that it be invertible on what is counted, the same at every level, and exact at each level rather than on average. The two retroductions that follow say what of the throat meets them in mathematics (\S\ref{ssec:math}) and what that mathematics represents (\S\ref{ssec:phys}); since the conditions were stated with this structure in view, that it meets them is a description, not a contrast.
 
 \subsection{The mathematical retroduction: what the structure is}\label{ssec:math}
 
@@ -1314,9 +1326,9 @@ the circles of the levels are rings whose radii stand in the ratio $\golden$
 \Lean{ring\_ratio}, down to the bottom $\sigma_{\mathrm{IR}}=12$ (Figure~\ref{fig:torus}(d)); the
 Kaluza--Klein modes of \S\ref{sec:spectrum} are standing waves across them.
 
-\emph{The rings are tiled by the additive rule.} In the coordinate $t=e^{-y}$ the section is the metric $(d\theta^2+dt^2)/t^2$ of the hyperbolic half-plane with $\theta$ periodic, a cusp, and the ring of the level $\sigma$ is the horocycle $t=\golden^{-\sigma}$, of length $2\pi\golden^{\sigma}$, at the distance $\log\golden$ from the next \Lean{cusp\_metric}. The additive rule $\golden^{\sigma}+\golden^{\sigma+1}=\golden^{\sigma+2}$ (Imported statement~\ref{imp:additive}) tiles these rings. Between two consecutive rings take two tiles bounded by arcs of the two rings and by two meridians, a long one whose lower arc has length $a$ and a short one whose lower arc has length $a/\golden$; one level up each arc is multiplied by $\golden$, and $\golden a=a+a/\golden$, $\golden(a/\golden)=a$, so a long tile lies under a long and a short one and a short tile under a long one: the substitution $A\mapsto AB$, $B\mapsto A$ of Fibonacci~\cite{MH40,BG13}. Its matrix is a shift of the winding followed by the exchange $(n,w)\mapsto(w,n)$ of the closed string, $\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)\left(\begin{smallmatrix}1&0\\1&1\end{smallmatrix}\right)$ \Lean{level\_step\_is\_exchange\_shift}, so one level up is a shift followed by a T-duality. Each tile is congruent to every tile of its kind at every level, by $\theta+it\mapsto\lambda(\theta+it)+c$, the areas are $a/\golden$ and $a/\golden^{2}$, and every ring is covered exactly \tier{N}; it is a horocyclic tiling, of the kind from which aperiodic tilings of the hyperbolic plane are built~\cite{MM98,GS05}. Two tiles are the fewest: the counts of a substitution grow by an eigenvalue of its integer matrix~\cite{BG13}, one tile would grow by an integer, and $\golden$ is irrational; with two tiles the trace $1$ and the determinant $-1$ leave the Fibonacci matrix only \Lean{fibonacci\_substitution\_unique}. With the ring of level $0$, of length $2\pi$, covered by two long tiles and a short one, $a=2\pi/\golden^{2}$, and weighted by $1/(4G_N)=\tfrac12$ (Imported statement~\ref{imp:adscft}) the long tile carries $\pi/\golden^{2}$ and the short one $\pi/\golden^{3}$; with $A_\sigma$ long and $B_\sigma$ short tiles, $S(\sigma)=\pi(A_\sigma\golden^{-2}+B_\sigma\golden^{-3})=\pi\golden^{\sigma}$ at every level \Lean{two\_tile\_entropy}. The tiles count the side of $\golden$, $A_\sigma+B_\sigma=F_{\sigma+4}$, and their weights carry $\pi=2\pi\cdot\tfrac12$; the count alone is not $S$ and tends to $\golden^{4}S/(\sqrt5\,\pi)=0.9757\,S$ \tier{N} (Figure~\ref{fig:throattiling}).
+\emph{The rings are tiled by the additive rule.} In the coordinate $t=e^{-y}$ the section is the metric $(d\theta^2+dt^2)/t^2$ of the hyperbolic half-plane with $\theta$ periodic, a cusp, and the ring of the level $\sigma$ is the horocycle $t=\golden^{-\sigma}$, of length $2\pi\golden^{\sigma}$, at the distance $\log\golden$ from the next \Lean{cusp\_metric}. The additive rule $\golden^{\sigma}+\golden^{\sigma+1}=\golden^{\sigma+2}$ (Imported statement~\ref{imp:additive}) tiles these rings. Between two consecutive rings take two tiles bounded by arcs of the two rings and by two meridians, a long one whose lower arc has length $a$ and a short one whose lower arc has length $a/\golden$; one level up each arc is multiplied by $\golden$, and $\golden a=a+a/\golden$, $\golden(a/\golden)=a$, so a long tile lies under a long and a short one and a short tile under a long one: the substitution $A\mapsto AB$, $B\mapsto A$ of Fibonacci~\cite{MH40,BG13}. Its matrix is a shift of the winding followed by the exchange $(n,w)\mapsto(w,n)$ of the closed string, $\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)\left(\begin{smallmatrix}1&0\\1&1\end{smallmatrix}\right)$ \Lean{level\_step\_is\_exchange\_shift}, so one level up is a shift followed by a T-duality. Each tile is congruent to every tile of its kind at every level, by $\theta+it\mapsto\lambda(\theta+it)+c$, the areas are $a/\golden$ and $a/\golden^{2}$, and every ring is covered exactly (\testref{test\_boundaries\_nest}) \tier{N}; it is a horocyclic tiling, of the kind from which aperiodic tilings of the hyperbolic plane are built~\cite{MM98,GS05}. Two tiles are the fewest: the counts of a substitution grow by an eigenvalue of its integer matrix~\cite{BG13}, one tile would grow by an integer, and $\golden$ is irrational; with two tiles the trace $1$ and the determinant $-1$ leave the Fibonacci matrix only \Lean{fibonacci\_substitution\_unique}. With the ring of level $0$, of length $2\pi$, covered by two long tiles and a short one, $a=2\pi/\golden^{2}$, and weighted by $1/(4G_N)=\tfrac12$ (Imported statement~\ref{imp:adscft}) the long tile carries $\pi/\golden^{2}$ and the short one $\pi/\golden^{3}$; with $A_\sigma$ long and $B_\sigma$ short tiles, $S(\sigma)=\pi(A_\sigma\golden^{-2}+B_\sigma\golden^{-3})=\pi\golden^{\sigma}$ at every level \Lean{two\_tile\_entropy}. The tiles count the side of $\golden$, $A_\sigma+B_\sigma=F_{\sigma+4}$, and their weights carry $\pi=2\pi\cdot\tfrac12$; the count alone is not $S$ and tends to $\golden^{4}S/(\sqrt5\,\pi)=0.9757\,S$ \tier{N} (Figure~\ref{fig:throattiling}).
 
-\emph{Two fixed weights, and why a count does not reach them.} Weighted by $\tfrac12$ per unit of length, any partition of a ring sums to $\pi\golden^{\sigma}$; that holds by construction. What the tiling adds is that the sum is a count with two weights, $\pi/\golden^{2}$ and $\pi/\golden^{3}$, the same at every level. A circle of the same length in a regular tiling is not made of its edges, and the arcs between its crossings take ever more lengths, $1,2,3,3,5,7,10,16,27,41$ distinct ones for $\{7,3\}$ at $\sigma=0,\dots,9$, $115$ in all, so up to the levels computed no fixed set of weights turns a count of its arcs into $\pi\golden^{\sigma}$ \tier{N} (Figure~\ref{fig:tilingstrip}). Two weights are needed and two are enough because $\golden$ is irrational. One fixed weight would need a count multiplied by $\golden$ from each level to the next, and a ratio of whole numbers can tend to $\golden$, as the layers of $\{7,3\}$ tend to $\golden^{2}$ through $8/3,21/8,55/21,\dots$, but it never equals it at any step. The best fractions for $\golden$ are the ratios of consecutive Fibonacci numbers, and they miss it by about $1/(\sqrt5\,q^{2})$ for a denominator $q$, $0.99990/(\sqrt5\,q^{2})$ at $q=F_{29}$ \tier{N}; for no number outside the class of $\golden$, those whose continued fraction ends in ones, do the best fractions miss by so much, which is the sense in which $\golden$ is the number least well approximated by fractions~\cite{Hur91}. An unweighted count therefore follows $\pi\golden^{\sigma}$ only as those fractions follow $\golden$, on average, as the tile count does, $F_{\sigma+4}\to0.9757\,\pi\golden^{\sigma}$ (\testref{test\_unweighted\_count\_tends\_to\_a\_fixed\_fraction}). The approach has an exact form: by Binet's formula, $F_{\sigma+4}-\golden^{4}S(\sigma)/(\sqrt5\,\pi)=F_{\sigma+4}-\golden^{\sigma+4}/\sqrt5=-\bar\golden^{\,\sigma+4}/\sqrt5$, so the unweighted count stays within $\golden^{-(\sigma+4)}/\sqrt5$ of its mean at every level, because $\golden$ is a Pisot unit, an algebraic unit whose conjugate lies inside the unit circle, $|\bar\golden|=\golden^{-1}$ \Lean{tile\_count\_deviation}. Irrationality, a determinant $\pm1$ and the Pisot property are shared with other quadratic units, as $1+\sqrt2$ of the substitution $A\mapsto AAB$, $B\mapsto A$; the trace $1$, the additive law, is what leaves $\golden$ (\testref{test\_the\_three\_columns\_of\_irrational\_unimodular\_pisot}) \tier{N}. The same matrix carries the arity: its square $\left(\begin{smallmatrix}2&1\\1&1\end{smallmatrix}\right)$ \Lean{golden\_matrix\_sq} has trace $\golden^2+\golden^{-2}=3$ (Imported statement~\ref{imp:arity}) \Lean{golden\_square\_trace}, the least trace of a hyperbolic element of the modular group, and its closed geodesic, of length $2\operatorname{arccosh}(3/2)=4\log\golden$, the length of four levels, is the shortest of the modular surface~\cite{Coh55} \tier{N}.
+\emph{Two fixed weights, and why a count does not reach them.} Weighted by $\tfrac12$ per unit of length, any partition of a ring sums to $\pi\golden^{\sigma}$; that holds by construction. What the tiling adds is that the sum is a count with two weights, $\pi/\golden^{2}$ and $\pi/\golden^{3}$, the same at every level. A circle of the same length in a regular tiling is not made of its edges, and the arcs between its crossings take ever more lengths, $1,2,3,3,5,7,10,16,27,41$ distinct ones for $\{7,3\}$ at $\sigma=0,\dots,9$, $115$ in all, so up to the levels computed no fixed set of weights turns a count of its arcs into $\pi\golden^{\sigma}$ \tier{N} (Figure~\ref{fig:tilingstrip}). Two weights are needed and two are enough because $\golden$ is irrational. One fixed weight would need a count multiplied by $\golden$ from each level to the next, and a ratio of whole numbers can tend to $\golden$, as the layers of $\{7,3\}$ tend to $\golden^{2}$ through $8/3,21/8,55/21,\dots$, but it never equals it at any step. The best fractions for $\golden$ are the ratios of consecutive Fibonacci numbers, and they miss it by about $1/(\sqrt5\,q^{2})$ for a denominator $q$, $0.99990/(\sqrt5\,q^{2})$ at $q=F_{29}$ (\testref{test\_hurwitz\_constant\_of\_phi}) \tier{N}; for no number outside the class of $\golden$, those whose continued fraction ends in ones, do the best fractions miss by so much, which is the sense in which $\golden$ is the number least well approximated by fractions~\cite{Hur91}. An unweighted count therefore follows $\pi\golden^{\sigma}$ only as those fractions follow $\golden$, on average, as the tile count does, $F_{\sigma+4}\to0.9757\,\pi\golden^{\sigma}$ (\testref{test\_unweighted\_count\_tends\_to\_a\_fixed\_fraction}). The approach has an exact form: by Binet's formula, $F_{\sigma+4}-\golden^{4}S(\sigma)/(\sqrt5\,\pi)=F_{\sigma+4}-\golden^{\sigma+4}/\sqrt5=-\bar\golden^{\,\sigma+4}/\sqrt5$, so the unweighted count stays within $\golden^{-(\sigma+4)}/\sqrt5$ of its mean at every level, because $\golden$ is a Pisot unit, an algebraic unit whose conjugate lies inside the unit circle, $|\bar\golden|=\golden^{-1}$ \Lean{tile\_count\_deviation}. Irrationality, a determinant $\pm1$ and the Pisot property are shared with other quadratic units, as $1+\sqrt2$ of the substitution $A\mapsto AAB$, $B\mapsto A$; the trace $1$, the additive law, is what leaves $\golden$ (\testref{test\_the\_three\_columns\_of\_irrational\_unimodular\_pisot}) \tier{N}. The same matrix carries the arity: its square $\left(\begin{smallmatrix}2&1\\1&1\end{smallmatrix}\right)$ \Lean{golden\_matrix\_sq} has trace $\golden^2+\golden^{-2}=3$ (Imported statement~\ref{imp:arity}) \Lean{golden\_square\_trace}, the least trace of a hyperbolic element of the modular group, and its closed geodesic, of length $2\operatorname{arccosh}(3/2)=4\log\golden$, the length of four levels, is the shortest of the modular surface~\cite{Coh55} \tier{N}.
 
 \begin{figure}[p]
 \centering
@@ -1363,7 +1375,9 @@ carries $S=\pi\sqrt N$, not one digit per halving. Generated by \testref{test\_s
 \begin{minipage}[t][\textheight][t]{\textwidth}
 \centering
 \includegraphics[width=\textwidth]{fig_tilings_strip.pdf}
-\caption{Five regular tilings of the hyperbolic disk at the levels $\sigma=0,\dots,6$, each disk of radius $\operatorname{arsinh}z$ drawn at equal size, with the $\lfloor S\rfloor$ mode dots outside it: $\{7,3\}$, heptagons; $\{3,7\}$, triangles; $\{5,4\}$, pentagons; $\{12,5\}$, dodecagons; $\{6,10\}$, hexagons. Above each disk, the number of tiles whose centres lie inside it. In $\{12,5\}$ no tile but the central one has its centre inside a disk drawn, and the disks of $\sigma\le2$ lie inside that dodecagon, as those of $\sigma\le1$ lie inside the central hexagon of $\{6,10\}$, so they show no edge; in $\{6,10\}$ the boundary of the level touches edges at $\sigma=1$ and $\sigma=3$, and in no other tiling at any level drawn \tier{N}. Why each is set aside, from what the code shows. $\{7,3\}$ grows by $\golden^{2}$ per layer, counted by edges and by vertices, but its centre has the order $7$, which none of the symmetries or clocks of the note has, and the edges that a level cuts give $S$ only on average, $2.41$ of them per unit of $S$ (\testref{test\_crofton\_constant}). $\{3,7\}$, the dual of $\{7,3\}$, has at its centre the order $3$ of $\rho$, and its layers grow by $\golden^{2}$ when taken by shared vertices but by about $1.6$ when taken by shared edges. $\{5,4\}$ comes closest: its edge is exact in $\golden$, $\cosh e=\golden$, its layers $5F_{2k}$ grow by $\golden^{2}$, its centre has the order $5$ and four tiles meet at each vertex, $4\cdot5=20$; it is the tiling of the pentagon code~\cite{PYHP15}, and with one qubit per bond it gives $1.49\,S$. $\{12,5\}$ carries $12\cdot5=60$, but grows by about $11$ per layer and has no length exact in $\golden$. $\{6,10\}$ carries $6\cdot10=60$ and its inscribed radius is exactly $\operatorname{arsinh}\golden$, the disk of $\sigma=1$, but it grows by about $5$ per layer. What would let one of them stand for the throat is a count that grows by exactly $\golden$ from one level to the next; a count is a whole number, its growth from level to level a fraction, and $\golden$ is not a fraction, so each gives $S$ only on average, and only with a bond dimension chosen to that end \tier{N}. Used in \S\ref{ssec:math} and \S\ref{ssec:phys}. Generated by \testref{test\_section\_writes\_its\_figure[section-41]}.}\label{fig:tilingstrip}
+\caption{Five regular tilings of the hyperbolic disk at the levels $\sigma=0,\dots,6$, each disk of radius $\operatorname{arsinh}z$ drawn at equal size, with the $\lfloor S\rfloor$ mode dots outside it: $\{7,3\}$, heptagons; $\{3,7\}$, triangles; $\{5,4\}$, pentagons; $\{12,5\}$, dodecagons; $\{6,10\}$, hexagons. Above each disk, the number of tiles whose centres lie inside it. In $\{12,5\}$ no tile but the central one has its centre inside a disk drawn, and the disks of $\sigma\le2$ lie inside that dodecagon, as those of $\sigma\le1$ lie inside the central hexagon of $\{6,10\}$, so they show no edge; in $\{6,10\}$ the boundary of the level touches edges at $\sigma=1$ and $\sigma=3$, and in no other tiling at any level drawn
+(\testref{test\_section41\_prints\_its\_conclusions}) \tier{N}. Why each is set aside, from what the code shows. $\{7,3\}$ grows by $\golden^{2}$ per layer, counted by edges and by vertices, but its centre has the order $7$, which none of the symmetries or clocks of the note has, and the edges that a level cuts give $S$ only on average, $2.41$ of them per unit of $S$ (\testref{test\_crofton\_constant}). $\{3,7\}$, the dual of $\{7,3\}$, has at its centre the order $3$ of $\rho$, and its layers grow by $\golden^{2}$ when taken by shared vertices but by about $1.6$ when taken by shared edges. $\{5,4\}$ comes closest: its edge is exact in $\golden$, $\cosh e=\golden$, its layers $5F_{2k}$ grow by $\golden^{2}$, its centre has the order $5$ and four tiles meet at each vertex, $4\cdot5=20$; it is the tiling of the pentagon code~\cite{PYHP15}, and with one qubit per bond it gives $1.49\,S$. $\{12,5\}$ carries $12\cdot5=60$, but grows by about $11$ per layer and has no length exact in $\golden$. $\{6,10\}$ carries $6\cdot10=60$ and its inscribed radius is exactly $\operatorname{arsinh}\golden$, the disk of $\sigma=1$, but it grows by about $5$ per layer. What would let one of them stand for the throat is a count that grows by exactly $\golden$ from one level to the next; a count is a whole number, its growth from level to level a fraction, and $\golden$ is not a fraction, so each gives $S$ only on average, and only with a bond dimension chosen to that end
+(\testref{test\_pairs\_that\_give\_s\_on\_average}) \tier{N}. Used in \S\ref{ssec:math} and \S\ref{ssec:phys}. Generated by \testref{test\_section\_writes\_its\_figure[section-41]}.}\label{fig:tilingstrip}
 \vfill
 \end{minipage}
 \end{figure}
@@ -1414,7 +1428,8 @@ $\golden^{n+1}=F_{n+1}\golden+F_n$ with Fibonacci numbers, $\golden^{2\sigma}$ i
 $k/N(\sigma)$ of a turn, never close on themselves; by the three-gap theorem~\cite{vRa88} they cut
 the ring into at most three lengths, and by Weyl's theorem they fill it evenly. Numerically, for
 $\sigma=1,\dots,6$ and up to $10^4$ marks, there are never more than three gap lengths and the
-discrepancy stays below $0.005$ \tier{N}. The subdivision of the ring is the granularity of
+discrepancy stays below $0.005$
+(\testref{test\_three\_gaps\_of\_the\_marks}; \testref{test\_discrepancy\_stays\_below\_half\_a\_percent}) \tier{N}. The subdivision of the ring is the granularity of
 Figure~\ref{fig:granularity} at the rotation $\golden^{-2\sigma}$. Two further identities are pure
 algebra. With $c=3$ and $L_0=N/2$, Cardy's expression gives
 $2\pi\sqrt{c L_0/6}=\pi\sqrt N=\pi\golden^{\sigma}=S(\sigma)$ \Lean{cardy\_entropy,
@@ -1465,7 +1480,8 @@ generator is already enough. Because $\golden$ is irrational, $n\golden$ is neve
 $n\neq0$ \Lean{golden\_irrational, golden\_rotation\_aperiodic}, so the levels $a+b\golden$ never repeat, they are dense in the line, while a rational step $p/q$ would send the pair $(-p,q)$ to $0$, so that distinct pairs fall on one point, $14\,042$ coincidences among the pairs in $[-60,60]^2$ for $3/2$ against none for $\golden$ \Lean{rational\_step\_kernel} (\testref{test\_rational\_step\_has\_a\_kernel}) \tier{N};
 and by Weyl's theorem their fractional parts fill $[0,1)$ evenly~\cite{Wey16}. They refine under the same rule that builds the tower:
 at $N=F_k$ points the largest gap is $\golden^{-(k-2)}$, one more Fibonacci step is one
-more factor $\golden$, and no new dimension is added \tier{N}. Among irrational steps $\golden$ refines most
+more factor $\golden$, and no new dimension is added
+(\testref{test\_three\_golds\_with\_ratio\_phi\_squared}) \tier{N}. Among irrational steps $\golden$ refines most
 evenly: the first $N$ points cut the circle into at most three lengths~\cite{vRa88}, and for
 $\golden$ their ratio is at most $\golden^{2}=2.618$, reached for every $N$ up to $5000$ except when
 $N+1$, the marks with the origin, is a Fibonacci number, where only two lengths remain, in the ratio
@@ -1508,8 +1524,8 @@ twelve of the icosahedron and the twelve of the bottom of the throat are proved 
 rotation group $A_5$ has order $60$, each vertex is fixed by the rotations of order $5$ about it,
 so there are $60/5=12$ vertices \Lean{twelve\_of\_the\_icosahedron}; $60$ is also the clock of
 $\golden$ modulo $10$, $\pi(10)=60=12\cdot5$ \Lean{pisano\_orders}, and $12=\operatorname{lcm}(4,6)=-1/\zeta(-1)$ is the
-half-turn of Proposition~\ref{prop:twelve}~\cite{F1}; that they are one twelve is a reading \tier{R}. Each vertex has five neighbours, the
-pentagon of $\golden=2\cos(\pi/5)$. \tier{N} for the full list of distances.
+half-turn of Proposition~\ref{prop:twelve}~\cite{F1}, and that they are one twelve is a reading. Each vertex has five neighbours, the pentagon of $\golden=2\cos(\pi/5)$. \tier{N} for the full
+list of distances (\testref{test\_icosaedral\_contact\_spheres\_do\_not\_touch}).
 
 \emph{Real and integer: the lattice and its window.} The pairs $(a,b)$ that build the levels are
 the points of a lattice, and the density of $a+b\golden$ is what that lattice looks like on one
@@ -1524,7 +1540,7 @@ quasicrystal~\cite{BG13,Jag21}; the tower is not that set but its points of norm
 weight on the second coordinate is not chosen: it is the self-dual Gaussian $e^{-\pi\bar x^2}$ of
 Imported statement~\ref{imp:gauss}, a weight and not a window. Two spaces can carry it. On the index $\sigma=a+b\golden$ the integer $12$ has conjugate $12$ and weight $e^{-144\pi}$,
 about $10^{-196}$, and the observed bottom would sit at $4+5\golden=12.09$: that form contradicts
-the clock and is eliminated \tier{N}. On the scale $\golden^{\sigma}$ the unit $\golden^n$ has conjugate
+the clock and is eliminated (\testref{test\_best\_lattice\_index}) \tier{N}. On the scale $\golden^{\sigma}$ the unit $\golden^n$ has conjugate
 $\pm\golden^{-n}$ and weight $w(n)=e^{-\pi\golden^{-2n}}$, which with the norm $\pm1$ gives the tower
 itself; $w(n)>\tfrac12$ if and only if $\pi\golden^{-2n}<\log2$ \Lean{window\_half\_iff}, and since
 $\pi/\golden^2>\log2>\pi/\golden^4$ \Lean{window\_crosses\_half} the first integer level that passes
@@ -1536,7 +1552,7 @@ a radius. The two are distinct conditions on the same variable, one on the self-
 the threshold $\log2$, the other on the factor $2$ of the Hubble rate, and neither follows from the
 other; the route of the arity is of another kind. The set and the tower are one lattice read twice: the ring of level $\sigma$ of Figure~\ref{fig:throattiling}, with $F_{\sigma+3}$ long and $F_{\sigma+2}$ short tiles, is labelled by the unit $\golden^{\sigma+3}=F_{\sigma+2}+F_{\sigma+3}\golden$ \Lean{golden\_pow\_fib}, and its word of tiles is a periodic approximant of the cut-and-project set (\testref{test\_ring\_word\_is\_the\_fibonacci\_rotations}). The Fourier transform of that set is a sum of Bragg peaks on the module $(\mathbb Z+\mathbb Z\golden)/(\golden+2)$, with amplitudes $0.95$, $0.88$ and $0.70$ at $(m,n)=(2,3),(1,2),(1,1)$ for $46\,368$ tiles, against at most $0.010$ at points chosen at random (\testref{test\_bragg\_peaks\_of\_the\_fibonacci\_chain}; \testref{test\_bragg\_random\_level}) \tier{N}.
 
-\emph{The three columns.} Read through the Rosetta stone, the pieces above are one translation. The unit $\golden^{\sigma}$ on the line is the arithmetic column; its pair with the conjugate on the plane of Imported statement~\ref{imp:units}, with the horocycle of the cusp and the lattice $\mathbb Z[i]$ of the torus, is arithmetic geometry; and the third direction enters by isometry through the golden coupling. The torus $\mathbb C/M_{\mathrm{PCF}}\mathbb Z[i]$ is a Riemann surface, Weil's third column; the second has no counterpart over a finite field here beyond the Pisano periods of Imported statement~\ref{imp:clocks}, so the three columns are a comparison of form \tier{R}. The throat meets the conditions of \S\ref{sec:discussion} by facts proved above, which is how they were read: the translation is invertible on what is counted, because $\golden$ is irrational and the step of level is unimodular \Lean{golden\_rotation\_aperiodic, level\_step\_is\_exchange\_shift}; the same at every level, by the additive law (Imported statement~\ref{imp:additive}); and exact at each level, by the two weights, with the unweighted count within $\golden^{-(\sigma+4)}/\sqrt5$ of its mean.
+\emph{The three columns.} Read through the Rosetta stone, the pieces above are one translation. The unit $\golden^{\sigma}$ on the line is the arithmetic column; its pair with the conjugate on the plane of Imported statement~\ref{imp:units}, with the horocycle of the cusp and the lattice $\mathbb Z[i]$ of the torus, is arithmetic geometry; and the third direction enters by isometry through the golden coupling. The torus $\mathbb C/M_{\mathrm{PCF}}\mathbb Z[i]$ is a Riemann surface, Weil's third column; the second has no counterpart over a finite field here beyond the Pisano periods of Imported statement~\ref{imp:clocks}, so the three columns are a comparison of form. The throat meets the conditions of \S\ref{sec:discussion} by facts proved above, which is how they were read: the translation is invertible on what is counted, because $\golden$ is irrational and the step of level is unimodular \Lean{golden\_rotation\_aperiodic, level\_step\_is\_exchange\_shift}; the same at every level, by the additive law (Imported statement~\ref{imp:additive}); and exact at each level, by the two weights, with the unweighted count within $\golden^{-(\sigma+4)}/\sqrt5$ of its mean.
 
 \emph{The quarter-turn and the scale.} Read through Imported statement~\ref{imp:gauss}, the window
 is the nome of a torus of modulus $\tau_n=i/N(n)$ at each level, and the tower of levels is a tower of
@@ -1546,7 +1562,7 @@ quarter-turn $S$ of the clock acts on that tower as the Galois mirror of the sca
 \Lean{S\_acts\_as\_mirror}, so the fractions of the clock, the half-turn of the monodromy and the
 quarter-turn of $S$, and the step $\golden$ of the scale are one involution read in two variables. The
 weight $\tfrac12$ is crossed at $n_{1/2}=\tfrac12\log_\golden(\pi/\log2)=1.570247$, against the
-quarter-turn $\pi/2=1.570796$, and $w(\pi/2)=0.50018$ \tier{N}. The crossing is not exactly the
+quarter-turn $\pi/2=1.570796$, and $w(\pi/2)=0.50018$ (\testref{test\_weight\_crossing\_is\_a\_quarter\_turn}) \tier{N}. The crossing is not exactly the
 quarter-turn: it would be for a width $\log2\cdot\golden^{\pi}=3.1433$, and the self-dual width is $\pi$,
 fixed by three conditions; what is exact is the structure that joins them, the action of $S$ on the
 tower. At the level $0$, $\tau=i$, the window meets the lemniscatic value of Imported
@@ -1584,7 +1600,8 @@ $d/4-\tfrac34$, and it equals $1/d$ if and only if $d=4$, since $(d-4)(d+1)=0$
 other dimension makes it so. Third, the zero mode is the exact term $k=0$: $J_1(0)=0$
 \Lean{bessel\_zero\_mode}, where the asymptotic form would give $\pi/4$
 \Lean{zero\_mode\_vs\_asymptotic}; the deviation of the exact zeros from it is largest there and
-falls after, $j_{1,k}/\pi-k=0.2197,0.2331,0.2383,\dots\to\tfrac14$ \tier{N}. Fourth, the bottom is
+falls after, $j_{1,k}/\pi-k=0.2197,0.2331,0.2383,\dots\to\tfrac14$
+(\testref{test\_offsets\_against\_the\_printed\_column}) \tier{N}. Fourth, the bottom is
 twice the ceiling of W8, $12=2\sigma_\Lambda=2|\Lambda_5|=(n+1)n$, and $n(n+1)=4n$ if and only if
 $n=3$ \Lean{bottom\_twice\_lambda\_iff}. The theta series obeys the law under $S$,
 $\vartheta(-1/\tau)=(-i\tau)^{1/2}\vartheta(\tau)$, by Mathlib \Lean{theta\_S\_law}, with no axiom;
@@ -1604,7 +1621,7 @@ and its metric is not postulated: it is the measure that reflection positivity i
 tower operator. The equations coincide (Proposition~\ref{prop:rs}); the origin differs. The
 continuum of the two-brane model is the golden grid refined, and the levels carry the geometry,
 not the modes (Remark~\ref{rmk:levels}). The tower is open because it is spectral: closing it into
-a ring makes the transfer hyperbolic and the spectrum complex (Remark~\ref{rmk:bloch}). Read through the translation of \S\ref{ssec:math}, its compact direction is the fibre, whose period $\tau(\sigma)$ is the internal coordinate of the level (Imported statement~\ref{imp:units}): it shrinks because $\golden$ is a Pisot unit while the entropy grows in the physical coordinate, and their product is constant because the norm is a unit, so that the passage between them loses nothing; the sign of the norm, $(-1)^{\sigma}$, alternates as the half-turn does from level to level, $\varepsilon(\sigma)\tau(\sigma)=\pi$ \Lean{closure\_each\_level} \tier{R}. The dimensions follow the columns: in one, the line of energies, the spectrum of the tower; in two, the ring with its time, where the boundary theory of $c=3$ lives (Imported statement~\ref{imp:adscft}); in three, the section with its time, the bulk that the isometry $V^\dagger V=\mathbf 1$ keeps on that boundary \Lean{bulk\_boundary\_isometry}; in four, Minkowski space, where the Kaluza--Klein modes are particles; in five, the throat, whose step $\log\golden$ is the regulator of $\mathbb Z[\golden]$ \tier{R}.
+a ring makes the transfer hyperbolic and the spectrum complex (Remark~\ref{rmk:bloch}). Read through the translation of \S\ref{ssec:math}, its compact direction is the fibre, whose period $\tau(\sigma)$ is the internal coordinate of the level (Imported statement~\ref{imp:units}): it shrinks because $\golden$ is a Pisot unit while the entropy grows in the physical coordinate, and their product is constant because the norm is a unit, so that the passage between them loses nothing; the sign of the norm, $(-1)^{\sigma}$, alternates as the half-turn does from level to level, $\varepsilon(\sigma)\tau(\sigma)=\pi$ \Lean{closure\_each\_level}. The dimensions follow the columns: in one, the line of energies, the spectrum of the tower; in two, the ring with its time, where the boundary theory of $c=3$ lives (Imported statement~\ref{imp:adscft}); in three, the section with its time, the bulk that the isometry $V^\dagger V=\mathbf 1$ keeps on that boundary \Lean{bulk\_boundary\_isometry}; in four, Minkowski space, where the Kaluza--Klein modes are particles; in five, the throat, whose step $\log\golden$ is the regulator of $\mathbb Z[\golden]$ (read through \S\ref{ssec:math}).
 
 \emph{What each side chooses and the other fixes.} At the level of the equations,
 \begin{center}\small
@@ -1639,13 +1656,14 @@ Where~\cite{MM20} place each value of the parameters in a superselection sector 
 factorises, here one state does; and the connected part that in the average is carried by spacetime
 wormholes~\cite{MM20,SSSY24} is here produced along the orbit of the phase of the tower, of irrational step $\log\golden/2\pi$
 (\S\ref{ssec:math}). Both are
-comparisons of form \tier{R}. What an ensemble adds beyond the envelope, the statistics
+comparisons of form (\S\ref{ssec:math}). What an ensemble adds beyond the envelope, the statistics
 of its level spacings, is a statement about fluctuations (Imported statement~\ref{imp:envelope}). For
 the Kaluza--Klein tower the operator gives those too: Theorem~\ref{thm:bessel} fixes every level, so
 the fluctuations around the envelope are fixed with it, and their statistics is rigidity, spacings
 falling to $\pi$, which the data show against the ensemble value (\S\ref{sec:arity}).
 
-\emph{The dictionary without a choice.} The further choice of \S\ref{sec:intro}, that of a discretisation, can be put to numbers. A network on a regular tiling cut at the level $\sigma$ has as many open legs as edges the boundary of the level crosses; by Crofton's formula~\cite{San76} their number is, on average, a constant of the tiling times the length of the boundary, so their entropy is $S$ only on average and only for a bond dimension $\chi$ chosen to that end. For $\{7,3\}$ the ratio of the legs to $S$ runs $2.23,2.75,3.40,\dots,2.42$ over $\sigma=0,\dots,12$, about its constant $2.41$; of the $50\,340$ pairs of a tiling with $p,q\le60$ and an integer $\chi\le16$, $172$ give $S$ on average within $1\%$, none exactly, and the best, $\{20,3\}$ with $\chi=3$, within $3\times10^{-6}$, which no larger search improves \tier{N}. Choosing that pair, or any other, is a selection by the number it must match, the place that the vacuum holds in the landscape~\cite{BP00,Wei87}, as choosing a radius is for the modes $n/R$ of a string; both read the golden lattice through rational ratios (\S\ref{ssec:math}) \tier{R}. In the throat the dictionary is the area law itself, and its weight is not fitted to $S$: $1/(4G_N)=\tfrac12$ is the modulus $|\Omega|=\tfrac12$ of the microstate, the fixed point of $x\mapsto1-x$ (\S\ref{sec:inputs}), identified with $G_N$ (Imported statement~\ref{imp:adscft}, item (d)) \Lean{area\_quantum\_half}. $S(\sigma)$ is written with the same $G_N$, so that the weight and the entropy agree is the consistency of that identification, not a contrast. The contrast is elsewhere: the network fits $\chi$ to $S$ and then gives $S$ only on average, its legs fluctuating from level to level about a constant of the tiling; the throat sets $G_N$ by the identification before, and with the two fixed weights of \S\ref{ssec:math} gives $S$ at every level. The tiles are not qudits: a long tile would need a bond of dimension $e^{\pi/\golden^{2}}=3.32$ and a short one $e^{\pi/\golden^{3}}=2.10$, so the throat gives an area counted by two weights and not a network of integer bonds, whose Hilbert space would be a tensor product over the bonds, of dimension $\chi^{n}$; the dimension of a level is the integer of W2, and its growth $e^{S}$ is not $\chi^{n}$ for any integer $\chi$ at any integer level, since $e^{S/n}=(-1)^{-i\golden^{\sigma}/n}$ is transcendental by the Gelfond--Schneider theorem~\cite{Sch35} \Lean{level\_growth\_not\_power}. The discretisation of the dictionary therefore adds no choice to the tower for $S$: what the network selects to match $S$, the structure fixes (\testref{test\_pairs\_that\_give\_s\_on\_average}).
+\emph{The dictionary without a choice.} The further choice of \S\ref{sec:intro}, that of a discretisation, can be put to numbers. A network on a regular tiling cut at the level $\sigma$ has as many open legs as edges the boundary of the level crosses; by Crofton's formula~\cite{San76} their number is, on average, a constant of the tiling times the length of the boundary, so their entropy is $S$ only on average and only for a bond dimension $\chi$ chosen to that end. For $\{7,3\}$ the ratio of the legs to $S$ runs $2.23,2.75,3.40,\dots,2.42$ over $\sigma=0,\dots,12$, about its constant $2.41$; of the $50\,340$ pairs of a tiling with $p,q\le60$ and an integer $\chi\le16$, $172$ give $S$ on average within $1\%$, none exactly, and the best, $\{20,3\}$ with $\chi=3$, within $3\times10^{-6}$, which no larger search improves
+(\testref{test\_pairs\_that\_give\_s\_on\_average}) \tier{N}. Choosing that pair, or any other, is a selection by the number it must match, the place that the vacuum holds in the landscape~\cite{BP00,Wei87}, as choosing a radius is for the modes $n/R$ of a string; both read the golden lattice through rational ratios (\S\ref{ssec:math}). In the throat the dictionary is the area law itself, and its weight is not fitted to $S$: $1/(4G_N)=\tfrac12$ is the modulus $|\Omega|=\tfrac12$ of the microstate, the fixed point of $x\mapsto1-x$ (\S\ref{sec:inputs}), identified with $G_N$ (Imported statement~\ref{imp:adscft}, item (d)) \Lean{area\_quantum\_half}. $S(\sigma)$ is written with the same $G_N$, so that the weight and the entropy agree is the consistency of that identification, not a contrast. The contrast is elsewhere: the network fits $\chi$ to $S$ and then gives $S$ only on average, its legs fluctuating from level to level about a constant of the tiling; the throat sets $G_N$ by the identification before, and with the two fixed weights of \S\ref{ssec:math} gives $S$ at every level. The tiles are not qudits: a long tile would need a bond of dimension $e^{\pi/\golden^{2}}=3.32$ and a short one $e^{\pi/\golden^{3}}=2.10$, so the throat gives an area counted by two weights and not a network of integer bonds, whose Hilbert space would be a tensor product over the bonds, of dimension $\chi^{n}$; the dimension of a level is the integer of W2, and its growth $e^{S}$ is not $\chi^{n}$ for any integer $\chi$ at any integer level, since $e^{S/n}=(-1)^{-i\golden^{\sigma}/n}$ is transcendental by the Gelfond--Schneider theorem~\cite{Sch35} \Lean{level\_growth\_not\_power}. The discretisation of the dictionary therefore adds no choice to the tower for $S$: what the network selects to match $S$, the structure fixes (\testref{test\_pairs\_that\_give\_s\_on\_average}).
 
 
 \emph{The level of the observer and the lattice.} Read with axiom~(F8), the level of the observer's
@@ -1672,7 +1690,8 @@ distance is at least $7.6$, reached at $-1$, and without the correlation it woul
 result does not depend on it. Planck alone gives $583.877$, $2.2$ to
 $3.1$ standard deviations from $584$ as the correlation of $\Omega_m$ and $H_0$ runs from $-1$ to
 $0$; the local $H_0$ with the $\omega_m$ of Planck, a combination that $\Lambda$CDM does not
-reconcile, gives $583.40$, nearest to $583$ and $5.0$ standard deviations from it \tier{N}. The
+reconcile, gives $583.40$, nearest to $583$ and $5.0$ standard deviations from it
+(\testref{test\_data\_readings}) \tier{N}. The
 hypothesis is therefore excluded, by the criterion stated in advance, and the other determinations do not undo it: Planck alone agrees with the combination, $1.4$ to $1.8$ standard deviations from it in $\Omega_\Lambda h^2$, and differs only in precision, so it does not favour $584$ (\testref{test\_desi\_against\_planck}); the local $H_0$ moves the nearest integer to $583$ and excludes that one (\testref{test\_the\_worst\_case\_is\_deci}) \tier{N}. A tower with a rational step $p/q$ in place of $\golden$ reads the same data at other levels: with $21/13$ the bottom moves by $0.8$ standard deviations, which the data of \S\ref{sec:data} do not exclude, and the observer's level by $71$ (\testref{test\_rational\_step\_versus\_the\_contrast}); it stays within three standard deviations of the golden reading only from $144/89$ on, and each further depth asks for the next fraction, the convergents of $\golden$. This compares the steps with each other, not with a datum: what singles out $\golden$ is the clock and the additive law, not the data (\testref{test\_three\_sigma\_criterion}) \tier{N}. No measurement error is known that would remove the exclusion, the unit is
 fixed by an argument independent of the data and cannot be moved, and no level of the structure
 singles out $584$ ($584\equiv8\bmod 24$), so there is no mechanism to protect. An evolving dark
@@ -1691,7 +1710,7 @@ contrasts with $\Lambda$ is the lattice form of that level.
 What places the
 observer there is, in~\cite{CW6}, accumulation and not selection: the observer is a worldline whose
 Fisher information grows to the ceiling $F_{\max}^{-1}=\tfrac14=\mu^2$, one bit per eigenvalue, and each
-level becomes objective at $\tfrac12$~\cite{Kie26}; a cell that fills opens the next level. The redundant records that make a level objective are, read with Imported statement~\ref{imp:weld}, its modes of matter, $\lfloor S\rfloor$ particles of one unit of Fisher information each, as scattered photons are the fragments of the environment that carry the record of an everyday object~\cite{BKZ06,RZ10}: the particles of a level observe it \tier{R}. The
+level becomes objective at $\tfrac12$~\cite{Kie26}; a cell that fills opens the next level. The redundant records that make a level objective are, read with Imported statement~\ref{imp:weld}, its modes of matter, $\lfloor S\rfloor$ particles of one unit of Fisher information each, as scattered photons are the fragments of the environment that carry the record of an everyday object~\cite{BKZ06,RZ10}: the particles of a level observe it \textemdash{} a reading of the records, not a result about them. The
 conjugacy of the observer's clock and its level in~\cite{CW6}, $S(\sigma)\tau_F(\sigma)=\pi M_{\mathrm{PCF}}=\pi M_{\mathrm{PCF}}|N(\golden^{\sigma})|$, with $N$ the norm of Imported statement~\ref{imp:units}, is not the first law of de~Sitter: $S\tau_F$ is constant, while the entropy times the
 inverse Gibbons--Hawking temperature grows as $\golden^{3\sigma/2}$ \tier{N}, so it does not by itself fix
 the level. Where many worlds sees branches and third quantization baby universes~\cite{BS12,GS89}, the
@@ -1711,10 +1730,10 @@ four-dimensional gravity appears meet in it. In the two-brane model it is recove
 distances larger than the anti-de~Sitter radius~\cite{RS99b,GT00}, and brane cosmology is standard
 only when $H_{\mathrm{dS}}\ell\ll1$, with a non-conventional regime for $H_{\mathrm{dS}}\ell\gtrsim1$~\cite{BDL00}. In
 induced gravity the Einstein--Hilbert term is a coefficient of the local expansion of a heat kernel
-regularised by a Gaussian in proper time~\cite{Sak00,Vas03}, valid where the winding terms are small.
-By Poisson summation the window is that winding term, so the two readings have the same form; they
+regularised by a Gaussian in proper time~\cite{Sak00,Vas03}, valid where the winding terms are small, and
+by Poisson summation the window is that winding term, so the two readings have the same form: they
 are one if the proper time of the heat kernel is $N$ and its coefficient $a_1$ is the Einstein--Hilbert
-term, which the note does not compute. \tier{R} On that reading gravity turns on where the windings of the ring stop
+term, which the note does not compute. On that reading gravity turns on where the windings of the ring stop
 dominating, and the first level with weight above $\tfrac12$ and the first with $H_{\mathrm{dS}}\ell<1$ are
 both $\sigma_G=2$.
 \witness{P}{window\_crosses\_half, hubble\_below\_bulk\_crossing}
@@ -1731,13 +1750,14 @@ $k\le\tfrac34$ \Lean{tcc\_iff\_k}, or it does not apply if $\sigma$ is not a dyn
 If $\sigma$ is a dynamical modulus, the reading changes the form of axiom~(F8): $\Lambda(\sigma)=6\golden^{-\sigma}$
 is then the potential of a field that rolls, an exponential quintessence $V\propto e^{-\lambda\Phi}$ with
 $\lambda=1/\sqrt2$ fixed by the modulus of the ring, $\Phi$ in units of the reduced Planck mass, which
-thaws to $w\simeq-0.92$ today \tier{N}; the slope is fixed by the metric of \S\ref{ssec:math}, with
+thaws to $w\simeq-0.92$ today (\testref{test\_cpl\_projection}) \tier{N}; the slope is fixed by the metric of \S\ref{ssec:math}, with
 $k=1$, while $w$ today depends also on the initial value of the field, taken frozen, and on $\Omega_m$,
 taken as $0.31$. The fit of exponential quintessence to the baryon acoustic oscillations of DESI with the
 cosmic microwave background and the supernovae of DES gives $\lambda=0.698^{+0.173}_{-0.202}$~\cite{AAN25}:
 $1/\sqrt2$ lies $0.05$ standard deviations from it, while the data exclude $\lambda=0$ at about $3.5$ and
 the value $\sqrt2$ of asymptotic string moduli at $4.1$ standard deviations, and place the central value
-below the bound of trans-Planckian censorship \tier{N}~\tier{L}. It is a contrast that the slope passes,
+below the bound of trans-Planckian censorship \tier[BV20]{N}
+(\testref{test\_distance\_to\_the\_measured\_lambda}). It is a contrast that the slope passes,
 under a reading that is not an axiom of this note, with one combination of data and a wide interval;
 the projection of the model onto $(w_0,w_a)$, with $w_a\simeq-0.11$, is not the parametrised fit
 of~\cite{DESI25}, which the rolling field need not follow.
@@ -1750,9 +1770,9 @@ depth identified with the length of the mirror-invariant interval $[-12,12]$ of 
 bottom to its mirror image, the depth is the clock, $k\pi r=24\log\golden=11.55$, and the throat runs
 from the bottom, $\sigma=12$, to the ultraviolet end at $\sigma=36$, $M\golden^{36}=1.05\times10^{7}$~GeV;
 the vector ratio depends only on the depth, so it is the same on $[-12,12]$ and on $[12,36]$
-(\testref{test\_vector\_ratio\_depends\_only\_on\_the\_depth}); the throat is then a truncated two-brane model
+(\testref{test\_vector\_ratio\_depends\_only\_on\_the\_depth}) \tier{N}; the throat is then a truncated two-brane model
 of the kind of~\cite{DPS08}, the warp does not produce the hierarchy, $M_{\mathrm{Pl}}^2\simeq M_5^3/k$
-makes Newton's constant a datum of its own, and no parameter of the throat is left free; the free number moves to $G_N$, and the identification of the depth is a further one, not a consequence of the mirror \tier{N}. The
+makes Newton's constant a datum of its own, and no parameter of the throat is left free; the free number moves to $G_N$, and the identification of the depth is a further one, not a consequence of the mirror. The
 vector ratio is $2.275$ in the first and $2.228$ in the second, both inside the present range
 $2.15$--$2.39$.
 
@@ -1761,8 +1781,8 @@ shift that a twisted boundary condition around a compact circle gives Kaluza--Kl
 \cite{SS79,Hos83}; there the shift is exact, here it is asymptotic (\S\ref{ssec:math}), and the
 half-turn of the monodromy is the antiperiodic case $q=\tfrac12$. The weight $\tfrac12$ of the window is
 an equal weight under $S$, as in the transition between thermal anti-de~Sitter space and the black
-hole~\cite{HP83,Wit98b}; that transition sits at the self-dual point $\tau=i$, which here is the level
-$0$, with weight $e^{-\pi}$, not at the edge of the window. \tier{R}
+hole~\cite{HP83,Wit98b}: that transition sits at the self-dual point $\tau=i$, which here is the level
+$0$, with weight $e^{-\pi}$, not at the edge of the window.
 
 \emph{A comparison of form.} The relation that \S\ref{sec:intro} declares between the throat of this
 note and the $AdS_2$ throat of the black hole is developed here and in the transition of Hawking and
@@ -1774,7 +1794,7 @@ stated: the tower has a massless zero mode where the traversable wormhole has a 
 exact term $k=0$ against the asymptotic one; and its quarter is asymptotic, not exact. The second is
 what W7 requires: with a finite Hilbert space no continuous group acts exactly, and the tower is an
 $SL(2)$ tower only asymptotically. The analysis of~\cite{MQ18} uses collective fields averaged over
-the couplings at large $N$; the comparison is of form, not an identification. \tier{R}
+the couplings at large $N$: the comparison is of form, not an identification.
 
 \emph{What the masses are.} Read with Imported statement~\ref{imp:weld}, the leading
 formula~\eqref{eq:leading} is an energy of information. Since $\pi\golden^{12}=S(12)$,
@@ -1793,7 +1813,7 @@ by half a wavelength and offset by the quarter-turn of four dimensions; and thei
 information stored at the bottom, which sits where the half-turn of the fibre, the phase that gives
 matter its spin $\tfrac12$ (Imported statement~\ref{imp:monodromy}), closes on the clock of $\golden$. The observed candidates
 of~\cite{LYR26} at $380$ and $700$~GeV are, in this representation, the first tones
-of the gravitational response of about a thousand bits at the scale of the leptons \tier{R}. \tier{P*} for the
+of the gravitational response of about a thousand bits at the scale of the leptons. \tier{P} for the
 identity, \tier{P} in~\cite{CW6} for the weld; the rest is its physical reading. A bit here is the unit of Fisher information of one mode (item (c) of the proof after Imported
 statement~\ref{imp:weld}), and each mode takes the area $4\ell_P^2$ that the area quantum of
 axiom~(B1) assigns to one unit of $S$: a physical quantity of the bottom of the throat, not a record kept by anyone. The
@@ -1831,7 +1851,8 @@ reading proposes (ring and loop, reciprocal), Figure~\ref{fig:granularity} the d
 the ring. The central charge $c=3$ is that of the boundary torus, two-dimensional, while the phase
 $\tfrac14$ uses $d=4$ for the radial tower (axiom~(F2)); both were already in the note, and this
 reading makes their coexistence explicit: for the entropy of the ring the four-dimensional area law
-is excluded, while the phase keeps $d=4$. \tier{P*} for the
+is excluded \Lean{area\_law\_4d\_meets\_weld\_iff}, while the phase keeps $d=4$
+\Lean{phase\_equals\_inverse\_dimension\_iff} \tier{P} for the
 identities; the reading is axioms~(F6) and~(F7).
 
 \emph{The tower and the cosmological constant.} Read with axiom~(F8), the tower descends with the
@@ -1849,7 +1870,7 @@ the ratio to the Higuchi bound, $\Delta_{\mathrm{colour}}^2/(2H_{\mathrm{dS}}^2)
 same at every level \Lean{higuchi\_ratio\_level\_free}, and the bound holds for a spin-two state of mass
 $\kappa\Delta_{\mathrm{colour}}$ if and only if $\kappa^2\pi^3/(q^2M_{\mathrm{PCF}})\ge1$ \Lean{higuchi\_iff\_charge}.
 If the electric and magnetic charges are equal at the self-dual point, $q^2=2\pi$, the ratio is
-$0.0727$ and the bound asks $\kappa\ge3.71$ \tier{N}. This is a contrast of admissibility with a
+$0.0727$ and the bound asks $\kappa\ge3.71$ (\testref{test\_higuchi\_bound}) \tier{N}. This is a contrast of admissibility with a
 coefficient, finer than that of the exponent, and two things decide it that the note does not fix:
 the ratio $\kappa$ of the lightest spin-two state of the colour tower to its gap, and the unit. The
 comparison is made in the units of the framework, where~\cite{CW6} places the Hubble rate and the
