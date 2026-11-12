@@ -14,7 +14,7 @@ import numpy as np
 import pytest
 from scipy.special import jn_zeros
 
-from kkgt.constants import LN_PHI, M_PCF, PHI
+from kkgt.constants import LN_PHI, M_GEV, M_PLANCK_GEV, M_PCF, PHI
 
 HBAR = 1.054571817e-34
 C_LIGHT = 299792458.0
@@ -83,7 +83,7 @@ class TestSection30SymmetricThroat:
     @pytest.mark.parametrize("level,printed",
                              [(12, 101.06), (36, 1.048e7)])
     def test_scales(self, level, printed):
-        m = 0.313851
+        m = M_GEV
         got = m * PHI**level
         if printed > 1e5:
             assert got == pytest.approx(printed, rel=5e-4)
@@ -198,9 +198,9 @@ class TestSection33ColourHole:
         assert round(math.pi**3 / M_PCF, 4) == 0.4570
 
     def test_regge_masses_in_both_units(self):
-        m = 0.313851
+        m = M_GEV
         u = m / M_PCF
-        m_pl = 1.2209e19
+        m_pl = M_PLANCK_GEV
         assert u / math.sqrt(M_PCF) == pytest.approx(5.616e-4, rel=1e-3)
         assert (m_pl / math.sqrt(2)) / math.sqrt(M_PCF) == pytest.approx(
             1.048e18, rel=1e-3
@@ -209,16 +209,16 @@ class TestSection33ColourHole:
         assert round(conv, 2) == 203.56
 
     def test_graviton_modes_below_1000_tev(self):
-        m = 0.313851
+        m = M_GEV
         mk = jn_zeros(1, 5000) * m * PHI**12
         count = int((mk < 1e6).sum())
         estimate = 1e6 / (math.pi * m * PHI**12)
         assert count == 3149
-        assert round(estimate, 1) == 3149.7
+        assert round(estimate, 1) == 3149.9
         assert abs(count - estimate) < 1.0
 
     def test_first_mode(self):
-        assert round(jn_zeros(1, 1)[0] * 0.313851 * PHI**12, 1) == 387.2
+        assert round(jn_zeros(1, 1)[0] * M_GEV * PHI**12, 1) == 387.2
 
 
 # ══════════════════════════════════════════════════════════ section 34 ══
@@ -327,7 +327,7 @@ class TestSection37Consistency:
     @pytest.mark.parametrize("mass,printed", [(3600, 17.60), (4000, 17.82)])
     def test_gluon_background_level(self, mass, printed):
         """sigma = log_phi(m/(j_{0,1} M)) with M = 0.31384 GeV."""
-        got = math.log(mass / (jn_zeros(0, 1)[0] * 0.31384)) / LN_PHI
+        got = math.log(mass / (jn_zeros(0, 1)[0] * M_GEV)) / LN_PHI
         assert round(got, 2) == printed, (mass, got)
 
     def test_ratio_700_over_380_is_the_bessel_ratio(self):

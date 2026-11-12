@@ -12,7 +12,7 @@ import math
 import numpy as np
 import pytest
 
-from kkgt.constants import LN_PHI, M_KOIDE_MEV, M_PCF, PHI
+from kkgt.constants import LN_PHI, M_GEV, M_KOIDE_MEV, M_PLANCK_GEV, M_PCF, PHI
 
 # physical constants, exactly as the script uses them (CODATA 2018)
 HBAR = 1.054571817e-34          # J s
@@ -76,7 +76,7 @@ class TestSection18TwoReadingsOfTheSameCurvature:
     def test_the_gap_is_a_unit_conversion(self):
         """s_entropy - s_curv = 2 log_phi(M_Pl/u) - log_phi 2 = 203.562."""
         s_curv, s_entropy = self.readings()
-        m_pl = 1.220890e28          # eV
+        m_pl = M_PLANCK_GEV * 1e9     # eV
         formula = 2 * math.log(m_pl / U_EV) / LN_PHI - math.log(2) / LN_PHI
         assert s_entropy - s_curv == pytest.approx(formula, abs=1e-6)
         assert formula == pytest.approx(203.562, abs=5e-4)
@@ -116,7 +116,7 @@ class TestSection20TwoCandidates:
     """section 20 -- 'The contrast with the two observed candidates (380 and 700 GeV)'"""
 
     @staticmethod
-    def fit(masses, errors, m_scale=0.31384):
+    def fit(masses, errors, m_scale=M_GEV):
         """Weighted fit of the scale lambda with mu = the J1 zeros."""
         from scipy.special import jn_zeros
 
@@ -145,7 +145,7 @@ class TestSection20TwoCandidates:
     def test_predictions_at_sigma_12(self, k, printed):
         from scipy.special import jn_zeros
 
-        got = round(jn_zeros(1, 6)[k] * 0.31384 * PHI**12)
+        got = round(jn_zeros(1, 6)[k] * M_GEV * PHI**12)
         assert got == printed, k
 
 
@@ -158,7 +158,7 @@ class TestSection21TwoBraneRival:
         from scipy.special import jn_zeros
 
         j = jn_zeros(1, 4)
-        lg = 0.31384 * PHI**12
+        lg = M_GEV * PHI**12
         assert lam == pytest.approx(99.64, abs=5e-3)
         assert round(j[2] * lam) == 1014
         assert round(j[3] * lam) == 1328
@@ -258,7 +258,7 @@ class TestSection24ScaleAndTop:
     def test_planck_mass_in_gev(self):
         g_j = 1.602176634e-10
         m_pl = math.sqrt(HBAR * C_LIGHT**5 / G_NEWTON) / g_j
-        assert m_pl == pytest.approx(1.22089e19, rel=1e-5)
+        assert m_pl == pytest.approx(M_PLANCK_GEV, rel=1e-5)
 
     def test_the_grid_does_not_fix_the_top(self):
         """2 log_phi(l_u/l) = 203.562, 0.44 away from the nearest integer."""

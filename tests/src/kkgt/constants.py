@@ -25,8 +25,9 @@ OBS_G = (380.0, 700.0, 1000.0, 1322.0)
 
 # ── Sections 16, 17, 18, 24: the scale M of (F1) and its unit ────────────
 M_KOIDE_MEV = 313.84                      # MeV, (F1), used by sections 16-18
+M_GEV = M_KOIDE_MEV / 1000                # GeV: the same scale in the unit of the paper
 U_MEV = M_KOIDE_MEV / M_PCF               # 4.6258 MeV, the unit of (F1)
-M_PLANCK_GEV = 1.22089e19                 # section 24 prints 1.22089e+19
+M_PLANCK_GEV = 1.22089e19                 # section 24 prints 1.22089e+19 (from hbar, c, G)
 
 # ── Sections 10, 44, 13, 39, 41: the five figures of the manuscript ───────
 # main.tex includes exactly these five files and attributes each to a section.

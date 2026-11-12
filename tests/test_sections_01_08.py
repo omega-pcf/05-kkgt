@@ -21,7 +21,7 @@ import numpy as np
 import pytest
 from scipy.special import jn_zeros
 
-from kkgt.constants import LN_PHI, OBS_G, PHI
+from kkgt.constants import LN_PHI, M_GEV, OBS_G, PHI
 
 R2 = 5e-4   # rounding tolerance for a value printed with .2f
 R3 = 5e-4   # .3f
@@ -67,7 +67,7 @@ class TestSection1Numbers:
 
     def test_masses_at_the_bottom_of_the_throat(self):
         """m_k = j_{1,k} M phi^12 with M = 0.31384 GeV -> 387, 709, 1028, 1346."""
-        M = 0.31384
+        M = M_GEV
         got = [round(x * M * PHI**12) for x in jn_zeros(1, 4)]
         assert got == [387, 709, 1028, 1346]
 
@@ -117,6 +117,66 @@ class TestSection1Numbers:
         got = run_section(1).value(r"framework units\): M_PCF\s+([-\d.]+)",
                                    label="M_PCF")
         assert got == pytest.approx(6 * math.sqrt(3) * math.pi / LN_PHI, abs=1e-3)
+
+    def test_dirichlet_lowest_eigenvalue_is_positive(self, run_section):
+        """Boundary conditions: Neumann has no mode, Dirichlet starts at 26.4."""
+        run = run_section(1)
+        m = run.match(
+            r"lowest m\^2: Neumann \(~0\) ; Dirichlet \(26\.4\)\s+"
+            r"\('([-\d.e+]+)',\s*(?:np\.float64\()?([\d.]+)"
+        )
+        neumann, dirichlet = float(m.group(1)), float(m.group(2))
+        assert abs(neumann) < 1e-6, neumann
+        assert dirichlet == pytest.approx(26.4, abs=0.05), dirichlet
+
+    def test_second_order_convergence_on_the_golden_grid(self, run_section):
+        """Relative error of m1 on [0,12] at Q = 16,32,64,128: 1.2e-4 ... 1.8e-6."""
+        run = run_section(1)
+        m = run.match(
+            r"relative error of m1 on \[0,12\], Q=16,32,64,128 vs 3\.83182\s+"
+            r"(\[[^\]]+\])"
+        )
+        errs = [float(v) for v in re.findall(r"'([\d.e+-]+)'", m.group(1))]
+        assert errs == pytest.approx([1.2e-4, 2.9e-5, 7.3e-6, 1.8e-6], rel=0.05), errs
+        # second order: every refinement divides the error by ~4
+        for a, b in zip(errs, errs[1:]):
+            assert a / b == pytest.approx(4.0, rel=0.3), (a, b)
+
+    def test_one_node_per_level_degrades_the_residual(self, run_section):
+        """One node per golden level: the residual rounds to 11-12 %.
+
+        The section prints 12.4 for sigma[0,6] and 10.8 for sigma[-6,6];
+        both round to the integers the sentence quotes.
+        """
+        run = run_section(1)
+        vals = [float(v) for v in re.findall(
+            r"one node per level, sigma\[-?\d+,6\] residual \(11-12%\)\s+([\d.]+)",
+            run.stdout,
+        )]
+        assert len(vals) == 2, vals
+        assert sorted(round(v) for v in vals) == [11, 12], vals
+
+    def test_m_phi_11_is_62_5_gev(self, run_section):
+        """The level 11 of M-theory read as a scale: M phi^11 = 62.5 GeV."""
+        got = run_section(1).value(
+            r"M phi\^11 \(GeV\), CW6 M-theory level read as a scale\s+([\d.]+)",
+            label="M phi^11",
+        )
+        assert got == pytest.approx(62.5, abs=0.05), got
+
+    def test_cw6_sine_band_matches_the_eigenvalues(self, run_section):
+        """m_k = 2 sin(k pi/16)/log phi is the spectrum of (K), to 1e-10."""
+        run = run_section(1)
+        closed = run.value(
+            r"eig\(K\) = \(2-2cos\(pi k/8\)\)/\(log phi\)\^2 \(max diff\)\s+([\d.e+-]+)",
+            label="eig(K) closed form",
+        )
+        band = run.value(
+            r"CW6 \(160\): m_k = 2 sin\(k pi/16\)/log phi vs eig\(K\)\s+([\d.e+-]+)",
+            label="CW6 (160)",
+        )
+        assert closed < 1e-10, closed
+        assert band < 1e-10, band
 
 
 # ═══════════════════════════════════════════════════════════ section 2 ══
@@ -208,6 +268,15 @@ class TestSection4MetricPositivity:
         )]
         assert len(vals) == 3, vals
         assert vals[0] > 0 and vals[1] < 0 and vals[2] < 0, vals
+
+    def test_sym_t_eigenvalues_are_the_printed_three(self, run_section):
+        """The three magnitudes: +0.35 at a=0.05, -0.06 at a=0.2, -2.83 at a=1."""
+        run = run_section(4)
+        vals = [float(v) for v in re.findall(
+            r"min eigenvalue of sym\(T\)=([-\d.e+]+)", run.stdout
+        )]
+        assert len(vals) == 3, vals
+        assert vals == pytest.approx([0.35, -0.06, -2.83], abs=0.01), vals
 
     def test_eta_weighted_product_is_positive(self, run_section):
         """<f,Tf>_eta > 0 for a = 0.05, 0.2, 1.0: the metric restores positivity."""

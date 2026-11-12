@@ -12,6 +12,9 @@ Figures: 1 (section 44), 2 (section 13), 3 (section 10), 4 (section 39),
 also needs mpmath.
 """
 import sys
+
+from .constants import M_GEV, M_KOIDE_MEV, M_PLANCK_GEV
+
 SECCIONES = []
 
 # ======================================================================
@@ -180,7 +183,7 @@ def seccion_1():
       [round((lambda v: v[1]/v[0])(vec2(phi**-L)), 3) for L in (6, 12, 30)])
     # (3) bottom at 12, top at Planck
     mKK = M_lep*phi**12/1000                          # GeV per zero
-    for nm, MP in (("M_Pl", 1.2209e19), ("reduced M_Pl", 2.435e18)):
+    for nm, MP in (("M_Pl", M_PLANCK_GEV), ("reduced M_Pl", 2.435e18)):
         kpr = np.log(MP/mKK); e = np.exp(-kpr); g_, v_ = grav2(e), vec2(e)
         P(f"{nm}: k pi r (39.33/37.72); sigma_UV (93.74/90.39)", (round(kpr, 2), round(12 + kpr/lp, 2)))
         P(f"  graviton zeros (3.8317, 7.0156, 10.1735, 13.3237)", np.round(g_, 4))
@@ -236,15 +239,15 @@ def seccion_1():
 
     print("== v2: alternatives for m0 (golden valuation of the scale)")
     _sc = 99.12
-    for _nm, _m in (("M", 0.31384), ("m_p/3", 0.938272/3), ("m_e", 0.000510999)):
+    for _nm, _m in (("M", M_GEV), ("m_p/3", 0.938272/3), ("m_e", 0.000510999)):
         P(f"sigma_IR with m0 = {_nm}", round(float(np.log(_sc/_m)/lp), 2))
     P("M_PCF log phi = 6 sqrt3 pi (framework units): M_PCF", round(6*np.sqrt(3)*np.pi/lp, 3))
 
     print("== v3: second short cycle")
     P("leading order pi(k+1/4) M phi^12, k=1 (GeV) ; exact j11", (round(np.pi*1.25*mKK, 0), round(jn_zeros(1,1)[0]*mKK, 0)))
     _v24 = vec2(phi**-24)
-    P("vector m2/m1, T-dual throat [-12,12] (2.228) ; Planck top (2.275)", (round(_v24[1]/_v24[0], 3), round((lambda v: v[1]/v[0])(vec2(np.exp(-np.log(1.2209e19/mKK)))), 3)))
-    P("M phi^11 (GeV), CW6 M-theory level read as a scale", round(0.31384*phi**11, 1))
+    P("vector m2/m1, T-dual throat [-12,12] (2.228) ; Planck top (2.275)", (round(_v24[1]/_v24[0], 3), round((lambda v: v[1]/v[0])(vec2(np.exp(-np.log(M_PLANCK_GEV/mKK)))), 3)))
+    P("M phi^11 (GeV), CW6 M-theory level read as a scale", round(M_GEV*phi**11, 1))
     _th = 2*np.sin(np.pi*np.arange(1, 8)/16)/lp
     P("CW6 (160): m_k = 2 sin(k pi/16)/log phi vs eig(K)", f"{np.max(np.abs(np.sort(_th**2) - np.sort(np.linalg.eigvals(_K/lp**2).real))):.1e}")
 
@@ -327,8 +330,8 @@ def seccion_3():
     print("validation against the golden chain (article table):")
     for lev in (6, 12, 30):
         v = vec(phi**-lev); print(f"  depth phi^{lev}: vector m2/m1 = {v[1]/v[0]:.3f}")
-    M = 0.31384; mKK = M*phi**12          # scale per zero on the background sigma_IR = 12 (GeV)
-    for nm, MP in (("M_Pl", 1.2209e19), ("reduced M_Pl", 2.435e18)):
+    M = M_GEV; mKK = M*phi**12          # scale per zero on the background sigma_IR = 12 (GeV)
+    for nm, MP in (("M_Pl", M_PLANCK_GEV), ("reduced M_Pl", 2.435e18)):
         kpr = np.log(MP/mKK); levels = kpr/lp; eps = np.exp(-kpr)
         g, v = grav(eps), vec(eps)
         print(f"\nUV at {nm}: k pi r = {kpr:.2f} = {levels:.2f} levels; sigma_UV = {12+levels:.2f}")
@@ -852,7 +855,7 @@ SECCIONES.append((15, 'Exact count of states with c = 3 at the level N/2 against
 # ======================================================================
 def seccion_16():
     import math
-    M = 313.84   # MeV, (F1)
+    M = M_KOIDE_MEV   # MeV, (F1)
     d = 2 / 9    # delta = 2/n^2, n = 3
     obs = {"e": 0.51099895, "mu": 105.6583755, "tau": 1776.86}
     m = sorted(M * (1 + math.sqrt(2) * math.cos(d + 2 * math.pi * k / 3)) ** 2 for k in range(3))
@@ -868,7 +871,7 @@ def seccion_17():
     import math, random
     phi = (1 + 5 ** 0.5) / 2
     L = math.log(phi)
-    u = 313.84e6 / (6 * 3 ** 0.5 * math.pi / L)        # eV, the unit of (F1)
+    u = M_KOIDE_MEV * 1e6 / (6 * 3 ** 0.5 * math.pi / L)        # eV, the unit of (F1)
     hbar, Mpc = 6.582119569e-16, 3.0856775814913673e19   # eV s, km
     def sigma_obs(H0, OL):                              # Lambda = 3 H0^2 Omega_L, curvatura
         lam = 3 * (hbar * H0 / Mpc) ** 2 * OL
@@ -887,8 +890,8 @@ SECCIONES.append((17, 'The observer level from the value of Lambda, below (F9) a
 def seccion_18():
     import math, random
     phi = (1 + 5 ** 0.5) / 2; L = math.log(phi)
-    u = 313.84e6 / (6 * 3 ** 0.5 * math.pi / L)      # eV, unit of (F1)
-    M = 313.84e6; MP = 1.220890e28                    # eV
+    u = M_KOIDE_MEV * 1e6 / (6 * 3 ** 0.5 * math.pi / L)      # eV, unit of (F1)
+    M = M_KOIDE_MEV * 1e6; MP = M_PLANCK_GEV * 1e9                    # eV
     hbar, Mpc_km = 6.582119569e-16, 3.0856775814913673e19
     lP2, c, Mpc_m = (1.616255e-35) ** 2, 2.99792458e8, 3.0856775814913673e22
     def readings(H0, OL):
@@ -932,7 +935,7 @@ SECCIONES.append((19, 'The phase offset of the tower: exact zeros against the as
 def seccion_20():
     import math
     from scipy.special import jn_zeros
-    phi = (1 + 5 ** 0.5) / 2; M = 0.31384
+    phi = (1 + 5 ** 0.5) / 2; M = M_GEV
     j = jn_zeros(1, 6)
     def fit(m, e):
         w = [1 / x ** 2 for x in e]; mu = j[:len(m)]
@@ -952,7 +955,7 @@ SECCIONES.append((20, 'The contrast with the two observed candidates (380 and 70
 def seccion_21():
     import math
     from scipy.special import jn_zeros
-    phi = (1 + 5 ** 0.5) / 2; M = 0.31384
+    phi = (1 + 5 ** 0.5) / 2; M = M_GEV
     j = jn_zeros(1, 4); m, e = [380, 700], [20, 20]
     w = [1 / x ** 2 for x in e]
     lam = sum(a * b * c for a, b, c in zip(w, m, j)) / sum(a * c * c for a, c in zip(w, j))
@@ -1132,7 +1135,7 @@ SECCIONES.append((29, 'What fixes the lattice point: Omega_Lambda h^2', seccion_
 # ======================================================================
 def seccion_30():
     import math
-    phi = (1 + 5 ** 0.5) / 2; M = 0.313851
+    phi = (1 + 5 ** 0.5) / 2; M = M_GEV
     print(f"depth 24 levels (the clock): k pi r = 24 log phi = {24*math.log(phi):.2f}  (top at Planck: 39.33)")
     print(f"IR scale = M phi^12 = {M*phi**12:.2f} GeV; UV scale = M phi^36 = {M*phi**36:.3e} GeV")
     print("vector ratio: 2.228 (symmetric) against 2.275 (Planck); current range 2.15-2.39")
@@ -1195,7 +1198,7 @@ def seccion_33():
     import math
     phi = (1 + 5 ** 0.5) / 2; L = math.log(phi)
     MPCF = 6 * 3 ** 0.5 * math.pi / L; eps0 = math.pi / MPCF
-    M = 0.313851; u = M / MPCF; MPl = 1.2209e19; Ecurv = MPl / 2 ** 0.5
+    M = M_GEV; u = M / MPCF; MPl = M_PLANCK_GEV; Ecurv = MPl / 2 ** 0.5
     for q2, nm in ((2 * math.pi, "q^2 = 2 pi"), (1.0, "q = 1")):
         qm2 = (2 * math.pi) ** 2 / q2
         vals = [qm2 * eps0 * phi ** -s * math.pi * phi ** s for s in (0, 5, 12)]
@@ -1283,7 +1286,7 @@ def seccion_37():
     import numpy as np
     from scipy.special import jn_zeros, j0, y0
     from scipy.optimize import brentq
-    phi = (1 + 5 ** 0.5) / 2; L = np.log(phi); M = 0.31384
+    phi = (1 + 5 ** 0.5) / 2; L = np.log(phi); M = M_GEV
     S = np.pi * phi ** 12
     print(f"S(12) = {S:.2f} (nats, as in Gibbons-Hawking and Cardy); modes = {int(S)}; as Shannon bits: {int(S)*np.log(2):.1f} nats, log2 fraction = {np.log(2):.4f}")
     def ratio(depth):

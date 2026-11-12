@@ -151,62 +151,69 @@ of that device, written down here for whoever writes or edits the text.
 
 ```latex
 \tier{X}            -> [X]   the witness lives in the prose of the SAME
-                             sentence: a \Lean name, an \eqref/\ref or a
-                             \witness
-\tier[KEY]{X}       -> X[n]  the claim rests on an external source: KEY is
-                             ALWAYS a \cite key (never a theorem name), and
-                             the bracket is printed by \cite itself, outside
-                             the coloured group and in the paragraph's own
-                             font, so a fused tag never shows two brackets
-\tier[\testref{t}]{X} -> X[t] the claim rests on a named test: KEY is a
-                             name macro (a \testref, or several of them
-                             separated by ';'), the bracket is printed by
-                             \tier itself, and the tag comes first
+                             sentence (a \Lean name, an \eqref/\ref or a
+                             \witness)
+\tier[ids]{X}       -> X[ids] the optional argument carries INTERNAL ids
+                             only: a \testref, or several of them
+                             separated by ';', printed in tt inside the
+                             tag's own brackets.  An external source is
+                             never a key of the tag — it is a real \cite
+                             set next to the tag ([N]~\cite{key},
+                             [P] in~\cite{key}), so a tag never prints a
+                             number in its bracket
 \witness{X}{a,b}    -> a block of its own, flush right, with the names
 \wtag{W1}{CLPW}     -> the label of the W list (unchanged)
 ```
 
-Whatever the optional argument holds, the render is the same shape:
-**the tag first, its reference inside the brackets** — `P[name1, name2]`,
-`N[test_x]`, `N[13]`. The reference never precedes the tag, so a test
-witnessed by `\tier[\testref{test\_x}]{N}` never appears as
-`(\testref{test\_x}) \tier{N}`.
+The optional argument means **internal ids and nothing else**.  Whatever
+else is written there — a `\cite` key, a theorem name — is an error, not a
+fallback: the preamble raises `\PackageError` instead of rendering a
+bracket full of a key.  The render of a legal tag is therefore always the
+same shape: **the tag first, its ids inside the brackets** —
+`P[name1, name2]`, `N[test_x]`.  The ids never precede the tag either, so a
+test witnessed in prose appears as `\tier{N} (\testref{test_x})`, never as
+`(\testref{test_x}) \tier{N}`.
 
-The preamble dispatches on the **content** of the optional argument: if it
-contains a name macro (a `\testref`, or several) the bracket is printed by
-`\tier` itself and the form is internal; anything else is read as a `\cite`
-key and the bracket comes from `\cite`. That keeps one macro with one
-optional argument and still lets a key and a name be told apart, because a
-name is written as a macro and a key never is.
+External sources stay outside the tag: the claim keeps its `\cite` next to
+it, in the standard form `[P] in~\cite{key}` for a result proved in a
+source and `[N]~\cite{key}` for a value quoted from one.  Two bracket
+groups in a row (`[P] in [12]`) are then the tag's own bracket plus the
+citation's, each printed by its own macro — and a tag alone never carries a
+number.
 
 A `\Lean{}` name is the one name that stays in the prose: it already prints
 `[name]` of its own, so folding it into `\tier[...]` would render
-`N[[name]]`. It is written before the tag, or in `\witness{}` on its own
-line.
+`N[[name]]` and is an error like any other non-`\testref` id.  It is
+written before the tag, or in `\witness{}` on its own line.
 
 ### 8.2 Rules for whoever writes or edits the text
 
 1. **One claim, one tag.** No two tags are ever adjacent — `\tier{P}
    \tier{N}` is a bug, not a summary.
-2. **An external source is the citation, not a tag.** The source of a claim
-   is its `\cite`, set immediately after the claim it supports: no tag says
-   "this is cited", because the bracket of the citation already says it, and
-   in numeric style a repeat carries its number like any other reference.
-   What a tag carries is an *internal* witness, by identifier: `\Lean{}`,
-   `\witness{}` or `\testref{}`. Where an `N` rests on comparing the claim
-   against an external source, the source goes in the optional argument —
-   `\tier[BV20]{N}` — and prints as `N[n]` through the citation itself.
+2. **An external source is the citation, not a tag — and never the key of
+   one.** The source of a claim is its `\cite`, set immediately after the
+   claim it supports: no tag says "this is cited", because the bracket of
+   the citation already says it, and in numeric style a repeat carries its
+   number like any other reference. What a tag carries is an *internal*
+   witness, by identifier: `\Lean{}`, `\witness{}` or `\testref{}`. The
+   external form is therefore `[N]~\cite{key}` (a value read off a source)
+   or `[P] in~\cite{key}` (a result proved in one); `\tier[key]{X}` does
+   not exist — the optional argument of `\tier` holds internal ids only and
+   the preamble errors on anything else.
 3. **A bare tag needs a witness in its sentence.** If the sentence has none,
    add the most honest one (the `\testref{}` of the test that checks the
    number, the `\Lean` name, an `\eqref`/`\ref`); never invent a citation.
 4. **Every `\tier{N}` carries a `\testref{}`** when a test verifies it —
    either folded into the tag, `\tier[\testref{test\_x}]{N}`, or, when the
    sentence already carries other witnesses, as `\testref{}` in the prose of
-   that same sentence. The set of cited tests is pinned by
+   that same sentence, after the tag. The set of cited tests is pinned by
    `tests/test_section_census.py`, so a new witness is added there too, after
    checking the test really recomputes the number next to it.
 5. **`\tier{P}` without a bracket** means proved here, with no theorem name
    quoted at that point; the name, when it is quoted, goes in `\witness{}`.
+   Proved in an external source is not "here": that is `[P] in~\cite{key}`,
+   one bracket for the tag and one for the citation, each printed by its own
+   macro.
 6. **The legend** (the unmarked first-page footnote) defines the classes and
    nothing else — one sentence each. It is exempt from rule 3 — it defines,
    it does not claim — and it never mentions `P*`.
@@ -217,6 +224,10 @@ line.
    agent without Lean, in draft) that need to tag a claim as written but not
    yet named. The printed text never invokes it: the body marks those claims
    `P`, the legend does not mention it and the prose no longer speaks of it.
+8. **No status tags in captions.** A caption already names the test that
+   generates the figure (`\testref{test_section_writes_its_figure[...]}` and
+   the test of the claim itself), which carries the status; a `\tier{…}`
+   inside `\caption{…}` is removed, not kept. Tags belong to the body.
 
 ### 8.3 Alphabet
 
@@ -224,8 +235,9 @@ line.
 |---|---|
 | `\tier{P}` | proved and verified by machine (Lean) |
 | `\tier{N}` | verified numerically, with the name of the test that checks it |
-| `\tier[KEY]{N}` | an `N` resting on an external source: `KEY` is a `\cite` key, printed as `N[n]` by the citation itself |
-| `\tier[\testref{t}]{N}` | an `N` whose witness is the named test: `KEY` is a `\testref` (several, separated by `;`), printed as `N[t]` by `\tier` itself — the internal form of the unified `X[reference]` |
+| `\tier[ids]{N}` | an `N` whose witness is a named test: `ids` is a `\testref` (several, separated by `;`), printed as `N[ids]` in tt by `\tier` itself — the only thing the optional argument may hold |
+| `[N]~\cite{key}` | an `N` read off an external source: the citation sits next to the tag, never inside it |
+| `[P] in~\cite{key}` | a `P` proved in an external source: one bracket for the tag, one for the citation |
 | `\tier{P*}` | internal: renders `[P*]` in ochre, available between builds; the released text never uses it (rule 7) |
 | `\witness{P}{names}` | the names of the proof, on a line of its own |
 | `\wtag{W1}{CLPW}` | the label of a witness of the W list |

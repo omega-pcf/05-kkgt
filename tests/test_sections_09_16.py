@@ -13,7 +13,7 @@ import math
 import numpy as np
 import pytest
 
-from kkgt.constants import LN_PHI, PHI
+from kkgt.constants import LN_PHI, M_KOIDE_MEV, PHI
 
 
 # ═══════════════════════════════════════════════════════════ section 9 ══
@@ -389,7 +389,7 @@ class TestSection16KoideFromM:
     OBS = {"e": 0.51099895, "mu": 105.6583755, "tau": 1776.86}
 
     @staticmethod
-    def _koide(m_scale=313.84, delta=2 / 9):
+    def _koide(m_scale=M_KOIDE_MEV, delta=2 / 9):
         """m_k = M (1 + sqrt2 cos(delta + 2 pi k/3))^2, sorted."""
         return sorted(
             m_scale * (1 + math.sqrt(2) * math.cos(delta + 2 * math.pi * k / 3)) ** 2
