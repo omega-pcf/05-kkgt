@@ -2,7 +2,7 @@
   "title": "One object instead of a choice of vacuum to put the observer in de Sitter space: From wormholes, black holes and baby universes to the criteria for an observer in de Sitter, contrasted with the Kaluza–Klein graviton candidates and with the cosmological constant",
   "description": "In de Sitter space an observer must be inside the universe it observes, and in string theory placing it has become a choice: of a vacuum among some 10^500. The same choice returns where wormholes, black holes and baby universes meet. The baby universes that branch off through wormholes carry parameters that fix the constants of nature, the cosmological constant among them, and the same parameters label the boundary theories over which the gravity of a black-hole throat is averaged; in both the question is which value, and the answer is sought in what a throat contains. The programme to which this note belongs, written within critical realism, reads the difficulty as one of representation rather than of selection: what is missing is one object that meets the criteria Witten and Chandrasekaran, Longo, Penington and Witten set for an observer in de Sitter, not a choice among values. This note does not test that claim itself; it tests two of its consequences where data can reach them, on the particles of one throat and on the cosmological constant. The object, in the framework of the programme, is a microstate whose levels form a tower built from two numbers, π and the golden ratio φ; read as a warped extra dimension it is a throat, the golden throat, whose Kaluza–Klein modes are its particles. The question becomes whether the tower fixes what a throat model otherwise chooses. The two-brane model of Randall and Sundrum assumes the dimension and chooses the infrared scale and the depth. The golden throat has the same equations, so the same mass ratios, and four independent conditions of the tower, reflection positivity, four-dimensional gravity, the arity of the framework and the clock of φ, fix its spectrum with no free parameter, to leading order π(k+1/4) times Mφ^12 in the unit M of the framework. The arity gives the dimension that the two-brane model assumes; with M identified with the scale of the charged leptons and the level 12 with the bottom of the throat, the spectrum fixes the infrared scale that it chooses. Identified with the graviton candidates reported at 380 and 700 GeV, they place the bottom of the throat at 11.97±0.05, 0.6 standard deviations from 12, and give the next modes at 1028 and 1346 GeV, against 1014 and 1328 GeV for the two-brane model fitted to the same candidates. Only the depth, the position of the top, stays free, and the ratio of the vector modes can decide it if they share the throat. The same tower carries the observer of de Sitter space. In the gravitational unit of the framework the observed cosmological constant gives the observer's level, 583.79±0.03: the level is read from the data, not chosen, and the hypothesis that it sits at an integer level is excluded within ΛCDM at 7.6 standard deviations. What the note leaves open is one number, the ratio of the lepton scale to the Planck scale.",
   "version": "0.1.0",
-  "publication_date": "2026-11-11",
+  "publication_date": "2026-11-12",
   "creators": [
     {
       "name": "González García, Jorge Armando",
@@ -41,40 +41,64 @@
   "language": "eng",
   "references": [
     "A. G. Riess et al. (2022). A comprehensive measurement of the local value of the Hubble constant with 1 km s⁻<sup>1</sup> Mpc⁻<sup>1</sup> uncertainty from the Hubble Space Telescope and the SH0ES team. The Astrophysical Journal Letters. 934(1), L7. https://doi.org/10.3847/2041-8213/ac5c5b",
+    "Adams, John F. (1960). On the non-existence of elements of Hopf invariant one. Annals of Mathematics. 72(1), 20–104. https://doi.org/10.2307/1970147",
     "Afkhami-Jeddi, Nima; Cohn, Henry; Hartman, Thomas; Tajdini, Amirhossein (2021). Free partition functions and an averaged holographic duality. Journal of High Energy Physics. 2021(1), 130. https://doi.org/10.1007/JHEP01(2021)130",
     "Agashe, Kaustubh; Davoudiasl, Hooman; Perez, Gilad; Soni, Amarjit (2007). Warped gravitons at the CERN LHC and beyond. Physical Review D. 76, 036006. https://doi.org/10.1103/PhysRevD.76.036006",
+    "Aharony, Ofer; Bergman, Oren; Jafferis, Daniel Louis; Maldacena, Juan (2008). 𝒩 = 6 superconformal Chern-Simons-matter theories, M2-branes and their gravity duals. Journal of High Energy Physics. 2008(10), 091. https://doi.org/10.1088/1126-6708/2008/10/091",
     "Akrami, Yashar; Alestas, George; Nesseris, Savvas (2025). Has DESI detected exponential quintessence?. arXiv. https://doi.org/10.48550/arXiv.2504.04226 https://arxiv.org/abs/2504.04226",
+    "Al-Amoudi, Ismael (2007). Redrawing Foucault's Social Ontology. Organization. 14(4), 543–563. https://doi.org/10.1177/1350508407078052",
     "Apostol, Tom M. (1990). Modular Functions and Dirichlet Series in Number Theory. Graduate Texts in Mathematics. https://doi.org/10.1007/978-1-4612-0999-7",
+    "Artin, Michael; Grothendieck, Alexander; Verdier, Jean-Louis (1972). Théorie des topos et cohomologie étale des schémas (SGA 4). Lecture Notes in Mathematics. 269. https://doi.org/10.1007/BFb0081551",
     "Avila, Artur (2015). Global theory of one-frequency Schrödinger operators. Acta Mathematica. 215(1), 1–54. https://doi.org/10.1007/s11511-015-0128-7",
     "Avila, Artur; Jitomirskaya, Svetlana (2009). The Ten Martini Problem. Annals of Mathematics. 170(1), 303–342. https://doi.org/10.4007/annals.2009.170.303",
     "Baake, M.; Grimm, U. (2013). Aperiodic Order, Vol. 1: A Mathematical Invitation. Cambridge University Press. https://doi.org/10.1017/cbo9781139025256",
+    "Baez, John C. (2018). From the icosahedron to E8. London Mathematical Society Newsletter.(476), 18–23. https://arxiv.org/abs/1712.06436",
     "Band, Ram; Beckus, Siegfried; Loewy, Raphael (2024). The Dry Ten Martini Problem for Sturmian Hamiltonians. https://doi.org/10.48550/arXiv.2402.16703 https://arxiv.org/abs/2402.16703",
     "Banks, T. (2001). Cosmological breaking of supersymmetry?. International Journal of Modern Physics A. 16, 910–921. https://doi.org/10.1142/S0217751X01003998",
     "Banks, T.; Fischler, W. (2001). M-theory observables for cosmological space-times. https://doi.org/10.48550/arXiv.hep-th/0102077 https://arxiv.org/abs/hep-th/0102077",
     "Barceló, C.; Garay, L. J. (1998). Quantum fields in anti-de Sitter wormholes. Physical Review D. 57(8), 5291–5294. https://doi.org/10.1103/PhysRevD.57.5291",
+    "Barthes, Roland (1953). Le degré zéro de l'écriture. Seuil.",
     "Bedroya, Alek; Vafa, Cumrun (2020). Trans-Planckian censorship and the swampland. Journal of High Energy Physics. 2020(9), 123. https://doi.org/10.1007/JHEP09(2020)123",
+    "Berry, M. V.; Keating, J. P. (1999). The Riemann zeros and eigenvalue asymptotics. SIAM Review. 41(2), 236–266. https://doi.org/10.1137/S0036144598347497",
     "Bhaskar, Roy (1975). A Realist Theory of Science. Leeds Books.",
+    "Bhaskar, Roy (1998). Critical realism and dialectic. Critical Realism: Essential Readings., 575–640.",
+    "Bhaskar, Roy (1998). Dialectical critical realism and ethics. Critical Realism: Essential Readings., 641–687.",
     "Binétruy, P.; Deffayet, C.; Langlois, D. (2000). Non-conventional cosmology from a brane universe. Nuclear Physics B. 565(1-2), 269–287. https://doi.org/10.1016/S0550-3213(99)00696-3",
     "Blume-Kohout, Robin; Zurek, Wojciech H. (2006). Quantum Darwinism: entanglement, branches, and the emergent classicality of redundantly stored quantum information. Physical Review A. 73(6), 062310. https://doi.org/10.1103/PhysRevA.73.062310",
+    "Borger, James (2009). Lambda-rings and the field with one element. arXiv. https://doi.org/10.48550/arXiv.0906.3146 https://arxiv.org/abs/0906.3146",
+    "Böröczky, Károly (1978). Packing of spheres in spaces of constant curvature. Acta Mathematica Academiae Scientiarum Hungaricae. 32(3-4), 243–261. https://doi.org/10.1007/BF01902361",
+    "Bott, Raoul; Milnor, John (1958). On the parallelizability of the spheres. Bulletin of the American Mathematical Society. 64(3), 87–89. https://doi.org/10.1090/S0002-9904-1958-10166-4",
     "Bousso, R.; Susskind, L. (2012). Multiverse interpretation of quantum mechanics. Physical Review D. 85(4), 045007. https://doi.org/10.1103/PhysRevD.85.045007",
     "Bousso, Raphael (2006). Holographic probabilities in eternal inflation. Physical Review Letters. 97, 191302. https://doi.org/10.1103/PhysRevLett.97.191302",
     "Bousso, Raphael; Polchinski, Joseph (2000). Quantization of four-form fluxes and dynamical neutralization of the cosmological constant. Journal of High Energy Physics. 2000(06), 006. https://doi.org/10.1088/1126-6708/2000/06/006",
     "Boyle, Latham; Dickens, Madeline; Flicker, Felix (2020). Conformal quasicrystals and holography. Physical Review X. 10(1), 011009. https://doi.org/10.1103/PhysRevX.10.011009",
     "Brown, J. D.; Henneaux, Marc (1986). Central charges in the canonical realization of asymptotic symmetries: an example from three-dimensional gravity. Communications in Mathematical Physics. 104(2), 207–226. https://doi.org/10.1007/BF01211590",
+    "Brown, Tim (2008). Design thinking. Harvard Business Review. 86(6), 84–92. https://hbr.org/2008/06/design-thinking",
     "Buckingham, E. (1914). On physically similar systems; illustrations of the use of dimensional equations. Physical Review. 4, 345–376. https://doi.org/10.1103/PhysRev.4.345",
     "Cardy, John L. (1986). Operator content of two-dimensional conformally invariant theories. Nuclear Physics B. 270, 186–204. https://doi.org/10.1016/0550-3213(86)90552-3",
     "Chandrasekaran, V.; Longo, R.; Penington, G.; Witten, E. (2023). An algebra of observables for de Sitter space. Journal of High Energy Physics. 2023(2), 82. https://doi.org/10.1007/JHEP02(2023)082",
     "Cohen, Andrew G.; Kaplan, David B.; Nelson, Ann E. (1999). Effective field theory, black holes, and the cosmological constant. Physical Review Letters. 82, 4971–4974. https://doi.org/10.1103/PhysRevLett.82.4971",
     "Cohn, Harvey (1955). Approach to Markoff's minimal forms through modular functions. Annals of Mathematics. 61(1), 1–12. https://doi.org/10.2307/1969618",
     "Coleman, S. (1988). Why there is nothing rather than something: a theory of the cosmological constant. Nuclear Physics B. 310(3-4), 643–668. https://doi.org/10.1016/0550-3213(88)90097-1",
+    "Connes, Alain (1999). Trace formula in noncommutative geometry and the zeros of the Riemann zeta function. Selecta Mathematica. 5(1), 29–106. https://doi.org/10.1007/s000290050042",
+    "Connes, Alain; Consani, Caterina (2010). Schemes over 𝔽₁ and zeta functions. Compositio Mathematica. 146(6), 1383–1415. https://doi.org/10.1112/S0010437X09004692",
+    "Connes, Alain; Douglas, Michael R.; Schwarz, Albert (1998). Noncommutative geometry and Matrix theory: compactification on tori. Journal of High Energy Physics. 1998(02), 003. https://doi.org/10.1088/1126-6708/1998/02/003",
+    "Conway, John H.; Smith, Derek A. (2003). On Quaternions and Octonions. A K Peters. https://doi.org/10.1201/9781439864180",
+    "Cruz, Norman; Olivares, Marco; Villanueva, J. R. (2017). The golden ratio in Schwarzschild–Kottler black holes. The European Physical Journal C. 77(2), 123. https://doi.org/10.1140/epjc/s10052-017-4670-7",
+    "Cubitt, Toby S.; Pérez-García, David; Wolf, Michael M. (2015). Undecidability of the spectral gap. Nature. 528(7581), 207–211. https://doi.org/10.1038/nature16059",
+    "Davies, P. C. W. (1977). The thermodynamic theory of black holes. Proceedings of the Royal Society of London. A. Mathematical and Physical Sciences. 353(1675), 499–521. https://doi.org/10.1098/rspa.1977.0047",
     "Davoudiasl, H.; Hewett, J. L.; Rizzo, T. G. (2000). Bulk gauge fields in the Randall--Sundrum model. Physics Letters B. 473, 43–49. https://doi.org/10.1016/S0370-2693(99)01430-6",
     "Davoudiasl, H.; Hewett, J. L.; Rizzo, T. G. (2003). Brane localized kinetic terms in the Randall--Sundrum model. Physical Review D. 68(4), 045002. https://doi.org/10.1103/PhysRevD.68.045002",
     "Davoudiasl, Hooman; Perez, Gilad; Soni, Amarjit (2008). The little Randall--Sundrum model at the Large Hadron Collider. Physics Letters B. 665, 67–71. https://doi.org/10.1016/j.physletb.2008.05.024",
     "De Clerck, Marine; Hartnoll, Sean A.; Yang, Ming (2025). Wheeler--DeWitt wavefunctions for 5d BKL dynamics, automorphic L-functions and complex primon gases. Journal of High Energy Physics. 2025(11), 160. https://doi.org/10.1007/JHEP11(2025)160",
     "de Giorgi, A.; Marcoli, M.; Silvetti, F. (2026). LHC constraints on resonant Kaluza--Klein gravitons. https://doi.org/10.48550/arXiv.2607.12012 https://arxiv.org/abs/2607.12012",
+    "Denef, Frederik; Douglas, Michael R. (2007). Computational complexity of the landscape I. Annals of Physics. 322(5), 1096–1142. https://doi.org/10.1016/j.aop.2006.07.013",
     "DESI Collaboration (2025). DESI DR2 results. II. Measurements of baryon acoustic oscillations and cosmological constraints. Physical Review D. 112(8), 083515. https://doi.org/10.1103/tr6y-kpc6",
+    "Design Council (2007). Eleven Lessons: Managing Design in Eleven Global Brands. Design Council. https://www.idi-design.ie/content/files/ElevenLessons_Design_Council_2.pdf",
     "Elder-Vass, Dave (2025). Segmenting ontology. Synthese. 206(1), 33. https://doi.org/10.1007/s11229-025-05119-y",
     "Fejes Tóth, L. (1940). Über einen geometrischen Satz. Mathematische Zeitschrift. 46(1), 83–85. https://doi.org/10.1007/BF01181430",
+    "Foucault, Michel (1969). L'archéologie du savoir. Gallimard. https://doi.org/10.14375/np.9782070119875",
+    "Frobenius, Georg (1878). Über lineare Substitutionen und bilineare Formen. Journal für die reine und angewandte Mathematik. 84, 1–63. https://doi.org/10.1515/crelle-1878-18788403",
     "Garriga, J.; Tanaka, T. (2000). Gravity in the Randall--Sundrum brane world. Physical Review Letters. 84(13), 2778–2781. https://doi.org/10.1103/PhysRevLett.84.2778",
     "Gibbons, G. W.; Hawking, S. W. (1977). Cosmological event horizons, thermodynamics, and particle creation. Physical Review D. 15(10), 2738–2751. https://doi.org/10.1103/PhysRevD.15.2738",
     "Giddings, S. B.; Strominger, A. (1988). Loss of incoherence and determination of coupling constants in quantum gravity. Nuclear Physics B. 307(4), 854–866. https://doi.org/10.1016/0550-3213(88)90109-5",
@@ -85,10 +109,14 @@
     "González García, Jorge Armando; González García, Víctor Manuel; García Ordóñez, Luz María; Dressler Pérez, Itzel Marion (2026). The Crystalline Worldsheet: a string theoretical framework based on 𝔽₁, for the de Sitter observer problem. Zenodo. https://doi.org/10.5281/zenodo.21343602",
     "González, J. (2026). ¿Cómo representar un agujero de gusano? Presentación de un programa de investigación sobre modelos de juguete en gravedad cuántica desde una perspectiva de tendencia realista crítica.",
     "González, J. (2026). Representación y representado en la física teórica.",
+    "Good, Michael R. R.; Ong, Yen Chin (2015). Are black holes springlike?. Physical Review D. 91(4), 044031. https://doi.org/10.1103/PhysRevD.91.044031",
     "Goodman-Strauss, Chaim (2005). A strongly aperiodic set of tiles in the hyperbolic plane. Inventiones mathematicae. 159(1), 119–132. https://doi.org/10.1007/s00222-004-0384-1",
     "Greene, John M. (1979). A method for determining a stochastic transition. Journal of Mathematical Physics. 20(6), 1183–1201. https://doi.org/10.1063/1.524170",
     "Grisales Herrera, J. (2023). Golden Prime Symmetry.",
     "Gubser, S. S.; Klebanov, I. R.; Polyakov, A. M. (1998). Gauge theory correlators from non-critical string theory. Physics Letters B. 428(1-2), 105–114. https://doi.org/10.1016/S0370-2693(98)00377-3",
+    "Gubser, Steven S.; Knaute, Johannes; Parikh, Sarthak; Samberg, Andreas; Witaszczyk, Przemek (2017). p-Adic AdS/CFT. Communications in Mathematical Physics. 352(3), 1019–1059. https://doi.org/10.1007/s00220-016-2813-6",
+    "Hales, Thomas (2005). A proof of the Kepler conjecture. Annals of Mathematics. 162(3), 1065–1185. https://doi.org/10.4007/annals.2005.162.1065",
+    "Harré, Rom; Madden, Edward H. (1975). Causal Powers: A Theory of Natural Necessity. Basil Blackwell.",
     "Hartnoll, Sean A.; Yang, Ming (2025). The conformal primon gas at the end of time. Journal of High Energy Physics. 2025(7), 281. https://doi.org/10.1007/JHEP07(2025)281",
     "Hawking, S. W. (1988). Wormholes in spacetime. Physical Review D. 37(4), 904–910. https://doi.org/10.1103/PhysRevD.37.904",
     "Hawking, S. W. (1993). Black Holes and Baby Universes and Other Essays. Bantam.",
@@ -96,19 +124,38 @@
     "Hawking, S. W.; Page, Don N. (1983). Thermodynamics of black holes in anti-de Sitter space. Communications in Mathematical Physics. 87, 577–588. https://doi.org/10.1007/BF01208266",
     "Hawking, S.W. (1984). The cosmological constant is probably zero. Physics Letters B. 134, 403–404. https://doi.org/10.1016/0370-2693(84)91370-4",
     "Heemskerk, Idse; Penedones, Joao; Polchinski, Joseph; Sully, James (2009). Holography from conformal field theory. Journal of High Energy Physics. 2009(10), 079. https://doi.org/10.1088/1126-6708/2009/10/079",
+    "Hegel, Georg Wilhelm Friedrich (1812). Wissenschaft der Logik. Schrag.",
+    "Heydeman, Matthew; Marcolli, Matilde; Saberi, Ingmar A.; Stoica, Bogdan (2018). Tensor networks, p-adic fields, and algebraic curves: arithmetic and the AdS₃/CFT₂ correspondence. Advances in Theoretical and Mathematical Physics. 22(1), 93–176. https://doi.org/10.4310/ATMP.2018.v22.n1.a4",
     "Higuchi, Atsushi (1987). Forbidden mass range for spin-2 field theory in de Sitter spacetime. Nuclear Physics B. 282, 397–436. https://doi.org/10.1016/0550-3213(87)90691-2",
+    "Hopf, Heinz (1931). Über die Abbildungen der dreidimensionalen Sphäre auf die Kugelfläche. Mathematische Annalen. 104(1), 637–665. https://doi.org/10.1007/BF01457962",
+    "Hopf, Heinz (1935). Über die Abbildungen von Sphären auf Sphären niedrigerer Dimension. Fundamenta Mathematicae. 25, 427–440. https://doi.org/10.4064/fm-25-1-427-440",
     "Hosotani, Yutaka (1983). Dynamical mass generation by compact extra dimensions. Physics Letters B. 126, 309–313. https://doi.org/10.1016/0370-2693(83)90170-3",
+    "Howard, William A. (1980). The formulae-as-types notion of construction. To H. B. Curry: Essays on Combinatory Logic, Lambda Calculus and Formalism., 479–490.",
     "Huerta, John; Schreiber, Urs (2018). M-theory from the superpoint. Letters in Mathematical Physics. 108, 2695–2727. https://doi.org/10.1007/s11005-018-1110-z",
     "Hurwitz, A. (1891). Über die angenäherte Darstellung der Irrationalzahlen durch rationale Brüche. Mathematische Annalen. 39(2), 279–284. https://doi.org/10.1007/BF01206656",
+    "Hurwitz, Adolf (1898). Über die Composition der quadratischen Formen von beliebig vielen Variablen. Nachrichten von der Gesellschaft der Wissenschaften zu Göttingen, Mathematisch-Physikalische Klasse., 309–316.",
     "Huxley, M. N. (2003). Exponential sums and lattice points III. Proceedings of the London Mathematical Society. 87(3), 591–609. https://doi.org/10.1112/S0024611503014485",
     "Jacobson, Ted (1995). Thermodynamics of spacetime: the Einstein equation of state. Physical Review Letters. 75(7), 1260–1263. https://doi.org/10.1103/PhysRevLett.75.1260",
     "Jagannathan, A. (2021). The Fibonacci quasicrystal: case study of hidden dimensions and multifractality. Reviews of Modern Physics. 93(4), 045001. https://doi.org/10.1103/RevModPhys.93.045001",
     "Jahn, Alexander; Eisert, Jens (2021). Holographic tensor network models and quantum error correction: a topical review. Quantum Science and Technology. 6(3), 033002. https://doi.org/10.1088/2058-9565/ac0293",
     "Jahn, Alexander; Zimborás, Zoltán; Eisert, Jens (2020). Central charges of aperiodic holographic tensor-network models. Physical Review A. 102(4), 042407. https://doi.org/10.1103/PhysRevA.102.042407",
     "Julia, B. (1990). Statistical theory of numbers. Springer Proceedings in Physics. 47, 276–293. https://doi.org/10.1007/978-3-642-75405-0_30",
+    "Kachru, Shamit; Kallosh, Renata; Linde, Andrei; Trivedi, Sandip P. (2003). de Sitter vacua in string theory. Physical Review D. 68(4), 046005. https://doi.org/10.1103/PhysRevD.68.046005",
+    "Kaluza, Theodor (1921). Zum Unitätsproblem der Physik. Sitzungsberichte der Preussischen Akademie der Wissenschaften., 966–972.",
+    "Kant, Immanuel (1781). Kritik der reinen Vernunft. Hartknoch.",
+    "Kervaire, Michel (1958). Non-parallelizability of the n-sphere for n > 7. Proceedings of the National Academy of Sciences. 44(3), 280–283. https://doi.org/10.1073/pnas.44.3.280",
     "Kiely, A.; Chisholm, D. A.; Touil, A.; Deffner, S.; Landi, G. T.; Campbell, S. (2026). Metrological approach to the emergence of classical objectivity. Physical Review A. 113(2), 022403. https://doi.org/10.1103/hn78-7xx3",
+    "Klein, Oskar (1926). Quantentheorie und fünfdimensionale Relativitätstheorie. Zeitschrift für Physik. 37(12), 895–906. https://doi.org/10.1007/BF01397481",
+    "Kodaira, Kunihiko (1963). On compact analytic surfaces, II. Annals of Mathematics. 77(3), 563–626. https://doi.org/10.2307/1970131",
     "Koide, Y. (1982). Fermion-boson two-body model of quarks and leptons and Cabibbo mixing. Lettere al Nuovo Cimento. 34(8), 201–205. https://doi.org/10.1007/BF02817096",
     "Koide, Y. (1983). A fermion-boson composite model of quarks and leptons. Physics Letters B. 120(1-3), 161–165. https://doi.org/10.1016/0370-2693(83)90644-5",
+    "Lambek, Joachim; Scott, Philip J. (1986). Introduction to Higher Order Categorical Logic. Cambridge Studies in Advanced Mathematics.",
+    "Lawson, Tony (1998). Economic science without experimentation. Critical Realism: Essential Readings., 144–186.",
+    "Lawvere, F. W. (1994). Cohesive toposes and Cantor's 'lauter Einsen'. Philosophia Mathematica. 2(1), 5–15. https://doi.org/10.1093/philmat/2.1.5",
+    "Lawvere, F. William (1964). An elementary theory of the category of sets. Proceedings of the National Academy of Sciences. 52(6), 1506–1511. https://doi.org/10.1073/pnas.52.6.1506",
+    "Lawvere, F. William (1969). Diagonal arguments and cartesian closed categories. Lecture Notes in Mathematics. 92, 134–145. https://doi.org/10.1007/BFb0080769",
+    "Lawvere, F. William (1991). Some thoughts on the future of category theory. Lecture Notes in Mathematics. 1488, 1–13. https://doi.org/10.1007/BFb0084208",
+    "Lawvere, F. William (1996). Unity and identity of opposites in calculus and physics. Applied Categorical Structures. 4(2-3), 167–174. https://doi.org/10.1007/BF00122250",
     "Le Yaouanc, A.; Richard, F. (2026). Evidence for Kaluza--Klein excitations of the graviton, gluon and quark at LHC. https://doi.org/10.48550/arXiv.2610.31458 https://arxiv.org/abs/2610.31458",
     "Le Yaouanc, A.; Richard, F. (2026). Influence of the KK graviton decay into hh on the triple Higgs measurement at LHC. https://doi.org/10.48550/arXiv.2606.29922 https://arxiv.org/abs/2606.29922",
     "Le Yaouanc, Alain; Richard, François (2025). Evidence for BSM spin 0 and spin 2 resonances at LHC: possible interpretations. arXiv. https://doi.org/10.48550/arXiv.2506.09490 https://arxiv.org/abs/2506.09490",
@@ -119,6 +166,7 @@
     "Maldacena, Juan; Michelson, Jeremy; Strominger, Andrew (1999). Anti-de Sitter fragmentation. Journal of High Energy Physics. 1999(02), 011. https://doi.org/10.1088/1126-6708/1999/02/011",
     "Maloney, Alexander; Witten, Edward (2020). Averaging over Narain moduli space. Journal of High Energy Physics. 2020(10), 187. https://doi.org/10.1007/JHEP10(2020)187",
     "Mandelstam, L.; Tamm, I. (1945). The uncertainty relation between energy and time in non-relativistic quantum mechanics. Journal of Physics USSR. 9, 249–254.",
+    "Manin, Yu. I. (2004). Real multiplication and noncommutative geometry (ein Alterstraum). The Legacy of Niels Henrik Abel., 685–727. https://doi.org/10.1007/978-3-642-18908-1_23",
     "Margolus, Norman; Levitin, Lev B. (1998). The maximum speed of dynamical evolution. Physica D: Nonlinear Phenomena. 120(1-2), 188–195. https://doi.org/10.1016/S0167-2789(98)00054-2",
     "Margulis, G. A.; Mozes, S. (1998). Aperiodic tilings of the hyperbolic plane by convex polygons. Israel Journal of Mathematics. 107(1), 319–325. https://doi.org/10.1007/BF02764015",
     "Marolf, D.; Maxfield, H. (2020). Transcending the ensemble: baby universes, spacetime wormholes, and the order and disorder of black hole information. Journal of High Energy Physics. 2020(8), 044. https://doi.org/10.1007/JHEP08(2020)044",
@@ -131,10 +179,12 @@
     "National Institute of Standards and Technology (). NIST Digital Library of Mathematical Functions, §10.21(vii), McMahon's expansion. https://dlmf.nist.gov/10.21.vii",
     "Neukirch, J. (1999). Algebraic Number Theory. Springer. https://doi.org/10.1007/978-3-662-03983-0",
     "Nguyen, J. (2026). Scientific representation. The Stanford Encyclopedia of Philosophy. https://plato.stanford.edu/entries/scientific-representation/",
+    "Nielsen, Michael A.; Chuang, Isaac L. (2000). Quantum Computation and Quantum Information. Cambridge University Press. https://doi.org/10.1017/cbo9780511976667",
     "Obied, Georges; Ooguri, Hirosi; Spodyneiko, Lev; Vafa, Cumrun (2018). De Sitter space and the swampland. arXiv. https://doi.org/10.48550/arXiv.1806.08362 https://arxiv.org/abs/1806.08362",
     "Odlyzko, A. M. (1987). On the distribution of spacings between zeros of the zeta function. Mathematics of Computation. 48(177), 273–308. https://doi.org/10.1090/s0025-5718-1987-0866115-0",
     "Ooguri, Hirosi; Palti, Eran; Shiu, Gary; Vafa, Cumrun (2019). Distance and de Sitter conjectures on the swampland. Physics Letters B. 788, 180–184. https://doi.org/10.1016/j.physletb.2018.11.018",
     "Osterwalder, Konrad; Schrader, Robert (1973). Axioms for Euclidean Green's functions. Communications in Mathematical Physics. 31(2), 83–112. https://doi.org/10.1007/BF01645738",
+    "Ostrowski, Alexander (1916). Über einige Lösungen der Funktionalgleichung φ(x)·φ(y)=φ(xy). Acta Mathematica. 41, 271–284. https://doi.org/10.1007/BF02422947",
     "Pastawski, Fernando; Yoshida, Beni; Harlow, Daniel; Preskill, John (2015). Holographic quantum error-correcting codes: toy models for the bulk/boundary correspondence. Journal of High Energy Physics. 2015(6), 149. https://doi.org/10.1007/JHEP06(2015)149",
     "Planck Collaboration (2020). Planck 2018 results. VI. Cosmological parameters. Astronomy & Astrophysics. 641, A6. https://doi.org/10.1051/0004-6361/201833910",
     "Plotnitsky, Arkady; Khrennikov, Andrei (2015). Reality without realism: on the ontological and epistemological architecture of quantum mechanics. Foundations of Physics. 45(10), 1269–1300. https://doi.org/10.1007/s10701-015-9942-1",
@@ -146,6 +196,7 @@
     "Reuter, M. (1998). Nonperturbative evolution equation for quantum gravity. Physical Review D. 57, 971–985. https://doi.org/10.1103/PhysRevD.57.971",
     "Riedel, C. Jess; Zurek, Wojciech H. (2010). Quantum Darwinism in an everyday environment: huge redundancy in scattered photons. Physical Review Letters. 105(2), 020404. https://doi.org/10.1103/PhysRevLett.105.020404",
     "Rivero, A.; Gsponer, A. (2005). The strange formula of Dr. Koide. https://doi.org/10.48550/arXiv.hep-ph/0505220 https://arxiv.org/abs/hep-ph/0505220",
+    "Russell, Bertrand (1908). Mathematical Logic as Based on the Theory of Types. American Journal of Mathematics. 30(3), 222–262. https://doi.org/10.2307/2369948",
     "Ryu, Shinsei; Takayanagi, Tadashi (2006). Holographic derivation of entanglement entropy from the anti-de Sitter space/conformal field theory correspondence. Physical Review Letters. 96(18), 181602. https://doi.org/10.1103/PhysRevLett.96.181602",
     "Saad, Phil; Shenker, Stephen H.; Stanford, Douglas (2019). JT gravity as a matrix integral. arXiv. https://doi.org/10.48550/arXiv.1903.11115 https://arxiv.org/abs/1903.11115",
     "Saad, Phil; Shenker, Stephen H.; Stanford, Douglas; Yao, Shunyu (2024). Wormholes without averaging. Journal of High Energy Physics. 2024(9), 133. https://doi.org/10.1007/JHEP09(2024)133",
@@ -155,18 +206,28 @@
     "Scherk, J.; Schwarz, John H. (1979). How to get masses from extra dimensions. Nuclear Physics B. 153, 61–88. https://doi.org/10.1016/0550-3213(79)90592-3",
     "Schlenker, J.-M.; Witten, E. (2022). No ensemble averaging below the black hole threshold. Journal of High Energy Physics. 2022(7), 143. https://doi.org/10.1007/JHEP07(2022)143",
     "Schneider, Theodor (1935). Transzendenzuntersuchungen periodischer Funktionen. I. Transzendenz von Potenzen. Journal für die reine und angewandte Mathematik. 172, 65–69. https://doi.org/10.1515/crll.1935.172.65",
+    "Schreiber, Urs (2013). Differential cohomology in a cohesive ∞-topos. arXiv. https://doi.org/10.48550/arXiv.1310.7930 https://arxiv.org/abs/1310.7930",
     "Schütte, K.; van der Waerden, B. L. (1952). Das Problem der dreizehn Kugeln. Mathematische Annalen. 125(1), 325–334. https://doi.org/10.1007/BF01343127",
     "Serre, Jean-Pierre (1971). Cohomologie des groupes discrets. Prospects in Mathematics., 77–170. https://doi.org/10.1515/9781400881697-005",
     "Serre, Jean-Pierre (1973). A Course in Arithmetic. Graduate Texts in Mathematics. https://doi.org/10.1007/978-1-4684-9884-4",
     "Sonnino, Giorgio; Nardone, Pasquale (2024). The golden ratio family of extremal Kerr--Newman black holes and its implications for the cosmological constant. Axioms. 13, 862. https://doi.org/10.3390/axioms13120862",
+    "Sós, Vera T. (1958). On the distribution mod 1 of the sequence nα. Annales Universitatis Scientiarum Budapestinensis de Rolando Eötvös Nominatae, Sectio Mathematica. 1, 127–134.",
     "Streater, Raymond F.; Wightman, Arthur S. (1964). PCT, Spin and Statistics, and All That. Benjamin.",
     "Susskind, L. (2021). De Sitter holography: fluctuations, anomalous symmetry, and wormholes. Universe. 7(12), 464. https://doi.org/10.3390/universe7120464",
     "Susskind, L.; Witten, Edward (1998). The holographic bound in anti-de Sitter space. https://doi.org/10.48550/arXiv.hep-th/9805114 https://arxiv.org/abs/hep-th/9805114",
+    "Susskind, Leonard (2003). The anthropic landscape of string theory. arXiv. https://doi.org/10.48550/arXiv.hep-th/0302219 https://arxiv.org/abs/hep-th/0302219",
     "Swingle, Brian (2012). Entanglement renormalization and holography. Physical Review D. 86(6), 065007. https://doi.org/10.1103/PhysRevD.86.065007",
+    "T. Hales et al. (2017). A formal proof of the Kepler conjecture. Forum of Mathematics, Pi. 5, e2. https://doi.org/10.1017/fmp.2017.1",
+    "Tarski, Alfred (1951). A Decision Method for Elementary Algebra and Geometry. University of California Press. https://doi.org/10.1525/9780520348097",
+    "Taylor, Washington; Wang, Yi-Nan (2015). The F-theory geometry with most flux vacua. Journal of High Energy Physics. 2015(12), 164. https://doi.org/10.1007/JHEP12(2015)164",
+    "Tits, Jacques (1957). Sur les analogues algébriques des groupes semi-simples complexes. Colloque d'algèbre supérieure (Bruxelles, 1956)., 261–289.",
+    "Vafa, Cumrun (1996). Evidence for F-theory. Nuclear Physics B. 469(3), 403–415. https://doi.org/10.1016/0550-3213(96)00172-1",
     "van Ravenstein, Tony (1988). The three gap theorem (Steinhaus conjecture). Journal of the Australian Mathematical Society. Series A. Pure Mathematics and Statistics. 45(3), 360–370. https://doi.org/10.1017/S1446788700031062",
     "Vassilevich, D. V. (2003). Heat kernel expansion: user's manual. Physics Reports. 388(5-6), 279–360. https://doi.org/10.1016/j.physrep.2003.09.002",
+    "Virasoro, Miguel A. (1970). Subsidiary conditions and ghosts in dual-resonance models. Physical Review D. 1(10), 2933–2936. https://doi.org/10.1103/PhysRevD.1.2933",
     "Wall, D. D. (1960). Fibonacci series modulo m. The American Mathematical Monthly. 67(6), 525–532. https://doi.org/10.1080/00029890.1960.11989541",
     "Watson, G. N. (1944). A Treatise on the Theory of Bessel Functions. Cambridge University Press.",
+    "Weil, André (1948). Sur les courbes algébriques et les variétés qui s'en déduisent. Hermann.",
     "Weil, André (1979). Une lettre et un extrait de lettre à Simone Weil. Œuvres Scientifiques Collected Papers., 244–255. https://doi.org/10.1007/978-1-4757-1705-1_33",
     "Weinberg, Steven (1987). Anthropic bound on the cosmological constant. Physical Review Letters. 59, 2607–2610. https://doi.org/10.1103/PhysRevLett.59.2607",
     "Weyl, Hermann (1916). Über die Gleichverteilung von Zahlen mod. Eins. Mathematische Annalen. 77(3), 313–352. https://doi.org/10.1007/BF01475864",
@@ -174,6 +235,8 @@
     "Witten, E. (2001). Quantum gravity in de Sitter space. https://doi.org/10.48550/arXiv.hep-th/0106109 https://arxiv.org/abs/hep-th/0106109",
     "Witten, Edward (1998). Anti de Sitter space and holography. Advances in Theoretical and Mathematical Physics. 2(2), 253–291. https://doi.org/10.4310/ATMP.1998.v2.n2.a2",
     "Witten, Edward (1998). Anti-de Sitter space, thermal phase transition, and confinement in gauge theories. Advances in Theoretical and Mathematical Physics. 2, 505–532. https://doi.org/10.4310/ATMP.1998.v2.n3.a3",
+    "Witten, Edward (2024). A background-independent algebra in quantum gravity. Journal of High Energy Physics. 2024(03), 077. https://doi.org/10.1007/JHEP03(2024)077",
+    "Yanofsky, Noson S. (2003). A universal approach to self-referential paradoxes, incompleteness and fixed points. Bulletin of Symbolic Logic. 9(3), 362–386. https://doi.org/10.2178/bsl/1058448677",
     "Zurek, W. H. (2009). Quantum Darwinism. Nature Physics. 5(3), 181–188. https://doi.org/10.1038/nphys1202"
   ],
   "related_identifiers": [
@@ -789,6 +852,236 @@
     },
     {
       "identifier": "10.1103/PhysRevLett.105.020404",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.14375/np.9782070119875",
+      "relation": "cites",
+      "resource_type": "publication-book"
+    },
+    {
+      "identifier": "10.1177/1350508407078052",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1007/BFb0081551",
+      "relation": "cites",
+      "resource_type": "publication-book"
+    },
+    {
+      "identifier": "10.2307/2369948",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1073/pnas.52.6.1506",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.4007/annals.2005.162.1065",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1007/BF01902361",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1515/crelle-1878-18788403",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1007/BF02422947",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.48550/arXiv.0906.3146",
+      "relation": "cites",
+      "resource_type": "publication"
+    },
+    {
+      "identifier": "10.1007/978-3-642-18908-1_23",
+      "relation": "cites",
+      "resource_type": "publication"
+    },
+    {
+      "identifier": "10.1088/1126-6708/1998/02/003",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1112/S0010437X09004692",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1137/S0036144598347497",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1017/fmp.2017.1",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.48550/arXiv.hep-th/0302219",
+      "relation": "cites",
+      "resource_type": "publication"
+    },
+    {
+      "identifier": "10.1103/PhysRevD.1.2933",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1007/JHEP03(2024)077",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1007/BF01397481",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1007/s000290050042",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1017/cbo9780511976667",
+      "relation": "cites",
+      "resource_type": "publication-book"
+    },
+    {
+      "identifier": "10.1007/s00220-016-2813-6",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.4310/ATMP.2018.v22.n1.a4",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1007/BFb0084208",
+      "relation": "cites",
+      "resource_type": "publication"
+    },
+    {
+      "identifier": "10.1093/philmat/2.1.5",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1007/BF00122250",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.48550/arXiv.1310.7930",
+      "relation": "cites",
+      "resource_type": "publication"
+    },
+    {
+      "identifier": "10.1007/BF01457962",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.4064/fm-25-1-427-440",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1088/1126-6708/2008/10/091",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.2307/1970147",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1201/9781439864180",
+      "relation": "cites",
+      "resource_type": "publication-book"
+    },
+    {
+      "identifier": "10.1090/S0002-9904-1958-10166-4",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1073/pnas.44.3.280",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1016/0550-3213(96)00172-1",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1007/JHEP12(2015)164",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1103/PhysRevD.68.046005",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.2307/1970131",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1007/BFb0080769",
+      "relation": "cites",
+      "resource_type": "publication"
+    },
+    {
+      "identifier": "10.2178/bsl/1058448677",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1525/9780520348097",
+      "relation": "cites",
+      "resource_type": "publication-book"
+    },
+    {
+      "identifier": "10.1038/nature16059",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1016/j.aop.2006.07.013",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1098/rspa.1977.0047",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1103/PhysRevD.91.044031",
+      "relation": "cites",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1140/epjc/s10052-017-4670-7",
       "relation": "cites",
       "resource_type": "publication-article"
     }

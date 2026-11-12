@@ -6,7 +6,7 @@ title: "One object instead of a choice of vacuum to put the observer in de
   candidates and with the cosmological constant"
 type: software
 version: 0.1.0
-date-released: 2026-11-11
+date-released: 2026-11-12
 authors:
   - family-names: González García
     given-names: Jorge Armando
@@ -1663,6 +1663,9 @@ references:
     date-published: 1973-01-01
     year: 1973
     journal: Proceedings of Symposia in Pure Mathematics
+    notes: "vol. 24: Analytic Number Theory"
+    publisher:
+      name: American Mathematical Society
     start: "181"
     end: "193"
     type: article
@@ -1980,8 +1983,10 @@ references:
     title: A Realist Theory of Science
     date-published: 1975-01-01
     year: 1975
-    notes: Routledge, London, 2008; no DOI for the 1975 edition (Crossref lists only
-      the Routledge e-book)
+    notes: 2nd ed. 1978; Routledge, London, 2008 (Classical Texts in Critical
+      Realism, introduction by M. Hartwig); pages cited refer to the 2008
+      edition; no DOI for the 1975 edition (Crossref lists only the Routledge
+      e-book)
     publisher:
       name: Leeds Books
     type: book
@@ -2186,8 +2191,9 @@ references:
     date-published: 1979-01-01
     year: 1979
     journal: Œuvres Scientifiques Collected Papers
-    notes: Œuvres scientifiques / Collected Papers, vol. I; letter written 1940,
-      published 1979
+    notes: letter written 26 March 1940; Œuvres scientifiques / Collected Papers,
+      vol. I; English transl. by M. Krieger, Notices Amer. Math. Soc. 52(3)
+      (2005) 334-341
     publisher:
       name: Springer
     start: "244"
@@ -2440,3 +2446,1055 @@ references:
     start: "020404"
     type: article
     volume: "105"
+  - authors:
+      - family-names: Kant
+        given-names: Immanuel
+    title: Kritik der reinen Vernunft
+    date-published: 1781-01-01
+    year: 1781
+    notes: 2nd ed. 1787 (no DOI for the original edition)
+    publisher:
+      name: Hartknoch
+    type: book
+  - authors:
+      - family-names: Foucault
+        given-names: Michel
+    doi: 10.14375/np.9782070119875
+    identifiers:
+      - type: doi
+        value: 10.14375/np.9782070119875
+    title: L'archéologie du savoir
+    date-published: 1969-01-01
+    year: 1969
+    notes: DOI is the Gallimard e-book (Crossref year 2008); first published
+      Gallimard, Paris, 1969
+    publisher:
+      name: Gallimard
+    type: book
+  - authors:
+      - family-names: Al-Amoudi
+        given-names: Ismael
+    doi: 10.1177/1350508407078052
+    identifiers:
+      - type: doi
+        value: 10.1177/1350508407078052
+    title: Redrawing Foucault's Social Ontology
+    date-published: 2007-01-01
+    year: 2007
+    issue: "4"
+    journal: Organization
+    start: "543"
+    end: "563"
+    type: article
+    volume: "14"
+  - authors:
+      - family-names: Bhaskar
+        given-names: Roy
+    title: Critical realism and dialectic
+    date-published: 1998-01-01
+    year: 1998
+    editors:
+      - family-names: Archer
+        given-names: M.
+      - family-names: Bhaskar
+        given-names: R.
+      - family-names: Collier
+        given-names: A.
+      - family-names: Lawson
+        given-names: T.
+      - family-names: Norrie
+        given-names: A.
+    journal: "Critical Realism: Essential Readings"
+    notes: "ch. 23; from Dialectic: The Pulse of Freedom, Verso, London (1993),
+      §§1.5-1.7, 2.1, 2.2, 2.7"
+    publisher:
+      name: Routledge
+    start: "575"
+    end: "640"
+    type: generic
+  - authors:
+      - family-names: Bhaskar
+        given-names: Roy
+    title: Dialectical critical realism and ethics
+    date-published: 1998-01-01
+    year: 1998
+    editors:
+      - family-names: Archer
+        given-names: M.
+      - family-names: Bhaskar
+        given-names: R.
+      - family-names: Collier
+        given-names: A.
+      - family-names: Lawson
+        given-names: T.
+      - family-names: Norrie
+        given-names: A.
+    journal: "Critical Realism: Essential Readings"
+    notes: "ch. 24; from Dialectic: The Pulse of Freedom, Verso, London (1993),
+      §§3.1, 3.2, 3.7, 3.10"
+    publisher:
+      name: Routledge
+    start: "641"
+    end: "687"
+    type: generic
+  - authors:
+      - family-names: Artin
+        given-names: Michael
+      - family-names: Grothendieck
+        given-names: Alexander
+      - family-names: Verdier
+        given-names: Jean-Louis
+    doi: 10.1007/BFb0081551
+    identifiers:
+      - type: doi
+        value: 10.1007/BFb0081551
+    title: Théorie des topos et cohomologie étale des schémas (SGA 4)
+    date-published: 1972-01-01
+    year: 1972
+    journal: Lecture Notes in Mathematics
+    notes: "Tome 1, Exposé I, Appendice: Univers (N. Bourbaki)"
+    publisher:
+      name: Springer
+    type: book
+    volume: "269"
+  - authors:
+      - family-names: Russell
+        given-names: Bertrand
+    doi: 10.2307/2369948
+    identifiers:
+      - type: doi
+        value: 10.2307/2369948
+    title: Mathematical Logic as Based on the Theory of Types
+    date-published: 1908-01-01
+    year: 1908
+    issue: "3"
+    journal: American Journal of Mathematics
+    start: "222"
+    end: "262"
+    type: article
+    volume: "30"
+  - authors:
+      - family-names: Lambek
+        given-names: Joachim
+      - family-names: Scott
+        given-names: Philip J.
+    title: Introduction to Higher Order Categorical Logic
+    date-published: 1986-01-01
+    year: 1986
+    journal: Cambridge Studies in Advanced Mathematics
+    notes: vol. 7 (no DOI in Crossref; ISBN 0-521-24665-2)
+    publisher:
+      name: Cambridge University Press
+    type: book
+  - authors:
+      - family-names: Lawvere
+        given-names: F. William
+    doi: 10.1073/pnas.52.6.1506
+    identifiers:
+      - type: doi
+        value: 10.1073/pnas.52.6.1506
+    title: An elementary theory of the category of sets
+    date-published: 1964-01-01
+    year: 1964
+    issue: "6"
+    journal: Proceedings of the National Academy of Sciences
+    start: "1506"
+    end: "1511"
+    type: article
+    volume: "52"
+  - authors:
+      - family-names: Hales
+        given-names: Thomas
+    doi: 10.4007/annals.2005.162.1065
+    identifiers:
+      - type: doi
+        value: 10.4007/annals.2005.162.1065
+    title: A proof of the Kepler conjecture
+    date-published: 2005-01-01
+    year: 2005
+    issue: "3"
+    journal: Annals of Mathematics
+    start: "1065"
+    end: "1185"
+    type: article
+    volume: "162"
+  - authors:
+      - family-names: Böröczky
+        given-names: Károly
+    doi: 10.1007/BF01902361
+    identifiers:
+      - type: doi
+        value: 10.1007/BF01902361
+    title: Packing of spheres in spaces of constant curvature
+    date-published: 1978-01-01
+    year: 1978
+    issue: 3-4
+    journal: Acta Mathematica Academiae Scientiarum Hungaricae
+    start: "243"
+    end: "261"
+    type: article
+    volume: "32"
+  - authors:
+      - family-names: Frobenius
+        given-names: Georg
+    doi: 10.1515/crelle-1878-18788403
+    identifiers:
+      - type: doi
+        value: 10.1515/crelle-1878-18788403
+    title: Über lineare Substitutionen und bilineare Formen
+    date-published: 1878-01-01
+    year: 1878
+    journal: Journal für die reine und angewandte Mathematik
+    start: "1"
+    end: "63"
+    type: article
+    volume: "84"
+  - authors:
+      - family-names: Barthes
+        given-names: Roland
+    title: Le degré zéro de l'écriture
+    date-published: 1953-01-01
+    year: 1953
+    notes: no DOI for the 1953 edition
+    publisher:
+      name: Seuil
+    type: book
+  - authors:
+      - family-names: Ostrowski
+        given-names: Alexander
+    doi: 10.1007/BF02422947
+    identifiers:
+      - type: doi
+        value: 10.1007/BF02422947
+    title: Über einige Lösungen der Funktionalgleichung φ(x)·φ(y)=φ(xy)
+    date-published: 1916-01-01
+    year: 1916
+    journal: Acta Mathematica
+    start: "271"
+    end: "284"
+    type: article
+    volume: "41"
+  - authors:
+      - family-names: Brown
+        given-names: Tim
+    identifiers:
+      - type: url
+        value: https://hbr.org/2008/06/design-thinking
+    title: Design thinking
+    url: https://hbr.org/2008/06/design-thinking
+    date-published: 2008-01-01
+    year: 2008
+    issue: "6"
+    journal: Harvard Business Review
+    notes: no DOI in Crossref
+    start: "84"
+    end: "92"
+    type: article
+    volume: "86"
+  - authors:
+      - family-names: Harré
+        given-names: Rom
+      - family-names: Madden
+        given-names: Edward H.
+    title: "Causal Powers: A Theory of Natural Necessity"
+    date-published: 1975-01-01
+    year: 1975
+    notes: "ch. 1, §§ II-VI, pp. 8-26; reprinted as 'Conceptual and natural
+      necessity' in M. Archer, R. Bhaskar, A. Collier, T. Lawson and A. Norrie
+      (eds.), Critical Realism: Essential Readings, Routledge, London and New
+      York (1998), ch. 4, pp. 104-119"
+    publisher:
+      name: Basil Blackwell
+    type: book
+  - authors:
+      - family-names: Weil
+        given-names: André
+    title: Sur les courbes algébriques et les variétés qui s'en déduisent
+    date-published: 1948-01-01
+    year: 1948
+    notes: no DOI for the 1948 edition
+    publisher:
+      name: Hermann
+    type: book
+  - authors:
+      - family-names: Borger
+        given-names: James
+    doi: 10.48550/arXiv.0906.3146
+    identifiers:
+      - type: doi
+        value: 10.48550/arXiv.0906.3146
+      - type: url
+        value: https://arxiv.org/abs/0906.3146
+    title: Lambda-rings and the field with one element
+    url: https://arxiv.org/abs/0906.3146
+    date-published: 2009-01-01
+    year: 2009
+    journal: arXiv
+    notes: arXiv:0906.3146
+    type: historical-work
+  - authors:
+      - family-names: Manin
+        given-names: Yu. I.
+    doi: 10.1007/978-3-642-18908-1_23
+    identifiers:
+      - type: doi
+        value: 10.1007/978-3-642-18908-1_23
+    title: Real multiplication and noncommutative geometry (ein Alterstraum)
+    date-published: 2004-01-01
+    year: 2004
+    journal: The Legacy of Niels Henrik Abel
+    publisher:
+      name: Springer
+    start: "685"
+    end: "727"
+    type: generic
+  - authors:
+      - family-names: Connes
+        given-names: Alain
+      - family-names: Douglas
+        given-names: Michael R.
+      - family-names: Schwarz
+        given-names: Albert
+    doi: 10.1088/1126-6708/1998/02/003
+    identifiers:
+      - type: doi
+        value: 10.1088/1126-6708/1998/02/003
+    title: "Noncommutative geometry and Matrix theory: compactification on tori"
+    date-published: 1998-01-01
+    year: 1998
+    issue: "02"
+    journal: Journal of High Energy Physics
+    start: "003"
+    type: article
+    volume: "1998"
+  - authors:
+      - family-names: Tits
+        given-names: Jacques
+    title: Sur les analogues algébriques des groupes semi-simples complexes
+    date-published: 1957-01-01
+    year: 1957
+    journal: Colloque d'algèbre supérieure (Bruxelles, 1956)
+    notes: also Gauthier-Villars, Paris (no DOI)
+    publisher:
+      name: Ceuterick
+    start: "261"
+    end: "289"
+    type: generic
+  - authors:
+      - family-names: Connes
+        given-names: Alain
+      - family-names: Consani
+        given-names: Caterina
+    doi: 10.1112/S0010437X09004692
+    identifiers:
+      - type: doi
+        value: 10.1112/S0010437X09004692
+    title: Schemes over 𝔽₁ and zeta functions
+    date-published: 2010-01-01
+    year: 2010
+    issue: "6"
+    journal: Compositio Mathematica
+    start: "1383"
+    end: "1415"
+    type: article
+    volume: "146"
+  - authors:
+      - family-names: Berry
+        given-names: M. V.
+      - family-names: Keating
+        given-names: J. P.
+    doi: 10.1137/S0036144598347497
+    identifiers:
+      - type: doi
+        value: 10.1137/S0036144598347497
+    title: The Riemann zeros and eigenvalue asymptotics
+    date-published: 1999-01-01
+    year: 1999
+    issue: "2"
+    journal: SIAM Review
+    start: "236"
+    end: "266"
+    type: article
+    volume: "41"
+  - authors:
+      - family-names: Howard
+        given-names: William A.
+    title: The formulae-as-types notion of construction
+    date-published: 1980-01-01
+    year: 1980
+    editors:
+      - family-names: Seldin
+        given-names: J. P.
+      - family-names: Hindley
+        given-names: J. R.
+    journal: "To H. B. Curry: Essays on Combinatory Logic, Lambda Calculus and
+      Formalism"
+    notes: London (no DOI)
+    publisher:
+      name: Academic Press
+    start: "479"
+    end: "490"
+    type: generic
+  - authors:
+      - family-names: Sós
+        given-names: Vera T.
+    title: On the distribution mod 1 of the sequence nα
+    date-published: 1958-01-01
+    year: 1958
+    journal: Annales Universitatis Scientiarum Budapestinensis de Rolando Eötvös
+      Nominatae, Sectio Mathematica
+    notes: no DOI
+    start: "127"
+    end: "134"
+    type: article
+    volume: "1"
+  - authors:
+      - name: T. Hales et al.
+    doi: 10.1017/fmp.2017.1
+    identifiers:
+      - type: doi
+        value: 10.1017/fmp.2017.1
+    title: A formal proof of the Kepler conjecture
+    date-published: 2017-01-01
+    year: 2017
+    journal: Forum of Mathematics, Pi
+    start: e2
+    type: article
+    volume: "5"
+  - authors:
+      - family-names: Susskind
+        given-names: Leonard
+    doi: 10.48550/arXiv.hep-th/0302219
+    identifiers:
+      - type: doi
+        value: 10.48550/arXiv.hep-th/0302219
+      - type: url
+        value: https://arxiv.org/abs/hep-th/0302219
+    title: The anthropic landscape of string theory
+    url: https://arxiv.org/abs/hep-th/0302219
+    date-published: 2003-01-01
+    year: 2003
+    journal: arXiv
+    notes: arXiv:hep-th/0302219; also in B. Carr (ed.), Universe or Multiverse?,
+      Cambridge University Press (2007) 247-266, chapter DOI
+      10.1017/cbo9781107050990.018
+    type: historical-work
+  - authors:
+      - family-names: Virasoro
+        given-names: Miguel A.
+    doi: 10.1103/PhysRevD.1.2933
+    identifiers:
+      - type: doi
+        value: 10.1103/PhysRevD.1.2933
+    title: Subsidiary conditions and ghosts in dual-resonance models
+    date-published: 1970-01-01
+    year: 1970
+    issue: "10"
+    journal: Physical Review D
+    start: "2933"
+    end: "2936"
+    type: article
+    volume: "1"
+  - authors:
+      - family-names: Witten
+        given-names: Edward
+    doi: 10.1007/JHEP03(2024)077
+    identifiers:
+      - type: doi
+        value: 10.1007/JHEP03(2024)077
+    title: A background-independent algebra in quantum gravity
+    date-published: 2024-01-01
+    year: 2024
+    issue: "03"
+    journal: Journal of High Energy Physics
+    start: "077"
+    type: article
+    volume: "2024"
+  - authors:
+      - family-names: Kaluza
+        given-names: Theodor
+    title: Zum Unitätsproblem der Physik
+    date-published: 1921-01-01
+    year: 1921
+    journal: Sitzungsberichte der Preussischen Akademie der Wissenschaften
+    notes: Berlin (no DOI)
+    start: "966"
+    end: "972"
+    type: article
+  - authors:
+      - family-names: Klein
+        given-names: Oskar
+    doi: 10.1007/BF01397481
+    identifiers:
+      - type: doi
+        value: 10.1007/BF01397481
+    title: Quantentheorie und fünfdimensionale Relativitätstheorie
+    date-published: 1926-01-01
+    year: 1926
+    issue: "12"
+    journal: Zeitschrift für Physik
+    start: "895"
+    end: "906"
+    type: article
+    volume: "37"
+  - authors:
+      - name: Design Council
+    identifiers:
+      - type: url
+        value: https://www.idi-design.ie/content/files/ElevenLessons_Design_Council_2.pdf
+    title: "Eleven Lessons: Managing Design in Eleven Global Brands"
+    url: https://www.idi-design.ie/content/files/ElevenLessons_Design_Council_2.pdf
+    date-published: 2007-01-01
+    year: 2007
+    notes: A study of the design process; PDF mirror (the original
+      designcouncil.org.uk page no longer resolves)
+    publisher:
+      name: Design Council
+    type: generic
+  - authors:
+      - family-names: Connes
+        given-names: Alain
+    doi: 10.1007/s000290050042
+    identifiers:
+      - type: doi
+        value: 10.1007/s000290050042
+    title: Trace formula in noncommutative geometry and the zeros of the Riemann
+      zeta function
+    date-published: 1999-01-01
+    year: 1999
+    issue: "1"
+    journal: Selecta Mathematica
+    start: "29"
+    end: "106"
+    type: article
+    volume: "5"
+  - authors:
+      - family-names: Nielsen
+        given-names: Michael A.
+      - family-names: Chuang
+        given-names: Isaac L.
+    doi: 10.1017/cbo9780511976667
+    identifiers:
+      - type: doi
+        value: 10.1017/cbo9780511976667
+    title: Quantum Computation and Quantum Information
+    date-published: 2000-01-01
+    year: 2000
+    notes: DOI is the Cambridge University Press e-book (Crossref year 2012); first
+      published 2000
+    publisher:
+      name: Cambridge University Press
+    type: book
+  - authors:
+      - family-names: Gubser
+        given-names: Steven S.
+      - family-names: Knaute
+        given-names: Johannes
+      - family-names: Parikh
+        given-names: Sarthak
+      - family-names: Samberg
+        given-names: Andreas
+      - family-names: Witaszczyk
+        given-names: Przemek
+    doi: 10.1007/s00220-016-2813-6
+    identifiers:
+      - type: doi
+        value: 10.1007/s00220-016-2813-6
+    title: p-Adic AdS/CFT
+    date-published: 2017-01-01
+    year: 2017
+    issue: "3"
+    journal: Communications in Mathematical Physics
+    start: "1019"
+    end: "1059"
+    type: article
+    volume: "352"
+  - authors:
+      - family-names: Heydeman
+        given-names: Matthew
+      - family-names: Marcolli
+        given-names: Matilde
+      - family-names: Saberi
+        given-names: Ingmar A.
+      - family-names: Stoica
+        given-names: Bogdan
+    doi: 10.4310/ATMP.2018.v22.n1.a4
+    identifiers:
+      - type: doi
+        value: 10.4310/ATMP.2018.v22.n1.a4
+    title: "Tensor networks, p-adic fields, and algebraic curves: arithmetic and the
+      AdS₃/CFT₂ correspondence"
+    date-published: 2018-01-01
+    year: 2018
+    issue: "1"
+    journal: Advances in Theoretical and Mathematical Physics
+    start: "93"
+    end: "176"
+    type: article
+    volume: "22"
+  - authors:
+      - family-names: Lawson
+        given-names: Tony
+    title: Economic science without experimentation
+    date-published: 1998-01-01
+    year: 1998
+    editors:
+      - family-names: Archer
+        given-names: M.
+      - family-names: Bhaskar
+        given-names: R.
+      - family-names: Collier
+        given-names: A.
+      - family-names: Lawson
+        given-names: T.
+      - family-names: Norrie
+        given-names: A.
+    journal: "Critical Realism: Essential Readings"
+    notes: ch. 6; from Economics and Reality, Routledge, London (1997), chs. 15-16,
+      chapter DOI 10.4324/9780203195390-22
+    publisher:
+      name: Routledge
+    start: "144"
+    end: "186"
+    type: generic
+  - authors:
+      - family-names: Hegel
+        given-names: Georg Wilhelm Friedrich
+    title: Wissenschaft der Logik
+    date-published: 1812-01-01
+    year: 1812
+    notes: "vol. 1; 2nd ed. 1832; English: The Science of Logic, transl. G. di
+      Giovanni, Cambridge University Press (2010), DOI 10.1017/9780511780240"
+    publisher:
+      name: Schrag
+    type: book
+  - authors:
+      - family-names: Lawvere
+        given-names: F. William
+    doi: 10.1007/BFb0084208
+    identifiers:
+      - type: doi
+        value: 10.1007/BFb0084208
+    title: Some thoughts on the future of category theory
+    date-published: 1991-01-01
+    year: 1991
+    editors:
+      - family-names: Carboni
+        given-names: A.
+      - family-names: Pedicchio
+        given-names: M. C.
+      - family-names: Rosolini
+        given-names: G.
+    journal: Lecture Notes in Mathematics
+    notes: Category Theory (Como, 1990)
+    publisher:
+      name: Springer
+    start: "1"
+    end: "13"
+    type: generic
+    volume: "1488"
+  - authors:
+      - family-names: Lawvere
+        given-names: F. W.
+    doi: 10.1093/philmat/2.1.5
+    identifiers:
+      - type: doi
+        value: 10.1093/philmat/2.1.5
+    title: Cohesive toposes and Cantor's 'lauter Einsen'
+    date-published: 1994-01-01
+    year: 1994
+    issue: "1"
+    journal: Philosophia Mathematica
+    start: "5"
+    end: "15"
+    type: article
+    volume: "2"
+  - authors:
+      - family-names: Lawvere
+        given-names: F. William
+    doi: 10.1007/BF00122250
+    identifiers:
+      - type: doi
+        value: 10.1007/BF00122250
+    title: Unity and identity of opposites in calculus and physics
+    date-published: 1996-01-01
+    year: 1996
+    issue: 2-3
+    journal: Applied Categorical Structures
+    start: "167"
+    end: "174"
+    type: article
+    volume: "4"
+  - authors:
+      - family-names: Schreiber
+        given-names: Urs
+    doi: 10.48550/arXiv.1310.7930
+    identifiers:
+      - type: doi
+        value: 10.48550/arXiv.1310.7930
+      - type: url
+        value: https://arxiv.org/abs/1310.7930
+    title: Differential cohomology in a cohesive ∞-topos
+    url: https://arxiv.org/abs/1310.7930
+    date-published: 2013-01-01
+    year: 2013
+    journal: arXiv
+    notes: arXiv:1310.7930 (v2, 2017)
+    type: historical-work
+  - authors:
+      - family-names: Hopf
+        given-names: Heinz
+    doi: 10.1007/BF01457962
+    identifiers:
+      - type: doi
+        value: 10.1007/BF01457962
+    title: Über die Abbildungen der dreidimensionalen Sphäre auf die Kugelfläche
+    date-published: 1931-01-01
+    year: 1931
+    issue: "1"
+    journal: Mathematische Annalen
+    start: "637"
+    end: "665"
+    type: article
+    volume: "104"
+  - authors:
+      - family-names: Hopf
+        given-names: Heinz
+    doi: 10.4064/fm-25-1-427-440
+    identifiers:
+      - type: doi
+        value: 10.4064/fm-25-1-427-440
+    title: Über die Abbildungen von Sphären auf Sphären niedrigerer Dimension
+    date-published: 1935-01-01
+    year: 1935
+    journal: Fundamenta Mathematicae
+    start: "427"
+    end: "440"
+    type: article
+    volume: "25"
+  - authors:
+      - family-names: Hurwitz
+        given-names: Adolf
+    title: Über die Composition der quadratischen Formen von beliebig vielen Variablen
+    date-published: 1898-01-01
+    year: 1898
+    journal: Nachrichten von der Gesellschaft der Wissenschaften zu Göttingen,
+      Mathematisch-Physikalische Klasse
+    notes: no DOI for the original edition
+    start: "309"
+    end: "316"
+    type: article
+  - authors:
+      - family-names: Aharony
+        given-names: Ofer
+      - family-names: Bergman
+        given-names: Oren
+      - family-names: Jafferis
+        given-names: Daniel Louis
+      - family-names: Maldacena
+        given-names: Juan
+    doi: 10.1088/1126-6708/2008/10/091
+    identifiers:
+      - type: doi
+        value: 10.1088/1126-6708/2008/10/091
+    title: 𝒩 = 6 superconformal Chern-Simons-matter theories, M2-branes and their
+      gravity duals
+    date-published: 2008-01-01
+    year: 2008
+    issue: "10"
+    journal: Journal of High Energy Physics
+    start: "091"
+    type: article
+    volume: "2008"
+  - authors:
+      - family-names: Adams
+        given-names: John F.
+    doi: 10.2307/1970147
+    identifiers:
+      - type: doi
+        value: 10.2307/1970147
+    title: On the non-existence of elements of Hopf invariant one
+    date-published: 1960-01-01
+    year: 1960
+    issue: "1"
+    journal: Annals of Mathematics
+    start: "20"
+    end: "104"
+    type: article
+    volume: "72"
+  - authors:
+      - family-names: Conway
+        given-names: John H.
+      - family-names: Smith
+        given-names: Derek A.
+    doi: 10.1201/9781439864180
+    identifiers:
+      - type: doi
+        value: 10.1201/9781439864180
+    title: On Quaternions and Octonions
+    date-published: 2003-01-01
+    year: 2003
+    publisher:
+      name: A K Peters
+    type: book
+  - authors:
+      - family-names: Bott
+        given-names: Raoul
+      - family-names: Milnor
+        given-names: John
+    doi: 10.1090/S0002-9904-1958-10166-4
+    identifiers:
+      - type: doi
+        value: 10.1090/S0002-9904-1958-10166-4
+    title: On the parallelizability of the spheres
+    date-published: 1958-01-01
+    year: 1958
+    issue: "3"
+    journal: Bulletin of the American Mathematical Society
+    start: "87"
+    end: "89"
+    type: article
+    volume: "64"
+  - authors:
+      - family-names: Kervaire
+        given-names: Michel
+    doi: 10.1073/pnas.44.3.280
+    identifiers:
+      - type: doi
+        value: 10.1073/pnas.44.3.280
+    title: Non-parallelizability of the n-sphere for n > 7
+    date-published: 1958-01-01
+    year: 1958
+    issue: "3"
+    journal: Proceedings of the National Academy of Sciences
+    start: "280"
+    end: "283"
+    type: article
+    volume: "44"
+  - authors:
+      - family-names: Vafa
+        given-names: Cumrun
+    doi: 10.1016/0550-3213(96)00172-1
+    identifiers:
+      - type: doi
+        value: 10.1016/0550-3213(96)00172-1
+    title: Evidence for F-theory
+    date-published: 1996-01-01
+    year: 1996
+    issue: "3"
+    journal: Nuclear Physics B
+    start: "403"
+    end: "415"
+    type: article
+    volume: "469"
+  - authors:
+      - family-names: Taylor
+        given-names: Washington
+      - family-names: Wang
+        given-names: Yi-Nan
+    doi: 10.1007/JHEP12(2015)164
+    identifiers:
+      - type: doi
+        value: 10.1007/JHEP12(2015)164
+    title: The F-theory geometry with most flux vacua
+    date-published: 2015-01-01
+    year: 2015
+    issue: "12"
+    journal: Journal of High Energy Physics
+    start: "164"
+    type: article
+    volume: "2015"
+  - authors:
+      - family-names: Kachru
+        given-names: Shamit
+      - family-names: Kallosh
+        given-names: Renata
+      - family-names: Linde
+        given-names: Andrei
+      - family-names: Trivedi
+        given-names: Sandip P.
+    doi: 10.1103/PhysRevD.68.046005
+    identifiers:
+      - type: doi
+        value: 10.1103/PhysRevD.68.046005
+    title: de Sitter vacua in string theory
+    date-published: 2003-01-01
+    year: 2003
+    issue: "4"
+    journal: Physical Review D
+    start: "046005"
+    type: article
+    volume: "68"
+  - authors:
+      - family-names: Kodaira
+        given-names: Kunihiko
+    doi: 10.2307/1970131
+    identifiers:
+      - type: doi
+        value: 10.2307/1970131
+    title: On compact analytic surfaces, II
+    date-published: 1963-01-01
+    year: 1963
+    issue: "3"
+    journal: Annals of Mathematics
+    start: "563"
+    end: "626"
+    type: article
+    volume: "77"
+  - authors:
+      - family-names: Baez
+        given-names: John C.
+    identifiers:
+      - type: url
+        value: https://arxiv.org/abs/1712.06436
+    title: From the icosahedron to E8
+    url: https://arxiv.org/abs/1712.06436
+    date-published: 2018-01-01
+    year: 2018
+    issue: "476"
+    journal: London Mathematical Society Newsletter
+    notes: arXiv:1712.06436 (no DOI for the newsletter)
+    start: "18"
+    end: "23"
+    type: article
+  - authors:
+      - family-names: Lawvere
+        given-names: F. William
+    doi: 10.1007/BFb0080769
+    identifiers:
+      - type: doi
+        value: 10.1007/BFb0080769
+    title: Diagonal arguments and cartesian closed categories
+    date-published: 1969-01-01
+    year: 1969
+    journal: Lecture Notes in Mathematics
+    notes: Category Theory, Homology Theory and their Applications II
+    publisher:
+      name: Springer
+    start: "134"
+    end: "145"
+    type: generic
+    volume: "92"
+  - authors:
+      - family-names: Yanofsky
+        given-names: Noson S.
+    doi: 10.2178/bsl/1058448677
+    identifiers:
+      - type: doi
+        value: 10.2178/bsl/1058448677
+    title: A universal approach to self-referential paradoxes, incompleteness and
+      fixed points
+    date-published: 2003-01-01
+    year: 2003
+    issue: "3"
+    journal: Bulletin of Symbolic Logic
+    start: "362"
+    end: "386"
+    type: article
+    volume: "9"
+  - authors:
+      - family-names: Tarski
+        given-names: Alfred
+    doi: 10.1525/9780520348097
+    identifiers:
+      - type: doi
+        value: 10.1525/9780520348097
+    title: A Decision Method for Elementary Algebra and Geometry
+    date-published: 1951-01-01
+    year: 1951
+    notes: 2nd ed.; the DOI record (De Gruyter/UC Press e-book) additionally lists
+      J. C. C. McKinsey as co-author
+    publisher:
+      name: University of California Press
+    type: book
+  - authors:
+      - family-names: Cubitt
+        given-names: Toby S.
+      - family-names: Pérez-García
+        given-names: David
+      - family-names: Wolf
+        given-names: Michael M.
+    doi: 10.1038/nature16059
+    identifiers:
+      - type: doi
+        value: 10.1038/nature16059
+    title: Undecidability of the spectral gap
+    date-published: 2015-01-01
+    year: 2015
+    issue: "7581"
+    journal: Nature
+    start: "207"
+    end: "211"
+    type: article
+    volume: "528"
+  - authors:
+      - family-names: Denef
+        given-names: Frederik
+      - family-names: Douglas
+        given-names: Michael R.
+    doi: 10.1016/j.aop.2006.07.013
+    identifiers:
+      - type: doi
+        value: 10.1016/j.aop.2006.07.013
+    title: Computational complexity of the landscape I
+    date-published: 2007-01-01
+    year: 2007
+    issue: "5"
+    journal: Annals of Physics
+    start: "1096"
+    end: "1142"
+    type: article
+    volume: "322"
+  - authors:
+      - family-names: Davies
+        given-names: P. C. W.
+    doi: 10.1098/rspa.1977.0047
+    identifiers:
+      - type: doi
+        value: 10.1098/rspa.1977.0047
+    title: The thermodynamic theory of black holes
+    date-published: 1977-01-01
+    year: 1977
+    issue: "1675"
+    journal: Proceedings of the Royal Society of London. A. Mathematical and
+      Physical Sciences
+    start: "499"
+    end: "521"
+    type: article
+    volume: "353"
+  - authors:
+      - family-names: Good
+        given-names: Michael R. R.
+      - family-names: Ong
+        given-names: Yen Chin
+    doi: 10.1103/PhysRevD.91.044031
+    identifiers:
+      - type: doi
+        value: 10.1103/PhysRevD.91.044031
+    title: Are black holes springlike?
+    date-published: 2015-01-01
+    year: 2015
+    issue: "4"
+    journal: Physical Review D
+    start: "044031"
+    type: article
+    volume: "91"
+  - authors:
+      - family-names: Cruz
+        given-names: Norman
+      - family-names: Olivares
+        given-names: Marco
+      - family-names: Villanueva
+        given-names: J. R.
+    doi: 10.1140/epjc/s10052-017-4670-7
+    identifiers:
+      - type: doi
+        value: 10.1140/epjc/s10052-017-4670-7
+    title: The golden ratio in Schwarzschild–Kottler black holes
+    date-published: 2017-01-01
+    year: 2017
+    issue: "2"
+    journal: The European Physical Journal C
+    start: "123"
+    type: article
+    volume: "77"
