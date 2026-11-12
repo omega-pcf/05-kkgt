@@ -28,17 +28,17 @@ M_KOIDE_MEV = 313.84                      # MeV, (F1), used by sections 16-18
 U_MEV = M_KOIDE_MEV / M_PCF               # 4.6258 MeV, the unit of (F1)
 M_PLANCK_GEV = 1.22089e19                 # section 24 prints 1.22089e+19
 
-# ── Sections 10, 12, 13, 39, 41: the five figures of the manuscript ───────
+# ── Sections 10, 44, 13, 39, 41: the five figures of the manuscript ───────
 # main.tex includes exactly these five files and attributes each to a section.
 FIGURES = {
     10: "fig_granularity.pdf",
-    12: "fig_one_structure.pdf",
+    44: "fig_background.pdf",
     13: "fig_mobius_throat.pdf",
     39: "fig_throat_tiling.pdf",
     41: "fig_tilings_strip.pdf",
 }
 
 # ── Sections measured slower than 10 s on this machine ───────────────────
-# section 12: 12.3 s (figure 1), section 41: 35.7 s (figure 5).
-# Everything else runs in < 10 s, section 40 included (9.7 s).
-SLOW_SECTIONS = frozenset({12, 41})
+# section 41: 33.1 s (figure 5). Everything else runs in < 10 s: section 40
+# (9.2 s), section 44 (2.2 s, figure 1), section 12 (0.8 s, checks only).
+SLOW_SECTIONS = frozenset({41})

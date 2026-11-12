@@ -256,3 +256,24 @@ computation brought to the same contract:
   Two test functions were renamed (`...yields_the_j1_zeros`,
   `...give_s_on_average`) to keep the word out of `tests/`; no assertion
   changed.
+
+---
+
+## Addendum: the v134 port (section 44, figure 1 moved)
+
+The report above is the snapshot of the conversion of `reproduce_v108.py`.
+The author's `reproduce_v134.py` was folded in afterwards; the differences
+that matter for the numbers above:
+
+* **section 44 is new** -- `The Background figure: one structure seen at once
+  (Figure 1)`, ported line for line (221 lines), with its own class
+  `TestSection44BackgroundFigure` (31 tests) in `test_sections_44.py`;
+* **figure 1 moved out of section 12**: section 12 keeps the checks and
+  prints no figure any more (its drawing helpers were already dead code in
+  v134), so `FIGURES[12]` is gone and `FIGURES[44] = "fig_background.pdf"`;
+  the census pins `test_section_writes_its_figure[section-44]`;
+* **section 12 runs in 0.8 s and section 44 in 2.2 s**, so only section 41
+  carries `slow` (33 s): `-m 'not slow'` deselects 4 tests, not 7;
+* the counts quoted above (447 tests, `fig_one_structure`, 43 sections)
+  describe the state at conversion time; the current suite is **484 tests**
+  over 44 sections. `README.md` carries the live table.

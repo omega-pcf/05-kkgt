@@ -122,7 +122,3 @@ def run_section(module, n: int, cwd: Path | str) -> SectionRun:
         figures=figures,
     )
 
-
-def close_enough(got: float, want: float, tol: float) -> bool:
-    """Explicit absolute tolerance; used by the independent checks."""
-    return abs(got - want) <= tol

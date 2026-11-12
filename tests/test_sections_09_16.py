@@ -1,7 +1,8 @@
 """Deep numeric tests for sections 9-16 of kkgt.sections.
 
-Sections 9-11 (granularity and contact configurations), 12-13 (figures 1
-and 2, with their exact statements), 14-16 (gaps, state count, Koide).
+Sections 9-11 (granularity and contact configurations), 12 (the checks
+behind figure 1, now drawn by section 44) and 13 (figure 2, with its
+exact statements), 14-16 (gaps, state count, Koide).
 """
 
 from __future__ import annotations
@@ -183,7 +184,11 @@ class TestSection11ContactConfigurations:
 
 # ══════════════════════════════════════════════════════════ section 12 ══
 class TestSection12FigureOneStatements:
-    """section 12 -- 'Figure 1: one structure seen at once; the points of Z[i] per level; checks'"""
+    """section 12 -- 'One structure seen at once: the checks, the points of Z[i] per level and the vector ratio'
+
+    Figure 1 left this section with the v134 and is drawn by section 44 now;
+    what stayed is everything the section checks.
+    """
 
     def test_certainty_principle_eps0_times_m_is_pi(self):
         """eps0 = log phi/(6 sqrt3), M = 6 sqrt(3) pi/log phi -> eps0 M = pi."""
@@ -239,16 +244,29 @@ class TestSection12FigureOneStatements:
                              [(2, 8, 7), (3, 27, 19), (5, 125, 61),
                               (7, 343, 127), (9, 729, 217)])
     def test_cube_projection_counts(self, side, points, projected):
-        """The window {0..side-1}^3 projects onto 3 side^2 - 3 side + 1 points."""
-        assert side**3 == points
-        assert 3 * side * side - 3 * side + 1 == projected
+        """The window {0..side-1}^3 projects onto 3 side^2 - 3 side + 1 points.
 
-    @pytest.mark.slow
+        main.tex:1354 asserts the five pairs, so the projection is really
+        computed here: the points of the window are projected along
+        (1,1,1) onto the plane spanned by (1,-1,0)/sqrt2 and (1,1,-1)/sqrt6
+        and the shadows are counted, which is what the section does in 3D.
+        """
+        n3 = np.array([1, 1, 1]) / 3 ** 0.5
+        e1 = np.array([1, -1, 0]) / 2 ** 0.5
+        e2 = np.cross(n3, e1)
+        pts = np.array(list(itertools.product(range(side), repeat=3)), float)
+        assert len(pts) == points
+        shadows = {tuple(np.round([p @ e1, p @ e2], 9)) for p in pts}
+        assert len(shadows) == projected
+        assert len(shadows) == 3 * side * side - 3 * side + 1
+
     def test_section12_runs_all_of_its_checks(self, run_section):
         run = run_section(12)
         run.has("all checks: ok")
         run.value(r"eps0\*M/pi = ([\d.]+)", want=1.0, tol=1e-12, label="eps0 M/pi")
-        assert "fig_one_structure.pdf" in run.figures
+        run.has("m2/m1 against the depth: {6: 2.093, 12: 2.171, 24: 2.228, "
+                "30: 2.241, 81.74: 2.275} : ok")
+        assert run.figures == (), run.figures
 
 
 # ══════════════════════════════════════════════════════════ section 13 ══

@@ -165,6 +165,13 @@ class TestSection41FiveRegularTilings:
 
         n is kept in 15..25: below it the convergent has not converged, above
         it the product loses float64 precision (at n = 40 it underflows to 0).
+
+        main.tex:1349 quotes 0.99990/(sqrt5 q^2) at q = F_29 next to this
+        testref; that figure is section 41's float64 cancellation (it prints
+        0.999902), not the value of the ratio -- see
+        test_the_hurwitz_ratio_at_f_29_exactly, which computes it in 60
+        digits.  The test asserts the law the sentence is about, the
+        constant 1/sqrt5.
         """
         f = [0, 1]
         for _ in range(n + 3):
@@ -172,6 +179,41 @@ class TestSection41FiveRegularTilings:
         q, p = f[n + 1], f[n + 2]
         const = abs(PHI - p / q) * q * q
         assert const == pytest.approx(1 / math.sqrt(5), abs=1e-5), (n, const)
+
+    def test_the_hurwitz_ratio_at_f_29_exactly(self):
+        """sqrt5 q^2 |phi - p/q| at q = F_29 and F_30, in 60 digits: 1.00000.
+
+        main.tex:1349 writes ``0.99990/(sqrt5 q^2) at q = F_29`` beside the
+        testref above; section 41 prints 0.999902 there because float64
+        cancels ``1.618... - p/q`` down to ~6e-13, whose own noise is ~3e-4
+        of it.  Both readings of the index (q = F_29 = 514229 and the
+        F_30 = 832040 that section 41's shifted list prints) give 1.00000
+        exactly, so the figure in the manuscript is the cancellation, not
+        the ratio.  Nothing is loosened here: this test states the exact
+        value so the discrepancy is visible in the suite.
+        """
+        from decimal import Decimal, localcontext
+
+        with localcontext() as ctx:
+            ctx.prec = 60
+            sqrt5 = Decimal(5).sqrt()
+            phi = (1 + sqrt5) / 2
+            f = [0, 1]
+            for _ in range(31):
+                f.append(f[-1] + f[-2])
+            for k in (29, 30):
+                q, p = Decimal(f[k]), Decimal(f[k + 1])
+                ratio = abs(phi - p / q) * sqrt5 * q * q
+                assert round(ratio, 5) == 1.00000, (k, ratio)
+
+        # the float64 cancellation of section 41, reproduced line by line
+        phi64 = (1 + 5 ** 0.5) / 2
+        f64 = [1, 1]
+        for _ in range(40):
+            f64.append(f64[-1] + f64[-2])
+        dev = [abs(phi64 - f64[n + 1] / f64[n]) * 5 ** 0.5 * f64[n] ** 2
+               for n in range(5, 30)]
+        assert round(dev[-1], 6) == 0.999902
 
     @pytest.mark.parametrize("n", [5, 10, 15])
     def test_hurwitz_constant_of_sqrt2(self, n):
@@ -221,7 +263,8 @@ class TestSection41FiveRegularTilings:
         assert "fig_tilings_strip.pdf" in run.figures
         run.has("{3,7} by shared vertices: [1, 15, 45, 120, 315, 825, 2160]")
         run.has("0.999902 (Hurwitz: phi is the worst approximant)")
-        run.has("boundary of a level tangent to edges: only {6,10}")
+        run.has("boundary of a level tangent to edges: only {6,10}, "
+                "sigma=1 (6 edges) and sigma=3 (12 edges)")
         run.has("{5,4} with qubits: 1.4907 S")
 
     @pytest.mark.slow

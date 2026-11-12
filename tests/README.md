@@ -1,7 +1,7 @@
 # Tests for the note (package `kkgt`)
 
 The computation of the note lives in the importable package
-`tests/src/kkgt`, in the module `kkgt.sections`: forty-three numbered
+`tests/src/kkgt`, in the module `kkgt.sections`: forty-four numbered
 sections registered in `SECCIONES`.  Nothing is a script any more: the
 tests import the package, and `main.tex` cites the tests that check its
 numbers with `\testref{...}` (a test name of the suite), which
@@ -11,11 +11,11 @@ citation is left, and that each of the five figures names the test that
 writes it.
 
 ```bash
-uv run pytest tests/ -q                 # whole suite   (451 tests, ~70 s)
-uv run pytest tests/ -q -m 'not slow'   # without >10 s (444 tests, ~61 s)
+uv run pytest tests/ -q                 # whole suite   (484 tests, ~61 s)
+uv run pytest tests/ -q -m 'not slow'   # without >10 s (480 tests, ~61 s)
 pnpm run test                           # same, through package.json
 
-PYTHONPATH=tests/src uv run python -m kkgt.sections        # the 43 sections
+PYTHONPATH=tests/src uv run python -m kkgt.sections        # the 44 sections
 PYTHONPATH=tests/src uv run python -m kkgt.sections 38     # only section 38
 ```
 
@@ -25,16 +25,17 @@ PYTHONPATH=tests/src uv run python -m kkgt.sections 38     # only section 38
 tests/
 ├── conftest.py                # Agg backend, `sections_module`, `sections`, `run_section`
 ├── src/kkgt/
-│   ├── sections.py            # the computation: 43 numbered sections (SECCIONES)
+│   ├── sections.py            # the computation: 44 numbered sections (SECCIONES)
 │   ├── constants.py           # PHI, M_PCF, OBS_G, FIGURES, SLOW_SECTIONS
 │   └── harness.py             # SectionRun: run a section, read its stdout
 ├── test_section_census.py     # \testref{...} <-> main.tex contract (numbers, figures)
-├── test_section_runs.py       # all 43 sections run clean and print their number
+├── test_section_runs.py       # all 44 sections run clean and print their number
 ├── test_sections_01_08.py     # tower, spectra, phase, Bessel chain, look-elsewhere
 ├── test_sections_09_16.py     # granularity, contact, figures 1-2, gaps, Koide
 ├── test_sections_17_28.py     # observer level, units, window, nome, Poisson
 ├── test_sections_29_38.py     # lattice point, quintessence, entropy, area law
-└── test_sections_39_43.py     # tilings (figures 4-5), dictionary, three columns
+├── test_sections_39_43.py     # tilings (figures 4-5), dictionary, three columns
+└── test_sections_44.py        # figure 1 (fig_background): the background figure
 ```
 
 ## Section -> test map
@@ -52,7 +53,7 @@ tests/
 | 9  | `...[section-09]` | `TestSection9GapRatios` (7) |
 | 10 | `...[section-10]` | `TestSection10Granularity` (12) |
 | 11 | `...[section-11]` | `TestSection11ContactConfigurations` (5) |
-| 12 | `...[section-12]` | `TestSection12FigureOneStatements` (21) |
+| 12 | `...[section-12]` | `TestSection12FigureOneStatements` (21) -- checks only: figure 1 moved to section 44 |
 | 13 | `...[section-13]` | `TestSection13FigureTwoReciprocity` (11) |
 | 14 | `...[section-14]` | `TestSection14RingGaps` (12) |
 | 15 | `...[section-15]` | `TestSection15StateCount` (6) |
@@ -84,6 +85,7 @@ tests/
 | 41 | `...[section-41]` | `TestSection41FiveRegularTilings` (17) |
 | 42 | `...[section-42]` | `TestSection42TwoCoordinatesAndTheStep` (33) |
 | 43 | `...[section-43]` | `TestSection43ThreeColumns` (12) |
+| 44 | `...[section-44]` | `TestSection44BackgroundFigure` (31) |
 
 Every section therefore has at least two tests: one that *runs* it (so the
 author's own `assert`s execute) and one or more that recompute its numbers.
@@ -107,8 +109,12 @@ stated in the test with a comment saying where the number comes from.
 
 `@pytest.mark.slow` marks what takes more than 10 s on this machine:
 
-* section 12 (figure 1) and section 41 (figure 5) -- 12 s and 36 s;
-* the seven tests that need them are deselected with `-m 'not slow'`.
+* section 41 (figure 5) -- 33 s; four tests carry the mark;
+* everything else runs under 10 s: section 40 takes 9.2 s, section 44
+  (figure 1) 2.2 s and section 12 (checks only, it no longer draws) 0.8 s.
+
+Figure 1 is `fig_background.pdf`, written by section 44 since the v134:
+section 12 keeps the checks of the statements its panels used to draw.
 
 Sections run inside a temporary directory, so the five `fig_*.pdf` files and
 the `kk_vs_cw6_out.txt` dump never touch the repository, and the matplotlib

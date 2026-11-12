@@ -100,10 +100,10 @@ def caption_of(figure_file: str) -> str:
 
 @pytest.mark.section
 class TestSectionRegistry:
-    def test_forty_three_sections_in_order(self, sections):
-        """Sections 1..43, contiguous: the tex lists them as (1)..(43)."""
+    def test_forty_four_sections_in_order(self, sections):
+        """Sections 1..44, contiguous: the tex lists them as (1)..(44)."""
         numbers = [n for n, _t, _f in sections]
-        assert numbers == list(range(1, 44)), numbers
+        assert numbers == list(range(1, 45)), numbers
 
     def test_every_section_is_callable(self, sections):
         for n, title, fn in sections:
@@ -164,7 +164,7 @@ class TestTexTestRefs:
         assert set(CITED_IN_TEX) == {
             # the five figures, by the test that writes them
             "test_section_writes_its_figure[section-10]",
-            "test_section_writes_its_figure[section-12]",
+            "test_section_writes_its_figure[section-44]",
             "test_section_writes_its_figure[section-13]",
             "test_section_writes_its_figure[section-39]",
             "test_section_writes_its_figure[section-41]",
@@ -259,5 +259,9 @@ class TestFigureSections:
             )
 
     def test_slow_figure_sections_are_declared(self):
-        """Sections 12 and 41 render >10 s and carry the slow mark."""
-        assert set(FIGURES) & SLOW_SECTIONS == {12, 41}
+        """Section 41 (figure 5) renders >10 s and carries the slow mark.
+
+        Figure 1 moved from section 12 to section 44 and got cheaper:
+        0.8 s for the checks of 12, 2.2 s for the figure of 44.
+        """
+        assert set(FIGURES) & SLOW_SECTIONS == {41}
