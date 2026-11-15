@@ -6,7 +6,7 @@ title: "One object instead of a choice of vacuum to put the observer in de
   candidates and with the cosmological constant"
 type: software
 version: 0.1.0
-date-released: 2026-11-12
+date-released: 2026-11-15
 authors:
   - family-names: González García
     given-names: Jorge Armando
@@ -3498,3 +3498,21 @@ references:
     start: "123"
     type: article
     volume: "77"
+  - authors:
+      - family-names: Bousso
+        given-names: Raphael
+    doi: 10.1088/1126-6708/2000/11/038
+    identifiers:
+      - type: doi
+        value: 10.1088/1126-6708/2000/11/038
+      - type: url
+        value: https://doi.org/10.1088/1126-6708/2000/11/038
+    title: Positive vacuum energy and the N-bound
+    url: https://doi.org/10.1088/1126-6708/2000/11/038
+    date-published: 2000-01-01
+    year: 2000
+    issue: "11"
+    journal: Journal of High Energy Physics
+    start: "038"
+    type: article
+    volume: "2000"

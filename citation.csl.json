@@ -5155,5 +5155,29 @@
     "issue": "2",
     "page": "123",
     "DOI": "10.1140/epjc/s10052-017-4670-7"
+  },
+  {
+    "id": "Bou00",
+    "type": "article-journal",
+    "title": "Positive vacuum energy and the N-bound",
+    "author": [
+      {
+        "family": "Bousso",
+        "given": "Raphael"
+      }
+    ],
+    "container-title": "Journal of High Energy Physics",
+    "volume": "2000",
+    "issue": "11",
+    "page": "038",
+    "issued": {
+      "date-parts": [
+        [
+          2000
+        ]
+      ]
+    },
+    "DOI": "10.1088/1126-6708/2000/11/038",
+    "URL": "https://doi.org/10.1088/1126-6708/2000/11/038"
   }
 ]
