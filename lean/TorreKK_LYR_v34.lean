@@ -1,5 +1,5 @@
 /-
-  TorreKK_LYR.lean, v33 (November 7, 2026; v33 fixes the order in the docstring of level_step_is_exchange_shift): everything article 9 proves, in Lean.
+  TorreKK_LYR.lean, v34 (November 11, 2026; v34 adds the Hopf foliation, J, the compression limit and the observer's half, and renames the Dedekind axiom to dedekindEta so as not to clash with the metric eta): everything article 9 proves, in Lean.
   Status: [P*] written, NOT COMPILED (there is no Lean in the environment where it was written).
   No sorry. Axioms at the end for classical results that Mathlib does not have yet (each with its source).
 
@@ -22,6 +22,8 @@
      the trace 3 of the square of the golden matrix.
  12. (v32) The diagonal of the cube has a kernel; the tile count differs from its mean by
      −ψⁿ/√5 (Binet); a rational step p/q has kernel (−p, q).
+ 13. (v34) The Hopf foliation of S³ is the torus tower of the window; J; the limit z = ½; flip_level;
+     the flat chart covers the half.
 -/
 import Mathlib
 
@@ -657,9 +659,9 @@ theorem crossing_point_half (lam : ℂ → ℂ) (hS : lam (-1 / Complex.I) = 1 -
   linear_combination hS / 2
 
 /-- **Axioma (Dedekind; Apostol, *Modular Functions and Dirichlet Series*, Thms. 3.1 and 3.4).** -/
-axiom eta : ℂ → ℂ
+axiom dedekindEta : ℂ → ℂ
 axiom eta_T (τ : ℂ) (h : 0 < τ.im) :
-    eta (τ + 1) = Complex.exp (2 * Real.pi * Complex.I / 24) * eta τ
+    dedekindEta (τ + 1) = Complex.exp (2 * Real.pi * Complex.I / 24) * dedekindEta τ
 
 /-- The multiplier of `η^k` under `T`: with `k = 24`, the clock, it is 1; with `k = 12`, the background, it is
 `e^{iπ} = −1`. -/
@@ -676,7 +678,7 @@ theorem eta_power_T_phase :
 
 /-- `|η|^{48}` is invariant under `T`. -/
 theorem partition_T_invariant (τ : ℂ) (h : 0 < τ.im) :
-    ‖eta (τ + 1)‖ ^ 48 = ‖eta τ‖ ^ 48 := by
+    ‖dedekindEta (τ + 1)‖ ^ 48 = ‖dedekindEta τ‖ ^ 48 := by
   rw [eta_T τ h, Complex.norm_mul, Complex.norm_exp]
   have : (2 * Real.pi * Complex.I / 24 : ℂ).re = 0 := by simp
   rw [this, Real.exp_zero, one_mul]
@@ -1400,5 +1402,122 @@ theorem rational_step_kernel (p q : ℤ) (hq : q ≠ 0) :
   have hq' : (q : ℝ) ≠ 0 := by exact_mod_cast hq
   have h : (q : ℝ) * ((p : ℝ) / q) = p := by field_simp
   rw [h]; push_cast; ring
+
+/-! ## v34 (Sprints 57, 58 and 70b): the Hopf foliation, J, the compression limit and the observer's half
+
+The tori |z₁| = cos η, |z₂| = sin η of S³ with tan η_n = φ^{−2n} are the torus tower of the window
+(I13); J(z₁, z₂) = (−z̄₂, z̄₁) is the antipode of W10 on the base, the mirror on the tori and, squared,
+the half turn of the fibre. φ is local with its own name, `hopfPhi`, so as not to clash with anything
+in the module. -/
+
+/-- φ, the golden ratio (local to this section). -/
+def hopfPhi : ℝ := (1 + Real.sqrt 5) / 2
+
+/-- The leaf angle of level n: tan η_n = φ^{-2n}. -/
+def windowEta (n : ℤ) : ℝ := Real.arctan (hopfPhi ^ (-2 * n))
+
+/-- The torus of level n has modulus τ_n = i·tan η_n = i φ^{-2n} (I13). -/
+theorem tan_eta (n : ℤ) : Real.tan (windowEta n) = hopfPhi ^ (-2 * n) := by
+  unfold windowEta; exact Real.tan_arctan _
+
+/-- The exchange z₁ ↔ z₂ sends η to π/2 − η: it is the mirror n ↦ −n (`S_acts_as_mirror`). -/
+theorem swap_is_mirror (n : ℤ) : windowEta (-n) = Real.pi / 2 - windowEta n := by
+  unfold windowEta
+  have hφ : 0 < hopfPhi := by unfold hopfPhi; have := Real.sqrt_nonneg 5; linarith
+  have hpos : 0 < hopfPhi ^ (-2 * n) := zpow_pos hφ _
+  have h : hopfPhi ^ (-2 * -n) = (hopfPhi ^ (-2 * n))⁻¹ := by
+    rw [← zpow_neg]; ring_nf
+  rw [h, Real.arctan_inv_of_pos hpos]
+
+/-- Level 0 is the Clifford torus, η = π/4 (τ = i). -/
+theorem level_zero_is_clifford : windowEta 0 = Real.pi / 4 := by
+  unfold windowEta; simp [Real.arctan_one]
+
+/-- The antipode of S³ is the Hopf action at angle π: −z = e^{iπ} z. -/
+theorem antipode_is_half_turn (z : ℂ × ℂ) :
+    (-z.1, -z.2) = (Complex.exp (Real.pi * Complex.I) * z.1,
+                    Complex.exp (Real.pi * Complex.I) * z.2) := by
+  simp [Complex.exp_pi_mul_I]
+
+/-- The Hopf map h(z) = z₁/z₂ does not tell z apart from −z: the half turn is invisible on the base. -/
+theorem hopf_blind_to_half_turn (z : ℂ × ℂ) : (-z.1) / (-z.2) = z.1 / z.2 :=
+  neg_div_neg_eq _ _
+
+/-- J(z₁, z₂) = (−z̄₂, z̄₁), the quaternionic unit j. -/
+def J (z : ℂ × ℂ) : ℂ × ℂ := (-(starRingEnd ℂ) z.2, (starRingEnd ℂ) z.1)
+
+/-- J² = −1: its square is the half turn. -/
+theorem J_sq (z : ℂ × ℂ) : J (J z) = (-z.1, -z.2) := by
+  simp [J]
+
+/-- J has order 4, like S in SL₂(ℤ) (`quarter_and_half_turn`). -/
+theorem J_four (z : ℂ × ℂ) : J (J (J (J z))) = z := by
+  simp [J]
+
+/-- J swaps the moduli: it carries the torus η to the torus π/2 − η (the mirror). -/
+theorem J_swaps_moduli (z : ℂ × ℂ) :
+    ‖(J z).1‖ = ‖z.2‖ ∧ ‖(J z).2‖ = ‖z.1‖ := by
+  simp only [J]
+  constructor
+  · rw [norm_neg]; exact Complex.norm_conj _
+  · exact Complex.norm_conj _
+
+/-- On the base, J is the antipode of W10: h(Jz) = −1 / conj(h z) (`antipodal_involution`). -/
+theorem J_lifts_W10 (z : ℂ × ℂ) (h1 : z.1 ≠ 0) (h2 : z.2 ≠ 0) :
+    (J z).1 / (J z).2 = -1 / (starRingEnd ℂ) (z.1 / z.2) := by
+  have c1 : (starRingEnd ℂ) z.1 ≠ 0 := (map_ne_zero _).mpr h1
+  have c2 : (starRingEnd ℂ) z.2 ≠ 0 := (map_ne_zero _).mpr h2
+  simp only [J, map_div₀]
+  field_simp
+
+/-- For x > 0, 1/sin(arctan x) = √(1 + x⁻²); with x = φ^{-2n} it gives R/r = √(1 + φ^{4n}). -/
+theorem stereo_ratio (x : ℝ) (hx : 0 < x) :
+    1 / Real.sin (Real.arctan x) = Real.sqrt (1 + x⁻¹ ^ 2) := by
+  rw [Real.sin_arctan]
+  rw [one_div_div]
+  rw [show (1 + x⁻¹ ^ 2) = (1 + x ^ 2) / x ^ 2 by field_simp; ring]
+  rw [Real.sqrt_div (by positivity), Real.sqrt_sq hx.le]
+
+/-- Below z = ½ the four-dimensional area law, 2πz², does not reach the bits πz
+    (the equality at z = ½ is `area_law_4d_meets_weld_iff`). -/
+theorem capacity_exceeded (z : ℝ) (hz : 0 < z) (hz2 : z < 1 / 2) :
+    2 * Real.pi * z ^ 2 < Real.pi * z := by
+  have hp : 0 < Real.pi := Real.pi_pos
+  have hsq : 2 * z ^ 2 < z := by nlinarith
+  calc
+    2 * Real.pi * z ^ 2 = Real.pi * (2 * z ^ 2) := by ring
+    _ < Real.pi * z := mul_lt_mul_of_pos_left hsq hp
+
+/-- 6φ^{-σ} = 6 only at σ = 0: the level at which the first patch and the throat have the same
+    constant (that they do is `dS_entropy_law` with `two_routes_to_six`; the level, by construction). -/
+theorem flip_level (σ : ℝ) : 6 * hopfPhi ^ (-σ) = 6 ↔ σ = 0 := by
+  have hφ : 1 < hopfPhi := by
+    unfold hopfPhi
+    have : (1 : ℝ) < Real.sqrt 5 := by
+      rw [show (1 : ℝ) = Real.sqrt 1 by simp]
+      exact Real.sqrt_lt_sqrt (by norm_num) (by norm_num)
+    linarith
+  have hφ0 : 0 < hopfPhi := by linarith
+  have hl : Real.log hopfPhi ≠ 0 := (Real.log_pos hφ).ne'
+  constructor
+  · intro h
+    have h1 : hopfPhi ^ (-σ) = 1 := by linarith
+    have h2 : Real.log (hopfPhi ^ (-σ)) = 0 := by rw [h1, Real.log_one]
+    rw [Real.log_rpow hφ0] at h2
+    rcases mul_eq_zero.mp h2 with h3 | h3
+    · linarith
+    · exact absurd h3 hl
+  · rintro rfl; simp
+
+/-- The flat chart: X₀ + X₄ = ℓ e^{t/ℓ} > 0 (CW6, «The observer sees exactly half»), with
+    X₀ = ℓ sinh(t/ℓ) + r²/(2ℓ) e^{t/ℓ} and X₄ = ℓ cosh(t/ℓ) − r²/(2ℓ) e^{t/ℓ}. -/
+theorem planar_patch_positive (ℓ t r : ℝ) (hℓ : 0 < ℓ) :
+    0 < (ℓ * Real.sinh (t / ℓ) + r ^ 2 / (2 * ℓ) * Real.exp (t / ℓ))
+      + (ℓ * Real.cosh (t / ℓ) - r ^ 2 / (2 * ℓ) * Real.exp (t / ℓ)) := by
+  have h : (ℓ * Real.sinh (t / ℓ) + r ^ 2 / (2 * ℓ) * Real.exp (t / ℓ))
+      + (ℓ * Real.cosh (t / ℓ) - r ^ 2 / (2 * ℓ) * Real.exp (t / ℓ))
+      = ℓ * (Real.cosh (t / ℓ) + Real.sinh (t / ℓ)) := by ring
+  rw [h, Real.cosh_add_sinh]
+  exact mul_pos hℓ (Real.exp_pos _)
 
 end TorreKK

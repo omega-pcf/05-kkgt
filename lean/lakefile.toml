@@ -1,7 +1,7 @@
 name = "kk-golden-throat"
 version = "0.1.0"
 keywords = ["math", "de-sitter", "kaluza-klein", "golden-ratio"]
-defaultTargets = ["TorreKK_LYR_v33"]
+defaultTargets = ["TorreKK_LYR_v34"]
 
 [leanOptions]
 pp.unicode.fun = true
@@ -15,4 +15,4 @@ scope = "leanprover-community"
 rev = "v4.33.1"
 
 [[lean_lib]]
-name = "TorreKK_LYR_v33"
+name = "TorreKK_LYR_v34"

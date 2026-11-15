@@ -141,7 +141,7 @@ written, and each was added to the pinned set in
 
 **WW27 (L1092) — chose (i) `N`.**
 *Evidence:* `test_theta3_at_tau_i` recomputes `Σ e^{-πk²}` and asserts it
-equals `π^{1/4}/Γ(3/4)` to `1e-10`; `lean/TorreKK_LYR_v33.lean` has **no**
+equals `π^{1/4}/Γ(3/4)` to `1e-10`; `lean/TorreKK_LYR_v34.lean` has **no**
 theorem about `θ₃` (grep `theta3|vartheta|lemnisc` → 0 hits); the phrase is
 the identity itself, and WW27 (Whittaker & Watson, *A Course of Modern
 Analysis*, 1927) is the provenance of the value, not its witness.
@@ -170,7 +170,7 @@ during the earlier migration and was put back:
 *After:* `\tier{P} for the identity, \tier{P} in~\cite{CW6} for the weld;`
 
 **D35 (L1918) — chose `P`, not `N`.**
-*Evidence:* `lean/TorreKK_LYR_v33.lean:1201` proves
+*Evidence:* `lean/TorreKK_LYR_v34.lean:1203` proves
 `theorem moduli_slope (L : ℝ) (hL : 0 < L) : L / (Real.sqrt 2 * L) = 1 / Real.sqrt 2`
 — the exact identity the sentence states (instantiate `L = log φ`). The
 numerical test `test_canonical_slope` only confirms the float `≈ 0.7071`.

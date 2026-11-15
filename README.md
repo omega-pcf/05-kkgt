@@ -37,7 +37,7 @@ González García, J. A., González García, V. M., Dressler Pérez, I. M., & Ga
 
 ### Formal Verification (`lean/`)
 
-- **`lean/TorreKK_LYR_v28.lean`**: the entire development in one file (139 theorems, 6 axioms, no `sorry`).
+- **`lean/TorreKK_LYR_v34.lean`**: the entire development in one file (163 theorems, 6 axioms, no `sorry`).
 - **`lean/lakefile.toml`**: lake build configuration with the Mathlib dependency (`v4.33.1`).
 - **`lean/lean-toolchain`**: `leanprover/lean4:v4.33.1`.
 
@@ -54,7 +54,7 @@ González García, J. A., González García, V. M., Dressler Pérez, I. M., & Ga
 
 ```bash
 pnpm run validate     # = pnpm run verify = pnpm run verify:lean
-pnpm run verify:lean  # cd lean && lake build TorreKK_LYR_v28
+pnpm run verify:lean  # cd lean && lake build TorreKK_LYR_v34
 ```
 
 ## Build and Compilation

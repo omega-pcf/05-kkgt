@@ -12,7 +12,7 @@
     "generate:figures:list": "uv run python scripts/figures/main.py --list",
     "generate:types": "pnpm exec tsx scripts/generate_types.ts",
     "verify:py": "uv run pytest tests/ -q -m 'not slow'",
-    "verify:lean": "cd lean && lake build TorreKK_LYR_v33",
+    "verify:lean": "cd lean && lake build TorreKK_LYR_v34",
     "verify": "pnpm run verify:py && pnpm run verify:lean",
     "validate": "pnpm run verify",
     "test": "uv run pytest tests/ -q",
