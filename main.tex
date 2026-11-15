@@ -661,8 +661,9 @@ fixes its spectrum. The argument starts from the data and from what the framewor
 independent conditions then fix the measure, the boundaries, the phase and the bottom, and one fact
 fixes the scale; the spectrum so fixed is contrasted with the graviton candidates and with the
 cosmological constant; and the two retroductions that close it say what the structure is in
-mathematics and what it represents in physics. Figure~\ref{fig:background} gathers the structure that
-the proofs use.
+mathematics and what it represents in physics, where the observer is placed: what it is, what it
+reaches, and the history of the levels that ends in the observed constant.
+Figure~\ref{fig:background} gathers the structure that the proofs use.
 
 \section{The data}\label{sec:data}
 
@@ -749,7 +750,7 @@ $(1/r)'=\cos b/r^2$ and $(\cos b/r)'=(1-\sqrt2\sin b)/r^2$, the quotient rule. F
 proves that the projection of the square torus is conformal. \Lean{stereographic\_meridian\_deriv}
 \item \emph{The law of the Dedekind $\eta$ under $T$}~\cite{Apo90}: $\eta(\tau+1)=e^{2\pi i/24}\eta(\tau)$.
 From it the note proves the modular invariance of the string partition function and the phase
-$-1$ of $\eta^{12}$. \Lean{eta, eta\_T}
+$-1$ of $\eta^{12}$. \Lean{dedekindEta, eta\_T}
 \item \emph{Weyl's equidistribution}~\cite{Wey16}: for $\alpha$ irrational and $f$ continuous of
 period $1$, the averages $\tfrac1N\sum_{n<N}f(n\alpha)$ tend to $\int_0^1f$. From it the note proves factorisation along an
 orbit. \Lean{weyl\_equidistribution}
@@ -792,7 +793,8 @@ it selects the measure $e^{4A}$ (\S\ref{sec:operator}).
 Each identifies a mathematical object with a physical one. These are the claims about the world.
 The graviton candidates of \S\ref{sec:data} test (F1)--(F4); the cosmological constant, read with
 (F8), tests the lattice form of the observer's level, not (F8) itself; (F5)--(F9) give readings that
-the present data do not reach.
+the present data do not reach, and (F10) a history that requires $w=-1$, in tension with the
+evolving dark energy that the present data prefer.
 
 \begin{description}
 \item[(F1) The unit.] The pure number $M_{\mathrm{PCF}}=6\sqrt3\pi/\log\golden=67.846$ is read as the
@@ -842,6 +844,7 @@ weight is the first winding term of a heat kernel on the ring (Imported statemen
 are mathematics. That the weight measures the curvature of the patch against that of the bulk, and
 that four-dimensional gravity turns on where it passes $\tfrac12$, is physics. Used in
 \S\ref{ssec:phys}.
+\item[(F10) The history of the levels.] That the four-dimensional area law, $4\pi z^2/(4G_N)=2\pi z^2$ with $G_N=\tfrac12$, holds the bits $S=\pi z$ of a level only down to $z=\tfrac12$, $\sigma=-\log_\golden2$, where $S=\pi/2$, half a cell, one doubling below the level $0$, where $S=\pi$ (Imported statement~\ref{imp:valuation}) \Lean{area\_law\_4d\_meets\_weld\_iff, capacity\_exceeded} \tier[\testref{test\_the\_compression\_limit\_is\_half\_a\_cell}]{N}; and that the first patch has the constant of the throat, $\Lambda(0)=3/G_N=6$ by the entropy law of W4 with $S(0)=\pi$ and $|\Lambda_5|=d(d-1)/2=6$ by W8, which agree only at $d=4$ with $G_N=\tfrac12$ \Lean{dS\_entropy\_law, two\_routes\_to\_six}, the level at which they meet being $\sigma=0$ by construction \Lean{flip\_level}, are mathematics. That these are the stages of one history, in the unit $\ell$ of (F8), is physics: from the empty space, whose image at the centre of the throat is superpoint-like, the observers accumulate; the anti-de~Sitter throat, with $\Lambda_5=-6$ throughout, compresses what they accumulate towards its centre, each level holding its own bits in a smaller ring, through the level $0$ and down to the limit of compression at $z=\tfrac12$, where the capacity of the four-dimensional area law saturates on half a cell; the saturation causes the burst, the Big Bang, and the burst is the rotation of (F8): what is released is de~Sitter, with the size of the constant of the throat and its sign turned; the radius doubles, half a cell becomes one, and the level $0$, crossed now for the second time, is the first patch of the tower, of the Planck size, $|\Lambda(0)|=|\Lambda_5|$; from there the observers go on accumulating, the level of their horizon rises, and the curvature of the observer's horizon, $3H^2=6\pi/S_H$, falls from $6$ to its asymptotic value $\Lambda_{\mathrm{obs}}$, which is constant. Used in \S\ref{ssec:phys}; contrasted with the equation of state of dark energy, since it requires $w=-1$.
 \end{description}
 The data are the graviton and gluon candidates of~\cite{LYR26}, read in the two-brane model, with
 the uncertainties of \S\ref{sec:data}, and the cosmological constant of \S\ref{sec:data}. They are
@@ -1572,7 +1575,7 @@ With $\sigma_{\mathrm{IR}}=12$ exactly the graviton masses are
 and $1028$ and $1346$~GeV against the $1000$ and $1322$~GeV that~\cite{LYR26} expect in the two-brane reading; the
 next two are $j_{1,5}M\golden^{12}=1664$~GeV and
 $j_{1,6}M\golden^{12}=1982$~GeV, with no free parameter
-\tier[\testref{test\_predictions\_at\_sigma\_12}]{N}. Fitted to the same two observed
+\tier[\testref{test\_masses\_at\_the\_bottom\_of\_the\_throat}; \testref{test\_predictions\_at\_sigma\_12}]{N}. Fitted to the same two observed
 candidates with its scale free, the two-brane model gives $1014$ and $1328$~GeV for its next two
 modes; the golden throat differs from it by $1.4\%$, so those modes separate the two only at a mass
 resolution better than about $15$~GeV, against the $\pm30$ and $\pm40$~GeV assumed in
@@ -1718,7 +1721,7 @@ Used in \S\ref{ssec:math} and \S\ref{ssec:phys}. Generated by \testref{test\_sec
 The angular direction is the torus. The framework places the microstate on
 $T^2=\mathbb{C}/M_{\mathrm{PCF}}\mathbb{Z}[i]$, $\tau=i$~\cite{CW6}, and the tower of lattices
 $\golden^{\sigma}M_{\mathrm{PCF}}\mathbb{Z}[i]$ has $\tau=i$ at every level \Lean{lattice\_tower\_tau}:
-the torus is the same at every level up to scale (Figure~\ref{fig:background}(a),(i)). The lattice points grow with the level: at the levels $\sigma=0,\dots,6$ of the tower of~\cite{CW6}, the points of $\mathbb{Z}[i]$ inside the ring of radius $\golden^{\sigma/2}$ are $5,5,9,13,21,37,57$. The disk has area $S(\sigma)=\pi\golden^{\sigma}$, the saturation entropy, and the count equals it only on average: the number of lattice points in a disk differs from its area by an error of lower order~\cite{Hux03}, and its ratio to $S$, $1.59,0.98,1.09,0.98,0.98,1.06,1.01$ here, is $0.9998$ at $\sigma=22$ \tier[\testref{test\_ratio\_at\_sigma\_22\_is\_unity\_to\_four\_decimals}]{N}. The mode count, the circle count of \S\ref{sec:intro}, is $\lfloor S\rfloor=3,5,8,13,21,34,56$; at the bottom of the throat, $\sigma=12$, the lattice points are $1005$ and $\lfloor S(12)\rfloor=1011$ (\testref{test\_bottom\_of\_the\_throat}). The right angle of
+the torus is the same at every level up to scale (Figure~\ref{fig:background}(a),(i)). The lattice points grow with the level: at the levels $\sigma=0,\dots,6$ of the tower of~\cite{CW6}, the points of $\mathbb{Z}[i]$ inside the ring of radius $\golden^{\sigma/2}$ are $5,5,9,13,21,37,57$. The disk has area $S(\sigma)=\pi\golden^{\sigma}$, the saturation entropy, and the count equals it only on average: the number of lattice points in a disk differs from its area by an error of lower order~\cite{Hux03}, and its ratio to $S$, $1.59,0.98,1.09,0.98,0.98,1.06,1.01$ here, is $0.9998$ at $\sigma=22$ \tier[\testref{test\_lattice\_points\_follow\_the\_area\_on\_average}; \testref{test\_ratio\_at\_sigma\_22\_is\_unity\_to\_four\_decimals}]{N}. The mode count, the circle count of \S\ref{sec:intro}, is $\lfloor S\rfloor=3,5,8,13,21,34,56$; at the bottom of the throat, $\sigma=12$, the lattice points are $1005$ and $\lfloor S(12)\rfloor=1011$ (\testref{test\_bottom\_of\_the\_throat}). The right angle of
 the torus is not chosen. The microstate starts from the eigenvalue triangle $\tfrac12\omega^{k}$,
 $\omega=e^{2\pi i/3}$, on a hexagonal lattice at $120^{\circ}$; the golden coupling $z=\golden y$,
 a third direction tied to the plane by $\golden$, carries it onto the square lattice $\mathbb{Z}[i]$,
@@ -1790,7 +1793,7 @@ $2.44$), the logarithmic correction $(c+3)/4$ of Cardy's formula at $c=3$ \tier[
 changes $S$, the masses or the lattice counts of the angular direction above.
 
 This is why the bottom is a half-turn and the phase a quarter-turn: for the modular matrix $S$,
-the half-turn is $S^2=-1$ and the quarter-turn is $S$ itself \Lean{quarter\_and\_half\_turn}.
+the half-turn is $S^2=-1$ and the quarter-turn is $S$ itself \Lean{quarter\_and\_half\_turn}. The same pair of turns acts on the three-sphere in which the square torus sits as the Clifford torus. The tori $|z_1|=\cos\eta$, $|z_2|=\sin\eta$ that foliate it are flat, of modulus $\tau=i\tan\eta$, and with $\tan\eta_n=\golden^{-2n}$ they are the tower of tori of the window, $\tau_n=i\golden^{-2n}$ of Imported statement~\ref{imp:gauss}, not the lattice torus of every level, whose modulus stays $\tau=i$; the two meet only at the level $0$, where the window torus is the Clifford torus \Lean{tan\_eta, level\_zero\_is\_clifford, clifford\_square}. The exchange $z_1\leftrightarrow z_2$ is $\eta\mapsto\pi/2-\eta$, the mirror $n\mapsto-n$ of Imported statement~\ref{imp:gauss} \Lean{swap\_is\_mirror, S\_acts\_as\_mirror}, and each window torus projects stereographically, from a point of the circle $z_1=0$, onto a torus of revolution with $R/r=\sqrt{1+\golden^{4n}}$, $\sqrt2$ at the level $0$ \Lean{stereo\_ratio, clifford\_stereographic\_torus}. The map $J(z_1,z_2)=(-\bar z_2,\bar z_1)$, the quaternion $j$, has order four and square $-1$ \Lean{J\_sq, J\_four}: on the base of the Hopf fibration it is the antipodal map of W10 \Lean{J\_lifts\_W10}, on the tori it is the mirror \Lean{J\_swaps\_moduli}, and its square is the half-turn of the fibre, $-z=e^{i\pi}z$, which the base does not see \Lean{antipode\_is\_half\_turn, hopf\_blind\_to\_half\_turn} \tier[\testref{test\_j\_squares\_to\_minus\_one\_and\_the\_half\_turn\_is\_invisible}]{N}. The antipodal map, the mirror and the half-turn are thus one quarter-turn and its square. The fibration itself is homogeneous: its isometries carry any fibre to any other; its tori are the preimages of the parallels of the base and need a chosen axis, which the same isometries carry to any other; the torus $\eta=\pi/4$ is fixed by the mirror, and the levels $\eta_n$ are placed by $\golden$ (Imported statement~\ref{imp:gauss}) \tier[\testref{test\_a\_torus\_is\_the\_preimage\_of\_a\_parallel\_and\_asks\_for\_an\_axis}; \testref{test\_the\_flat\_tori\_have\_modulus\_i\_tan\_eta}]{N}.
 
 \begin{definition}[The hypertorus]\label{def:hypertorus}
 The \emph{hypertorus} of the framework is the family, over the levels $\sigma$ of the throat, of
@@ -1873,7 +1876,7 @@ quasicrystal~\cite{BG13,Jag21}; the tower is not that set but its points of norm
 weight on the second coordinate is not chosen: it is the self-dual Gaussian $e^{-\pi\bar x^2}$ of
 Imported statement~\ref{imp:gauss}, a weight and not a window. Two spaces can carry it. On the index $\sigma=a+b\golden$ the integer $12$ has conjugate $12$ and weight $e^{-144\pi}$,
 about $10^{-196}$, and the observed bottom would sit at $4+5\golden=12.09$: that form contradicts
-the clock and is eliminated \tier[\testref{test\_best\_lattice\_index}]{N}. On the scale $\golden^{\sigma}$ the unit $\golden^n$ has conjugate
+the clock and is eliminated \tier[\testref{test\_the\_integer\_12\_kills\_the\_cut}; \testref{test\_best\_lattice\_index}]{N}. On the scale $\golden^{\sigma}$ the unit $\golden^n$ has conjugate
 $\pm\golden^{-n}$ and weight $w(n)=e^{-\pi\golden^{-2n}}$, which with the norm $\pm1$ gives the tower
 itself; $w(n)>\tfrac12$ if and only if $\pi\golden^{-2n}<\log2$ \Lean{window\_half\_iff}, and since
 $\pi/\golden^2>\log2>\pi/\golden^4$ \Lean{window\_crosses\_half} the first integer level that passes
@@ -1977,9 +1980,7 @@ they point to a level. The one quantity free on both sides is the position of th
 space of choices by measurement; it closes that space by overdetermination. Each of the four conditions
 fixes one element of the spectrum, the measure, the boundaries and weight, the phase and the bottom;
 the first three agree on $d=4$, which the measure carries as its exponent and the phase as its
-offset, and the fourth is independent of them. Together they leave one tower, up to the position of its top.
-
-Why one tower can stand where a choice stood, of a vacuum, of a value of the parameters of the baby
+offset, and the fourth is independent of them. Outside the tower the dimension is fixed once more: the constant of the first de~Sitter patch, $\Lambda(0)=3/G_N$ by the entropy law of W4 with $S(0)=\pi$, and that of the throat, $|\Lambda_5|=d(d-1)/2$ (W8), agree only at $d=4$ with $G_N=\tfrac12$ \Lean{dS\_entropy\_law, two\_routes\_to\_six}; with the patch and the throat taken in the same dimension, $d=4$ is the only integer at which they agree \tier[\testref{test\_only\_four\_dimensions\_share\_the\_two\_constants}]{N}. Together the four conditions leave one tower, up to the position of its top. Why one tower can stand where a choice stood, of a vacuum, of a value of the parameters of the baby
 universes or of a boundary theory to average over (\S\ref{sec:intro}), is the pair of irrationalities
 proved in \S\ref{ssec:math}. The two irrationalities are the granularity that either ensemble supplies
 by multiplying theories: levels as fine as wanted, by one rule, and phases that cover the whole
@@ -2007,7 +2008,7 @@ and the Planck values of \S\ref{sec:data}, $\sigma_{\mathrm{obs}}=583.88\pm0.04$
 the local $H_0$ \tier[\testref{test\_data\_readings}]{N}. The same curvature measured in the unit $u$ of (F1) reads $380.31$; the
 difference, $2\log_\golden(M_{\mathrm{Pl}}/u)-\log_\golden2=203.56$, is the conversion between the two
 units and not a second position. The value $585.3$ of~\cite{CW6}, eq.~(sigma-obs), takes $\Lambda$ in
-$\ell_P$ with the $6$ of $G_N=\tfrac12$; with the unit to which $G_N=\tfrac12$ is relative it is $583.88$.
+$\ell_P$ with the $6$ of $G_N=\tfrac12$; with the unit to which $G_N=\tfrac12$ is relative it is $583.88$. The level so read with the Planck values is that of the asymptotic de~Sitter state, which $\Lambda_{\mathrm{obs}}$ alone defines; with the same values the level of today's Hubble horizon, with $H_0$ in place of $H_0\Omega_\Lambda^{1/2}$, is $583.09$, below it, and rises towards it as the universe expands (\S\ref{sec:data}) \tier[\testref{test\_the\_asymptotic\_and\_today\_levels\_are\_the\_printed\_two}]{N}. The level read is therefore the asymptotic level of the horizon, the most an observer can accumulate: with $G_N=\tfrac12$, $S_{\mathrm{obs}}$ is the $N$-bound $3\pi/(\Lambda G_N)$ that Bousso places on the observable entropy of every universe with $\Lambda>0$~\cite{Bou00}, the logarithm of the finite number of states of~\cite{Ban01}, and the entropy of the state of maximum entropy of the algebra of the patch~\cite{CLPW23}.
 
 The integer levels are the units of $\mathbb Z[\golden]$ (Imported statement~\ref{imp:units}), and
 the hypothesis that the observer's patch sits at one of them, a lattice point, was put to the data
@@ -2040,10 +2041,7 @@ of the baby universes fix $\Lambda$: here $\Lambda$ is neither chosen nor fixed 
 lattice form that would have fixed it is excluded. The note does not fix $\Lambda$: it reads its level, and what it
 contrasts with $\Lambda$ is the lattice form of that level.
 
-What places the
-observer there is, in~\cite{CW6}, accumulation and not selection: the observer is a worldline whose
-Fisher information grows to the ceiling $F_{\max}^{-1}=\tfrac14=\mu^2$, one bit per eigenvalue, and each
-level becomes objective at $\tfrac12$~\cite{Kie26}; a cell that fills opens the next level. The redundant records that make a level objective are, read with Imported statement~\ref{imp:weld}, its modes of matter, $\lfloor S\rfloor$ particles of one unit of Fisher information each, as scattered photons are the fragments of the environment that carry the record of an everyday object~\cite{BKZ06,RZ10}: the particles of a level observe it---a reading of the records, not a result about them. The
+What places the observer there is, in~\cite{CW6}, accumulation and not selection, and both words have a precise content. The observer is localised information: the projection of W1, internal and with no region outside, read at the centre of the throat, whose modulus $\tfrac12$ is carried from the non-local type~III field to the particle that emerges from its tension~\cite[\S4.2]{CW6}. What it can ever reach is exactly half of de~Sitter space: the planar patch, $X_0+X_4=\ell e^{t/\ell}>0$, is the causal future of its worldline and covers one of the two halves of the hyperboloid that the antipodal map of W10 exchanges \LeanCW{dS\_covers\_half\_hyperboloid} \Lean{planar\_patch\_positive}; what it can ever receive is the other planar patch, $X_4-X_0>0$, and the two meet in its static patch, a quarter \tier[\testref{test\_the\_static\_patch\_is\_a\_quarter}]{N}. The other half is not outside but antipodal, and that the half it reaches is the modulus $\tfrac12$ is the identification of~\cite{CW6} \LeanCW{observer\_half\_from\_norms}. To observe is to accumulate: in the spin-star of~\cite[\S4.2]{CW6} a central system and two fragments of its environment become the centre, the past and the future of the observer, and the quantum Fisher information of the system, recorded redundantly in the fragments, grows to $F_{\max}=4$, the square of the number of fragments, where the Cram\'er--Rao bound on the variance reaches $F_{\max}^{-1}=\tfrac14=\mu^2$, one bit per eigenvalue \Lean{fisher\_unit\_iff}, so that each level becomes objective at the threshold $\tfrac12$~\cite{Zur09,Kie26}; the internal rotation $(it)^2=-t^2$ \Lean{wick\_squares\_flip\_sign} that accompanies it gives the observer its time, oriented by the direction of accumulation~\cite[\S4.3]{CW6}. A cell that fills opens the next level. The redundant records that make a level objective are, read with Imported statement~\ref{imp:weld}, its modes of matter, $\lfloor S\rfloor$ particles of one unit of Fisher information each, as scattered photons are the fragments of the environment that carry the record of an everyday object~\cite{BKZ06,RZ10}: the particles of a level observe it---a reading of the records, not a result about them. The
 conjugacy of the observer's clock and its level in~\cite{CW6}, $S(\sigma)\tau_F(\sigma)=\pi M_{\mathrm{PCF}}=\pi M_{\mathrm{PCF}}|N(\golden^{\sigma})|$, with $N$ the norm of Imported statement~\ref{imp:units}, is not the first law of de~Sitter: $S\tau_F$ is constant, while the entropy times the
 inverse Gibbons--Hawking temperature grows as $\golden^{3\sigma/2}$ \tier{N}, so it does not by itself fix
 the level. Where many worlds sees branches and third quantization baby universes~\cite{BS12,GS89}, the
@@ -2076,7 +2074,7 @@ $|\partial_\Phi V|/V=1/\sqrt2=0.707$ (\S\ref{ssec:math}): of order one, as the d
 asks~\cite{Obi18,OPSV19}, but below the asymptotic lower bound $\sqrt{2/3}=0.816$ of trans-Planckian
 censorship~\cite{BV20} \Lean{moduli\_slope\_below\_tcc}, in a region that is asymptotic, since the
 canonical distance $\sqrt2\,\sigma\log\golden$ grows without bound along the tower, $397$ Planck units
-at the observer \tier[\testref{test\_canonical\_distance\_along\_the\_tower}]{N}. Under the assumptions of \S\ref{ssec:math} this contrast of admissibility
+at the observer \tier[\testref{test\_condition\_on\_the\_moduli\_kinetic\_term}; \testref{test\_canonical\_distance\_along\_the\_tower}]{N}. Under the assumptions of \S\ref{ssec:math} this contrast of admissibility
 fails. It is a conflict with a conjecture, not an exclusion by data, and it falls on those assumptions
 first: with $K=-k\log\mathrm{Im}\,\tau$ the slope is $1/\sqrt{2k}$ and the bound holds if and only if
 $k\le\tfrac34$ \Lean{tcc\_iff\_k}, or it does not apply if $\sigma$ is not a dynamical modulus.
@@ -2095,6 +2093,8 @@ under a reading that is not an axiom of this note, with one combination of data 
 the projection of the model onto $(w_0,w_a)$, with $w_a\simeq-0.11$, is not the parametrised fit
 of~\cite{DESI25}, which the rolling field need not follow.
 
+\emph{From the accumulation to the patch.} Read with axiom~(F10), the levels have a history, in the unit $\ell$ of (F8), and it starts where the representation of \S\ref{sec:background} starts, from the empty space: the centre of the throat, compressed without bottom, is superpoint-like~\cite[\S4.2]{CW6}, the object at which the progression of~\cite{Sch13} from the empty space arrives. From there the observers accumulate (above), and the anti-de~Sitter throat, with $\Lambda_5=-6$ along all of it, compresses what they accumulate towards its centre, where the warp grows without bound~\cite[\S4.2]{CW6}: each level holds its own bits, $S=\pi z$, in a smaller ring, and the compression passes through the level $0$, $z=1$, still in anti-de~Sitter space, with no change of sign. Compression has a limit where a level can no longer hold its bits by the four-dimensional area law, at $z=|\Omega|=\tfrac12$, $\sigma=-\log_\golden2$, below the level $0$ at which the tower of~\cite{CW6} begins (\S\ref{ssec:math}); there $S=\pi/2$, half a cell, and below it $2\pi z^2<\pi z$ \Lean{capacity\_exceeded}, while the geometry continues. At that limit the capacity saturates, and the saturation causes the burst, the Big Bang. The burst is the internal rotation of (F8), the passage from the anti-de~Sitter throat to the de~Sitter patch: what is released is already de~Sitter. Axiom~(F8) turns each level of the throat into the patch of that level; in the history that passage takes place once, at the burst, and from it every level is a patch. The first expansion doubles the radius, $\log_\golden2$ levels (Imported statement~\ref{imp:valuation}), from $z=\tfrac12$ to $z=1$, and half a cell becomes one, $S=\pi$ \tier[\testref{test\_a\_doubling\_is\_not\_a\_bit}]{N}. The level $0$, $\tau=i$, is thus crossed twice: compressing, in anti-de~Sitter space, before the Big Bang, and expanding, as the first patch of the tower after it, of the Planck size, $H\ell=\sqrt2$. Its constant is that of the throat, $\Lambda(0)=|\Lambda_5|=6$, which agree only at $d=4$ (above). That they meet at $\sigma=0$ holds by construction \Lean{flip\_level}; that they meet at all does not. The two constants are equal, not the two radii: the throat has radius $\ell$, the first patch $H=\sqrt2/\ell$. In that patch the observers go on accumulating: four-dimensional gravity turns on at $\sigma_G=2$ (above), the level of their horizon rises and the curvature of the observer's horizon, $3H^2=6\pi/S_H$, falls towards the asymptotic level of the horizon, $\Lambda_{\mathrm{obs}}$, which does not move (above): with the determination from the cosmic microwave background and the baryon acoustic oscillations it is $583.79$, so that $3H^2(0)/\Lambda_{\mathrm{obs}}=\golden^{583.79}=10^{122.0}=S(583.79)/S(0)$ (\S\ref{sec:data}) \tier[\testref{test\_three\_h\_squared\_is\_the\_entropy\_of\_the\_horizon}; \testref{test\_the\_number\_of\_pi\_cells\_is\_122}]{N}. Since the first patch has the constant of the throat, $\Lambda S=6\pi$ reads $\Lambda S=|\Lambda_5|\,S(0)$, and the observed constant is the constant of the throat, its sign turned by (F8), divided by the cells accumulated since the first patch, $\Lambda_{\mathrm{obs}}=|\Lambda_5|\,S(0)/S_{\mathrm{obs}}$; the $122$ orders of magnitude that separate it from the Planck scale are that number of cells of size $S(0)=\pi$. The equality follows from $\Lambda S=6\pi$, holds by construction and is not a contrast; that what crosses the burst is the size of the constant of the throat is the reading of (F10). The size is fixed by $d$ and $\ell$, not by how much was accumulated before the burst; whether that accumulation fixes the number of cells, the asymptotic level of the horizon, is not derived here: that level is the open number of the note, one debt with $M/M_{\mathrm{Pl}}$, not two~\cite[eq.~(sigma-obs)]{CW6}. The contrast is the equation of state: in this history $\Lambda$ does not fall, its asymptotic value is constant and $w=-1$, as in $\Lambda$CDM, within which (F8) gives each level a constant. An evolving dark energy, which combinations of DESI data prefer at $2.8$ to $4.2$ standard deviations (\S\ref{sec:data}), is in tension with (F10) as stated and, if confirmed, would refute it; the rolling modulus above, $w\simeq-0.92$, is another hypothesis, not an axiom of this note, which would then displace (F10). That the saturation causes the Big Bang, and that half a saturated cell becomes the first cell of the patch, is the identification of (F10), not a consequence of the mathematics.
+
 \emph{The top: two hypotheses.} With the bottom placed by axiom~(F4), the depth of the throat has two readings,
 and the vector ratio would separate them. With the top at the Planck mass (\S\ref{sec:prediction}) the
 depth is the hierarchy, $k\pi r=39.33$, and fixing it needs a dynamics of the radion, as in the
@@ -2103,7 +2103,7 @@ depth identified with the length of the mirror-invariant interval $[-12,12]$ of 
 bottom to its mirror image, the depth is the clock, $k\pi r=24\log\golden=11.55$, and the throat runs
 from the bottom, $\sigma=12$, to the ultraviolet end at $\sigma=36$, $M\golden^{36}=1.05\times10^{7}$~GeV;
 the vector ratio depends only on the depth, so it is the same on $[-12,12]$ and on $[12,36]$
-\tier[\testref{test\_vector\_ratio\_depends\_only\_on\_the\_depth}]{N}; the throat is then a truncated two-brane model
+\tier[\testref{test\_depth\_of\_the\_clock}; \testref{test\_scales}; \testref{test\_vector\_ratio\_depends\_only\_on\_the\_depth}]{N}; the throat is then a truncated two-brane model
 of the kind of~\cite{DPS08}, the warp does not produce the hierarchy, $M_{\mathrm{Pl}}^2\simeq M_5^3/k$
 makes Newton's constant a datum of its own, and no parameter of the throat is left free; the free number moves to $G_N$, and the identification of the depth is a further one, not a consequence of the mirror. The
 vector ratio is $2.275$ in the first and $2.228$ in the second, both inside the present range
@@ -2247,7 +2247,7 @@ it, nothing beyond $S$ is counted as bits, so the holographic bound and the weld
 the alternative reading of $N$ as bits breaks both from $\sigma=3$ on, and the four-dimensional area
 law meets the weld only outside the tower; the exact count of states supports the level $N/2$ it
 assigns (\S\ref{ssec:math}, \S\ref{ssec:phys}). (F6) meets no such contrast: it enters only through
-the invariance of the closed-string spectrum.
+the invariance of the closed-string spectrum. (F10) stands otherwise: its mathematics holds, partly by construction, and it requires $w=-1$, so the evolving dark energy that the data of \S\ref{sec:data} prefer is in tension with it; a confirmed evolution would refute it as stated.
 
 The quark candidates of~\cite{LYR26} ($1040$ and $2150$~GeV) and the $Z_{\mathrm{KK}}$ indication at
 $3$~TeV are not treated: the profiles of the quarks depend on bulk masses that the framework does not
@@ -2318,7 +2318,7 @@ and everything else is dimensionless; what is missing is one relation between th
 demand~\cite{Wit01} in the observed universe and not only in the units of the framework (W8). The two
 scales of a level are joined by the norm (\S\ref{ssec:math}), and their common origin is the scale
 operator and its conjugate (\S\ref{ssec:phys}); what is open is why the masses are read at the bottom
-and the curvature at the level of the observer, two levels and not one. Eliminated: the
+and the curvature at the level of the observer, two levels and not one. The two data enter through the one modulus read on two faces: $M$ through the capacity of a cell, $\varepsilon_0M_{\mathrm{PCF}}=\pi=2\pi\mu$ (Imported statement~\ref{imp:scale}), and $G$ through the area quantum, $1/(4G_N)=\tfrac12=\mu$ (axiom~(B1)). The structure is the same at every level, so in its own units it has no scale from which their ratio could follow; on the side of the masses the clock gives a number, the bottom at $12$, where $\golden$ and $\pi$ close, without singling out a level of the tower (Proposition~\ref{prop:twelve}), and the ratio asks for the corresponding number on the side of the horizon. Eliminated: the
 observer at a lattice point, by the criterion stated in \S\ref{ssec:phys}, since the level read from the
 $\Lambda$CDM determination from the cosmic microwave background and the baryon acoustic oscillations,
 $583.789\pm0.028$, lies $7.6$ standard deviations from $584$ and further from every other integer; the
@@ -2329,7 +2329,7 @@ $583$ and $585$; the transition of Hawking and Page and the shift of Scherk and 
 identifications, kept as comparisons of form; and the conjugacy of the observer's clock as the first
 law of de~Sitter. Kept for the next cycle: the coefficient $a_1$ of a heat kernel with the ladder as
 spectrum, which would decide whether the window is the regulator of an induced gravity; why the level read is not an integer; whether $\sigma$ is a dynamical modulus, which would turn (F8) into an exponential quintessence of
-slope $1/\sqrt2$ and is decided by the evolution of dark energy, not by the lattice; whether the framework answers the average over boundary theories of black-hole
+slope $1/\sqrt2$ and is decided by the evolution of dark energy, not by the lattice, and which would displace (F10); whether the framework answers the average over boundary theories of black-hole
 microstates, which is left for future work; and whether the conjugacy of the clock fixes the unit. Not treated: whether the running of Newton's constant in asymptotically
 safe gravity~\cite{Reu98} bears on the level $\sigma_G$.
 \section{Conclusions and summary of results}\label{sec:summary}
@@ -2343,7 +2343,7 @@ appear in the tower, type~I in the Kaluza--Klein spectrum, fixed by four conditi
 follows from another and contrasted with the two observed candidates, $\sigma_{\mathrm{IR}}=11.97\pm0.05$;
 type~II in the level of the observer, one level by W4 and W9 in the gravitational unit, read at the
 real level $583.79$; its placement at a lattice point is excluded (\S\ref{ssec:phys}); type~III in the spacetime of the throat, whose Einstein equation
-follows from the relation (F5). The weld is where they meet.
+follows from the relation (F5). The weld is where they meet. The questions with which \S\ref{sec:background} closed its abduction are answered here. Who the observer is: localised information that accumulates, the projection of W1 read at the centre of the throat; where it can be: in the half of de~Sitter space that it reaches, at a level read from the data; how it is described: by W1--W12 and the axioms~(F) (\S\ref{ssec:phys}). The maximal accumulation of space with holography is bounded twice, by the four-dimensional area law at $z=\tfrac12$ and by the $N$-bound at the asymptotic level of the horizon (\S\ref{ssec:phys}).
 
 In the terms of~\cite{Bha75}, a choice among vacua and the operator are both representations; what
 differs is what each claims about the three domains. Of the empirical domain, a choice among vacua
@@ -2353,8 +2353,7 @@ hypothesis of a lattice point was contrasted and excluded. Of the actual domain,
 the spectra and the patch that occur whether or not they are measured, the operator claims every
 level of the tower and its rigid fluctuations. Of the real domain, a choice among vacua makes no
 claim about the mechanism that would make one vacuum ours; the operator claims to describe it, with
-its parts named, and that claim is the existential commitment of the axioms (F), of which (F1)--(F4)
-are contrasted.
+its parts named, and that claim is the existential commitment of the axioms (F), of which (F1)--(F4) are contrasted and (F10) is put in tension by the data on dark energy.
 
 Bhaskar's criterion compares accounts of the same phenomena~\cite{Bha75}. For the Kaluza--Klein
 masses the competing account is the two-brane model, whose scale is chosen, and the landscape, whose
@@ -2368,9 +2367,9 @@ baby-universe parameters that drive it to zero~\cite{Col88} or by a measure that
 $e^{S}$~\cite{Haw84} or the causal patch~\cite{Bou06}; bounded, by the effective field theory of black
 holes~\cite{CKN99}; or an input~\cite{Ban01}; or evolving, as a field that rolls, which the data
 of~\cite{DESI25} prefer at $2.8$ to $4.2$ standard deviations; read with a dynamical modulus, the
-operator gives that field its slope, $1/\sqrt2$, which the data admit (\S\ref{ssec:phys}). The operator places it on one ladder and reads its level
+operator gives that field its slope, $1/\sqrt2$, which the data admit (\S\ref{ssec:phys}). The history of axiom~(F10) predicts instead $w=-1$, and the same data put it in tension (\S\ref{ssec:phys}). The operator places the constant on one ladder and reads its level
 from the data, as an input; the hypothesis that the level is a lattice point, which would have fixed
-the density $\Omega_\Lambda h^2$, is excluded (\S\ref{ssec:phys}). For which theory, the competing
+the density $\Omega_\Lambda h^2$, is excluded (\S\ref{ssec:phys}). Read with the accumulation of the observer (\S\ref{ssec:phys}), the anthropic account is not removed but given a mechanism: the existence of the observer does fix $\Lambda$, through how much it has accumulated, $\Lambda S=6\pi$ \Lean{lambda\_times\_entropy}, so that the observed value measures what has been accumulated rather than what permits observers to exist. That amount is the level of the observer, which the note reads and does not derive, the one open number of the note (\S\ref{ssec:phys}, \S\ref{sec:not}). The history of the accumulation is axiom~(F10). Read with (F10), three more of these accounts change place: the baby-universe parameters of~\cite{Col88} drive $\Lambda$ to zero, whereas here it is small because the cells are many, $\Lambda_{\mathrm{obs}}=|\Lambda_5|\,S(0)/S_{\mathrm{obs}}$ (\S\ref{ssec:phys}); the weight $e^{S}$ of~\cite{Haw84} is the count of what has been accumulated rather than a weight on vacua; and the causal diamond of~\cite{Bou06} is the static patch, where the half the observer reaches and the half it receives meet (\S\ref{ssec:phys}). For which theory, the competing
 account is the average over boundary theories of low-dimensional gravity~\cite{SSS19}, with its
 superselection sectors~\cite{MM20}; it and the baby-universe parameters of~\cite{Col88} are the two
 forms of the question of \S\ref{sec:intro}. Against it the operator sets one state, which factorises,
@@ -2378,7 +2377,7 @@ and one orbit, which gives the connected part, as comparisons of form (\S\ref{ss
 not contrast it, since the
 Kaluza--Klein gravitons lie below the black-hole threshold~\cite{SW22}. For the selection of a spacetime without the anthropic
 principle, the account of Huerta and Schreiber selects the spacetimes of M-theory by central
-extensions~\cite{HS18}, and has no observer in it, so it does not meet W1. For a tower tied to $\Lambda$,
+extensions~\cite{HS18}, and has no observer in it, so it does not meet W1. Nor does a fibration select. The Hopf fibration that holography uses is homogeneous: its isometries carry any fibre to any other, so it singles out no fibre; its tori, the preimages of the parallels of the base, need a chosen axis, but every axis is carried to every other by the same isometries, so the choice singles out nothing either, and in the ABJM correspondence the integer $k$ of $S^7/\mathbb Z_k$, the level of the Chern--Simons theory, is a parameter that the fibration leaves free~\cite{ABJM08}. Without a further rule, anthropic or not, the fibration does not fix the vacuum. On the tower the window tori are leaves of the same fibration, and what singles out the torus and the levels, once an axis is drawn, is not the fibration: the torus $\eta=\pi/4$ is fixed by the mirror, and the levels by $\golden$, $\tan\eta_n=\golden^{-2n}$ (\S\ref{ssec:math}). For a tower tied to $\Lambda$,
 the distance conjecture asks $m\sim|\Lambda|^{\alpha}$ with $\alpha>0$~\cite{LPV19,MVV23}; the colour gap
 meets it with $\alpha=\tfrac12$, while the norm of \S\ref{ssec:math} reads the Kaluza--Klein scale of a
 level as inverse to the curvature of its patch, and joining the two towers is not done here. What the
@@ -2392,7 +2391,7 @@ The uniqueness is relative to the
 identifications made, axioms~(F1)--(F4), among them $m_0=M$ and the reading of the half-turn as a level; and, as with any model,
 it does not make the tower real, but puts it in a position to be contrasted. This is the
 criterion of convergence of the programme to which the note belongs, in which it is the prototype
-that finishes one part of the system, the masses, and submits it to data~\cite{PRES}.
+that finishes one part of the system, the masses, and submits it to data~\cite{PRES}. It places the observer as well: what it is and what it reaches, and a history of the levels, axiom~(F10), that ends in the observed constant and that the equation of state of dark energy contrasts (\S\ref{ssec:phys}).
 
 \begin{center}\small
 \begin{tabular}{@{}p{0.27\textwidth}p{0.36\textwidth}p{0.27\textwidth}@{}}
@@ -2405,7 +2404,11 @@ Arity $n=3$ & $d=4$, phase $\tfrac14$: the factor $\pi$ & Corollary~\ref{cor:pha
 Scale operator & the factor $\golden$: $m_k=j_{1,k}H(\sigma_{\mathrm{IR}})/m_0$ & Props.~\ref{prop:rs}, \ref{prop:scale} \\
 Clock of $\golden$ & the level $-1/\zeta(-1)=12$ (mathematics), identified with the bottom $\sigma_{\mathrm{IR}}$ (physics, tested) & Prop.~\ref{prop:twelve} \\
 Data & $11.97\pm0.05$ (two observed); $11.96\pm0.03$ (the pattern of four, two of them expected; not independent); the gluon zeros of~\cite{ADPS07} with the top at Planck & \S\ref{sec:prediction} \\
-The observer & one level, $583.79$, in the unit $\sqrt2\,\ell_P$; at a lattice point: excluded, $7.6\sigma$ & \S\ref{ssec:phys} \\
+The observer & one level, $583.79$, in the unit $\sqrt2\,\ell_P$, the asymptotic level of the horizon and the $N$-bound; at a lattice point: excluded, $7.6\sigma$ & \S\ref{ssec:phys} \\
+The history of the levels & compression to $z=\tfrac12$, the Big Bang, the first patch with the constant of the throat; $w=-1$, in tension with the data & (F10), \S\ref{ssec:phys} \\
+The dimension, once more & $\Lambda(0)=|\Lambda_5|$ only at $d=4$ with $G_N=\tfrac12$ & \S\ref{ssec:phys} \\
+What the observer reaches & half of de~Sitter space, the planar patch; the static patch a quarter & \S\ref{ssec:phys} \\
+The Hopf foliation & the window tori its leaves; $J$ the one quarter-turn behind W10, the mirror and the half-turn; homogeneous, the fibration selects nothing; the mirror and $\golden$ do & \S\ref{ssec:math}, \S\ref{sec:summary} \\
 The quarter-turn and the scale & the window a nome on a tower of tori; $S$ the Galois mirror; the weight $\tfrac12$ at $1.5702$ against $\pi/2$ & \S\ref{ssec:math} \\
 Real and integer & $\mathbb Z[\golden]$ a lattice with its conjugate; the tower its units, weighted by the self-dual Gaussian; $\sigma_G=2$ by two further routes & \S\ref{ssec:math} \\
 Reciprocal radii, $z\tau=M_{\mathrm{PCF}}$ & the ring cut into $N=\golden^{2\sigma}=(S/\pi)^2$ cells, never an integer, at most three gaps; $S=\pi\sqrt N$ & \S\ref{ssec:math}, Figs.~\ref{fig:mobius}--\ref{fig:granularity} \\
@@ -2428,7 +2431,7 @@ Reflection positivity & Osterwalder--Schrader~\cite{OS73} & imposed & \S\ref{sec
 Four-dimensional gravity & Neumann conditions & imposed & \S\ref{sec:spectrum} \\
 Spectral condition, $m^2\ge0$ & Wightman~\cite{SW64} & derived & Theorem~\ref{thm:bessel} \\
 Dictionary, Ryu--Takayanagi, area law & holography & derived & Imported statement~\ref{imp:adscft} \\
-Observer in de~Sitter, criteria W1--W12 & \cite{Wit01,CLPW23,GH77} & signatures proved and classified; observer read at a real level, at a lattice point excluded & \S\ref{sec:inputs}, \S\ref{ssec:phys} \\
+Observer in de~Sitter, criteria W1--W12 & \cite{Wit01,CLPW23,GH77} & signatures proved and classified; observer read at a real level, at a lattice point excluded; the half it reaches, the planar patch & \S\ref{sec:inputs}, \S\ref{ssec:phys} \\
 Factorisation of one state & --- & by construction, given I12 & Imported statement~\ref{imp:adscft} \\
 Critical dimension $D=c=26$ & the string~\cite{Pol98} & re-derived & Prop.~\ref{prop:twelve} \\
 Modular invariance & the string~\cite{Pol98} & re-derived & Prop.~\ref{prop:twelve} \\
@@ -2436,8 +2439,9 @@ Crossing group, point $\lambda=\tfrac12$ & bootstrap~\cite{PRV19} & derived & Co
 Graviton tower without Hagedorn growth; sparse spectrum & \cite{HPPS09} & growth derived; sparseness conditional on the unit of $\alpha'$ & \S\ref{ssec:phys} \\
 Higuchi bound, coefficient & \cite{Hig87} & ratio $\pi^3/(q^2M_{\mathrm{PCF}})$, the same at every level; decided by $q$, $\kappa$ and the unit & \S\ref{ssec:phys} \\
 Tower $\propto\Lambda^{1/2}$ & distance conjecture~\cite{LPV19} & derived & \S\ref{sec:discussion} \\
-Slope $|\partial_\Phi V|/V=1/\sqrt2$ & de~Sitter conjecture~\cite{Obi18,OPSV19}; trans-Planckian censorship~\cite{BV20} & of order one; below $\sqrt{2/3}$: fails under the assumptions of \S\ref{ssec:math}; admitted by the fit of~\cite{AAN25} if $\sigma$ is a dynamical modulus & \S\ref{ssec:phys} \\
-Cosmological constant & \cite{LPV19,Hig87} & form derived ($\alpha=\tfrac12$); value: read at $\sigma_{\mathrm{obs}}=583.79$; lattice point excluded in $\Lambda$CDM & \S\ref{ssec:phys} \\
+Slope $|\partial_\Phi V|/V=1/\sqrt2$ & de~Sitter conjecture~\cite{Obi18,OPSV19}; trans-Planckian censorship~\cite{BV20} & of order one; below $\sqrt{2/3}$: fails under the assumptions of \S\ref{ssec:math}; admitted by the fit of~\cite{AAN25} if $\sigma$ is a dynamical modulus, a hypothesis other than (F10) & \S\ref{ssec:phys} \\
+Cosmological constant & \cite{LPV19,Hig87} & form derived ($\alpha=\tfrac12$); value: read at $\sigma_{\mathrm{obs}}=583.79$; lattice point excluded in $\Lambda$CDM; the constant of the throat divided by the cells; (F10) requires $w=-1$, in tension with~\cite{DESI25} & \S\ref{ssec:phys} \\
+$N$-bound on the observable entropy & Bousso~\cite{Bou00} & identified: the asymptotic level of the horizon & \S\ref{ssec:phys} \\
 Einstein equation, $G_N=\tfrac12$ & Jacobson~\cite{Jac95} & derived, given (F5) & Imported statement~\ref{imp:weld} \\
 Level repulsion & \cite{Mon73} & derived & \S\ref{sec:arity} \\
 Cardy count of states at $c=3$; $N$ as bits excluded by the holographic bound & \cite{Car86}, holography & derived, given the reading of \S\ref{ssec:phys} & \S\ref{sec:discussion} \\
@@ -2448,7 +2452,7 @@ Cardy count of states at $c=3$; $N$ as bits excluded by the holographic bound & 
 \section{Code and data}\label{sec:code}
 
 Python $3.13$, NumPy $2.5.3$, SciPy $1.18.1$, Matplotlib, and mpmath for (2) below. Every number and every figure of this note is computed, in order of appearance, by one package,
-\code{kkgt}, which the note's own test suite carries in \code{tests/src/kkgt}, in forty-four numbered sections that can be run together or one at a time: (1) all
+\code{kkgt}, which the note's own test suite carries in \code{tests/src/kkgt}, in forty-six numbered sections that can be run together or one at a time: (1) all
 numbers, and the alternatives for $m_0$ of \S\ref{sec:bottom}; (2) the vacuum energy,
 \S\ref{sec:bottom}, which needs mpmath; (3) the two-brane spectra, Proposition~\ref{prop:rs};
 (4) Proposition~\ref{prop:metric} and reflection positivity; (5) Corollary~\ref{cor:phase};
@@ -2457,11 +2461,11 @@ numbers, and the alternatives for $m_0$ of \S\ref{sec:bottom}; (2) the vacuum en
 gap ratios of \S\ref{sec:discussion}; (10) Figure~\ref{fig:granularity} with its numbers; (11) the
 contact configurations; (12) the lattice counts of \S\ref{ssec:math} and the vector ratio against the depth, checking numerically each
 statement stated; (13) Figure~\ref{fig:mobius}, checking that $z\tau$ is constant; (14) the three
-gaps of the marks on the ring; (15) the exact count of states at level $N/2$ against $S$; (16) the reconstruction of the lepton masses from $M$; (17) the level $\sigma_{\mathrm{obs}}$ read from the observed $\Lambda$; (18) the observer's level and the unit of curvature; (19) the phase of the tower against its asymptotic form, and the form of~\cite{MQ18}; (20) the contrast with the two observed candidates; (21) the two-brane model fitted to the same candidates; (22) the unit of curvature and the value of~\cite{CW6}; (23) the lattice, the bottom and the observer's lattice point with the $H_0$ it requires; (24) the two dimensionful data and the top; (25) the self-dual Gaussian as a window on the index and as a weight on the scale; (26) the edge of the window and $\sigma_G$; (27) the window as a nome, the tower of tori, $S$ as the mirror and the crossing of $\tfrac12$ against $\pi/2$; (28) Poisson summation and $\vartheta_3(e^{-\pi})$; (29) the density of dark energy at the lattice point; (30) the mirror-invariant throat; (31) the metric of the modulus of the ring and the conjectures; (32) the level of the observer read from each determination against the lattice; (33) the welded tension, the Higuchi ratio, the Regge scale in the two units and the count of graviton modes below $1000$~TeV; (34) the exponential quintessence of slope $1/\sqrt2$ and the fit of~\cite{AAN25}; (35) the threshold $\tfrac12$: the Fisher time, the binary entropy and one bit per eigenvalue; (36) the orbit of the phase of the tower, the horizon of $S(12)$ and the black-hole threshold of the two-brane throat; (37) the entropy, the modes and the bits, the vector ratio as a function of the depth alone, the gluons in the graviton throat, the placement face of $M$, and the ratio $700/380$; (38) the area quantum of (B1) against a Shannon bit; (39) Figure~\ref{fig:throattiling}, checking that the boundaries of the tiles continue from ring to ring and that the weighted count is $S$; (40) the dictionary on a regular tiling against the cusp: the open legs of $\{7,3\}$ and the constant of Crofton, the pairs of a tiling and a bond dimension, the metric of the cusp, the two tiles and their substitution, the weighted count to $60$ digits, and the lattice count of \S\ref{ssec:math}; (41) Figure~\ref{fig:tilingstrip}, the tiles inside each disk of five regular tilings, the tangencies of the levels with their edges, and the approach of the Fibonacci ratios to $\golden$; (42) the weld time as the Galois coordinate, the step of level as an exchange and a shift, the ring labelled by a unit, the orthogonalisation at the half-turn, the rational step against the contrast, the trace $3$, and the ratios of the operator of Imported statement~\ref{imp:A1}; (43) the substitutions on two letters and the four conditions, the diagonal of the cube, Binet's bound on the tile count, the kernel of a rational step and the Bragg peaks of the Fibonacci chain; (44) Figure~\ref{fig:background}, checking numerically each statement drawn.
+gaps of the marks on the ring; (15) the exact count of states at level $N/2$ against $S$; (16) the reconstruction of the lepton masses from $M$; (17) the level $\sigma_{\mathrm{obs}}$ read from the observed $\Lambda$; (18) the observer's level and the unit of curvature; (19) the phase of the tower against its asymptotic form, and the form of~\cite{MQ18}; (20) the contrast with the two observed candidates; (21) the two-brane model fitted to the same candidates; (22) the unit of curvature and the value of~\cite{CW6}; (23) the lattice, the bottom and the observer's lattice point with the $H_0$ it requires; (24) the two dimensionful data and the top; (25) the self-dual Gaussian as a window on the index and as a weight on the scale; (26) the edge of the window and $\sigma_G$; (27) the window as a nome, the tower of tori, $S$ as the mirror and the crossing of $\tfrac12$ against $\pi/2$; (28) Poisson summation and $\vartheta_3(e^{-\pi})$; (29) the density of dark energy at the lattice point; (30) the mirror-invariant throat; (31) the metric of the modulus of the ring and the conjectures; (32) the level of the observer read from each determination against the lattice; (33) the welded tension, the Higuchi ratio, the Regge scale in the two units and the count of graviton modes below $1000$~TeV; (34) the exponential quintessence of slope $1/\sqrt2$ and the fit of~\cite{AAN25}; (35) the threshold $\tfrac12$: the Fisher time, the binary entropy and one bit per eigenvalue; (36) the orbit of the phase of the tower, the horizon of $S(12)$ and the black-hole threshold of the two-brane throat; (37) the entropy, the modes and the bits, the vector ratio as a function of the depth alone, the gluons in the graviton throat, the placement face of $M$, and the ratio $700/380$; (38) the area quantum of (B1) against a Shannon bit; (39) Figure~\ref{fig:throattiling}, checking that the boundaries of the tiles continue from ring to ring and that the weighted count is $S$; (40) the dictionary on a regular tiling against the cusp: the open legs of $\{7,3\}$ and the constant of Crofton, the pairs of a tiling and a bond dimension, the metric of the cusp, the two tiles and their substitution, the weighted count to $60$ digits, and the lattice count of \S\ref{ssec:math}; (41) Figure~\ref{fig:tilingstrip}, the tiles inside each disk of five regular tilings, the tangencies of the levels with their edges, and the approach of the Fibonacci ratios to $\golden$; (42) the weld time as the Galois coordinate, the step of level as an exchange and a shift, the ring labelled by a unit, the orthogonalisation at the half-turn, the rational step against the contrast, the trace $3$, and the ratios of the operator of Imported statement~\ref{imp:A1}; (43) the substitutions on two letters and the four conditions, the diagonal of the cube, Binet's bound on the tile count, the kernel of a rational step and the Bragg peaks of the Fibonacci chain; (44) Figure~\ref{fig:background}, checking numerically each statement drawn; (45) the level of the observer along $\Lambda$CDM, the asymptotic level and the $N$-bound, the limit of compression at $z=\tfrac12$ and the first expansion, the constant of the first patch against that of the throat in every dimension, the observed constant as the constant of the throat divided by the cells, and the halves of de~Sitter space that the observer reaches and receives; (46) the Hopf foliation by the tori of the window, the mirror, the map $J$, the homogeneity of the fibration and the axis of its tori.
 
-The package is exercised by the test suite of the note: \code{uv run pytest tests/ -q} runs all $490$ tests in about a minute, \code{uv run pytest tests/ -q -m 'not slow'} the $486$ that each take under ten seconds, and \code{pnpm run test} the same suite. A test either recomputes a number from its closed form or reads it from what its section prints, always with an explicit tolerance: a rounding tolerance is the width of the printed precision, $5\times10^{-5}$ for a value printed to four decimals, and no tolerance is widened to make a test pass. Every number and every figure of this note therefore names the test that checks it, as \testref{test\_bottom\_of\_the\_throat} names the counts at the bottom of the throat; the map of the forty-four sections to the tests is in \code{tests/README.md}.
+The package is exercised by the test suite of the note: \code{uv run pytest tests/ -q} runs all $520$ tests in about a minute, \code{uv run pytest tests/ -q -m 'not slow'} the $516$ that each take under ten seconds, and \code{pnpm run test} the same suite. A test either recomputes a number from its closed form or reads it from what its section prints, always with an explicit tolerance: a rounding tolerance is the width of the printed precision, $5\times10^{-5}$ for a value printed to four decimals, and no tolerance is widened to make a test pass. Every number and every figure of this note therefore names the test that checks it, as \testref{test\_bottom\_of\_the\_throat} names the counts at the bottom of the throat; the map of the forty-six sections to the tests is in \code{tests/README.md}.
 
-Lean~4: \code{TorreKK\_LYR\_v33.lean}, one hundred and fifty theorems and six axioms, no \code{sorry}, compiled with no errors;
+Lean~4: \code{TorreKK\_LYR\_v34.lean}, one hundred and sixty-three theorems and six axioms, no \code{sorry}, compiled with no errors;
 the Mathlib names at risk are listed below.
 \begin{center}\small\ttfamily
 \begin{tabular}{@{}ll@{}}
@@ -2475,9 +2479,13 @@ Real.cos\_pi\_div\_five & Real.tan\_arctan\\
 Complex.I\_sq & Complex.exp\_pi\_mul\_I\\
 Real.rpow\_lt\_rpow\_left\_iff & Real.exp\_le\_one\_iff\\
 Real.sq\_sqrt & Complex.abs, Complex.abs\_exp\\
-Nat.Prime.irrational\_sqrt & Irrational.int\_mul
+Nat.Prime.irrational\_sqrt & Irrational.int\_mul\\
+Real.arctan\_inv\_of\_pos & Real.sin\_arctan\\
+Real.log\_rpow & Real.cosh\_add\_sinh\\
+map\_div\textsubscript{0} & neg\_div\_neg\_eq\\
+Complex.abs\_conj & map\_ne\_zero
 \end{tabular}
-\end{center} Every \code{[name]} cited in the text is a theorem of this file; names marked \code{[CW6:~name]} are theorems of~\cite{CW6}. Five classical results that Mathlib does not yet contain enter as six axioms, each with its source and each used only where the text says: the zeros of $J_1$ with McMahon's phase \Lean{bessel\_J1\_zeros}~\cite{RS99,DHR00,Wat44}; the transcendence of $e^{\pi}$ \Lean{exp\_pi\_transcendental}~\cite{Sch35}, from which the irrationality of $\log\golden/\pi$ is proved; the two derivatives of the stereographic meridian \Lean{stereographic\_meridian\_deriv}, from which the conformality is proved; the function $\eta$ and its law under $T$ \Lean{eta, eta\_T}~\cite{Apo90}; and Weyl's equidistribution \Lean{weyl\_equidistribution}~\cite{Wey16}, from which the average along one orbit and its connected part are proved. There is no \code{sorry}.
+\end{center} Every \code{[name]} cited in the text is a theorem of this file; names marked \code{[CW6:~name]} are theorems of~\cite{CW6}. Five classical results that Mathlib does not yet contain enter as six axioms, each with its source and each used only where the text says: the zeros of $J_1$ with McMahon's phase \Lean{bessel\_J1\_zeros}~\cite{RS99,DHR00,Wat44}; the transcendence of $e^{\pi}$ \Lean{exp\_pi\_transcendental}~\cite{Sch35}, from which the irrationality of $\log\golden/\pi$ is proved; the two derivatives of the stereographic meridian \Lean{stereographic\_meridian\_deriv}, from which the conformality is proved; the function $\eta$ and its law under $T$ \Lean{dedekindEta, eta\_T}~\cite{Apo90}; and Weyl's equidistribution \Lean{weyl\_equidistribution}~\cite{Wey16}, from which the average along one orbit and its connected part are proved. There is no \code{sorry}.
 
 \printbibliography
 
