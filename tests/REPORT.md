@@ -160,7 +160,7 @@ thresholds. The four exceptions above were already justified when written.
 > After this report the witness system of `main.tex` was
 > standardised (colour by class, `\witness{P}{…}` on its own line, labels
 > `W1[CLPW]`, migration of 16 marks `P*`→`P` with verification of the 33
-> names against `lean/TorreKK_LYR_v33.lean`), and then reduced to the
+> names against `lean/TorreKK_LYR_v34.lean`), and then reduced to the
 > grammar approved by the author: one macro `\tier{X}` / `\tier[KEY]{X}`,
 > the classes `L` and `R` removed, `P*` kept as an internal macro that the
 > released text never invokes. Current state: 89 `\tier` (P 15, N 72,

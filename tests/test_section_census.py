@@ -10,7 +10,8 @@ same test name twice.
 
 Three things are pinned here:
 
-* the exact set of tests main.tex refers to;
+* the exact set of tests main.tex refers to (a new citation needs its line
+  here, added together with the citation itself);
 * the test each of the five figures is attributed to;
 * the absence of the older contract (a numbered ``section~N`` citation),
   which is what ``\\testref{...}`` replaced.
@@ -100,10 +101,15 @@ def caption_of(figure_file: str) -> str:
 
 @pytest.mark.section
 class TestSectionRegistry:
-    def test_forty_four_sections_in_order(self, sections):
-        """Sections 1..44, contiguous: the tex lists them as (1)..(44)."""
+    def test_forty_six_sections_in_order(self, sections):
+        """Sections 1..46, contiguous, in file order.
+
+        The manuscript still numbers its blocks (1)..(44): sections 45 and
+        46 came with the v136 provenance (the (F10) item and the Hopf
+        foliation) and get their ``(45)``/``(46)`` labels with it.
+        """
         numbers = [n for n, _t, _f in sections]
-        assert numbers == list(range(1, 45)), numbers
+        assert numbers == list(range(1, 47)), numbers
 
     def test_every_section_is_callable(self, sections):
         for n, title, fn in sections:
@@ -231,6 +237,25 @@ class TestTexTestRefs:
             "test_sym_t_eigenvalues_are_the_printed_three",
             "test_trace_three_and_the_shortest_geodesic",
             "test_uv_level",
+            # the witness ties the v136 pass closed: a number the manuscript
+            # already printed, by the test that asserts it
+            "test_masses_at_the_bottom_of_the_throat",
+            "test_depth_of_the_clock",
+            "test_scales",
+            "test_lattice_points_follow_the_area_on_average",
+            "test_the_integer_12_kills_the_cut",
+            "test_condition_on_the_moduli_kinetic_term",
+            # sections 45 and 46: the (F10) item and the Hopf foliation
+            "test_only_four_dimensions_share_the_two_constants",
+            "test_the_asymptotic_and_today_levels_are_the_printed_two",
+            "test_the_static_patch_is_a_quarter",
+            "test_the_number_of_pi_cells_is_122",
+            "test_a_torus_is_the_preimage_of_a_parallel_and_asks_for_an_axis",
+            "test_the_flat_tori_have_modulus_i_tan_eta",
+            "test_the_compression_limit_is_half_a_cell",
+            "test_a_doubling_is_not_a_bit",
+            "test_three_h_squared_is_the_entropy_of_the_horizon",
+            "test_j_squares_to_minus_one_and_the_half_turn_is_invisible",
         }
 
     def test_the_manuscript_cites_no_numbered_section(self):

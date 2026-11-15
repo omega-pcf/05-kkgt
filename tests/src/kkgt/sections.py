@@ -1,5 +1,5 @@
 """kkgt.sections: every number and the five figures of
-«The Kaluza–Klein spectrum of the golden throat», v134.
+«The Kaluza–Klein spectrum of the golden throat», v136.
 
 Usage:  PYTHONPATH=tests/src python -m kkgt.sections          all sections
         PYTHONPATH=tests/src python -m kkgt.sections 2 14     only those sections
@@ -2057,6 +2057,104 @@ def seccion_44():
     print("background figure: ok")
 
 SECCIONES.append((44, 'The Background figure: one structure seen at once (Figure 1)', seccion_44))
+
+# ======================================================================
+# 45. The observer level along LCDM, the story of (F10), the half, and the throat constant
+# ======================================================================
+def seccion_45():
+    """(F10) and the texts of ssec:phys: every number is checked; what
+    holds by construction is marked as such.
+    Run:  python -m kkgt.sections 45"""
+    import numpy as np
+    from math import gamma, pi
+    phi=(1+5**.5)/2; L=np.log(phi); lam=np.log(2)/L; G=0.5
+    z=lambda s: phi**s; S=lambda s: np.pi*phi**s; Lam=lambda s: 6*phi**(-s); Hl=lambda s: np.sqrt(Lam(s)/3)
+    # the horizon level in LCDM, with the Planck values
+    tP=5.391247e-44; l=np.sqrt(2)*tP; Mpc=3.0856775814913673e22
+    H0=67.36e3/Mpc; Om=0.3153; Or=9.0e-5; OL=1-Om-Or
+    Hc=lambda a: H0*np.sqrt(Or/a**4+Om/a**3+OL); sig=lambda h: np.log(6/(3*(h*l)**2))/L
+    a=np.logspace(-34,4,4000); s=sig(Hc(a))
+    s_inf=sig(H0*np.sqrt(OL)); s_hoy=sig(H0)
+    assert np.all(np.diff(s)>-1e-9) and abs(s[-1]-s_inf)<1e-2
+    assert abs(s_inf-583.877)<5e-3 and abs(s_hoy-583.090)<5e-3
+    print(f"Planck: asymptotic level {s_inf:.2f}; horizon of today {s_hoy:.2f}, below it, rising towards it")
+    assert np.allclose(3*(Hc(a)*l)**2*np.pi*phi**s,6*np.pi)
+    print("3H^2 = 6pi/S_H at every moment; what falls is 3H^2, Lambda is constant (w = -1)")
+    print(f"N bound: 3pi/(Lambda G_N) with G_N=1/2 = 6pi/Lambda = S_obs = pi phi^{s_inf:.3f}")
+    # the compression limit
+    zz=np.linspace(0.01,3,30000); cruce=zz[np.argmin(abs(2*np.pi*zz**2-np.pi*zz))]
+    assert abs(cruce-0.5)<1e-3 and np.isclose(z(-lam),0.5) and np.isclose(S(-lam),np.pi/2)
+    assert np.all(2*np.pi*zz[zz<0.5]**2<np.pi*zz[zz<0.5])
+    print(f"compression limit: 4pi z^2/(4G_N) = pi z only at z = 1/2, sigma = {-lam:.4f}, S = pi/2 (half a cell)")
+    assert np.isclose(z(0)/z(-lam),2) and np.isclose(S(0),2*S(-lam))
+    print("first expansion: the radius doubles, half a cell becomes a cell, S(0) = pi; a doubling is not a bit:",
+          f"Delta S = {(S(0)-S(-lam))/np.log(2):.3f} bits")
+    # the constant of the first patch and that of the throat
+    assert np.isclose(3*np.pi/(G*S(0)),6) and np.isclose(4*3/2,6)
+    Om_=lambda k: 2*pi**((k+1)/2)/gamma((k+1)/2)
+    iguales=[d for d in range(3,30) if np.isclose((d-1)*(d-2)/2*(Om_(d-2)/(4*G*np.pi))**(2/(d-2)),d*(d-1)/2)]
+    assert iguales==[4]
+    print("Lambda(0) = 3/G_N = 6 (W4) and |Lambda_5| = d(d-1)/2 = 6 (W8): with patch and throat at the same d, only d = 4")
+    sg=np.linspace(-5,600,200001); assert abs(sg[np.argmin(abs(Lam(sg)-6))])<1e-2
+    print("[by construction] the level where they are equal is sigma = 0; H(0) l = %.4f, throat radius 1: equal constants, not radii"%Hl(0))
+    w=lambda n: np.exp(-np.pi*phi**(-2.0*n)); assert w(1)<0.5<w(2) and Hl(1)>1>Hl(2)
+    r=583.79*np.log10(phi); assert abs(r-122.0)<0.01 and np.isclose(Lam(583.79)*S(583.79),6*S(0))
+    print(f"[by construction, Lambda S = 6pi] Lambda_obs = |Lambda_5| S(0)/S_obs: 3H^2(0)/Lambda_obs = phi^583.79 = 10^{r:.2f} pi cells")
+    # the half
+    rng=np.random.default_rng(45); N=200000; T=rng.uniform(-np.pi/2,np.pi/2,N)*0.999; chi=rng.uniform(0,np.pi,N)
+    tau=np.arcsinh(np.tan(T)); X0=np.sinh(tau); X4=np.cosh(tau)*np.cos(chi)
+    fut=chi<T+np.pi/2; past=chi<np.pi/2-T
+    assert np.array_equal(X0+X4>0,fut) and np.array_equal(X4-X0>0,past) and np.array_equal(fut&past,chi<np.pi/2-abs(T))
+    print("the flat chart X0+X4>0 is the causal future of the worldline; what it receives, X4-X0>0; they cross at the static patch, a quarter")
+    for l_,t_,r_ in [(1,0.3,2),(2.5,-1,0.7),(0.4,3,5)]:
+        assert np.isclose((l_*np.sinh(t_/l_)+r_**2/(2*l_)*np.exp(t_/l_))+(l_*np.cosh(t_/l_)-r_**2/(2*l_)*np.exp(t_/l_)),l_*np.exp(t_/l_))
+    print("X0+X4 = l e^{t/l} > 0 (planar_patch_positive): ok")
+
+SECCIONES.append((45, 'The observer level in LCDM, the story of (F10), the throat constant and the half', seccion_45))
+
+# ======================================================================
+# 46. The Hopf foliation and J
+# ======================================================================
+def seccion_46():
+    """P7 (ssec:math) and P7b (conclusions): the tori of the window, the
+    mirror, J, the axis.
+    Run:  python -m kkgt.sections 46"""
+    import numpy as np
+    phi=(1+5**.5)/2; rng=np.random.default_rng(46)
+    tor=lambda e,a,b: np.array([np.cos(e)*np.exp(1j*a),np.sin(e)*np.exp(1j*b)])
+    ns=np.arange(-12,13); eta=np.arctan(phi**(-2.0*ns))
+    assert np.allclose(np.tan(eta),phi**(-2.0*ns))
+    e=0.4;a,b=1.1,2.3;h=1e-6; g=lambda u,v:np.real(np.vdot(u,v))
+    da=(tor(e,a+h,b)-tor(e,a-h,b))/2/h; db=(tor(e,a,b+h)-tor(e,a,b-h))/2/h
+    assert np.allclose([g(da,da),g(db,db),g(da,db)],[np.cos(e)**2,np.sin(e)**2,0],atol=1e-8)
+    assert np.allclose(np.pi/2-eta,eta[::-1]) and np.isclose(eta[ns==0][0],np.pi/4)
+    for n,et in zip(ns,eta):
+        bb=np.linspace(0,2*np.pi,50); s=np.sin(et); rho=np.cos(et)/(1-s*np.sin(bb)); zz=s*np.cos(bb)/(1-s*np.sin(bb))
+        assert np.allclose((rho-1/np.cos(et))**2+zz**2,np.tan(et)**2,rtol=1e-9) and np.isclose(1/np.sin(et),np.sqrt(1+phi**(4.0*n)))
+    print("flat tori of modulus i tan eta, tan eta_n = phi^-2n; the exchange is the mirror; Clifford at 0; R/r = sqrt(1+phi^4n) from z1=0")
+    z=rng.normal(size=2)+1j*rng.normal(size=2); z/=np.linalg.norm(z); hopf=lambda z: z[...,0]/z[...,1]
+    J=lambda z: np.array([-np.conj(z[1]),np.conj(z[0])])
+    assert np.allclose(-z,np.exp(1j*np.pi)*z) and np.isclose(hopf(-z),hopf(z))
+    assert np.isclose(hopf(J(z)),-1/np.conj(hopf(z))) and np.allclose(J(J(z)),-z) and np.allclose(J(J(J(J(z)))),z)
+    assert np.isclose(abs(J(tor(e,a,b))[0]),np.sin(e))
+    print("J^2 = -1, J^4 = 1; on the base, the antipode of W10; on the tori, the mirror; the half turn is not seen on the base")
+    # homogeneity, tori and axis
+    for _ in range(100):
+        p=rng.normal(size=2)+1j*rng.normal(size=2); p/=np.linalg.norm(p); q=rng.normal(size=2)+1j*rng.normal(size=2); q/=np.linalg.norm(q)
+        A=np.array([[p[0],-p[1].conj()],[p[1],p[0].conj()]]); B=np.array([[q[0],-q[1].conj()],[q[1],q[0].conj()]]); U=B@np.linalg.inv(A)
+        assert np.allclose(U@p,q) and np.allclose(U.conj().T@U,np.eye(2))
+    e0=0.5; aa=rng.uniform(0,2*np.pi,500); bb=rng.uniform(0,2*np.pi,500)
+    Tz=np.stack([np.cos(e0)*np.exp(1j*aa),np.sin(e0)*np.exp(1j*bb)],-1)
+    assert np.allclose(abs(hopf(Tz)),1/np.tan(e0))
+    R=np.array([[np.cos(.7),-np.sin(.7)*np.exp(-.3j)],[np.sin(.7)*np.exp(.3j),np.cos(.7)]]); Tr=Tz@R.T
+    assert np.std(abs(Tr[:,0]))>1e-2 and np.allclose(abs(hopf(Tr@np.linalg.inv(R).T)),1/np.tan(e0))
+    D=np.diag([np.exp(.4j),np.exp(-1.1j)]); assert np.allclose(abs((Tz@D.T)[:,0]),np.cos(e0))
+    print("SU(2) takes any fibre to any other; a torus is the preimage of a parallel and asks for an axis; every axis goes to every other; U(1)xU(1) preserves each torus")
+    w=lambda n: np.exp(-np.pi*phi**(-2.0*n)); n12=0.5*np.log(np.pi/np.log(2))/np.log(phi)
+    assert np.allclose(w(ns),np.exp(-np.pi*np.tan(eta))) and abs(n12-1.5702)<1e-4
+    print(f"the window weight is e^(-pi tan eta_n); it crosses 1/2 at n = {n12:.4f}")
+
+SECCIONES.append((46, 'The Hopf foliation and J', seccion_46))
 
 if __name__ == "__main__":
     requested = {int(a) for a in sys.argv[1:]}

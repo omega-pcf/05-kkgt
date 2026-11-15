@@ -166,12 +166,12 @@ class TestSection41FiveRegularTilings:
         n is kept in 15..25: below it the convergent has not converged, above
         it the product loses float64 precision (at n = 40 it underflows to 0).
 
-        main.tex:1349 quotes 0.99990/(sqrt5 q^2) at q = F_29 next to this
-        testref; that figure is section 41's float64 cancellation (it prints
-        0.999902), not the value of the ratio -- see
-        test_the_hurwitz_ratio_at_f_29_exactly, which computes it in 60
-        digits.  The test asserts the law the sentence is about, the
-        constant 1/sqrt5.
+        main.tex quotes 1.00000/(sqrt5 q^2) at q = F_29 next to this
+        testref; the manuscript used to quote 0.99990 there, which is
+        section 41's float64 cancellation (it prints 0.999902), not the
+        value of the ratio -- see test_the_hurwitz_ratio_at_f_29_exactly,
+        which computes it in 60 digits.  This test asserts the law the
+        sentence is about, the constant 1/sqrt5.
         """
         f = [0, 1]
         for _ in range(n + 3):
@@ -183,14 +183,15 @@ class TestSection41FiveRegularTilings:
     def test_the_hurwitz_ratio_at_f_29_exactly(self):
         """sqrt5 q^2 |phi - p/q| at q = F_29 and F_30, in 60 digits: 1.00000.
 
-        main.tex:1349 writes ``0.99990/(sqrt5 q^2) at q = F_29`` beside the
-        testref above; section 41 prints 0.999902 there because float64
+        main.tex writes ``1.00000/(sqrt5 q^2) at q = F_29`` beside the
+        testref above; it used to quote 0.99990, which is section 41's
+        float64 cancellation -- it prints 0.999902 there because float64
         cancels ``1.618... - p/q`` down to ~6e-13, whose own noise is ~3e-4
         of it.  Both readings of the index (q = F_29 = 514229 and the
         F_30 = 832040 that section 41's shifted list prints) give 1.00000
-        exactly, so the figure in the manuscript is the cancellation, not
-        the ratio.  Nothing is loosened here: this test states the exact
-        value so the discrepancy is visible in the suite.
+        exactly, so the old figure was the cancellation, not the ratio.
+        Nothing is loosened here: this test states the exact value so the
+        discrepancy stays visible in the suite.
         """
         from decimal import Decimal, localcontext
 

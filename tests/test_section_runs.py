@@ -1,9 +1,9 @@
-"""Execution contract: all 44 sections of kkgt.sections run clean.
+"""Execution contract: all 46 sections of kkgt.sections run clean.
 
 Each case is one numbered section, identified as ``section-NN`` (the id is
 what the mapping table in the report uses).  Running a section executes the
-checks the author left inside it (80 ``assert`` statements spread over
-sections 11-13, 29, 37, 39-44) plus the number contract below: the exact
+checks the author left inside it (``assert`` statements spread over
+sections 11-13, 29, 37, 39-46) plus the number contract below: the exact
 line of stdout that carries the number the manuscript cites.
 
 Nothing is relaxed here: if a section raises, the test fails.
@@ -63,12 +63,14 @@ MARKERS = {
     42: "tau(12) = 0.2107",
     43: "14042 collisions",
     44: "background figure: ok",
+    45: "N bound: 3pi/(Lambda G_N) with G_N=1/2 = 6pi/Lambda = S_obs = pi phi^583.877",
+    46: "the window weight is e^(-pi tan eta_n); it crosses 1/2 at n = 1.5702",
 }
 
 
 def _params():
     out = []
-    for n in range(1, 45):
+    for n in range(1, 47):
         marks = [pytest.mark.section]
         if n in SLOW_SECTIONS:
             marks.append(pytest.mark.slow)
@@ -88,4 +90,4 @@ def test_section_runs_and_prints_its_number(run_section, n):
 
 def test_all_sections_covered():
     """The marker table must cover every registered section."""
-    assert sorted(MARKERS) == list(range(1, 45))
+    assert sorted(MARKERS) == list(range(1, 47))

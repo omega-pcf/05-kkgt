@@ -119,7 +119,11 @@ class TestSection1Numbers:
         assert got == pytest.approx(6 * math.sqrt(3) * math.pi / LN_PHI, abs=1e-3)
 
     def test_dirichlet_lowest_eigenvalue_is_positive(self, run_section):
-        """Boundary conditions: Neumann has no mode, Dirichlet starts at 26.4."""
+        """Boundary conditions: Neumann has the zero mode, Dirichlet starts at 26.4.
+
+        main.tex: "with them the lowest eigenvalue is 0, the massless
+        four-dimensional graviton; with Dirichlet ... there is no zero mode".
+        """
         run = run_section(1)
         m = run.match(
             r"lowest m\^2: Neumann \(~0\) ; Dirichlet \(26\.4\)\s+"

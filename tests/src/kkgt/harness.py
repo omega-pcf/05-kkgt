@@ -1,7 +1,7 @@
 """Harness for the test suite of the manuscript.
 
 The manuscript cites the tests that check each number (``\\testref{...}``),
-so the tests keep a 1:1 identity with the forty-three numbered sections of
+so the tests keep a 1:1 identity with the forty-six numbered sections of
 ``kkgt.sections``: every number is read from the stdout of the section that
 produces it, or recomputed independently and compared with an explicit
 tolerance.
