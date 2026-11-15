@@ -88,7 +88,12 @@ class TestSection10Granularity:
         assert round(1 / 2.0 ** -k) == 2 ** k
 
     def test_worst_gap_ratio_over_the_first_5000_levels(self):
-        """phi never leaves the phi^2 ratio; the phase step reaches 17.542."""
+        """phi never leaves the phi^2 ratio; the phase step reaches 17.542.
+
+        main.tex L1823-1824: the same worst-case scan for the three comparison
+        steps -- 3.414 for sqrt(2), 9.52 for e, 293.6 for pi, each at the
+        printed precision over N = 10..5000.
+        """
         worst_phi = max(
             (lambda g: g.max() / g.min())(self._gaps(np.arange(1, N + 1) * PHI))
             for N in range(10, 5001)
@@ -101,6 +106,17 @@ class TestSection10Granularity:
             for N in range(10, 5001)
         )
         assert round(worst_phase, 3) == 17.542, worst_phase
+
+        for name, a, printed, nd in (
+            ("sqrt2", 2**0.5, 3.414, 3),
+            ("e", math.e, 9.52, 2),
+            ("pi", math.pi, 293.6, 1),
+        ):
+            worst = max(
+                (lambda g: g.max() / g.min())(self._gaps(np.arange(1, N + 1) * a))
+                for N in range(10, 5001)
+            )
+            assert round(worst, nd) == printed, (name, worst)
 
     def test_the_levels_that_break_the_phi_squared_ratio(self):
         """N+1 = Fibonacci: only there the origin joins the marks."""

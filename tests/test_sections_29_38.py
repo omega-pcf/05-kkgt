@@ -53,6 +53,28 @@ class TestSection29LatticePointFromOmegaLambda:
         ol = omega_l_required(584)
         assert round((ol - p) / sigma, 1) == tension
 
+    def test_the_planck_level_is_2_2_to_3_1_sigma_from_584(self, run_section):
+        """main.tex L2024-2025: Planck's level 583.877 sits 2.2 (r = -1) to
+        3.1 (r = 0) standard deviations from 584 as the correlation of
+        Omega_m and H_0 runs from -1 to 0 (section 29 prints both).
+
+        One node rather than a parametrised pair: the manuscript cites this
+        test by name, and a parametrised id carries its parameters."""
+        ol = omega_l_required(584)
+        out = run_section(29)
+        for r, printed in [(-1.0, 2.2), (0.0, 3.1)]:
+            p, dp = self.planck(r)
+            level = 584 + math.log(ol / p) / LN_PHI
+            dist = (584 - level) * p * LN_PHI / dp     # in units of the level sigma
+            assert round(level, 3) == 583.877, (r, level)
+            assert round(dist, 1) == printed, (r, dist)
+            r_tag = re.escape(f"{r:+.0f}")            # the sign is a regex metachar
+            m = out.match(
+                rf"Planck only, r = {r_tag}: level ([\d.]+), ([\d.]+) sigma from 584"
+            )
+            assert round(float(m.group(1)), 3) == 583.877
+            assert round(float(m.group(2)), 1) == printed
+
     @pytest.mark.parametrize("r,ten", [(0.0, 1.81), (-1.0, 1.43)])
     def test_desi_against_planck(self, r, ten):
         """DESI DR2 + CMB (0.3240 +- 0.0043) agrees with Planck at 1.4-1.8 sigma."""
@@ -287,6 +309,19 @@ class TestSection36BlackHoleWhereNeeded:
         assert round(s_entropy, 2) == 1011.58
         for other in (gh, area, cardy):
             assert other == pytest.approx(s_entropy, rel=1e-9), other
+
+    def test_entropy_over_the_gh_temperature_grows_as_phi_to_the_three_sigma_over_two(self):
+        """main.tex L2045-2046: S times the inverse Gibbons-Hawking temperature.
+
+        S = pi phi^sigma (section 36) and T_GH ~ H = sqrt2 phi^{-sigma/2}
+        (also section 36), so the ratio steps by phi^{3/2} per level; the
+        claim is checked at s = 0, 12, 24.
+        """
+        def ratio(s):
+            return math.pi * PHI**s / PHI ** (-s / 2)
+
+        for s in (0, 12, 24):
+            assert ratio(s + 1) / ratio(s) == pytest.approx(PHI**1.5, rel=1e-12), s
 
     def test_lambda_is_positive(self):
         assert 6 * PHI**-12 == pytest.approx(0.0186, abs=5e-5)

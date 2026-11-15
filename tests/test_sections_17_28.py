@@ -169,6 +169,24 @@ class TestSection21TwoBraneRival:
         assert round(j[2] * (lg - lam)) == 14
         assert round(j[3] * (lg - lam)) == 19
 
+    def test_the_two_models_differ_by_one_point_four_percent(self):
+        """main.tex L1578: the throat differs from the two-brane fit by 1.4 %.
+
+        Every mode carries the same scale ratio, so 1028 against 1014 and
+        1346 against 1328 both give 1.4 %; telling the models apart needs a
+        resolution of 0.014 x 1028 = 14.4 GeV, 'about 15 GeV' in the text.
+        """
+        _sigma, _ds, lam = TestSection20TwoCandidates.fit([380, 700], [20, 20])
+        from scipy.special import jn_zeros
+
+        j = jn_zeros(1, 6)
+        lg = M_GEV * PHI**12
+        for k in (2, 3):
+            g, t = j[k] * lg, j[k] * lam
+            assert round(100 * abs(g - t) / g, 1) == 1.4, k
+        # integer precision on 'about 15 GeV': the width of 15 is 1 GeV
+        assert 0.014 * 1028 == pytest.approx(15, abs=1)
+
 
 # ══════════════════════════════════════════════════════════ section 22 ══
 class TestSection22CurvatureUnit:
@@ -405,3 +423,27 @@ class TestSection28PoissonTheta:
         closed = math.pi ** 0.25 / math.gamma(0.75)
         assert t3 == pytest.approx(closed, abs=1e-10)
         assert round(t3, 12) == 1.086434811213
+
+    def test_the_lambda_transformation_laws_hold_to_1e_16(self):
+        """main.tex L1541-1543: lambda(-1/tau) = 1 - lambda(tau), lambda(i) = 1/2.
+
+        lambda = (theta_2/theta_3)^4 at tau = i t. The laws are asserted to
+        1e-16 -- the precision main.tex used to state (witness-decisions
+        5.6, dropped concurrently); at float64 the residual is one ulp
+        (1.1e-16), hence mpmath at 50 digits.
+        """
+        import mpmath as mp
+
+        def lam(t):
+            th2 = 2 * mp.fsum(
+                mp.exp(-mp.pi * t * (mp.mpf(n) + mp.mpf("0.5")) ** 2)
+                for n in range(40)
+            )
+            th3 = 1 + 2 * mp.fsum(mp.exp(-mp.pi * t * n * n) for n in range(1, 40))
+            return (th2 / th3) ** 4
+
+        with mp.workdps(50):
+            assert abs(lam(mp.mpf(1)) - mp.mpf(1) / 2) < mp.mpf(10) ** -16
+            for t in (mp.mpf(2), mp.mpf(3)):
+                # -1/(i t) = i / t, so the law reads lambda(i/t) = 1 - lambda(i t)
+                assert abs(lam(1 / t) - (1 - lam(t))) < mp.mpf(10) ** -16, t

@@ -182,6 +182,85 @@ class TestSection1Numbers:
         assert closed < 1e-10, closed
         assert band < 1e-10, band
 
+    def test_the_three_spacings_have_the_variance_of_the_ensemble(self, run_section):
+        """main.tex L1366: the three spacings of eq:data /mean have variance 0.001.
+
+        The GUE reference for that variance is 3pi/8 - 1 = 0.178; section 1
+        prints both ('Additions A-C', B5 rigidity).
+        """
+        obs = np.array(OBS_G)
+        sp = np.diff(obs)
+        sp = sp / sp.mean()
+        assert round(float(np.var(sp)), 3) == 0.001
+        assert round(3 * math.pi / 8 - 1, 3) == 0.178
+        run = run_section(1)
+        run.value(
+            r"data unfolded spacing variance \(~0\)\s+([\d.]+)",
+            want=0.001, tol=R3, label="spacing variance",
+        )
+        run.value(
+            r"GUE \(beta=2\) spacing variance 3pi/8 - 1 \(0\.178\)\s+([\d.]+)",
+            want=0.178, tol=R3, label="GUE variance",
+        )
+
+    def test_the_residues_of_phi_to_the_twelve(self):
+        """main.tex L1508-1512: phi^12 = 89 + 144 phi on the 24-clock.
+
+        Modulo 16, 9, 12, 24, 48, 72 the coefficient 144 vanishes, so the
+        half-turn phi^12 is an integer residue which squares to 1; modulo 9
+        it is 8, i.e. -1. Modulo 5 the clock is 20 and phi^12 is not an
+        involution. Section 1 prints these tuples ('Proposition: phi^12 is
+        the half-turn of the 24-clock' / 'Clock of phi mod N (Pisano period)').
+        """
+        a, b = 89, 144        # phi^12 = F_11 + F_12 phi
+        for n in (16, 9, 12, 24, 48, 72):
+            assert b % n == 0, n          # integer residue: 144 = 0 (mod n)
+            r = a % n
+            assert r * r % n == 1, n      # the half-turn: the residue squares to 1
+        assert a % 9 == 8                 # modulo 9 it is -1
+        # modulo 5: 144 = 4 (mod 5), and (4 + 4 phi)^2 = 32 + 48 phi = 2 + 3 phi,
+        # not 1 -> phi^12 is neither an integer residue nor an involution
+        assert b % 5 == 4
+        aa, bb = a % 5, b % 5
+        sq = ((aa * aa + bb * bb) % 5, (2 * aa * bb + bb * bb) % 5)
+        assert sq != (1, 0), sq
+        # the order of phi mod 5 is 20: phi^k = F_{k-1} + F_k phi
+        u, v, k = 1 % 5, 0, 0
+        while True:
+            u, v, k = v, (u + v) % 5, k + 1
+            if (u, v) == (1 % 5, 0):
+                break
+            assert k < 100, k
+        assert k == 20, k
+
+    @pytest.mark.parametrize(
+        "n,printed", [(16, 24), (9, 24), (12, 24), (24, 24),
+                      (48, 24), (72, 24), (5, 20), (10, 60)]
+    )
+    def test_the_orders_of_phi_are_pisano_periods(self, n, printed):
+        """main.tex L939-943: the orders of phi are Pisano periods of N.
+
+        24 for N = 16, 9, 12, 24, 48, 72; 20 for N = 5; 60 for N = 10 --
+        both as the order of phi in (Z[phi]/N)^x and as the Fibonacci
+        period mod N. Section 1 prints 'Clock of phi mod N (Pisano period)'.
+        """
+        # Pisano period: smallest k > 0 with (F_k, F_{k+1}) = (0, 1) (mod n)
+        a, b, k = 0, 1, 0
+        while True:
+            a, b, k = b, (a + b) % n, k + 1
+            if (a, b) == (0, 1 % n):
+                break
+            assert k < 10000, n
+        assert k == printed, (n, k)
+        # order of phi: phi^k = F_{k-1} + F_k phi = 1 (mod n)
+        u, v, k = 1, 0, 0
+        while True:
+            u, v, k = v, (u + v) % n, k + 1
+            if (u % n, v % n) == (1 % n, 0):
+                break
+            assert k < 10000, n
+        assert k == printed, (n, k)
+
 
 # ═══════════════════════════════════════════════════════════ section 2 ══
 class TestSection2Casimir:
@@ -348,6 +427,8 @@ class TestSection6BesselChain:
 
         The residual 1.5e-3 on the fourth ratio is the discretisation error
         of the M=32 chain (the section itself reports rms 0.54% against data).
+        main.tex L1296: the shallow window's m2/m1 (1.8421) differs from the
+        deep value (1.8308) by 0.011, i.e. 0.6%.
         """
         run = run_section(6)
         m = run.match(r"sigma\[-6,6\] M=32: m/m1=\[([^\]]+)\]")
@@ -356,6 +437,11 @@ class TestSection6BesselChain:
         want = list(j / j[0])
         assert got[0] == pytest.approx(1.0, abs=1e-12)
         assert got[1:] == pytest.approx(want[1:], rel=2e-3)
+        m2 = run.match(r"sigma\[0,6\] M=32: m/m1=\[([^\]]+)\]")
+        shallow = [float(v) for v in m2.group(1).split()]
+        diff = shallow[1] - got[1]
+        assert round(diff, 3) == 0.011, diff
+        assert round(100 * diff / got[1], 1) == 0.6, diff
 
     def test_without_the_weight_the_chain_degrades(self, run_section):
         run = run_section(6)
@@ -404,6 +490,18 @@ class TestSection8LookElsewhere:
         grid = PHI ** (np.arange(1, 9) / 2)
         d = np.min(np.abs(r[:, None] / grid[None, :] - 1), axis=1)
         assert round(float(np.mean(d < tol)), 2) == printed
+
+    def test_a_random_scale_lands_within_point_zero_four_of_an_integer_level(self):
+        """main.tex L1557-1558: the seed-2 twin of the look-elsewhere test.
+
+        200k values of log_phi(scale) uniform in [0, 30]: the chance of
+        landing within 0.04 of an integer level is 0.08 (section 1 prints
+        the same draw rounded to .3f, 0.082).
+        """
+        rng = np.random.default_rng(2)
+        u = rng.uniform(0, 30, 200000)
+        p = float(np.mean(np.abs(u - np.round(u)) < 0.04))
+        assert round(p, 2) == 0.08, p
 
     def test_rs_fit_beats_the_golden_fit(self, run_section):
         """rms RS = 0.5% against rms phi^k = 12.1% (one parameter each)."""

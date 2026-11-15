@@ -256,6 +256,17 @@ class TestTexTestRefs:
             "test_a_doubling_is_not_a_bit",
             "test_three_h_squared_is_the_entropy_of_the_horizon",
             "test_j_squares_to_minus_one_and_the_half_turn_is_invisible",
+            # the numbers the missing-tests pass of the Needs-the-author list
+            # let us tie: each written from the manuscript's own claim
+            "test_the_three_spacings_have_the_variance_of_the_ensemble",
+            "test_the_residues_of_phi_to_the_twelve",
+            "test_deep_chain_yields_the_j1_zeros",
+            "test_a_random_scale_lands_within_point_zero_four_of_an_integer_level",
+            "test_worst_gap_ratio_over_the_first_5000_levels",
+            "test_the_two_models_differ_by_one_point_four_percent",
+            "test_the_lambda_transformation_laws_hold_to_1e_16",
+            "test_the_planck_level_is_2_2_to_3_1_sigma_from_584",
+            "test_entropy_over_the_gh_temperature_grows_as_phi_to_the_three_sigma_over_two",
         }
 
     def test_the_manuscript_cites_no_numbered_section(self):

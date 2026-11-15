@@ -11,8 +11,8 @@ citation is left, and that each of the five figures names the test that
 writes it.
 
 ```bash
-uv run pytest tests/ -q                 # whole suite   (520 tests, ~60 s)
-uv run pytest tests/ -q -m 'not slow'   # without >10 s (516 tests, ~57 s)
+uv run pytest tests/ -q                 # whole suite   (536 tests, ~58 s)
+uv run pytest tests/ -q -m 'not slow'   # without >10 s (532 tests, ~60 s)
 pnpm run test                           # same, through package.json
 
 PYTHONPATH=tests/src uv run python -m kkgt.sections        # the 46 sections
@@ -43,14 +43,14 @@ tests/
 
 | section | run test | deep tests |
 |---|---|---|
-| 1  | `test_section_runs.py::test_section_runs_and_prints_its_number[section-01]` | `TestSection1Numbers` (19) |
+| 1  | `test_section_runs.py::test_section_runs_and_prints_its_number[section-01]` | `TestSection1Numbers` (34) |
 | 2  | `...[section-02]` | `TestSection2Casimir` (3) |
 | 3  | `...[section-03]` | `TestSection3TwoBraneSpectra` (7) |
 | 4  | `...[section-04]` | `TestSection4MetricPositivity` (4) |
 | 5  | `...[section-05]` | `TestSection5QuarterPhase` (2) |
 | 6  | `...[section-06]` | `TestSection6BesselChain` (5) |
 | 7  | `...[section-07]` | `TestSection7Prediction` (4) |
-| 8  | `...[section-08]` | `TestSection8LookElsewhere` (11) |
+| 8  | `...[section-08]` | `TestSection8LookElsewhere` (12) |
 | 9  | `...[section-09]` | `TestSection9GapRatios` (7) |
 | 10 | `...[section-10]` | `TestSection10Granularity` (12) |
 | 11 | `...[section-11]` | `TestSection11ContactConfigurations` (5) |
@@ -63,22 +63,22 @@ tests/
 | 18 | `...[section-18]` | `TestSection18TwoReadingsOfTheSameCurvature` (3) |
 | 19 | `...[section-19]` | `TestSection19TowerOffset` (9) |
 | 20 | `...[section-20]` | `TestSection20TwoCandidates` (6) |
-| 21 | `...[section-21]` | `TestSection21TwoBraneRival` (1) |
+| 21 | `...[section-21]` | `TestSection21TwoBraneRival` (2) |
 | 22 | `...[section-22]` | `TestSection22CurvatureUnit` (6) |
 | 23 | `...[section-23]` | `TestSection23LatticeOfUnits` (10) |
 | 24 | `...[section-24]` | `TestSection24ScaleAndTop` (4) |
 | 25 | `...[section-25]` | `TestSection25AutodualWindow` (11) |
 | 26 | `...[section-26]` | `TestSection26WindowEdge` (6) |
 | 27 | `...[section-27]` | `TestSection27WindowAsNome` (6) |
-| 28 | `...[section-28]` | `TestSection28PoissonTheta` (3) |
-| 29 | `...[section-29]` | `TestSection29LatticePointFromOmegaLambda` (7) |
+| 28 | `...[section-28]` | `TestSection28PoissonTheta` (4) |
+| 29 | `...[section-29]` | `TestSection29LatticePointFromOmegaLambda` (9) |
 | 30 | `...[section-30]` | `TestSection30SymmetricThroat` (4) |
 | 31 | `...[section-31]` | `TestSection31ModuliMetric` (11) |
 | 32 | `...[section-32]` | `TestSection32LevelVersusGridShape` (6) |
 | 33 | `...[section-33]` | `TestSection33ColourHole` (8) |
 | 34 | `...[section-34]` | `TestSection34Quintessence` (4) |
 | 35 | `...[section-35]` | `TestSection35HalfThreshold` (8) |
-| 36 | `...[section-36]` | `TestSection36BlackHoleWhereNeeded` (6) |
+| 36 | `...[section-36]` | `TestSection36BlackHoleWhereNeeded` (7) |
 | 37 | `...[section-37]` | `TestSection37Consistency` (13) |
 | 38 | `...[section-38]` | `TestSection38AreaLawHalf` (4) |
 | 39 | `...[section-39]` | `TestSection39FibonacciTiling` (28) |
