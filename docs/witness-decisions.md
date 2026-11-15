@@ -4,9 +4,18 @@
 edited into `main.tex`, `docs/citations.md` and `tests/`. Nothing in this
 repository has been committed by this pass.
 
-**Repository:** `05-kk-golden-throat` · **HEAD:** `26808d6` · **scope:** the
-witness layer only (`main.tex`, `docs/`, `tests/`). `citation.csl.json`,
-`lean/`, `scripts/` and `images/` untouched.
+**Repository:** `05-kk-golden-throat` · **HEAD:** `5d5d341` · **scope:** the
+witness layer (`main.tex`, `docs/`) and, for figure 1 only,
+`scripts/figures/figuras_v134.py` + `images/`. `citation.csl.json`,
+`tests/` and `lean/` untouched.
+
+**Second pass, 2026-11-15 — the convention harmonisation.** The old
+`\Lean{}`/`\LeanCW{}` marks are gone from `main.tex` (170 + 6 sites: every
+internal name now sits inside its tag, every external source is its
+citation), the inline/own-line criterion of `docs/citations.md` §8.5 has
+been applied to both classes, and §5 below was closed on its manuscript
+side — rows 1–6 and 10 are applied (before/after in §6), rows 7–9 still
+wait on `tests/`.
 
 This file replaces the previous 802-line gate document: that one described
 the manuscript *before* the v134 merge, and most of its §4.1 "explicitly left
@@ -38,8 +47,8 @@ the sentence it marks, before the final punctuation.
 
 | Gate | What it asks | State |
 |---|---|---|
-| **A** — does the evidence say what the claim says? | per site, against the real test/cite/Lean name | **closed for 60 of the 74 tags**; 14 body `N` still carry no test name (§3): 6 need only a test we write (§4), 7 need your call (§5), 1 is already witnessed |
-| **B** — which option? | specific test / new test / reformulate / remove | **10 rows open** — all in §5 |
+| **A** — does the evidence say what the claim says? | per site, against the real test/cite/Lean name | **closed for every tag of the manuscript**: 8 body `N` still carry no folded test name (§3.1): 6 need only a test we write (§4), 2 are already witnessed in prose |
+| **B** — which option? | specific test / new test / reformulate / remove | **3 rows open** — §5.7, §5.8, §5.9, all waiting on `tests/`; the other seven rows of §5 are applied (§6) |
 | **C** — is the prose even? | post-`L`/`R` removal, grammar, captions | **all 21 findings of the old document closed or obsolete** (§2); 2 re-read flags left in §5 |
 
 ---
@@ -50,14 +59,15 @@ the sentence it marks, before the final punctuation.
 |---|---|---|
 | **(i)** cite an existing test — `\testref{…}` inserted | **25 sites** (23 inserts + 2 cite-key migrations), **20 new test ids** | §1.2 |
 | **(ii)** write a new test first | **4 tests now + 3 behind a ✓ in §5**, plus **3 extensions** | §4 |
-| **(iii)** reformulate the sentence | **4 open** — D03, D04, D16, D22 | §5 |
-| **(iv)** drop the tag | **1 applied** (D12), **2 open** — D01, D18 | §1.4, §5 |
+| **(iii)** reformulate the sentence | **4 applied** 2026-11-15 — D03, D04, D16, D22 | §5, §6 |
+| **(iv)** drop the tag | **3 applied** — D12, then D01 and D18 on 2026-11-15 | §1.4, §5, §6 |
 | class changed `N` → `P` | **1 applied** — D35, on a Lean proof | §1.3 |
 | unsupported numbers removed | **2** — `1.07 levels`, `2000 spacings` | §1.5 |
 | caption status tags removed | **3 sites** (the 4th of the old report was already gone) | §1.4 |
 | prose/consistency findings closed | **7 applied** (C1, C2, C7, C9, C10, C15, C16) + 12 obsolete | §2 |
 | rows closed as obsolete | **11** (D03-orphan, D13, D29, D20, T1, T4, D1, D5, D7, D12-count, D2/T5) | §2 |
-| **Needs the author** | **10 rows** | §5 |
+| **Needs the author** | **3 rows open** (§5.7, §5.8, §5.9 — all waiting on `tests/`); the other seven applied 2026-11-15 | §5, §6 |
+| **Convention harmonisation** 2026-11-15 | `\Lean{}` **170 → 0**, `\LeanCW{}` **6 → 0**, blocks **16 → 18**, one tag per claim | §6 |
 | **Blocked on nothing** | the three "no provenance" numbers are gone from the text | §1.5 |
 
 Test suite: **490** tests (was 484), **486** without the slow mark (was 480);
@@ -292,25 +302,29 @@ Deleted from the previous document because they no longer describe anything:
 
 ## 3. Fresh coverage of the current manuscript — open rows
 
-Inventory of the current `main.tex`: **83 inline tags** (14 body `\tier{N}` +
-1 legend `\tier{N}` + 16 `\tier{P}` + 52 `\tier[\testref{…}]{N}`), **16
-`\witness{P}{…}` blocks**, **12 `\wtag` labels**, **11 `[P] in~\cite{…}`**.
+Inventory of the current `main.tex` (after the 2026-11-15 convention pass):
+**236 inline tags** (8 body `\tier{N}` + 1 legend `\tier{N}` + 13 bare
+`\tier{P}` + 47 `\tier[\testref{…}]{N}` + 167 `\tier[names]{P}`), **18
+`\witness{…}` blocks** (9 `P`, 9 `N`), **12 `\wtag` labels**, **11
+`[P] in~\cite{…}`**, and **0 `\Lean{}`/`\LeanCW{}`**.
 No tag sits on its own line, no two tags are adjacent, no tag is preceded by
 a full stop without carrying its own witness, and every caption is tag-free.
+(The line numbers in the tables below are the ones of the previous pass; the
+2026-11-15 edits moved a few of them.)
 
-### 3.1 The 14 body `\tier{N}` that still carry no test name
+### 3.1 The 8 body `\tier{N}` that still carry no test name
 
 | # | Line | Claim | Witness in the sentence now | What is missing | Next step |
 |---|---|---|---|---|---|
 | 1 | L444 | Background: the golden step, “among the irrational steps checked, spread most evenly” | `\cite{Sos58,vRa88}` | the comparison itself: `test_worst_gap_ratio_over_the_first_5000_levels` asserts only `φ → 2.618` | §4.1 (shared with row 12) |
-| 2 | L680 | the assumed `±20/±30/±40 GeV` error bars | `\cite{LYR26}` | nothing — these are *assumptions*, not computed values | **§5.1** |
-| 3 | L935 | “The orders are Pisano periods, computed here” | `\cite{Wall60}` (the `\Lean{pisano_orders, modular_orders}` names are in the **next** sentence) | a witness in this sentence | **§5.2** |
-| 4 | L1090 | the heat kernel whose modes are the left side | `\Lean{theta\_S\_law}` | class: `N` over a Lean name | **§5.3** |
+| 2 | L680 | the assumed `±20/±30/±40 GeV` error bars | `\cite{LYR26}` | nothing — these are *assumptions*, not computed values | **§5.1 [x]** |
+| 3 | L935 | “The orders are Pisano periods, computed here” | `\cite{Wall60}`; the names sit in the **next** sentence as `\tier[pisano\_orders, modular\_orders]{P}` | — (the tag was moved there by §5.2) | **§5.2 [x]** |
+| 4 | L1090 | the heat kernel whose modes are the left side | `\tier[theta\_S\_law]{P}` | — (the class was the open question; §5.3 fixed it) | **§5.3 [x]** |
 | 5 | L1365 | the zeros of `ζ` follow the statistics of that ensemble | `\cite{Mon73,Odl87}` (tag *after* the cite) | `test_the_three_spacings_have_the_variance_of_the_ensemble`, and the tag moved into the variance sentence | §4.2 |
-| 6 | L1369 | “for the spacings checked” | `\Lean{bessel\_J1\_zeros}` | class: `N` over a Lean name | **§5.4** |
-| 7 | L1435 | roots bracketed on 6000 points, refined by Brent | `\eqref{eq:sl}`, `\eqref{eq:vector}` | a test of the continuum match, or no tag | **§5.5** |
-| 8 | L1511 | “`[N]` for the residues” | `\Lean{half\_turn\_of\_clock24, …}` (witnesses the *half-turn*, not the residues) | `test_the_residues_of_phi_to_the_twelve` | §4.3 |
-| 9 | L1545 | “the transformation laws, checked to `10⁻¹⁶`” | `\Lean{…}`, `\cite{PRV19}`, `\ref{sec:inputs}` | the `10⁻¹⁶` check exists in no file | **§5.6** |
+| 6 | L1369 | “for the spacings checked” | `\tier[bessel\_J1\_zeros]{P}` | — (the class was the open question; §5.4 fixed it) | **§5.4 [x]** |
+| 7 | L1435 | roots bracketed on 6000 points, refined by Brent | `\eqref{eq:sl}`, `\eqref{eq:vector}` | a test of the continuum match, or no tag | **§5.5 [x]** |
+| 8 | L1511 | “`[N]` for the residues” | `\tier[half\_turn\_of\_clock24, …]{P}` (witnesses the *half-turn*, not the residues) | `test_the_residues_of_phi_to_the_twelve` | §4.3 |
+| 9 | L1545 | “the transformation laws, checked to `10⁻¹⁶`” | `\cite{PRV19}`, `\ref{sec:inputs}`, `\tier[pairing\_FP\_modulus\_half]{P}` | the `10⁻¹⁶` check exists in no file — the precision and its tag were dropped (§5.6) | **§5.6 [x]** |
 | 10 | L1577 | `1.4 %` and `15 GeV` between the two models | `\ref{sec:data}` | `test_the_two_models_differ_by_one_point_four_percent` | §4.4 |
 | 11 | L1822 | worst gap ratios `3.414 / 9.52 / 293.6` | `\cite{vRa88}`, `\ref{imp:polar}` | the three comparison values asserted nowhere | §4.1 (shared with row 1) |
 | 12 | L1860 | the full list of icosahedral distances | `(\testref{test\_icosaedral\_contact\_spheres\_do\_not\_touch})` | — | **none** |
@@ -327,7 +341,7 @@ D39–D41 in §1.2; D06, D12, D16, D23, D35, C11, C18 in §1.3–§1.5.)
 |---|---|
 | **L1558** (the untagged twin of D14) | the same look-elsewhere argument with `seed 2` carries **no** tag while the `seed 1` twin at L1359 carries `N[…]`. Add a tag + test, or accept one twin marked → **§5.8** |
 | **L2023** (old L1694) | `583.877`, `583.40` and `5.0 σ` are asserted by `test_data_readings`; **“2.2 to 3.1 standard deviations” is not** → **§5.9** |
-| **L2149** | `\tier{P} for the identity` — the sentence has no witness in it for that first tag (the fused `\cite` covers only “for the weld”) → **§5.10** |
+| **L2149** | `\tier{P} for the identity` — the sentence has no witness in it for that first tag (the fused `\cite` covers only “for the weld”) → **§5.10 [x]** |
 | **L1477** (D20) | `11.97 (\eqref{eq:sigmaIR}) [N]` `[x]`. Optional: fold `test_alternatives_for_the_bottom_level` into the tag — it asserts `11.97` |
 | **P sites** | 16 bare `\tier{P}`, 11 `[P] in~\cite{…}`, 16 witness blocks, 12 `\wtag`: all grammatical, no action |
 
@@ -376,68 +390,104 @@ Nothing in §4 needs you; §5 does.
 Ten rows. One `✓` per row; the recommended option is marked **[rec]**.
 Everything else in this file is already applied or already ours.
 
+**Applied in the 2026-11-15 pass — rows 1–6 and 10 are `[x]`, their
+before/after is in §6; no tick is needed for them.** The three rows that
+stay open (7–9) all wait on `tests/` work, which this pass does not touch.
+
 1. **D01 · L680 · the assumed error bars.** `[N]` sits on a sentence whose
    own words are “we assume `±20` … `±40`”: an assumption is not a computed
    value, and the sentence's only source is its `\cite`.
-   **[rec] drop the tag** (`\cite{LYR26}` already carries the claim) — or
-   keep it and we look for a test that recomputes the error propagation the
-   assumption feeds.
-   `[ ] ✓`
+   **[rec] drop the tag** (`\cite{LYR26}` already carries the claim).
+   `[x] ✓` — applied: `… $±40$ at $1322$. These candidates are identified
+   in~\cite{LYR26} …`
 
-2. **D03 · L935 · the Pisano periods.** The tag says “computed here `[N]`”
+2. **D03 · L935 · the Pisano periods.** The tag said “computed here `[N]`”
    while the names that do the computing are in the next sentence.
-   **[rec] move the tag to that sentence as `\Lean{pisano\_orders,
-   modular\_orders} \tier{P}`** (machine-checked → `P`) — or keep `[N]` here
-   and we write the Pisano test (§4.6).
-   `[ ] ✓`
+   **[rec] move the tag to that sentence** (machine-checked → `P`).
+   `[x] ✓` — applied: the first sentence reads `periods~\cite{Wall60},
+   computed here;` and the second carries
+   `\tier[pisano\_orders, modular\_orders]{P}` (the two names migrated out
+   of the old `\Lean{}`).
 
-3. **D04 · L1090 · the heat kernel.** `[N]` on a sentence whose only witness
-   is `\Lean{theta\_S\_law}`, and L1939 already calls the same name
-   machine-checked. **[rec] `\tier{P}`** in place of `\tier{N}`.
-   `[ ] ✓`
+3. **D04 · L1090 · the heat kernel.** `[N]` on a sentence whose only
+   witness was `\Lean{theta\_S\_law}`, while L1939 already calls the same
+   name machine-checked. **[rec] `P`.**
+   `[x] ✓` — applied: `\tier[theta\_S\_law]{P}` replaces
+   `\Lean{theta\_S\_law} \tier{N}`.
 
 4. **D16 · L1369 · “for the spacings checked”.** Same shape: `[N]` over
-   `\Lean{bessel\_J1\_zeros}`. **[rec] `\tier{P}`** — or keep `N` and we
-   name the spacing test (needs a new test first).
-   `[ ] ✓`
+   `\Lean{bessel\_J1\_zeros}`. **[rec] `P`.**
+   `[x] ✓` — applied: `\tier[bessel\_J1\_zeros]{P} for the spacings
+   checked.`
 
-5. **D18 · L1435 · the Brent bracketing window.** The sentence describes how
-   the roots are found, not a result; no test reads `6000`, `[0.5,15]` or
-   Brent. **[rec] drop the tag** (the sentence keeps its content) — or say
-   the continuum match is load-bearing and we write §4.7.
-   `[ ] ✓`
+5. **D18 · L1435 · the Brent bracketing window.** The sentence describes
+   how the roots are found, not a result; no test reads `6000`, `[0.5,15]`
+   or Brent. **[rec] drop the tag** (the sentence keeps its content).
+   `[x] ✓` — applied: `… refined by Brent's method.`
 
 6. **D22 · L1545 · “checked to `10⁻¹⁶`”.** No file mentions `1e-16` or a
-   transformation-law check. **[rec] drop the precision** — “…both are the
-   fixed point of an involution (`\S\ref{sec:inputs}`); the transformation
-   laws follow from them.” — or tell us where the check runs and we name it.
-   `[ ] ✓`
+   transformation-law check. **[rec] drop the precision.**
+   `[x] ✓` — applied with the row's exact replacement text: `… both are
+   the fixed point of an involution (`\S\ref{sec:inputs}`); the
+   transformation laws follow from them.` (the bare `[N]` went with it).
 
-7. **D10 · L1295 · the `0.011 (0.6 %)` parenthesis.** The two tests now cited
-   cover `1.0 %` and `±0.11/0.16/0.21`; neither asserts `0.011`.
+7. **D10 · L1295 · the `0.011 (0.6 %)` parenthesis.** The two tests now
+   cited cover `1.0 %` and `±0.11/0.16/0.21`; neither asserts `0.011`.
    **[rec] keep the parenthesis** and we add one assert to
    `test_deep_chain_yields_the_j1_zeros` — or delete the parenthesis.
-   `[ ] ✓`
+   `[ ] ✓` — open: the manuscript keeps the parenthesis unchanged; the
+   assert belongs to `tests/`. The test exists but is **not** in the pinned
+   set of `tests/test_section_census.py`, so its `\testref` cannot be cited
+   in `main.tex` before that file pins it.
 
 8. **L2023 · “2.2 to 3.1 standard deviations”.** `test_data_readings`
    asserts the values and the `5.0 σ`, not this range.
    **[rec] keep the range** and we add the two σ values to the test — or
    drop the range from the sentence.
-   `[ ] ✓`
+   `[ ] ✓` — open: the sentence already carries
+   `\tier[\testref{test\_data\_readings}]{N}` and the range stays; the two
+   σ values belong to `tests/`.
 
 9. **L1558 · the `seed 2` twin.** The same argument with a different seed
    carries no tag while L1359 does. **[rec] add the tag with its test** (we
    write it, §4.8) — or accept that only one of the two twins is marked.
-   `[ ] ✓`
+   `[ ] ✓` — open: needs the seed-2 test, which does not exist yet.
 
-10. **L2149 · `\tier{P} for the identity`.** Which identity? Name it (we add
-    the reference) or **[rec] drop that first tag** and keep
+10. **L2149 · `\tier{P} for the identity`.** Which identity? Name it (we
+    add the reference) or **[rec] drop that first tag** and keep
     `\tier{P} in~\cite{CW6} for the weld`, which is witnessed.
-    `[ ] ✓`
+    `[x] ✓` — applied: `… at the scale of the leptons. \tier{P}
+    in~\cite{CW6} for the weld; the rest is its physical reading.`
 
 **One re-read when the above land (no tick needed):** the first-page legend
 promises `N` = “verified numerically, **with the name of the test that checks
-it**”; 14 body tags still carry no test name (§3.1). Once rows 1–6 and §4
-have landed, read the legend once and confirm it still describes what is
-left — that was C8 of the old document, and it is the only consistency finding
-that cannot be closed from here.
+it**”; 8 body tags still carry no test name (§3.1, was 14 before this pass).
+Once rows 1–6 and §4 have landed, read the legend once and confirm it still
+describes what is left — that was C8 of the old document, and it is the only
+consistency finding that cannot be closed from here.
+
+---
+
+## 6. Applied in the convention pass (2026-11-15) — no decision needed
+
+Counters, before → after: `\Lean{}` **170 → 0**, `\LeanCW{}` **6 → 0**,
+`\witness{}` **16 → 18** (7 single-id `P` blocks moved inline, 9 multi-id
+`N` tags moved to a block of their own), inline tags with ids
+**61 → 214**, `\testref{}` occurrences **88 → 88** (the pinned set is
+unchanged), first-page legend and `\wtag` labels untouched.
+
+The non-mechanical sites, with their before/after:
+
+| Site | Before | After | Why |
+|---|---|---|---|
+| L847 (F10, the compression limit) | `\Lean{area\_law\_4d\_meets\_weld\_iff, capacity\_exceeded} \tier[\testref{test\_the\_compression\_limit\_is\_half\_a\_cell}]{N}` | `\tier[area\_law\_4d\_meets\_weld\_iff, capacity\_exceeded]{P} (\testref{test\_the\_compression\_limit\_is\_half\_a\_cell})` | one claim, one tag: Lean proves the iff (`2πz²=πz ↔ z=1/2`), the test stays cited in the prose so the census set does not move |
+| L1796 (the Hopf map) | `\Lean{antipode\_is\_half\_turn, hopf\_blind\_to\_half\_turn} \tier[\testref{test\_j\_squares…}]{N}` | `\tier[antipode\_is\_half\_turn, hopf\_blind\_to\_half\_turn]{P} (\testref{test\_j\_squares…})` | same claim, both witnesses kept, one tag |
+| L1816 (the rational step) | `\Lean{rational\_step\_kernel} \tier[\testref{test\_rational\_step\_has\_a\_kernel}]{N}` | `\tier[rational\_step\_kernel]{P} (\testref{test\_rational\_step\_has\_a\_kernel})` | same claim, one tag |
+| L1983 (four dimensions) | `\Lean{dS\_entropy\_law, two\_routes\_to\_six}` … `… they agree \tier[\testref{test\_only\_four…}]{N}` | `\tier[dS\_entropy\_law, two\_routes\_to\_six]{P}` … `… they agree (\testref{test\_only\_four…})` | the same fact stated twice in one sentence → one tag |
+| L1882 / L1885 (the window and the radius) | `\Lean{window\_crosses\_half}` and `\Lean{hubble\_below\_bulk\_crossing}` in the prose | names deleted; the `\witness{P}{window\_crosses\_half, hubble\_below\_bulk\_crossing}` block keeps them | the two names were literally duplicated by that block — one witness per claim |
+| 6 × `\LeanCW{…}` | `[CW6: name]` next to a `\cite{CW6}` of the same sentence | the names deleted (the sentence already cites CW6), except L2044 where `exchanges in~\cite{CW6}` was written | an external source is the citation, never a bracket with a name |
+| 7 captions (`L643`, `L1683`, `L1687`×2, `L1689`, `L1706`×2) | `\Lean{name}` inside `\caption{…}` | `\code{name}` | rule 8: no tags in captions; the theorem name is kept as code |
+| 7 single-id `\witness{P}{…}` blocks | own line | `\tier[name]{P}` at the end of the sentence it witnessed | §8.5: one id → inline |
+| 9 multi-id `\tier[\testref{…}, \testref{…}]{N}` | inline at the end of a claim | `\witness{N}{\testref{…}, \testref{…}}` | §8.5: two ids or more at the end of a claim → the block of the family |
+| 2 multi-id `N` tags (L1029, L2108) | inline | unchanged | their sentence goes on after the claim; a block would break it in the middle |
+

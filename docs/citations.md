@@ -151,11 +151,14 @@ of that device, written down here for whoever writes or edits the text.
 
 ```latex
 \tier{X}            -> [X]   the witness lives in the prose of the SAME
-                             sentence (a \Lean name, an \eqref/\ref or a
+                             sentence (a \testref, the name of one of our
+                             Lean declarations, an \eqref/\ref or a
                              \witness)
 \tier[ids]{X}       -> X[ids] the optional argument carries INTERNAL ids
-                             only: a \testref, or several of them
-                             separated by ';', printed in tt inside the
+                             only: a \testref, or the raw names of
+                             declarations of our own Lean file — written
+                             with no macro around them, several of them
+                             separated by ',' — printed in tt inside the
                              tag's own brackets.  An external source is
                              never a key of the tag — it is a real \cite
                              set next to the tag ([N]~\cite{key},
@@ -165,11 +168,15 @@ of that device, written down here for whoever writes or edits the text.
 \wtag{W1}{CLPW}     -> the label of the W list (unchanged)
 ```
 
-The optional argument means **internal ids and nothing else**.  Whatever
-else is written there — a `\cite` key, a theorem name — is an error, not a
-fallback: the preamble raises `\PackageError` instead of rendering a
-bracket full of a key.  The render of a legal tag is therefore always the
-same shape: **the tag first, its ids inside the brackets** —
+The optional argument means **internal ids and nothing else**.  An id is a
+`\testref{...}` or the raw name of a declaration of
+`lean/TorreKK_LYR_v34.lean` — the two are told apart in the preamble by the
+token they contain (`\testref`, or an `\_` / a `,`, which only a name list
+has).  Whatever else is written there — a `\cite` key, a plain alnum token
+— is an error, not a fallback: the preamble raises `\PackageError` instead
+of rendering a bracket full of a key.  The render of a legal tag is
+therefore always the same shape: **the tag first, its ids inside the
+brackets** —
 `P[name1, name2]`, `N[test_x]`.  The ids never precede the tag either, so a
 test witnessed in prose appears as `\tier{N} (\testref{test_x})`, never as
 `(\testref{test_x}) \tier{N}`.
@@ -181,10 +188,14 @@ groups in a row (`[P] in [12]`) are then the tag's own bracket plus the
 citation's, each printed by its own macro — and a tag alone never carries a
 number.
 
-A `\Lean{}` name is the one name that stays in the prose: it already prints
-`[name]` of its own, so folding it into `\tier[...]` would render
-`N[[name]]` and is an error like any other non-`\testref` id.  It is
-written before the tag, or in `\witness{}` on its own line.
+**There is no `\Lean{}` and no `\LeanCW{}` any more.**  They were the
+artefact of the previous convention: a name printed in tt brackets of its
+own, standing next to the tag of the same claim (`P[…]` beside
+`N[test_x]`), which is the duplication this standard replaced.  Every
+internal name now lives **inside** the tag — `\tier[name1, name2]{P}` — or
+inside a `\witness{}` block, and an external name (a theorem of
+03-crystalline-worldsheet) is never printed at all: the claim keeps its
+citation, `in~\cite{CW6}`.
 
 ### 8.2 Rules for whoever writes or edits the text
 
@@ -195,14 +206,17 @@ written before the tag, or in `\witness{}` on its own line.
    claim it supports: no tag says "this is cited", because the bracket of
    the citation already says it, and in numeric style a repeat carries its
    number like any other reference. What a tag carries is an *internal*
-   witness, by identifier: `\Lean{}`, `\witness{}` or `\testref{}`. The
+   witness, by identifier: a Lean name inside its brackets,
+   `\witness{}` or `\testref{}`. The
    external form is therefore `[N]~\cite{key}` (a value read off a source)
    or `[P] in~\cite{key}` (a result proved in one); `\tier[key]{X}` does
    not exist — the optional argument of `\tier` holds internal ids only and
    the preamble errors on anything else.
 3. **A bare tag needs a witness in its sentence.** If the sentence has none,
    add the most honest one (the `\testref{}` of the test that checks the
-   number, the `\Lean` name, an `\eqref`/`\ref`); never invent a citation.
+   number, the Lean declaration that proves it — written inside the tag, so
+   the tag is bare no longer — or an `\eqref`/`\ref`); never invent a
+   citation.
 4. **Every `\tier{N}` carries a `\testref{}`** when a test verifies it —
    either folded into the tag, `\tier[\testref{test\_x}]{N}`, or, when the
    sentence already carries other witnesses, as `\testref{}` in the prose of
@@ -210,7 +224,9 @@ written before the tag, or in `\witness{}` on its own line.
    `tests/test_section_census.py`, so a new witness is added there too, after
    checking the test really recomputes the number next to it.
 5. **`\tier{P}` without a bracket** means proved here, with no theorem name
-   quoted at that point; the name, when it is quoted, goes in `\witness{}`.
+   quoted at that point; the name, when it is quoted, goes into the tag
+   itself (`\tier[name]{P}`) or, at the end of a claim that carries two
+   names or more, into a `\witness{}` block — see §8.5.
    Proved in an external source is not "here": that is `[P] in~\cite{key}`,
    one bracket for the tag and one for the citation, each printed by its own
    macro.
@@ -235,11 +251,12 @@ written before the tag, or in `\witness{}` on its own line.
 |---|---|
 | `\tier{P}` | proved and verified by machine (Lean) |
 | `\tier{N}` | verified numerically, with the name of the test that checks it |
-| `\tier[ids]{N}` | an `N` whose witness is a named test: `ids` is a `\testref` (several, separated by `;`), printed as `N[ids]` in tt by `\tier` itself — the only thing the optional argument may hold |
+| `\tier[ids]{N}` | an `N` whose witness is a named test: `ids` is a `\testref` (several, separated by `,`), printed as `N[ids]` in tt by `\tier` itself |
+| `\tier[names]{P}` | a `P` whose witness is the Lean declaration that proves it: `names` are written raw (no macro), printed as `P[name1, name2]` in tt by `\tier` itself — the form every migrated `\Lean{}` name now takes |
 | `[N]~\cite{key}` | an `N` read off an external source: the citation sits next to the tag, never inside it |
 | `[P] in~\cite{key}` | a `P` proved in an external source: one bracket for the tag, one for the citation |
 | `\tier{P*}` | internal: renders `[P*]` in ochre, available between builds; the released text never uses it (rule 7) |
-| `\witness{P}{names}` | the names of the proof, on a line of its own |
+| `\witness{X}{ids}` | the ids of the claim, on a line of its own, flush right — `P[name1, name2]` or `N[test_a, test_b]` |
 | `\wtag{W1}{CLPW}` | the label of a witness of the W list |
 
 **Why there is no `L`.** A witness stresses that there *is* a reference, and
@@ -265,3 +282,29 @@ sentence does not.
   to page 1.
 - **Colour is redundant with the letter** (WCAG 1.4.1): a tag reads the same
   in greyscale, so the letter alone always carries the meaning.
+
+### 8.5 Inline or a line of its own — the criterion
+
+The **shape** of a mark is decided by its ids, never by its class.  `P` and
+`N` both appear inline and on a line of its own, so the shape tells a
+reader how many witnesses a claim carries and where they sit, not what
+kind of evidence it is; reading the shape as "the proof is a block, the
+test is inline" was the drift this rule closes.
+
+- **Inline** `\tier[ids]{X}` when the claim carries **one id**, or when
+  its ids sit **inside the sentence that makes the claim** (the claim goes
+  on in that sentence).
+- **A line of its own** `\witness{X}{ids}` when a claim **ends with two
+  ids or more**: the block is flush right and is the last thing in its
+  paragraph — the form of the family (`\ProofWitnessBlock` in
+  03-crystalline-worldsheet).
+- A claim that ends but whose **sentence** goes on (`;` opening the next
+  clause of the same sentence) stays inline even with several ids: a
+  `\witness{}` ends the paragraph, so it can never be set in the middle of
+  one.
+
+State after the 2026-11 pass: **18 blocks** — 9 `P` and 9 `N`, every one of
+them with two ids or more; **no single-id block is left** (the seven that
+had one id moved inline, e.g. `\tier[sq\_add\_inv\_sq]{P}`); two multi-id
+`N` tags remain inline because their sentence continues after the claim.
+`\Lean{}` and `\LeanCW{}`: **0 occurrences** in `main.tex`.
