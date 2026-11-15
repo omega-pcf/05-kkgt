@@ -1,6 +1,6 @@
 # Witness decisions — handoff for the principal author
 
-**Status: applied, pending commit.** Everything marked `[x]` below is already
+**Status: applied and committed** (`ff44a61` figure, `bcee5eb` convention, `aade79b` tests, `6e54bdf` build). Everything marked `[x]` below is already
 edited into `main.tex`, `docs/citations.md` and `tests/`. Nothing in this
 repository has been committed by this pass.
 
@@ -48,7 +48,7 @@ the sentence it marks, before the final punctuation.
 | Gate | What it asks | State |
 |---|---|---|
 | **A** — does the evidence say what the claim says? | per site, against the real test/cite/Lean name | **closed for every tag of the manuscript**: 8 body `N` still carry no folded test name (§3.1): 6 need only a test we write (§4), 2 are already witnessed in prose |
-| **B** — which option? | specific test / new test / reformulate / remove | **3 rows open** — §5.7, §5.8, §5.9, all waiting on `tests/`; the other seven rows of §5 are applied (§6) |
+| **B** — which option? | specific test / new test / reformulate / remove | **closed: all ten rows of §5 applied** — seven on 2026-11-15, the last three the same evening with the tests written for them |
 | **C** — is the prose even? | post-`L`/`R` removal, grammar, captions | **all 21 findings of the old document closed or obsolete** (§2); 2 re-read flags left in §5 |
 
 ---
@@ -58,7 +58,7 @@ the sentence it marks, before the final punctuation.
 | Decision type | Count | Where |
 |---|---|---|
 | **(i)** cite an existing test — `\testref{…}` inserted | **25 sites** (23 inserts + 2 cite-key migrations), **20 new test ids** | §1.2 |
-| **(ii)** write a new test first | **4 tests now + 3 behind a ✓ in §5**, plus **3 extensions** | §4 |
+| **(ii)** write a new test first | **4 earlier + 8 written 2026-11-15**, plus **3 extensions** | §4, §6 |
 | **(iii)** reformulate the sentence | **4 applied** 2026-11-15 — D03, D04, D16, D22 | §5, §6 |
 | **(iv)** drop the tag | **3 applied** — D12, then D01 and D18 on 2026-11-15 | §1.4, §5, §6 |
 | class changed `N` → `P` | **1 applied** — D35, on a Lean proof | §1.3 |
@@ -66,7 +66,7 @@ the sentence it marks, before the final punctuation.
 | caption status tags removed | **3 sites** (the 4th of the old report was already gone) | §1.4 |
 | prose/consistency findings closed | **7 applied** (C1, C2, C7, C9, C10, C15, C16) + 12 obsolete | §2 |
 | rows closed as obsolete | **11** (D03-orphan, D13, D29, D20, T1, T4, D1, D5, D7, D12-count, D2/T5) | §2 |
-| **Needs the author** | **3 rows open** (§5.7, §5.8, §5.9 — all waiting on `tests/`); the other seven applied 2026-11-15 | §5, §6 |
+| **Needs the author** | **0 rows open** — all ten applied 2026-11-15, the last three with the tests written that same evening | §5, §6 |
 | **Convention harmonisation** 2026-11-15 | `\Lean{}` **170 → 0**, `\LeanCW{}` **6 → 0**, blocks **16 → 18**, one tag per claim | §6 |
 | **Blocked on nothing** | the three "no provenance" numbers are gone from the text | §1.5 |
 
@@ -435,23 +435,26 @@ stay open (7–9) all wait on `tests/` work, which this pass does not touch.
    cited cover `1.0 %` and `±0.11/0.16/0.21`; neither asserts `0.011`.
    **[rec] keep the parenthesis** and we add one assert to
    `test_deep_chain_yields_the_j1_zeros` — or delete the parenthesis.
-   `[ ] ✓` — open: the manuscript keeps the parenthesis unchanged; the
-   assert belongs to `tests/`. The test exists but is **not** in the pinned
-   set of `tests/test_section_census.py`, so its `\testref` cannot be cited
-   in `main.tex` before that file pins it.
+   `[x] ✓` — applied 2026-11-15: `test_deep_chain_yields_the_j1_zeros`
+   now asserts the window difference `0.011` (`0.6 %`), it is pinned in
+   `tests/test_section_census.py`, and the paragraph's witness block
+   carries it as a third `\testref`.
 
 8. **L2023 · “2.2 to 3.1 standard deviations”.** `test_data_readings`
    asserts the values and the `5.0 σ`, not this range.
    **[rec] keep the range** and we add the two σ values to the test — or
    drop the range from the sentence.
-   `[ ] ✓` — open: the sentence already carries
-   `\tier[\testref{test\_data\_readings}]{N}` and the range stays; the two
-   σ values belong to `tests/`.
+   `[x] ✓` — applied 2026-11-15: `test_the_planck_level_is_2_2_to_3_1_sigma_from_584`
+   asserts both σ values against section 29's own stdout (one node, not a
+   parametrised pair, so the manuscript can cite it by name), and the tag on
+   `583.40` carries it beside `test_data_readings`.
 
 9. **L1558 · the `seed 2` twin.** The same argument with a different seed
    carries no tag while L1359 does. **[rec] add the tag with its test** (we
    write it, §4.8) — or accept that only one of the two twins is marked.
-   `[ ] ✓` — open: needs the seed-2 test, which does not exist yet.
+   `[x] ✓` — applied 2026-11-15: `test_a_random_scale_lands_within_point_zero_four_of_an_integer_level`
+   recomputes `P(|u - round u| < 0.04) = 0.08` over `2e5` values with seed 2,
+   and the sentence now carries the tag.
 
 10. **L2149 · `\tier{P} for the identity`.** Which identity? Name it (we
     add the reference) or **[rec] drop that first tag** and keep
