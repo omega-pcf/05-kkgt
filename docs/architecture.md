@@ -61,7 +61,7 @@ scripts/
 **Automatic Synchronization:**
 - `CITATION.cff` version (via @release-it/bumper).
 - `CITATION.cff` date-released (via build.ts).
-- `CITATION.cff` languages (source of truth for Zenodo).
+- `.zenodo.json` `language` (from `CITATION.cff`'s `language`, falling back to `eng` when the CFF carries none).
 - `.zenodo.json` version and content (generated from `CITATION.cff` via Native Sync).
 
 **Zenodo:** Reads `.zenodo.json` from the tag, creates a version under the same Concept DOI.

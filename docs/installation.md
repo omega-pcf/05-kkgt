@@ -25,5 +25,5 @@ pnpm install
 ```bash
 pnpm run build          # Compile PDF via Docker
 pnpm run release        # Full release (version bump + build + GitHub + Zenodo)
-pnpm run release:dry-run # Dry-run, no changes
+pnpm run release:dry-run # Rebuild artifacts, then preview the release (needs a git remote)
 ```

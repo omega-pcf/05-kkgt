@@ -3,15 +3,15 @@
 
 # @{} is standard, valid syntax of the LaTeX kernel
 # Warnings about it are false positives and must be suppressed
-# See: investigation_prompt.md for technical details
+# See: docs/architecture.md (scripts/ notes) for the background
 
 # Suppress warnings about @{} in column definitions
 # These are typically User Regex warnings (numbers 2-8)
 # If specific warnings appear, add their numbers here
 
 # Example of a typical configuration:
-# QuietCounter = { 2, 3, 4, 5, 6, 7, 8 }
+#   QuietCounter = { 2, 3, 4, 5, 6, 7, 8 }
 
 # Note: if you need to identify the exact number of the warning,
-# run: chktex -v1 src/chapters/results.tex
+# run: chktex -v1 main.tex
 # and look for the warning number related to @{}

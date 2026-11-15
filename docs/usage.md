@@ -34,7 +34,7 @@ git commit -m "docs: update architecture guide"
 
 ```bash
 pnpm run release         # Full release: bump → build → tag → GitHub → Zenodo
-pnpm run release:dry-run # Preview without changes
+pnpm run release:dry-run # Preview only: rebuilds the artifacts, then walks the release without tagging or pushing (requires a git remote)
 ```
 
 ## Installation
