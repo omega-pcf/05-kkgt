@@ -1,442 +1,461 @@
-# Fundamento de la marca de testigo
+# Rationale of the witness mark
 
-**Documento:** justificación de la convención de testigos (`\tier`, `\witness`,
-`\wtag`) del manuscrito `05-kk-golden-throat`, escrita para que la convención
-tenga cabida en un artículo de matemáticas puras.
+**Document:** justification of the witness convention (`\tier`, `\witness`,
+`\wtag`) of the manuscript `05-kk-golden-throat`, written so that the
+convention has a place in a paper of pure mathematics.
 
-**Registro:** tercera persona, español; los identificadores, las macros y los
-nombres de archivo se escriben en inglés y en monoespaciado.
+**Register:** third person, English; identifiers, macros and file names are
+written in English and in monospace.
 
-**Relación con el resto de la documentación.** Este documento **argumenta**; la
-regla **operativa** vive en `docs/citations.md` §8 (gramática, reglas de
-redacción, alfabeto, convenciones y, en §8.5, el criterio cuantificado de
-inline frente a línea propia). Las decisiones por sitio —qué testigo sostiene
-cada claim, qué se reescribe y qué se elimina— viven en
-`docs/witness-decisions.md`. Nada de lo que se afirma aquí cambia el contrato
-de `docs/citations.md`: si ambos documentos llegaran a discrepar, manda
-`docs/citations.md`, porque es el que el build y la revisión de textos usan.
+**Relation to the rest of the documentation.** This document **argues**; the
+**operational** rule lives in `docs/citations.md` §8 (grammar, writing
+rules, alphabet, conventions and, in §8.5, the quantified criterion for
+inline versus a line of its own). The per-site decisions — which witness
+supports each claim, what is rewritten and what is removed — live in
+`docs/reports/20261115_DEC-001_witness_decisions.md`. Nothing asserted here
+changes the contract of `docs/citations.md`: if the two documents ever
+disagree, `docs/citations.md` governs, because it is the one the build and
+the text review use.
 
-**Estado:** vigente con el manuscrito en HEAD `7ce658c`. Las cifras de §4.4 y
-de §4.5 corresponden al estado del manuscrito al escribir este documento y se
-identifican por la cola de la oración, no sólo por el número de línea, porque
-el manuscrito se edita de forma concurrente.
-
----
-
-## 1. Qué se justifica aquí
-
-El manuscrito marca, junto a cada claim, cómo se estableció: `P` cuando la
-afirmación está probada y comprobada por máquina en Lean, `N` cuando está
-verificada numéricamente con el nombre de la prueba que la comprueba. La marca
-es un corchete pequeño, inmutable y de color propio (`\tier{P}`, `\tier{N}`,
-`\tier[ids]{X}`), o una línea propia alineada a la derecha cuando el claim
-arrastra varios testigos (`\witness{X}{ids}`). La primera página lleva una
-leyenda que define las clases y nada más.
-
-Ese dispositivo no es una moda tipográfica ni un adorno: es la respuesta a un
-problema real de lectura y de atribución, y su forma —inline o línea propia—
-se decide con un criterio cuantificado. Lo que este documento sostiene es
-precisamente eso: que la convención es **legítima** (resuelve algo que la
-cita bibliográfica no resuelve), **coherente** con la práctica
-contemporánea de verificación, **usable** (no cuesta legibilidad ni espacio
-imprimible de más) y **honestamente declarada** (no se presenta como una
-norma de AMS o de Chicago, y advierte de su novedad).
-
-Lo que este documento **no** hace: no fija reglas de edición. Las reglas están
-en `docs/citations.md`; aquí se da la razón de ser de cada una de ellas.
+**Status:** in force with the manuscript at HEAD `7ce658c`. The figures of
+§4.4 and §4.5 correspond to the state of the manuscript when this document
+was written, and are identified by the tail of the sentence, not only by
+the line number, because the manuscript is edited concurrently.
 
 ---
 
-## 2. Por qué una marca de testigo en un artículo de matemáticas puras
+## 1. What is justified here
 
-### 2.1 El problema que resuelve
+The manuscript marks, beside each claim, how it was established: `P` when
+the statement is proved and machine-checked in Lean, `N` when it is
+verified numerically with the name of the test that checks it. The mark is
+a small, immutable bracket in its own colour (`\tier{P}`, `\tier{N}`,
+`\tier[ids]{X}`), or a right-aligned line of its own when the claim carries
+several witnesses (`\witness{X}{ids}`). The first page carries a legend
+that defines the classes and nothing else.
 
-Una referencia bibliográfica responde a *dónde se ha publicado* una afirmación.
-No responde a *cómo se estableció* la afirmación que el lector tiene delante.
-En un artículo que mezcla tres tipos de afirmación —identidades probadas con
-Lean, números calculados y contrastados contra una suite, y resultados leídos
-en fuentes externas—, esa omisión tiene tres consecuencias concretas:
+That device is not a typographic fashion nor an ornament: it is the answer
+to a real problem of reading and of attribution, and its shape — inline or
+a line of its own — is decided by a quantified criterion. What this
+document maintains is precisely that: that the convention is
+**legitimate** (it solves something the bibliographic citation does not
+solve), **coherent** with contemporary verification practice, **usable**
+(it costs neither legibility nor extra printable space) and **honestly
+declared** (it is not presented as an AMS or Chicago norm, and it warns of
+its novelty).
 
-1. **La dirección de la referencia queda ambigua.** Un `\cite` al final de un
-   claim dice que hay una fuente; no dice si la fuente *prueba* el claim, si
-   sólo *reporta* el número, o si es el origen de una hipótesis que el artículo
-   toma prestada. El lector de matemáticas está habituado a leer la
-   bibliografía como procedencia del enunciado, no como verificación de él.
-   La marca separa los dos planos: la cita queda junto al claim con su forma
-   propia (`[N]~\cite{key}` para un valor leído en una fuente,
-   `[P] in~\cite{key}` para un resultado probado en ella), y la marca lleva
-   el testigo interno, por identificador.
-
-2. **El referente no es único.** Cuando un claim se apoya en tres
-   demostraciones de `lean/TorreKK_LYR_v34.lean` y en dos pruebas de la suite,
-   citar "la demostración" en singular obliga a elegir una y a esconder las
-   demás, o a escribir una enumeración en prosa que rompe la oración. La
-   gramática del dispositivo —un claim, una marca; el listado de identificadores
-   dentro del corchete o en su propia línea— da al lector el referente completo
-   y verificable: cada identificador es un nombre que se puede buscar en el
-   archivo de Lean o en la suite.
-
-3. **El coste tipográfico importa.** Un claim con un solo testigo cabe en la
-   oración; un claim con cinco nombres de cuarenta caracteres no. Sin una regla
-   de forma, el texto acumula corchetes largos en mitad de la frase y el lector
-   pierde el hilo de la oración que los contiene. De ahí que la distinción
-   inline / línea propia no sea estética: es la condición de que el dispositivo
-   sea legible.
-
-### 2.2 Qué gana el lector
-
-- **Comprueba la afirmación sin salir del texto.** El identificador está en la
-  página; el archivo de Lean y la suite están en el repositorio. Un número
-  marcado `N[test_rms_against_the_lyr_table]` puede reproducirse con una
-  orden; una identidad marcada `P[moduli_slope]` localiza el teorema.
-- **Distingue de un vistazo la naturaleza de la evidencia**, sin leer la
-  bibliografía: la letra carga el significado, el color sólo lo repite (§4.2).
-- **Sabe qué no está marcado.** La ausencia de marca es información: un claim
-  sin testigo es un claim que el artículo no verifica en el sitio donde se
-  afirma. Esa asimetría es útil sólo si la marca es sistemática, y la
-  sistematicidad exige una regla de forma explícita.
+What this document does **not** do: it does not set editing rules. The
+rules live in `docs/citations.md`; here the reason for being of each of
+them is given.
 
 ---
 
-## 3. El argumento post-2025
+## 2. Why a witness mark in a paper of pure mathematics
 
-Víctor sostiene que, **a partir de 2025 y con el estado del arte de la
-inteligencia artificial, la tendencia a la verificación exhaustiva numérica y
-mediante Lean y otros asistentes de pruebas llegó para quedarse** en las
-matemáticas formales, en la física y en otras disciplinas. El argumento se
-descompone en tres pasos.
+### 2.1 The problem it solves
 
-1. **La verificación dejó de ser excepcional.** La generación y la revisión de
-   pruebas por modelos de lenguaje, junto con la madurez de ecosistemas como
-   Lean y Mathlib, han abaratado el coste de comprobar una identidad o de
-   reconstruir un cálculo hasta el punto de que *no verificar* empieza a ser
-   la opción que exige justificación. Lo que antes era el privilegio de unos
-   pocos desarrollos —un teorema formalizado a mano durante años— es hoy una
-   expectativa razonable de lector para las afirmaciones numéricas y para las
-   identidades de cálculo.
+A bibliographic reference answers *where a statement has been published*.
+It does not answer *how the statement the reader has in front of them was
+established*. In a paper that mixes three kinds of statement — identities
+proved with Lean, numbers computed and checked against a suite, and results
+read from external sources — that omission has three concrete consequences:
 
-2. **La consecuencia editorial es una nueva clase de evidencia.** Si una parte
-   creciente de las afirmaciones de un artículo se establece por ejecución o
-   por comprobación de máquina, el artículo necesita decirlo *en el lugar
-   donde afirma*, y no sólo en una sección de "métodos" o en un apéndice
-   descriptivo. La referencia bibliográfica no puede hacer ese trabajo: no
-   distingue entre "probado en una fuente", "calculado aquí" y "supuesto por
-   hipótesis". Una convención que **marca la naturaleza de la evidencia junto
-   al claim obedece a esa realidad**: describe el estado real de cómo se
-   establece cada afirmación, con el mismo criterio en toda la disciplina.
+1. **The direction of the reference stays ambiguous.** A `\cite` at the
+   end of a claim says there is a source; it does not say whether the
+   source *proves* the claim, only *reports* the number, or is the origin
+   of a hypothesis the paper borrows. The reader of mathematics is used to
+   reading the bibliography as the provenance of the statement, not as its
+   verification. The mark separates the two planes: the citation sits
+   beside the claim in its own form (`[N]~\cite{key}` for a value read off
+   a source, `[P] in~\cite{key}` for a result proved in one), and the mark
+   carries the internal witness, by identifier.
 
-3. **La disciplina ya se mueve en esa dirección.** Los precedentes cercanos —
-   planos de trabajo con estado por enunciado (`leanblueprint`), tablas de
-   estado por resultado y sellos o insignias de artefacto que certifican qué
-   parte de un artículo está comprobada— existen precisamente porque la
-   verificación formal y numérica se ha vuelto un dato estructural del
-   resultado, no un detalle de implementación. La marca del manuscrito toma
-   ese principio y lo baja al nivel del claim, que es la unidad en que un
-   lector de matemáticas lee y juzga.
+2. **The referent is not unique.** When a claim rests on three proofs of
+   `lean/TorreKK_LYR_v34.lean` and on two tests of the suite, citing "the
+   proof" in the singular forces a choice of one and the hiding of the
+   others, or the writing of an enumeration in prose that breaks the
+   sentence. The grammar of the device — one claim, one mark; the list of
+   identifiers inside the bracket or on its own line — gives the reader the
+   complete and verifiable referent: each identifier is a name that can be
+   searched for in the Lean file or in the suite.
 
-De ahí que el dispositivo no se presente como un gusto de los autores: se
-presenta como la respuesta editorial a un cambio en la práctica de la
-disciplina. Eso no convierte a la marca en una norma de sociedad erudita; ver
-§6, donde se declara exactamente lo que la convención es y lo que no.
+3. **The typographic cost matters.** A claim with a single witness fits in
+   the sentence; a claim with five forty-character names does not. Without
+   a shape rule, the text accumulates long brackets in the middle of the
+   phrase and the reader loses the thread of the sentence that contains
+   them. Hence the inline / line-of-its-own distinction is not aesthetic:
+   it is the condition that the device be legible.
+
+### 2.2 What the reader gains
+
+- **Checks the statement without leaving the text.** The identifier is on
+  the page; the Lean file and the suite are in the repository. A number
+  marked `N[test_rms_against_the_lyr_table]` can be reproduced with one
+  command; an identity marked `P[moduli_slope]` locates the theorem.
+- **Distinguishes at a glance the nature of the evidence**, without reading
+  the bibliography: the letter carries the meaning, the colour only repeats
+  it (§4.2).
+- **Knows what is not marked.** The absence of a mark is information: an
+  unmarked claim is a claim the paper does not verify where it asserts it.
+  That asymmetry is useful only if the mark is systematic, and systematics
+  requires an explicit shape rule.
 
 ---
 
-## 4. Usabilidad y compactness
+## 3. The post-2025 argument
 
-El criterio de usabilidad y el de *compactness* —cuánto cuesta la marca en
-espacio y en atención— ya estaban parcialmente definidos en la documentación
-de la familia. Esta sección los recoge y los enriquece con el factor
-sintáctico en prosa pedido para §8.5 de `docs/citations.md`.
+Víctor maintains that, **from 2025 onwards and with the state of the art
+of artificial intelligence, the trend towards exhaustive numerical
+verification and verification with Lean and other proof assistants came to
+stay** in formal mathematics, physics and other disciplines. The argument
+breaks down into three steps.
 
-### 4.1 Herencia de la notación secundaria de la ingeniería de software
+1. **Verification stopped being exceptional.** The generation and review of
+   proofs by language models, together with the maturity of ecosystems
+   such as Lean and Mathlib, have lowered the cost of checking an identity
+   or reconstructing a calculation to the point where *not verifying*
+   begins to be the option that requires justification. What was once the
+   privilege of a few developments — a theorem formalised by hand over
+   years — is today a reasonable reader expectation for numerical
+   statements and for calculus identities.
 
-El dispositivo no nace de la tipografía matemática, sino de una práctica
-consolidada en la ingeniería de software y en el diseño de interfaces:
+2. **The editorial consequence is a new class of evidence.** If an
+   increasing share of a paper's statements is established by execution or
+   by machine check, the paper needs to say so *where it asserts it*, and
+   not only in a "methods" section or in a descriptive appendix. The
+   bibliographic reference cannot do that work: it does not distinguish
+   between "proved in a source", "computed here" and "assumed by
+   hypothesis". A convention that **marks the nature of the evidence
+   beside the claim answers that reality**: it describes the real state of
+   how each statement is established, with the same criterion across the
+   discipline.
 
-- **Tipado semántico:** los nombres dicen qué son. Un identificador
-  `test_second_order_convergence_on_the_golden_grid` no necesita glosa; el
-  lector que busque la comprobación la encuentra. El corchete del testigo
-  hereda esa disciplina: sólo admite identificadores internos, nunca claves de
-  bibliografía ni números impresos, de modo que su contenido es siempre un
-  nombre buscable.
-- **Color como marcador de *UX*, redundante con la etiqueta:** en las
-  interfaces serias el color acelera la lectura, pero la etiqueta sigue
-  portando el significado; el color nunca es la única vía. Aplicado al
-  manuscrito: azul `P`, verde `N`, ocre `P*`, turquesa `W` — y la letra, no el
-  tono, es lo que el lector en blanco y negro, con baja visión o con
-  deficiencia de color percibe.
-- **Marca de estado junto al objeto, no en una lista aparte:** como un
-  indicador de *build* verde al lado del commit, la marca vive al lado del
-  claim. Moverla a una tabla al final del artículo la haría más barata y menos
-  útil, a cambio de ahorrar unos caracteres.
+3. **The discipline is already moving in that direction.** The nearby
+   precedents — work plans with a status per statement (`leanblueprint`),
+   status tables per result, and artefact seals or badges that certify
+   which part of a paper has been checked — exist precisely because formal
+   and numerical verification has become a structural datum of the result,
+   not an implementation detail. The mark of the manuscript takes that
+   principle and lowers it to the level of the claim, which is the unit in
+   which a reader of mathematics reads and judges.
 
-La pasada de investigación previa sobre la convención —su alcance y su método
-están descritos en el *skill* de la familia `omega-pcf-paper-repos`, archivo
-`references/decision-gates.md`, sección *"When the convention itself is
-questioned"*— recorrió esa literatura con un propósito declarado: separar qué
-es estándar de la disciplina, qué es dispositivo propio del proyecto y cuál es
-el precedente real más cercano. El resultado destilado quedó en
-`docs/citations.md` §8.4: los precedentes reales son el estado por enunciado
-de `leanblueprint`, las tablas de estado y los sellos de artefacto; el resto —
-la marca en línea, la gramática de una sola macro, la regla de color— es
-dispositivo propio y se declara como tal.
+Hence the device is not presented as a taste of the authors: it is
+presented as the editorial answer to a change in the practice of the
+discipline. That does not turn the mark into a scholarly-society norm; see
+§6, where exactly what the convention is and what it is not is declared.
 
-### 4.2 La regla WCAG 1.4.1: el color nunca carga significado solo
+---
 
-`docs/citations.md` §8.4 fija ya esta regla: **el color es redundante con la
-letra (WCAG 1.4.1)**; la marca se lee igual en escala de grises y la letra
-basta para portar el significado. La regla se sostiene aquí por tres razones:
+## 4. Usability and compactness
 
-1. **Impresión.** El artículo se lee en papel y en PDF a color reducido; el
-   PDF se archiva y se cita en formatos que pierden color.
-2. **Accesibilidad.** El 1.4.1 es la condición de que un lector con
-   deficiencia de color distinga `P` de `N` sin ayuda cromática.
-3. **Consistencia del sistema.** Si el color portara significado propio, la
-   paleta sería una segunda gramática que habría que mantener sincronizada con
-   el alfabeto; al ser redundante, añadir una clase exige una letra, no un
-   matiz.
+The usability criterion and the *compactness* one — what the mark costs in
+space and in attention — were already partially defined in the family's
+documentation. This section gathers them and enriches them with the
+in-prose syntactic factor requested for §8.5 of `docs/citations.md`.
 
-Ninguna de las tres razones es decorativa: las tres son condiciones de
-usabilidad del dispositivo en su medio de circulación.
+### 4.1 Inheritance from the secondary notation of software engineering
 
-### 4.3 El contraste con la numeración alfabética de AMS y Chicago
+The device does not spring from mathematical typography, but from a
+practice consolidated in software engineering and interface design:
 
-La tentación natural, ante un enunciado con varias partes, es numerarlas —
-`(a)`, `(b)`, `(c)` o `(i)`, `(ii)`, `(iii)`—, que es la práctica que AMS y
-Chicago emplean para desglosar un enunciado y que todo lector de matemáticas
-conoce. Esa numeración **ordena**, y por eso no sirve aquí:
+- **Semantic typing:** names say what they are. An identifier
+  `test_second_order_convergence_on_the_golden_grid` needs no gloss; the
+  reader who looks for the check finds it. The bracket of the witness
+  inherits that discipline: it admits only internal identifiers, never
+  bibliography keys or printed numbers, so its content is always a
+  searchable name.
+- **Colour as a *UX* marker, redundant with the label:** in serious
+  interfaces colour speeds up reading, but the label still carries the
+  meaning; colour is never the only path. Applied to the manuscript: blue
+  `P`, green `N`, ochre `P*`, turquoise `W` — and the letter, not the
+  shade, is what the reader in black and white, with low vision or with
+  colour deficiency perceives.
+- **Status mark beside the object, not in a separate list:** like a green
+  *build* indicator next to the commit, the mark lives next to the claim.
+  Moving it to a table at the end of the paper would make it cheaper and
+  less useful, in exchange for saving a few characters.
 
-- **No certifica.** La letra `(a)` dice que hay una parte primera; no dice que
-  esté probada ni por qué. La marca dice exactamente eso: cómo se estableció.
-- **No es portable entre claims.** La numeración alfabética se reinicia en
-  cada enunciado y es local al enunciado; el testigo es un identificador
-  global, buscable en `lean/TorreKK_LYR_v34.lean` o en la suite.
-- **No distingue fuentes.** Numerar partes no separa "probado aquí" de "leído
-  en una fuente"; el dispositivo sí, con formas distintas para cada caso.
-- **Coste comparado.** Una enumeración alfabética añade un nivel de estructura
-  al enunciado; la marca añade un corchete. En un claim de una línea, la
-  enumeración es más cara que la marca.
+The prior research pass on the convention — its scope and method are
+described in the family *skill* `omega-pcf-paper-repos`, file
+`references/decision-gates.md`, section *"When the convention itself is
+questioned"* — went through that literature with a declared purpose: to
+separate what is standard in the discipline, what is device proper to the
+project, and what the real nearest precedent is. The distilled result sat
+in `docs/citations.md` §8.4: the real precedents are the per-statement
+status of `leanblueprint`, status tables and artefact seals; the rest —
+the inline mark, the one-macro grammar, the colour rule — is device proper
+to the project and is declared as such.
 
-La convención, por tanto, **no compite** con la numeración alfabética: la usa
-para lo que ella sirve (desglosar) y deja el estatus a la marca. Del mismo
-modo, la marca no sustituye a la bibliografía: la numeración alfabética de la
-bibliografía del artículo (`sorting=nyt`, la convención AMS que el proyecto ya
-sigue, `docs/citations.md` §7) sigue ordenando las referencias por autor; la
-marca no entra en esa capa.
+### 4.2 The WCAG 1.4.1 rule: colour never carries meaning alone
 
-### 4.4 El criterio cuantificado: usabilidad, compactness y sintaxis
+`docs/citations.md` §8.4 already fixes this rule: **colour is redundant
+with the letter (WCAG 1.4.1)**; the mark reads the same in greyscale and
+the letter suffices to carry the meaning. The rule is upheld here for
+three reasons:
 
-La forma de cada marca se decide con cinco cantidades leídas directamente de
-`main.tex`, sin juicio de gusto. Se resumen aquí porque son el núcleo del
-enriquecimiento pedido; la definición exacta, los cuatro umbrales y la tabla de
-sitios están en `docs/citations.md` §8.5.
+1. **Print.** The paper is read on paper and in reduced-colour PDF; the
+   PDF is archived and cited in formats that lose colour.
+2. **Accessibility.** 1.4.1 is the condition that a reader with colour
+   deficiency distinguishes `P` from `N` without chromatic help.
+3. **System consistency.** If colour carried its own meaning, the palette
+   would be a second grammar to keep synchronised with the alphabet; being
+   redundant, adding a class requires a letter, not a shade.
 
-| Símbolo | Cantidad | Papel en el criterio |
+None of the three reasons is decorative: all three are usability
+conditions of the device in its medium of circulation.
+
+### 4.3 The contrast with the alphabetic numbering of AMS and Chicago
+
+The natural temptation, before a statement with several parts, is to
+number them — `(a)`, `(b)`, `(c)` or `(i)`, `(ii)`, `(iii)` — which is the
+practice AMS and Chicago use to break down a statement and that every
+reader of mathematics knows. That numbering **orders**, and therefore it
+does not serve here:
+
+- **It does not certify.** The letter `(a)` says there is a first part; it
+  does not say it is proved or why. The mark says exactly that: how it was
+  established.
+- **It is not portable across claims.** Alphabetic numbering restarts at
+  every statement and is local to the statement; the witness is a global
+  identifier, searchable in `lean/TorreKK_LYR_v34.lean` or in the suite.
+- **It does not distinguish sources.** Numbering parts does not separate
+  "proved here" from "read in a source"; the device does, with distinct
+  forms for each case.
+- **Comparative cost.** An alphabetic enumeration adds a level of
+  structure to the statement; the mark adds a bracket. In a one-line
+  claim, the enumeration is more expensive than the mark.
+
+The convention, therefore, **does not compete** with alphabetic numbering:
+it uses it for what it is good at (breaking down) and leaves status to
+the mark. In the same way, the mark does not replace the bibliography: the
+alphabetic ordering of the paper's bibliography (`sorting=nyt`, the AMS
+convention the project already follows, `docs/citations.md` §7) keeps
+ordering the references by author; the mark does not enter that layer.
+
+### 4.4 The quantified criterion: usability, compactness and syntax
+
+The shape of each mark is decided with five quantities read directly from
+`main.tex`, with no judgement of taste. They are summarised here because
+they are the core of the requested enrichment; the exact definition and
+the four thresholds are in `docs/citations.md` §8.5, and the site table —
+every flagged site with the tail of the sentence it closes — is in
+`docs/reports/20261115_WIT-001_criterion_sites.md`.
+
+| Symbol | Quantity | Role in the criterion |
 |---|---|---|
-| `k` | número de identificadores del claim | `k ≥ 2` es la condición de partida: un identificador nunca gana una línea propia |
-| `L` | longitud del listado, en caracteres | mide el peso visual del corchete; `L ≥ 35` es el umbral, calibrado con la lista más corta que ya se imprime como bloque |
-| `r` | **residuo de la oración**: palabras de la misma oración que siguen a la marca | `r = 0` exige que la marca *cierre* la oración; `r ≥ 1` mantiene la marca en línea, sin excepción |
-| `d` | distancia en palabras al bloque más cercano del mismo párrafo | ritmo de la prosa: `d ≥ 75` evita dos bloques seguidos |
-| `i` | 1 si la marca cierra un `\item` de una enumeración | posición sintáctica: dentro de una lista el bloque rompería el ítem |
+| `k` | number of identifiers of the claim | `k ≥ 2` is the starting condition: an identifier never earns a line of its own |
+| `L` | length of the list, in characters | measures the visual weight of the bracket; `L ≥ 35` is the threshold, calibrated with the shortest list the manuscript already prints as a block |
+| `r` | **sentence residual**: words of the *same sentence* that follow the mark | `r = 0` requires the mark to *close* the sentence; `r ≥ 1` keeps the mark inline, with no exception |
+| `d` | distance in words to the nearest block of the same paragraph | rhythm of the prose: `d ≥ 75` avoids two consecutive blocks |
+| `i` | 1 if the mark closes an `\item` of an enumeration | syntactic position: inside a list the block would break the item |
 
-En una frase operativa: **un listado de dos identificadores o más y de treinta
-y cinco caracteres o más pasa a línea propia sólo si la marca cierra su
-oración, no cierra un elemento de lista y está a setenta y cinco palabras o
-más del bloque anterior.** Todo lo demás queda en línea.
+In one operative phrase: **a list of two or more identifiers and
+thirty-five characters or more goes to a line of its own only if the mark
+closes its sentence, does not close a list item and stands seventy-five
+words or more from the previous block.** Everything else stays inline.
 
-Las cuatro condiciones responden a las cuatro exigencias de usabilidad:
+The four conditions answer the four usability demands:
 
-- `k` y `L` al **coste**: el bloque paga un salto de párrafo, así que sólo se
-  pide a listados que de verdad necesitan la línea.
-- `r` a la **lectura**: como `\witness` emite `\par` antes y después, la
-  oración que la sigue empezaría un párrafo nuevo; un residuo de una sola
-  palabra (un paréntesis de referencia, un `\testref` final) ya rompería la
-  oración. El residuo se cuenta, no se estima.
-- `d` al **ritmo**: si el párrafo ya lleva un bloque a menos de setenta y
-  cinco palabras, el segundo bloque es monotonía; el propio manuscrito marca
-  el suelo empírico, que es la pareja de bloques más apretada que ya acepta.
-- `i` a la **posición**: un bloque dentro de una enumeración separaría el
-  testigo del resto del ítem; ninguno de los bloques del manuscrito está
-  dentro de uno.
+- `k` and `L` address **cost**: the block pays a paragraph break, so it is
+  only asked of lists that truly need the line.
+- `r` addresses **reading**: since `\witness` emits `\par` before and
+  after, the sentence that follows it would start a new paragraph; a
+  residual of a single word (a reference parenthesis, a closing
+  `\testref`) would already break the sentence. The residual is counted,
+  not estimated.
+- `d` addresses **rhythm**: if the paragraph already carries a block less
+  than seventy-five words away, the second block is monotony; the
+  manuscript itself marks the empirical floor, which is the tightest block
+  pair it already accepts.
+- `i` addresses **position**: a block inside an enumeration would separate
+  the witness from the rest of the item; none of the manuscript's blocks
+  sits inside one.
 
-El criterio es reproducible por cualquier persona que abra `main.tex`, y
-reproduce el estado aplicado sin una sola excepción: los dieciocho bloques del
-manuscrito cumplen las cinco condiciones. De las marcas en línea con dos
-identificadores o más —treinta y cuatro, treinta y uno `P` y tres `N`—,
-trece cierran su oración; el criterio señala nueve de ellas para pasar a
-bloque y deja cuatro en línea con una razón numérica (el listado más corto
-de todos, dos elementos de lista, un bloque vecino a setenta palabras). La
-tabla completa, con la cola de la oración que cada marca cierra, está en
-`docs/citations.md` §8.5.
+The criterion is reproducible by anyone who opens `main.tex`, and it
+reproduces the applied state without a single exception: the manuscript's
+eighteen blocks meet the five conditions. Of the inline marks with two
+identifiers or more — thirty-four, thirty-one `P` and three `N` — thirteen
+close their sentence; the criterion flags nine of them to become a block
+and leaves four inline with a numerical reason (the shortest list of all,
+two list items, a neighbouring block at seventy words). The complete
+table, with the tail of the sentence each mark closes, is in
+`docs/reports/20261115_WIT-001_criterion_sites.md`.
 
-**Revisión.** La convención se revisa con una pasada de lectura sobre la
-tabla de `docs/citations.md` §8.5: una pregunta por fila, *¿sigue alguna
-palabra de la oración a la marca?* No se escribe una prueba de CI para esto:
-un test que volviera a derivar lo que esa sección ya garantiza se probaría
-contra sí mismo; el censo (`tests/test_section_census.py`) custodia lo de lo
-que el build depende —los identificadores de prueba que el manuscrito cita— y
-esto no lo es.
+**Review.** The convention is reviewed with a reading pass over the table
+in `docs/reports/20261115_WIT-001_criterion_sites.md`: one question per
+row, *does any word of that sentence follow the mark?* No CI test is
+written for this: a test that re-derived what that section already
+guarantees would test the document against itself; the census
+(`tests/test_section_census.py`) guards what the build depends on — the
+test identifiers the manuscript cites — and this is not that.
 
-### 4.5 Compactness: el coste medido del dispositivo
+### 4.5 Compactness: the measured cost of the device
 
-El *compactness* no es una intuición aquí: se puede contar. Con el manuscrito
-en el estado de este documento, el aparato completo ocupa:
+*Compactness* is not an intuition here: it can be counted. With the
+manuscript in the state of this document, the whole apparatus occupies:
 
-- **240 marcas en línea** — 18 sin argumento (una de ellas la leyenda de la
-  primera página) y 222 con identificadores (167 `P` y 55 `N`)—, todas
-  compuestas en `\footnotesize` dentro de la oración que marcan: cuestan los
-  caracteres del corchete, no una línea;
-- **18 bloques** — 9 `P` y 9 `N`—, cada uno con una línea propia y dos saltos
-  de párrafo (`\par` antes y después de `\witness`);
-- **12 etiquetas** `\wtag` de la lista de testigos y **98 apariciones** de
+- **240 inline marks** — 18 without argument (one of them the first-page
+  legend) and 222 with identifiers (167 `P` and 55 `N`) — all set in
+  `\footnotesize` inside the sentence they mark: they cost the characters
+  of the bracket, not a line;
+- **18 blocks** — 9 `P` and 9 `N` — each with a line of its own and two
+  paragraph breaks (`\par` before and after `\witness`);
+- **12** `\wtag` **labels** of the witness list and **98 occurrences** of
   `\testref`.
 
-De ahí salen dos consecuencias que justifican los umbrales de §4.4:
+From that follow two consequences that justify the thresholds of §4.4:
 
-1. **El bloque es caro, así que se pide a cambio.** Cuesta una línea y rompe
-   el párrafo; sólo se le pide a un listado de 35 caracteres o más, que es
-   exactamente la lista más corta que el manuscrito ya imprime como bloque.
-   Sin ese umbral, el listado `pisano_orders, modular_orders` —29
-   caracteres— ganaría una línea entera por veintinueve caracteres, y el
-   coste no tendría contrapartida.
-2. **El corchete en línea es barato pero no gratis.** El argumento opcional
-   de `\tier` imprime nombres, nunca números: el coste del corchete no crece
-   con la numeración de referencias, y los identificadores se rompen en
-   línea gracias a los guiones bajos permitidos (`\brk@us`). El límite real
-   no es el ancho, es la oración: por eso manda `r`, no `L`.
+1. **The block is expensive, so it is asked to pay in return.** It costs a
+   line and breaks the paragraph; it is only asked of a list of 35
+   characters or more, which is exactly the shortest list the manuscript
+   already prints as a block. Without that threshold, the list
+   `pisano_orders, modular_orders` — 29 characters — would earn a whole
+   line for twenty-nine characters, and the cost would have no
+   counterpart.
+2. **The inline bracket is cheap but not free.** The optional argument of
+   `\tier` prints names, never numbers: the cost of the bracket does not
+   grow with the numbering of references, and the identifiers break in
+   line thanks to the permitted underscores (`\brk@us`). The real limit is
+   not the width, it is the sentence: hence `r` rules, not `L`.
 
-Con eso, el presupuesto del dispositivo es previsible: en un manuscrito de
-este porte, unas veinte líneas propias y un corchete por claim. Es un precio
-que la información que compra —cómo se estableció cada afirmación— justifica,
-y es también la razón por la que la regla de forma existe: sin ella, el
-presupuesto crecería con la prosa y el aparato empezaría a leerse como
-ruido.
-
----
-
-## 5. Qué es y qué no es
-
-**No es una clase de revisión por pares.** La marca `P` dice que una
-demostración está formalizada y comprobada por una máquina en el archivo del
-proyecto; `N` dice que un número se recalcula en la suite y se contrasta con
-una tolerancia declarada. Ninguna de las dos dice que un tercero haya leído el
-artículo, ni que la demostración haya sido revisada por un humano, ni que el
-resultado esté publicado. Confundir verificación de máquina con revisión por
-pares sería el error más grave que este dispositivo podría inducir, y por eso
-la leyenda de la primera página define las clases y nada más: la explicación
-del aparato vive en esta documentación, no en la página 1.
-
-**No sustituye a la cita.** La fuente externa es y sigue siendo el `\cite`, con
-su forma propia junto al claim: `[N]~\cite{key}` y `[P] in~\cite{key}`. El
-argumento opcional de `\tier` admite **sólo** identificadores internos —un
-`\testref` o el nombre crudo de una declaración de nuestro archivo de Lean— y
-el preámbulo levanta un `\PackageError` ante cualquier otra cosa, de modo que
-un corchete de marca nunca imprime un número de referencia. Un bracket que
-dijera "está citado" sería redundante con la cita que ya está ahí.
-
-**Un claim, una marca.** No hay dos marcas contiguas, ni una marca y un
-`\cite` diciendo lo mismo, ni marcas en los pies de figura (la regla 8 de
-`docs/citations.md` §8.2). La leyenda es exempta de la regla de testigo
-obligatorio porque define, no afirma.
-
-**`P*` es interno.** La clase existe y funciona en el preámbulo (despacho
-`\@namedef{tiercol@P*}`, color ocre) para marcar entre compilaciones una
-afirmación escrita pero aún no nombrada; el texto impreso nunca la invoca, la
-leyenda no la menciona y la prosa no habla de ella. Es una herramienta de
-trabajo, no una clase del alfabeto publicado.
-
-**`L` y `R` se eliminaron, y por qué.** Ambas cargaban información que el
-texto ya daba:
-
-- `L` significaba "está citado", que es exactamente lo que dice la cita
-  numérica, repetida según la norma AMS cada vez que se cita de nuevo (las
-  matemáticas no tienen forma de segunda mención; `op. cit.` e `ibid.` son de
-  la nota bibliográfica de Chicago). La clase no añadía información y era la
-  única que a veces se sostenía sin ninguna referencia junto a ella. Su
-  contenido se absorbió en prosa: cada claim conserva su cita al lado.
-- `R` marcaba la dirección de la lectura —un "esto se lee como"—, no cómo se
-  establece el claim, de modo que no pertenecía a un alfabeto de testigos.
-  Once de sus sitios repetían lo que la prosa ya decía; el único que
-  funcionaba se escribió como prosa (`a reading of the records, not a result
-  about them`), y dos sitios añadidos en una ronda contradecían la sección
-  "probado aquí" en la que estaban.
-
-Ambas eliminaciones están documentadas en `docs/citations.md` §8.3 y aplicadas
-en el manuscrito: el alfabeto publicado es `P` y `N`.
+With that, the budget of the device is predictable: in a manuscript of
+this size, some twenty lines of its own and a bracket per claim. It is a
+price that the information it buys — how each statement was established —
+justifies, and it is also the reason the shape rule exists: without it,
+the budget would grow with the prose and the apparatus would begin to read
+as noise.
 
 ---
 
-## 6. Honestidad: la novedad declarada
+## 5. What it is and what it is not
 
-Este documento no presenta la convención como algo consagrado. La afirmación
-verificable es la inversa: **ninguna publicación previa marca la verificación
-claim por claim en línea, en el punto exacto donde se afirma**, y el proyecto
-lo dice como tal.
+**It is not a peer-review class.** The mark `P` says that a proof is
+formalised and machine-checked in the project's file; `N` says that a
+number is recomputed in the suite and checked against a declared
+tolerance. Neither says that a third party has read the paper, nor that
+the proof has been reviewed by a human, nor that the result is published.
+Confusing machine verification with peer review would be the gravest error
+this device could induce, and that is why the first-page legend defines
+the classes and nothing else: the explanation of the apparatus lives in
+this documentation, not on page 1.
 
-- `docs/citations.md` §8.4 declara sin rodeos que el estado en línea es
-  "una convención de este proyecto y no una de AMS o de Chicago", y señala los
-  precedentes reales —`leanblueprint` con estado por enunciado, tablas de
-  estado, sellos de artefacto— como lo más cercano que existe.
-- La familia omega-pcf es, en ese sentido, **pionera**: adopta el principio de
-  esos precedentes y lo baja al claim, que es un nivel de granularidad que los
-  precedentes no cubren. Ser pionera tiene un coste declarado: no hay una norma
-  externa a la que apelarse si alguien pregunta "¿dónde está esto
-  especificado?", y la respuesta es este archivo y `docs/citations.md` §8.
-- La pasada de investigación sobre la convención se comprometió a reportar el
-  reparto con honestidad —qué parte es estándar de la disciplina, qué parte es
-  dispositivo propio y cuál es el precedente más cercano— y así quedó
-  registrado. Nada de lo que este documento afirma se presenta como norma
-  publicada cuando no lo es.
+**It does not replace the citation.** The external source is and remains
+the `\cite`, in its own form beside the claim: `[N]~\cite{key}` and
+`[P] in~\cite{key}`. The optional argument of `\tier` admits **only**
+internal identifiers — a `\testref` or the raw name of a declaration of
+our Lean file — and the preamble raises a `\PackageError` before anything
+else, so a mark bracket never prints a reference number. A bracket that
+said "it is cited" would be redundant with the citation that is already
+there.
 
-La novedad declarada es, además, el mejor argumento a favor de la convención:
-si el estado de la evidencia es hoy un dato estructural del resultado (§3),
-decirlo en el punto de afirmación es más honesto que silenciarlo, y hacerlo
-con un criterio cuantificado y reproducible (§4.4) es lo que separa una
-convención de un capricho.
+**One claim, one mark.** There are no two adjacent marks, nor a mark and a
+`\cite` saying the same thing, nor marks in figure captions (rule 8 of
+`docs/citations.md` §8.2). The legend is exempt from the mandatory-witness
+rule because it defines, it does not assert.
+
+**`P*` is internal.** The class exists and works in the preamble (dispatch
+`\@namedef{tiercol@P*}`, ochre colour) to mark between compilations a
+statement written but not yet named; the printed text never invokes it,
+the legend does not mention it and the prose does not speak of it. It is a
+work tool, not a class of the published alphabet.
+
+**`L` and `R` were eliminated, and why.** Both carried information the
+paper already gave:
+
+- `L` meant "it is cited", which is exactly what the numeric citation
+  says, repeated according to the AMS norm every time it is cited again
+  (mathematics has no second-reference form; `op. cit.` and `ibid.` belong
+  to the Chicago bibliographic note). The class added no information and
+  was the only one that sometimes stood with no reference beside it. Its
+  content was absorbed into prose: each claim keeps its citation beside
+  it.
+- `R` marked the direction of the reading — a "this is read as" —, not how
+  the claim is established, so it did not belong to an alphabet of
+  witnesses. Eleven of its sites repeated what the prose already said; the
+  only one that worked was written as prose (`a reading of the records,
+  not a result about them`), and two sites added in one round contradicted
+  the "proved here" section they were in.
+
+Both eliminations are documented in `docs/citations.md` §8.3 and applied
+in the manuscript: the published alphabet is `P` and `N`.
 
 ---
 
-## 7. Referencias internas
+## 6. Honesty: the declared novelty
 
-Todas las fuentes de este documento son archivos del repositorio o del entorno
-de trabajo de la familia; no se invoca ninguna URL externa.
+This document does not present the convention as something consecrated.
+The verifiable claim is the reverse: **no previous publication marks
+verification claim by claim inline, at the exact point where it asserts
+it**, and the project says so as much.
 
-| Archivo | Qué aporta |
+- `docs/citations.md` §8.4 states without detour that the inline status is
+  "a convention of this project and not one of AMS or Chicago", and points
+  to the real precedents — `leanblueprint` with status per statement,
+  status tables, artefact seals — as the closest thing that exists.
+- The omega-pcf family is, in that sense, **pioneering**: it adopts the
+  principle of those precedents and lowers it to the claim, which is a
+  level of granularity the precedents do not cover. Being pioneering has a
+  declared cost: there is no external norm to appeal to if someone asks
+  "where is this specified?", and the answer is this file and
+  `docs/citations.md` §8.
+- The research pass on the convention committed to reporting the split
+  honestly — which part is discipline standard, which part is device
+  proper to the project, and what the nearest precedent is — and so it was
+  recorded. Nothing this document asserts is presented as a published norm
+  when it is not.
+
+The declared novelty is, besides, the best argument in favour of the
+convention: if the state of the evidence is today a structural datum of
+the result (§3), saying so at the point of assertion is more honest than
+silencing it, and doing so with a quantified and reproducible criterion
+(§4.4) is what separates a convention from a whim.
+
+---
+
+## 7. Internal references
+
+All the sources of this document are files of the repository or of the
+family's work environment; no external URL is invoked.
+
+| File | What it provides |
 |---|---|
-| `docs/citations.md` §8 (§8.1 gramática, §8.2 reglas de redacción, §8.3 alfabeto y por qué no hay `L` ni `R`, §8.4 convención y regla WCAG 1.4.1, §8.5 criterio inline / línea propio cuantificado) | el contrato del dispositivo; la regla operativa que este documento justifica |
-| `docs/citations.md` §5, §6, §7 | higiene de datos, convención de documentación y decisiones de estilo ya fijadas (bibliografía alfabética AMS, iniciales) |
-| `docs/witness-decisions.md` | decisiones por sitio, contadores del pase de armonización y la lista de trabajo pendiente del autor |
-| `README.md` | enlace a la sección de testigos de `docs/citations.md`; `docs/README.md` es el índice del directorio y todavía no lista este archivo |
-| `main.tex` — preámbulo (sistema de testigos, despacho de `\tier`, definición de `\witness` y `\wtag`) y leyenda de la primera página | la implementación y lo que el lector ve en la página 1 |
-| `lean/TorreKK_LYR_v34.lean` | los identificadores `P` que la marca puede imprimir |
-| `tests/` y `tests/test_section_census.py` | la suite numérica y el censo que fija los identificadores de prueba que el manuscrito cita |
-| `tests/REPORT.md` | censo histórico del aparato de testigos, marcado explícitamente como anterior a la estandarización; se conserva como historia, no como estado |
-| `citation.csl.json`, `CITATION.cff` | la capa bibliográfica con la que la marca **no** se mezcla: la fuente externa es un `\cite`, nunca un identificador de marca |
-| `omega-pcf-paper-repos` → `references/decision-gates.md` | el método de la pasada de investigación de la convención (separar estándar de disciplina, dispositivo propio y precedente real) y la regla de no escribir pruebas de CI para convenciones editoriales |
-| `omega-pcf-paper-repos` → `references/witness-system.md` | la gramática del sistema de testigos a nivel de familia, sus defectos conocidos (herencia de cursiva en entornos de teorema, marcas en línea dentro de alineados) y el estado de propagación a los repositorios hermanos |
+| `docs/citations.md` §8 (§8.1 grammar, §8.2 writing rules, §8.3 alphabet and why there is no `L` or `R`, §8.4 convention and the WCAG 1.4.1 rule, §8.5 the quantified inline / line-of-its-own criterion) | the contract of the device; the operational rule this document justifies |
+| `docs/citations.md` §5, §6, §7 | data hygiene, documentation convention and settled style decisions (AMS alphabetical bibliography, initials) |
+| `docs/reports/20261115_DEC-001_witness_decisions.md` | per-site decisions, counters of the harmonisation pass and the author's pending-work list |
+| `README.md` | link to the witness section of `docs/citations.md`; `docs/README.md` is the directory index |
+| `main.tex` — preamble (witness system, `\tier` dispatch, definition of `\witness` and `\wtag`) and the first-page legend | the implementation and what the reader sees on page 1 |
+| `lean/TorreKK_LYR_v34.lean` | the `P` identifiers the mark can print |
+| `tests/` and `tests/test_section_census.py` | the numerical suite and the census that fixes the test identifiers the manuscript cites |
+| `tests/REPORT.md` | historical census of the witness apparatus, explicitly marked as prior to standardisation; kept as history, not as state |
+| `citation.csl.json`, `CITATION.cff` | the bibliographic layer the mark does **not** mix with: the external source is a `\cite`, never a mark identifier |
+| `omega-pcf-paper-repos` → `references/decision-gates.md` | the method of the convention research pass (separate discipline standard, device proper, real precedent) and the rule of not writing CI tests for editorial conventions |
+| `omega-pcf-paper-repos` → `references/witness-system.md` | the grammar of the family-level witness system, its known defects (italic inheritance in theorem environments, inline marks inside alignments) and the state of propagation to the sibling repositories |
 
 ---
 
-## 8. Límites y trabajo pendiente
+## 8. Limits and pending work
 
-1. **Aplicación de las filas señaladas.** `docs/citations.md` §8.5 marca
-   nueve sitios en línea que el criterio cuantificado lleva a bloque; su
-   aplicación corresponde a un pase de edición que no es este documento y que
-   actualizará los contadores de §8.5.
-2. **Leyenda y cobertura.** La leyenda promete `N` = "verificado
-   numéricamente, con el nombre de la prueba que lo comprueba"; el trabajo
-   pendiente de `docs/witness-decisions.md` §3.1 y §4 consiste en que cada
-   claim `N` cuerpo lleve ese nombre. Mientras haya `N` sin testigo nombrado,
-   la leyenda describe la intención del sistema y no todos sus sitios.
-3. **Comentarios del preámbulo.** El comentario de cabecera de `main.tex`
-   describe la forma del aparato en una frase ("una marca desnuda queda en
-   línea; un testigo con nombres gana una línea propia") que es más gruesa que
-   el criterio de `docs/citations.md` §8.5: hay marcas con nombres que quedan
-   en línea por los cuatro umbrales. La frase debe leerse como resumen, no
-   como regla; la regla vive en `docs/citations.md`.
-4. **Propagación a la familia.** Sólo `05-kk-golden-throat` y
-   `03-crystalline-worldsheet` renderizan marcas; la adopción del criterio en
-   los demás repositorios es decisión editorial, nunca mecánica.
-5. **Ninguna garantía externa.** Mientras no exista una norma publicada que
-   describa la marca por claim, la convención descansa en esta documentación y
-   en su revisión; eso está declarado en §6 y no debe presentarse de otro modo.
+1. **Application of the flagged rows.** `docs/citations.md` §8.5 flagged
+   nine inline sites that the quantified criterion takes to a block; their
+   application corresponds to an editing pass that is not this document
+   and that records its counters in `docs/reports/`.
+2. **Legend and coverage.** The legend promises `N` = "verified
+   numerically, with the name of the test that checks it"; the pending work
+   of `docs/reports/20261115_DEC-001_witness_decisions.md` §3.1 and §4
+   consists of each body claim `N` carrying that name. While there are `N`
+   without a named witness, the legend describes the intention of the
+   system and not all its sites.
+3. **Preamble comments.** The header comment of `main.tex` describes the
+   shape of the apparatus in one sentence ("a bare mark stays inline; a
+   witness with names earns a line of its own") which is coarser than the
+   criterion of `docs/citations.md` §8.5: there are marks with names that
+   stay inline by the four thresholds. The sentence should be read as a
+   summary, not as a rule; the rule lives in `docs/citations.md`.
+4. **Propagation to the family.** Only `05-kk-golden-throat` and
+   `03-crystalline-worldsheet` render marks; the adoption of the criterion
+   in the remaining repositories is an editorial decision, never a
+   mechanical one.
+5. **No external guarantee.** While there is no published norm that
+   describes the claim-by-claim mark, the convention rests on this
+   documentation and on its review; that is declared in §6 and must not be
+   presented otherwise.

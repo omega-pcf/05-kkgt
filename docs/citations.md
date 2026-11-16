@@ -1,11 +1,23 @@
 # Citations Pipeline — Best Practices
 
+| Field | Value |
+|---|---|
+| **document** | `docs/citations.md` |
+| **status** | active |
+| **version** | 2.0 |
+| **date** | 2026-11-16 |
+| **scope** | The citation pipeline and the witness contract shared by the family (01-hilbert-polya, 02-odd-zeta, 03-crystalline-worldsheet, 04-mersenne-cr, 05-kk-golden-throat); the pipeline scripts are byte-identical across them. |
+
 This document describes how citations flow from a single source of truth to
 the PDF, CITATION.cff, and .zenodo.json, and the conventions for adding new
-references. It applies to every paper repository in this family
-(01-hilbert-polya, 02-odd-zeta, 03-crystalline-worldsheet, 04-mersenne-cr,
-05-kk-golden-throat); the pipeline scripts are byte-identical
-across them.
+references.
+
+Two companion documents hold what this one deliberately does not: the
+**justification** of the witness device is argued in
+[`docs/witness-rationale.md`](witness-rationale.md), and the **concrete
+per-site material** — inventories, sentence tails, applied states, verdict
+tables — lives in [`docs/reports/`](reports/README.md). This file states
+only the generic, portable rule.
 
 ## 1. Single source of truth
 
@@ -92,11 +104,11 @@ fails the build otherwise.
 ## 5. Data hygiene rules (lessons encoded)
 
 - **Root title carries full Unicode**: `package.json.description` holds the
-   paper title verbatim (special math characters such as 𝔽₁, μ₆, φ); every
-   build copies it into `CITATION.cff` and the Zenodo title unmodified.
-   Never ASCII-fold it (`F1`, `mu6`) — that degradation propagates to the
-   deposition on every rebuild. The sanitizer applies only to Unicode
-   superscripts (→ `<sup>`), never to math alphabetics or subscripts.
+  paper title verbatim (special math characters such as 𝔽₁, μ₆, φ); every
+  build copies it into `CITATION.cff` and the Zenodo title unmodified.
+  Never ASCII-fold it (`F1`, `mu6`) — that degradation propagates to the
+  deposition on every rebuild. The sanitizer applies only to Unicode
+  superscripts (→ `<sup>`), never to math alphabetics or subscripts.
 - **Author lists are structured.** Each author is one `given`/`family`
   object. A comma-joined blob ("A. X, B. Y, C. Z") makes biber abort with
   `Name "..." has too many commas` and kills the whole bibliography.
@@ -114,23 +126,20 @@ fails the build otherwise.
   `\AtEveryBibitem{\iffieldundef{doi}{}{\clearfield{url}}}` suppresses the
   URL whenever the entry has a DOI (no `doi.org` duplication); entries
   without a DOI keep their URL (retrieved-from sources).
-- **Sorting and name style**: references sort alphabetically (`sorting=nyt`,
-  the AMS convention for `amsart`) and render with initials
-  (`giveninits=true`) regardless of the stored form — stored CSL data keeps
-  full given names, so Zenodo/CFF metadata stay complete.
 
 ## 6. Conventions
 
 - Docs and comments in English; filenames kebab-case under `docs/`;
   figures as `images/fig{N}_{semantic-name}.pdf` matching the
   `\includegraphics` names; one semantic subfolder per concern
-  (`src/`, `tests/`, `scripts/`, `images/`, `docs/`, `lean/`).
+  (`src/`, `tests/`, `scripts/`, `images/`, `docs/`, `lean/`). Specific,
+  repository-tied material goes to `docs/reports/` (see its `README.md`);
+  `docs/` itself stays generic.
 - Commits follow semver conventional-commit style, English subject lines,
   e.g. `docs(citations): add pipeline best-practices guide`,
   `fix(citations): correct Shou2023 author list and publication year`,
   `feat(pipeline): adopt biblatex bibliography from CSL`.
 - Never push without an explicit instruction from the author.
-
 
 ## 7. Settled style decisions
 
@@ -138,8 +147,8 @@ fails the build otherwise.
   the `\AtEveryBibitem` hook (see §5); stored metadata keeps both. Applied
   identically to all five repositories.
 - Reference ordering: **alphabetical** (`sorting=nyt`) per AMS convention;
-  rendered author names: **initials** (`giveninits=true`).
-
+  rendered author names: **initials** (`giveninits=true`) — the stored-data
+  side (full given names in CSL) is §5.
 
 ## 8. Witnesses (tiers)
 
@@ -148,7 +157,9 @@ tag set in footnotesize and in its own colour. This section is the contract
 of that device, written down here for whoever writes or edits the text.
 The justification of the device — why a mark of this kind belongs in a
 paper of pure mathematics, and what it does not claim — is argued in
-`docs/witness-rationale.md`; this section states only the contract.
+`docs/witness-rationale.md`; this section states only the contract. The
+concrete instances of the rules below — site inventories, sentence tails,
+applied states and verdict tables — live in `docs/reports/`.
 
 ### 8.1 Grammar — one macro, one optional argument
 
@@ -210,11 +221,10 @@ citation, `in~\cite{CW6}`.
    the citation already says it, and in numeric style a repeat carries its
    number like any other reference. What a tag carries is an *internal*
    witness, by identifier: a Lean name inside its brackets,
-   `\witness{}` or `\testref{}`. The
-   external form is therefore `[N]~\cite{key}` (a value read off a source)
-   or `[P] in~\cite{key}` (a result proved in one); `\tier[key]{X}` does
-   not exist — the optional argument of `\tier` holds internal ids only and
-   the preamble errors on anything else.
+   `\witness{}` or `\testref{}` (the external forms are stated once, in
+   §8.1: `[N]~\cite{key}`, `[P] in~\cite{key}`). `\tier[key]{X}` does not
+   exist — the optional argument of `\tier` holds internal ids only and the
+   preamble errors on anything else.
 3. **A bare tag needs a witness in its sentence.** If the sentence has none,
    add the most honest one (the `\testref{}` of the test that checks the
    number, the Lean declaration that proves it — written inside the tag, so
@@ -229,8 +239,8 @@ citation, `in~\cite{CW6}`.
 5. **`\tier{P}` without a bracket** means proved here, with no theorem name
    quoted at that point; the name, when it is quoted, goes into the tag
    itself (`\tier[name]{P}`) or, when the claim carries two ids or more and
-   closes its sentence, into a `\witness{}` block — the four gates of §8.5
-   decide which of the two.
+   closes its sentence, into a `\witness{}` block — the criterion of §8.5
+   (four gates and two labelled heuristics) decides which of the two.
    Proved in an external source is not "here": that is `[P] in~\cite{key}`,
    one bracket for the tag and one for the citation, each printed by its own
    macro.
@@ -281,9 +291,9 @@ sentence does not.
   against a named test or an external source. That is a
   decision of this project and not an AMS or Chicago one; the real precedents
   are blueprints with a status per statement (`leanblueprint`), status tables
-  and artefact seals. The first-page legend therefore states the classes and
-  nothing else: the notes that explain the device belong to this standard, not
-  to page 1.
+  and artefact seals (argued in `docs/witness-rationale.md`). The
+  first-page legend therefore states the classes and nothing else: the notes
+  that explain the device belong to this standard, not to page 1.
 - **Colour is redundant with the letter** (WCAG 1.4.1): a tag reads the same
   in greyscale, so the letter alone always carries the meaning.
 
@@ -296,15 +306,18 @@ kind of evidence it is; reading the shape as "the proof is a block, the
 test is inline" was the drift this rule closes.
 
 The criterion is **quantitative**: five quantities read off `main.tex`
-with no judgement call, four gates, one reading pass to review it.  It
-replaces the earlier one-liner ("two ids or more at the end of a claim"),
-which never said what "the end of a claim" is.
+with no judgement call, four gates, two labelled heuristics, one reading
+pass to review it.
 
 **The rule in one sentence.**  A claim whose id list carries **two ids or
 more and 35 characters or more** goes on a line of its own
 `\witness{X}{ids}` **only if the mark closes its sentence, does not close
 a list item, and stands at least 75 words from the nearest block of its
-paragraph**; every other site stays inline `\tier[ids]{X}`.
+paragraph**; every other site stays inline `\tier[ids]{X}`.  Two labelled
+**heuristics** amend the cost and position conditions (gates 2 and 4): `u`
+takes the verdict from the list the mark sits in, `p` prefers a line of its
+own at a paragraph close — both stated below.  Gates 1 and 3 (`k ≥ 2`,
+`r = 0`) are absolute: no heuristic lifts them.
 
 #### The quantities
 
@@ -318,93 +331,123 @@ paragraph**; every other site stays inline `\tier[ids]{X}`.
 
 #### The four gates
 
-A claim with `k ≥ 2` is set as a block **iff all four hold**:
+A claim with `k ≥ 2` is set as a block **iff all four hold**, unless one of
+the heuristics below decides otherwise:
 
 1. **`k ≥ 2`.**  One id never earns a line of its own: the seven
    single-id blocks of the 2026-11 pass moved inline for exactly this
-   reason (`\tier[sq\_add\_inv\_sq]{P}` and its six siblings).
+   reason (calibration: `docs/reports/20261115_WIT-001_criterion_sites.md`
+   §4).
 2. **`L ≥ 35`.**  35 characters is the shortest id list the manuscript
-   already prints as a block — `certainty_principle, log_from_scale`,
-   `main.tex:899`.  Below that the flush-right line costs a paragraph
-   break and buys no room: the bracket fits in the sentence.
-3. **`r = 0`.**  `\witness` issues `\par … \par` (preamble,
-   `main.tex:94-98`), so it always ends the paragraph where it sits and
-   the text after it opens a new one.  Any residual — a trailing clause
-   (`; …`, `, so …`, `which …`), a parenthetical
-   (`(Figure~\ref{fig:background}(a))`), a closing `\testref` — would be
-   stranded at the head of a new paragraph, and the sentence it belongs
-   to would be torn in two.  **`r ≥ 1` ⇒ inline, no exception.**  The
-   residual is counted, not estimated: in the current inventory no site
-   has `1 ≤ r ≤ 5` whose residual could read as a sentence of its own —
-   the small residuals are reference parentheticals and final
-   `\testref`s, which are parts of the sentence they follow.
+   already prints as a block (calibration: same report, §4).  Below that
+   the flush-right line costs a paragraph break and buys no room: the
+   bracket fits in the sentence.
+3. **`r = 0`.**  `\witness` issues `\par … \par` (preamble), so it always
+   ends the paragraph where it sits and the text after it opens a new one.
+   Any residual — a trailing clause (`; …`, `, so …`, `which …`), a
+   parenthetical (`(Figure~\ref{fig:background}(a))`), a closing
+   `\testref` — would be stranded at the head of a new paragraph, and the
+   sentence it belongs to would be torn in two.  **`r ≥ 1` ⇒ inline, no
+   exception.**  The residual is counted, not estimated: in the current
+   inventory no site has `1 ≤ r ≤ 5` whose residual could read as a
+   sentence of its own — the small residuals are reference parentheticals
+   and final `\testref`s, which are parts of the sentence they follow.
 4. **`i = 0` and `d ≥ 75`.**  A block inside an enumeration would close
    the item's paragraph and set the mark off from the rest of the list;
    no block of the manuscript sits inside one.  And a second block a few
    lines below the first is monotone prose: 75 words is the tightest
-   block-to-block distance the manuscript already accepts (the two blocks
-   of `main.tex:2075` and `main.tex:2083`), so `d < 75` keeps the claim
-   inline.
+   block-to-block distance the manuscript already accepts (calibration:
+   same report, §4), so `d < 75` keeps the claim inline.
 
 The four gates read as a paragraph, but they are each a number: the
-criterion is reproducible by anyone who opens `main.tex`, and it reproduces
-the applied state without a single exception — all 26 blocks of the
-manuscript have `k ≥ 2`, `L ≥ 35`, `r = 0`, `i = 0` and either no block in
-their paragraph or `d ≥ 75`.
+criterion is reproducible by anyone who opens `main.tex`, and the applied
+inventory it reproduces — every block, every flagged site, every counter —
+is recorded in `docs/reports/20261115_WIT-001_criterion_sites.md`.
 
-#### The sites the rule flags
+#### The two heuristics — `u` and `p`
 
-Every inline mark with `k ≥ 2` whose sentence ends at the mark (`r = 0`),
-with the tail of the sentence it closes.  Thirteen sites; twelve of them
-pass gates 1–3 (`L ≥ 35`), and gate 4 keeps four of those inline (the
-`stereo_ratio` row fails it too once the `tan_eta` row below it takes its
-line — see the note under the table).
+Both are **heuristics**, labelled as such wherever they are applied: they
+act only on the cost and position conditions of gates 2 and 4, never on
+gates 1 and 3.  Each is a measurable positional signal, not a quantity of
+the criterion.
 
-| `main.tex` | `k` | `L` | `r` | `d` | `i` | the sentence ends with | verdict |
-|---|---|---|---|---|---|---|---|
-| 310 | 3 | 71 | 0 | — | 0 | `…which is transcendental by the Gelfond--Schneider theorem~\cite{Sch35}` | **→ block** |
-| 946 | 2 | 29 | 0 | — | 0 | `…those of $S$ and $ST$, are computed in Lean` | stays inline — `L = 29 < 35`, gate 2 |
-| 1128 | 2 | 36 | 0 | — | 1 | `…with $G_N=\tfrac12$, the entropy law of a de~Sitter horizon` | stays inline — closes a `\item` of the W list, gate 4 |
-| 1170 | 3 | 48 | 0 | — | 0 | `…monodromy $\pi$, and the maximum of the binary entropy` | **→ block** |
-| 1500 | 3 | 47 | 0 | — | 1 | `…the clock $24$, and $\eta^{12}$ picks up exactly $e^{i\pi}=-1$` | stays inline — closes an `\item`, gate 4 |
-| 1748 | 2 | 41 | 0 | — | 0 | `…the phase is $\pi\golden^{2\sigma}$, a half-turn only at $\sigma=0$` | **→ block** |
-| 1766 | 2 | 42 | 0 | 70 | 0 | `…with Fibonacci numbers, $\golden^{2\sigma}$ is irrational` | stays inline — a block already stands 70 words away, gate 4 |
-| 1781 | 2 | 61 | 0 | 94 | 0 | `…so $\pi z<z^{2}$ for every $\sigma\geq3$` | **→ block** |
-| 1799 (`stereo_ratio, clifford_stereographic_torus`) | 2 | 42 | 0 | 61* | 0 | `…of revolution with $R/r=\sqrt{1+\golden^{4n}}$, $\sqrt2$ at the level $0$` | stays inline — `d = 61 < 75` once `tan_eta` takes its line, gate 4 (*148 before that move) |
-| 1799 (`tan_eta, level_zero_is_clifford, clifford_square`) | 3 | 48 | 0 | 197 | 0 | `…$0$, where the window torus is the Clifford torus` | **→ block** |
-| 1809 | 2 | 35 | 0 | — | 0 | `…and the throat` | **→ block** |
-| 1837 | 3 | 69 | 0 | — | 0 | `…tends to $\int fg-\int f\int g$` | **→ block** |
-| 2033 | 2 | 70 | 0 | — | 0 | `…$5.0$ standard deviations from it` | **→ block** |
+**`u` — uniformity of a newline-separated list (HEURISTIC).**  In a list
+whose elements already sit on their own lines — an `enumerate`, `itemize`
+or `description` whose `\item`s each begin a line, and the numbered
+sequence of `imported` statements — every mark of the run takes the same
+form: all inline or all on a line of its own, never mixed.  The verdict is
+therefore taken **from the run, not from the item**: census the other
+marks of the run (inline `\tier` vs `\witness` block), then
 
-The line numbers are those of the manuscript as this section was written;
-the tail of the sentence identifies the site when a concurrent editing
-pass moves it.
+- run all inline → the mark stays inline, whatever gates 2 and 4 would say;
+- run all own-line → the mark goes on a line of its own, whatever gate 4's
+  `i` would say;
+- run mixed → `u` gives no verdict (it abstains), the run is recorded as a
+  uniformity defect for a later harmonising pass, and the site falls
+  through to `p` and to the four gates;
+- run with no other mark → `u` abstains for lack of a census.
 
-**Applied 2026-11-15: eight of the nine rows.**  The manuscript stands at
-**26 blocks** (18 + 8) and leaves **26 inline marks with two ids or more**
-(34 − 8).  The `stereo_ratio` row reverted on re-reading it against the
-applied text: once `tan_eta` took its line, the distance to the block
-above it fell to **61 words**, so gate 4 keeps it inline — the outcome the
-note above the table had predicted.
+Measurable: the run is delimited by `\begin{…}`/`\end{…}`; the census
+counts `\tier` and `\witness` occurrences inside it, excluding the mark
+under review.  Today every list of the manuscript is homogeneous inline
+(no `\witness` block sits inside a list), and the imported-statement
+sequence is the mixed case that motivated the rule.
+
+Best practice: visual rhythm — a list whose marks change shape from item
+to item forces the eye to re-acquire the pattern, while a consistent form
+keeps the list scannable
+([How Users Read on the Web](https://www.nngroup.com/articles/how-users-read-on-the-web/)).
+
+**`p` — paragraph close (HEURISTIC).**  A mark that is the last element of
+its paragraph — only punctuation and commands follow it before the break —
+adds a preference for a line of its own: the paragraph break the block
+would cost is already there, and no residual can be stranded.  The
+condition is positional: it is read without reference to `k` or `L`, and it
+acts on whichever of gates 2 and 4 would keep the mark inline.  Among
+candidates (`k ≥ 2`, `r = 0`), `p = 1` therefore sets the mark on a line of
+its own; `p = 0` leaves the four gates to decide.  Gate 1 stays absolute:
+a single id never earns a line of its own, at a paragraph close or
+anywhere else.
+
+Measurable: from the mark to the end of its paragraph (blank line, the
+close of the enclosing environment) there is no word — only punctuation
+and commands.
+
+Best practice: do not split what the reader is following — a sentence
+closed at its paragraph close keeps its parts together, which is the
+reading side of the same rule that `r = 0` enforces
+([PlainLanguage.gov — Sentences](https://www.plainlanguage.gov/guidelines/sentences/)).
+
+**Order of decision.**  1. gate 1 (`k ≥ 2`), 2. gate 3 (`r = 0`) — both
+absolute; 3. `u`, when it gives a verdict; 4. `p`; 5. gates 2 and 4
+(`L ≥ 35`, `i = 0`, `d ≥ 75`).  A mark goes on a line of its own only when
+one of steps 3–5 sets it there; otherwise it stays inline.  The verdicts
+for the current manuscript — every candidate site by the tail of its
+sentence, with its `u`/`p` values and the counter delta — are in
+`docs/reports/20261116_WIT-002_u_p_verdicts.md`.
 
 #### How the criterion is reviewed
 
-One reading pass over the table above — it prints, for every flagged
-site, the tail of the sentence the mark closes, so the whole check is one
-question per row: *does any word of that sentence follow the mark?*  The
-same pass is what confirms gates 4 (`i`, `d`) for a new site, since both
-are read from the two lines around it.  No style test is written for
-this: a CI check that re-derives what this section already guarantees
-would test the document against itself; the census
+One reading pass over the site table in
+`docs/reports/20261115_WIT-001_criterion_sites.md` — it prints, for every
+flagged site, the tail of the sentence the mark closes, so the whole check
+is one question per row: *does any word of that sentence follow the mark?*
+The same pass is what confirms gates 4 (`i`, `d`) and the census of `u` for
+a new site, since all three are read from the lines around it.  No style
+test is written for this: a CI check that re-derives what this section
+already guarantees would test the document against itself; the census
 (`tests/test_section_census.py`) guards what the build depends on — the
 test references the manuscript cites — and nothing here does.
 
-#### State after the application pass (2026-11-15)
+#### Concrete material of this rule
 
-**26 blocks** — 16 `P` and 10 `N`, every one of them with `k ≥ 2`,
-`L ≥ 35`, `r = 0`, `i = 0` and `d ≥ 75` (or no block in its paragraph);
-**no single-id block is left**.  **26 inline marks carry two ids or
-more** — 24 `P` and 2 `N` — of which **13 close their sentence** and are
-the table above.  The two multi-id `N` marks left are `main.tex:1033` and
-`main.tex:2121`, whose sentence goes on after the claim.  `\Lean{}` and
-`\LeanCW{}`: **0 occurrences** in `main.tex`.
+The site table with the sentence tails, the calibration facts behind the
+thresholds, the applied state of the 2026-11-15 pass, and the pending
+`u`/`p` verdict table all live in `docs/reports/`:
+
+- `docs/reports/20261115_WIT-001_criterion_sites.md` — applied inventory
+  (site table, counters, threshold calibrations).
+- `docs/reports/20261116_WIT-002_u_p_verdicts.md` — verdicts of the two
+  heuristics for the current manuscript (pending application).
+- `docs/reports/20261115_DEC-001_witness_decisions.md` — the decision log
+  behind the tiers.

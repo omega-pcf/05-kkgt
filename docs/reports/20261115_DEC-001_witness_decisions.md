@@ -1,5 +1,13 @@
 # Witness decisions — handoff for the principal author
 
+| Field | Value |
+|---|---|
+| **id** | `DEC-001` |
+| **title** | Witness decisions — handoff for the principal author |
+| **status** | applied and committed |
+| **date** | 2026-11-15 |
+| **version** | 2.0 (second pass; supersedes the previous 802-line gate document) |
+
 **Status: applied and committed** (`ff44a61` figure, `bcee5eb` convention, `aade79b` tests, `6e54bdf` build). Everything marked `[x]` below is already
 edited into `main.tex`, `docs/citations.md` and `tests/`. Nothing in this
 repository has been committed by this pass.
@@ -70,7 +78,7 @@ the sentence it marks, before the final punctuation.
 | **Convention harmonisation** 2026-11-15 | `\Lean{}` **170 → 0**, `\LeanCW{}` **6 → 0**, blocks **16 → 18**, one tag per claim | §6 |
 | **Blocked on nothing** | the three "no provenance" numbers are gone from the text | §1.5 |
 
-Test suite: **535** tests (was 490), **531** without the slow mark (was 486);
+Test suite: **533** tests (was 490), **529** without the slow mark (was 486);
 `main.tex` (Code and data) and `tests/README.md` updated.
 
 ---
@@ -268,7 +276,7 @@ manuscript quotes.
 
 ### 1.7 Counters `[x]`
 
-`main.tex` (Code and data): “runs all **$535$** tests … the **$531$** that
+`main.tex` (Code and data): “runs all **$533$** tests … the **$529$** that
 each take under ten seconds” (was 484/480). `tests/README.md` lines 14-15
 updated to match. Six tests were added (§1.2), none marked slow.
 
