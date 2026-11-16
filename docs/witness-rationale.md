@@ -235,26 +235,12 @@ ordering the references by author; the mark does not enter that layer.
 ### 4.4 The quantified criterion: usability, compactness and syntax
 
 The shape of each mark is decided with five quantities read directly from
-`main.tex`, with no judgement of taste. They are summarised here because
-they are the core of the requested enrichment; the exact definition and
-the four thresholds are in `docs/citations.md` §8.5, and the site table —
-every flagged site with the tail of the sentence it closes — is in
-`docs/reports/20261115_WIT-001_criterion_sites.md`.
-
-| Symbol | Quantity | Role in the criterion |
-|---|---|---|
-| `k` | number of identifiers of the claim | `k ≥ 2` is the starting condition: an identifier never earns a line of its own |
-| `L` | length of the list, in characters | measures the visual weight of the bracket; `L ≥ 35` is the threshold, calibrated with the shortest list the manuscript already prints as a block |
-| `r` | **sentence residual**: words of the *same sentence* that follow the mark | `r = 0` requires the mark to *close* the sentence; `r ≥ 1` keeps the mark inline, with no exception |
-| `d` | distance in words to the nearest block of the same paragraph | rhythm of the prose: `d ≥ 75` avoids two consecutive blocks |
-| `i` | 1 if the mark closes an `\item` of an enumeration | syntactic position: inside a list the block would break the item |
-
-In one operative phrase: **a list of two or more identifiers and
-thirty-five characters or more goes to a line of its own only if the mark
-closes its sentence, does not close a list item and stands seventy-five
-words or more from the previous block.** Everything else stays inline.
-
-The four conditions answer the four usability demands:
+`main.tex`, with no judgement of taste. The definitions of the five
+quantities, the four thresholds and the rule in one sentence have a single
+home in `docs/citations.md` §8.5 and are not restated here; the site table
+— every flagged site with the tail of the sentence it closes — is in
+`docs/reports/20261115_WIT-001_criterion_sites.md`. What this section adds
+is the *why*: the four conditions answer four usability demands —
 
 - `k` and `L` address **cost**: the block pays a paragraph break, so it is
   only asked of lists that truly need the line.
@@ -281,13 +267,11 @@ two list items, a neighbouring block at seventy words). The complete
 table, with the tail of the sentence each mark closes, is in
 `docs/reports/20261115_WIT-001_criterion_sites.md`.
 
-**Review.** The convention is reviewed with a reading pass over the table
-in `docs/reports/20261115_WIT-001_criterion_sites.md`: one question per
-row, *does any word of that sentence follow the mark?* No CI test is
-written for this: a test that re-derived what that section already
-guarantees would test the document against itself; the census
-(`tests/test_section_census.py`) guards what the build depends on — the
-test identifiers the manuscript cites — and this is not that.
+**Review.** The review method — the reading pass over the table in
+`docs/reports/20261115_WIT-001_criterion_sites.md`, its one question per
+row, and why no CI test is written for it — is stated once, in
+`docs/citations.md` §8.5; this document follows that method, it does not
+restate it.
 
 ### 4.5 Compactness: the measured cost of the device
 
@@ -303,7 +287,8 @@ manuscript in the state of this document, the whole apparatus occupies:
 - **12** `\wtag` **labels** of the witness list and **98 occurrences** of
   `\testref`.
 
-From that follow two consequences that justify the thresholds of §4.4:
+From that follow two consequences that justify the thresholds argued in
+§4.4 (the thresholds themselves are `docs/citations.md` §8.5):
 
 1. **The block is expensive, so it is asked to pay in return.** It costs a
    line and breaks the paragraph; it is only asked of a list of 35

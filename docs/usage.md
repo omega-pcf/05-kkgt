@@ -13,7 +13,9 @@ pnpm run build
 
 ## Commits
 
-All commits follow [Conventional Commits](https://www.conventionalcommits.org/):
+All commits follow [Conventional Commits](https://www.conventionalcommits.org/),
+with **English subject lines** (the documentation language rule is
+`docs/citations.md` §6):
 
 ```
 <type>(<scope>): <description>
@@ -43,4 +45,5 @@ pnpm run release:dry-run # Preview only: rebuilds the artifacts, then walks the 
 pnpm install
 ```
 
-**Requirements:** Node.js 20+, pnpm 9+, Docker.
+Prerequisites, requirements and setup have a single home:
+[installation.md](installation.md).

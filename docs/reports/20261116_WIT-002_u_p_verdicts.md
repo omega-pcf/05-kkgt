@@ -15,10 +15,9 @@ plus the resulting counters. The generic rule — quantities, gates, the two
 heuristics and the decision order — lives in `docs/citations.md` §8.5; the
 applied inventory of the 2026-11-15 pass lives in
 `docs/reports/20261115_WIT-001_criterion_sites.md`. This file is a
-**snapshot**: line numbers are those of `main.tex` at commit `7fa8994`
-(the last commit that touched it; verified unchanged at HEAD `542b94b`),
-and the manuscript is edited concurrently; the tail of the sentence
-identifies each site when a line number moves.
+**snapshot** — the convention is stated once, in `docs/reports/README.md`
+— and its line numbers are those of `main.tex` at commit `7fa8994` (the
+last commit that touched it; verified unchanged at HEAD `542b94b`).
 
 **Repository:** `05-kk-golden-throat`.
 

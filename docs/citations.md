@@ -50,9 +50,9 @@ Order of operations (`scripts/build.ts`):
 2. `syncCitationMetadata` — reads `citation.csl.json`, writes
    `src/bibliography.bib` (BibLaTeX, keys renamed to the CSL `id`s), updates
    `CITATION.cff` and `.zenodo.json`.
-3. `compilePDF` — `latexmk -pdf` inside Docker (`kjarosh/latex:2024.4-full`),
-   `SOURCE_DATE_EPOCH` pinned to the last commit; biber runs automatically
-   through latexmk's `bcf → bbl` rule.
+3. `compilePDF` — `latexmk -pdf` inside Docker (the pinned image and every
+   reproducibility measure are `docs/architecture.md`); biber runs
+   automatically through latexmk's `bcf → bbl` rule.
 4. `generateChecksums` — `checksums.txt`.
 
 There are no manual steps. If the PDF is stale or the bibliography is
@@ -132,11 +132,13 @@ fails the build otherwise.
 - Docs and comments in English; filenames kebab-case under `docs/`;
   figures as `images/fig{N}_{semantic-name}.pdf` matching the
   `\includegraphics` names; one semantic subfolder per concern
-  (`src/`, `tests/`, `scripts/`, `images/`, `docs/`, `lean/`). Specific,
-  repository-tied material goes to `docs/reports/` (see its `README.md`);
-  `docs/` itself stays generic.
-- Commits follow semver conventional-commit style, English subject lines,
-  e.g. `docs(citations): add pipeline best-practices guide`,
+  (`src/`, `tests/`, `scripts/`, `images/`, `docs/`, `lean/`). What goes
+  where — generic documents at the `docs/` root, repository-tied ones under
+  `docs/reports/` — is the directory doctrine of `docs/README.md` and
+  `docs/reports/README.md`; it is not restated here.
+- Commits follow the family convention of `docs/usage.md` §Commits
+  (Conventional Commits, English subject lines); scopes name the area, e.g.
+  `docs(citations): add pipeline best-practices guide`,
   `fix(citations): correct Shou2023 author list and publication year`,
   `feat(pipeline): adopt biblatex bibliography from CSL`.
 - Never push without an explicit instruction from the author.

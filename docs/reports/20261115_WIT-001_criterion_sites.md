@@ -14,10 +14,9 @@
 after the 2026-11-15 application pass. The generic rule — quantities,
 thresholds, gates, heuristics and the review method — lives in
 `docs/citations.md` §8.5; the justification of the device lives in
-`docs/witness-rationale.md`. This file is a **snapshot**: line numbers are
-those of the manuscript when the table was written, and the manuscript is
-edited concurrently; the tail of the sentence identifies each site when a
-line number moves.
+`docs/witness-rationale.md`. This file is a **snapshot** — the convention
+is stated once, in `docs/reports/README.md` — and its line numbers are
+those of the manuscript when the table was written.
 
 **Repository:** `05-kk-golden-throat`.
 
@@ -47,9 +46,7 @@ line — see the note under the table).
 | 1837 | 3 | 69 | 0 | — | 0 | `…tends to $\int fg-\int f\int g$` | **→ block** |
 | 2033 | 2 | 70 | 0 | — | 0 | `…$5.0$ standard deviations from it` | **→ block** |
 
-The line numbers are those of the manuscript as this section was written;
-the tail of the sentence identifies the site when a concurrent editing
-pass moves it.
+Line numbers and the sentence-tail convention: `docs/reports/README.md`.
 
 ## 2. Applied 2026-11-15: eight of the nine rows
 

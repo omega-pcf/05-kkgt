@@ -20,10 +20,9 @@ cd 05-kk-golden-throat
 pnpm install
 ```
 
-## Build
+## Build and release
 
-```bash
-pnpm run build          # Compile PDF via Docker
-pnpm run release        # Full release (version bump + build + GitHub + Zenodo)
-pnpm run release:dry-run # Rebuild artifacts, then preview the release (needs a git remote)
-```
+`pnpm run build` (compile via Docker), `pnpm run release` (full release) and
+`pnpm run release:dry-run` (rebuild the artifacts, then preview the release
+without tagging) are documented, together with the daily workflow, in
+[usage.md](usage.md).
