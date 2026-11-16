@@ -14,6 +14,8 @@ docs/
 ├── style-guide.md     # Family style guide v2.1: editorial (§1–§12), code quality D1–D7 (§13), tex/proofreading (§14)
 ├── usage.md           # Build and release commands
 ├── witness-rationale.md  # Why the marks exist (convention rationale, EN)
+├── specs/            # Design specifications (dated, id'd, ISO header)
+│   └── 20261116_SPEC-001_deterministic_self_citations.md
 └── reports/           # Specific, repository-tied reports (dated, id'd)
     ├── README.md      # Index of the reports (id · title · status · date)
     ├── 20261115_DEC-001_witness_decisions.md
@@ -35,6 +37,11 @@ inventories, decision logs, verdict tables — goes to `docs/reports/`.
 - **style-guide.md**: The family style guide (v2.1): editorial rules (§1–§12), the software-quality doctrine D1–D7 (§13) and the tex/proofreading pipeline with its cited sources (§14). Generic across the family: this repository's own conventions are linked, never copied — witness contract in `citations.md` §8, rationale in `witness-rationale.md`.
 - **usage.md**: Daily workflow, conventional commits, build and release commands.
 - **witness-rationale.md**: The rationale of the witness marks: evidence classes, usability, succinctness.
+- **specs/**: Design specifications — proposals that change the pipeline or a
+  shared artifact, with purpose, evidence, acceptance criteria and open
+  questions; first entry
+  [SPEC-001](specs/20261116_SPEC-001_deterministic_self_citations.md)
+  (deterministic self-citation blocks in the READMEs).
 - **reports/**: Specific reports — the witness decision log (DEC-001), the criterion site inventory (WIT-001), the `u`/`p` verdict table (WIT-002) and the figure-1 prose de-embed (FIG-001); index in `reports/README.md`.
 
 ## Conventions
