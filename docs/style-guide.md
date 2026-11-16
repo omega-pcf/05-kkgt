@@ -14,6 +14,7 @@
 **Framework (purpose)**:
 - **Goal of the document**: maximize **auditability, best practices, and correctness**.
 - **Target style**: elegant and **succinct**; succinctness is an explicit goal, not an aesthetic preference.
+- **Register**: the register of this document is the one its header states. Phrasing dictated in conversation is intent to be rendered, not text to be copied; a colloquial analogy appears only beside the objective criterion it stands for, and never in place of one.
 - **No justification by assertion**: every prescription carries its reason on a concrete front — mathematical, conventional, insight/characterization, or linguistic clarity; argumentative creativity is always subordinated to correctness.
 
 **FUNDAMENTAL EDITORIAL PRINCIPLE**: This guide is **editorial**, not **authorial** — with respect to the text (§1–§12); the quality of the code that supports it is prescribed in §13. Its function is to:
