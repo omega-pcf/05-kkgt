@@ -26,11 +26,13 @@
 \newcommand{\pending}[1]{{\color{red}[#1]}}
 % ---------------------------------------------------------------------------
 % Witness system.  Colour by class; a mark with ids stays inline \tier[ids]{X}
-% and moves to a line of its own in list form, P[name1, name2], only when the
-% four gates of docs/citations.md section 8.5 all hold: two ids or more at 35
-% characters or more, the mark closing its sentence (r = 0), not closing a
-% list item (i = 0), and standing 75 words or more from the nearest witness
-% block of its blank-line paragraph (d >= 75); every other site stays inline.
+% and moves to a line of its own in list form, P[name1, name2], when the gates
+% of docs/citations.md section 8.5 hold: two ids or more at 35 characters or
+% more, the mark closing its sentence (r = 0), not closing a list item (i = 0),
+% and standing 75 words or more from the nearest witness block of its
+% blank-line paragraph (d >= 75).  Two heuristics sit between those gates in
+% the decision order - u, the shape of the run of marks a list already has, and
+% p, a mark at the close of its paragraph - both labelled in section 8.5.
 % Every mark selects its own font with \normalfont..., so neither an enclosing
 % \itshape (amsthm's plain theorem style) nor an open \emph can leak into it.
 % ---------------------------------------------------------------------------
@@ -937,7 +939,8 @@ $\chi(\mathrm{SL}_2(\mathbb{Z}))=\tfrac14+\tfrac16-\tfrac12=\zeta(-1)$. The orde
 periods~\cite{Wall60}, computed here; $S=\left(\begin{smallmatrix}0&-1\\1&0\end{smallmatrix}\right)$
 and $T=\left(\begin{smallmatrix}1&1\\0&1\end{smallmatrix}\right)$ generate
 $\mathrm{SL}_2(\mathbb{Z})$~\cite{Ser73}, and the Euler characteristic is classical~\cite{Ser71}.
-The orders modulo $16$, $9$, $5$ and $10$, and those of $S$ and $ST$, are computed in Lean \tier[pisano\_orders, modular\_orders]{P}.
+The orders modulo $16$, $9$, $5$ and $10$, and those of $S$ and $ST$, are computed in Lean
+\witness{P}{pisano\_orders, modular\_orders}.
 \end{imported}
 
 \begin{imported}[One exponent, angle and radius]\label{imp:angle}
