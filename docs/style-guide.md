@@ -486,16 +486,39 @@ AI-generated artifacts also appear in **code** —monolithic modules, self-testi
 
 ## 9. SPECIAL CASES: CONTRADICTING ORTHODOXY
 
-When the paper contradicts conventions (because the geometric structure requires it):
+A conflict with a convention or with the literature is justified by what
+the paper derives, never by announcing a reason for it. "The geometric
+structure requires it" is not such a reason when it is quoted as the
+premise: it is the conclusion, and the sentence that uses it as a premise
+is circular - the excuse the section used to license.
 
-**Explicit format:**
-```
-In contrast with [standard convention], here we find that [disruptive result].
-This does not contradict [standard theory], but rather reveals that [reconciling interpretation].
-The reason is that [deep geometric/structural explanation].
-```
+Four things carry the claim, in this order:
 
-**Do not hide**. Do not apologize. Be clear about WHAT it contradicts and WHY it is necessary.
+1. **The convention, quoted and cited.** What is contradicted, in the form
+   its source states it, with the reference. Contradicting a paraphrase of
+   a convention is not contradicting the convention.
+2. **The point of conflict**, shown rather than summarised: the step, the
+   formula, or the number where the two disagree.
+3. **The class of the conflict**: genuine · different hypotheses or
+   definitions · notation only · an error in the source. Only the first is
+   a contradiction; the others are labelled as they are, because presenting
+   a difference of hypotheses as a conflict misleads the reader about what
+   is at stake. If the check dissolves the conflict, the text says so at
+   the place where it raised it.
+4. **The derivation that resolves it.** The reconciling interpretation and
+   the structural reason are results of the paper: they appear with their
+   argument, so the reader can follow them from what precedes. A closing
+   clause that asserts them asserts nothing.
+
+**Form**: the convention and its citation, the conflict and its evidence,
+what the paper derives instead, and what would show the paper wrong - at
+the place where the reader meets the conflict, not in a disclaimer and
+not in a footnote.
+
+**Do not hide it. Do not apologize.** The hedging formula and the
+triumphant one are the same failure in opposite directions: both replace
+the evidence with a posture. State what contradicts, what does not, and
+why, in the order above.
 
 ---
 
@@ -689,7 +712,15 @@ Sections §1–§12 prescribe the quality of the **text**. This section prescrib
 
 ### 13.1 Doctrine
 
-- **Not self-baked.** For any functional need, use the standard library or a consolidated library from the ecosystem. With AI-assisted generation there are no legacy excuses ("that's how we inherited it from a Fortran of the 90s"): the code is rewritten against the standard library.
+- **No hand-rolled implementation where a library covers the need.** For
+  any functional need, the standard library or a maintained library of the
+  ecosystem is used. A hand-written implementation is admissible only
+  where no maintained library provides the behaviour, and it then carries
+  tests against the contract that library would have offered. The choice is
+  recorded where the code is read: library, version, and the reason it
+  covers the need. Provenance is not the criterion — that an
+  implementation was inherited does not keep it, and that a need is new
+  does not license reinventing it.
 - **Standard library first.** The table §13.3 is normative: `argparse` for CLI, `logging` for logging, `dataclasses` for data, `numpy.testing` for numerical verification, `pytest` for tests.
 - **Serious code review.** No module is incorporated without explicit code review —structure, contracts, tests, naming—; the review is neither a formality nor a mere procedure.
 - **The production module never tests itself.** Asserts live in the suite, never in the code that runs (defect **D2**).
