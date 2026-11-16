@@ -1,5 +1,5 @@
 {
-  "name": "@omega-pcf/05-kk-golden-throat",
+  "name": "@omega-pcf/05-kkgt",
   "version": "0.1.0",
   "description": "One object instead of a choice of vacuum to put the observer in de Sitter space: From wormholes, black holes and baby universes to the criteria for an observer in de Sitter, contrasted with the Kaluza–Klein graviton candidates and with the cosmological constant",
   "metadata": {
@@ -54,7 +54,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/omega-pcf/05-kk-golden-throat.git"
+    "url": "https://github.com/omega-pcf/05-kkgt.git"
   },
   "keywords": [
     "de Sitter space",

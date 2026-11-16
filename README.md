@@ -1,8 +1,6 @@
-# One object instead of a choice of vacuum to put the observer in de Sitter space
+# One object instead of a choice of vacuum to put the observer in de Sitter space: From wormholes, black holes and baby universes to the criteria for an observer in de Sitter, contrasted with the Kaluza–Klein graviton candidates and with the cosmological constant
 
-From wormholes, black holes and baby universes to the criteria for an observer in de Sitter, contrasted with the Kaluza–Klein graviton candidates and with the cosmological constant.
-
-[![Project Page](https://img.shields.io/badge/Project%20Page-omega--pcf.com-blue)](https://omega-pcf.com)
+[![Project Page](https://img.shields.io/badge/Project%20Page-omega--pcf.com-blue)](https://omega-pcf.com/kkgt)
 
 ## Authors
 
@@ -21,7 +19,17 @@ In de Sitter space an observer must be inside the universe it observes, and in s
 
 ## Citation
 
-González García, J. A., González García, V. M., Dressler Pérez, I. M., & García Ordóñez, L. M. (2026). *One object instead of a choice of vacuum to put the observer in de Sitter space*. Preprint. Repository: [omega-pcf/05-kk-golden-throat](https://github.com/omega-pcf/05-kk-golden-throat).
+González García, J. A., González García, V. M., Dressler Pérez, I. M., & García Ordóñez, L. M. (2026). *One object instead of a choice of vacuum to put the observer in de Sitter space: From wormholes, black holes and baby universes to the criteria for an observer in de Sitter, contrasted with the Kaluza–Klein graviton candidates and with the cosmological constant*. Preprint. Repository: [omega-pcf/05-kkgt](https://github.com/omega-pcf/05-kkgt).
+
+```bibtex
+@article{Gonzalez2026KKGoldenThroat,
+  author  = {González García, J. A. and González García, V. M. and Dressler Pérez, I. M. and García Ordóñez, L. M.},
+  title   = {One object instead of a choice of vacuum to put the observer in de Sitter space: From wormholes, black holes and baby universes to the criteria for an observer in de Sitter, contrasted with the Kaluza–Klein graviton candidates and with the cosmological constant},
+  journal = {Preprint},
+  year    = {2026},
+  url     = {https://github.com/omega-pcf/05-kkgt}
+}
+```
 
 ## Repository Structure
 
@@ -44,7 +52,7 @@ González García, J. A., González García, V. M., Dressler Pérez, I. M., & Ga
 ### Numerical checks
 
 - **`tests/src/kkgt/sections.py`** (module `kkgt.sections`): every number and every figure of the note, in forty-six sections that run together or one at a time (`PYTHONPATH=tests/src uv run python -m kkgt.sections`).
-- **`tests/`**: the suite that checks them, `uv run pytest tests/ -q` (535 tests; 531 with `-m 'not slow'`); `main.tex` cites the test behind each number with `\testref{...}`.
+- **`tests/`**: the suite that checks them, `uv run pytest tests/ -q` (533 tests; 529 with `-m 'not slow'`); `main.tex` cites the test behind each number with `\testref{...}`.
 
 ### Figures (`images/`)
 
