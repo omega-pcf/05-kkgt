@@ -14,7 +14,7 @@
 **Framework (purpose)**:
 - **Goal of the document**: maximize **auditability, best practices, and correctness**.
 - **Target style**: elegant and **succinct**; succinctness is an explicit goal, not an aesthetic preference.
-- **No silly justifications**: every prescription is justified on a concrete front — mathematical, conventional, insight/characterization, or linguistic clarity; argumentative creativity is always subordinated to correctness.
+- **No justification by assertion**: every prescription carries its reason on a concrete front — mathematical, conventional, insight/characterization, or linguistic clarity; argumentative creativity is always subordinated to correctness.
 
 **FUNDAMENTAL EDITORIAL PRINCIPLE**: This guide is **editorial**, not **authorial** — with respect to the text (§1–§12); the quality of the code that supports it is prescribed in §13. Its function is to:
 - ✅ Prescribe **style, format, coherence of notation, presentation structure**
@@ -23,7 +23,18 @@
 - ❌ **NOT** add concepts that are not in the original text without explicit verification
 - ❌ **NOT** make mathematical claims that require technical justification
 
-**When a mathematical content suggestion is found**: Verify it first against the repository's original source document. If it is not grounded, remain faithful to the original and only improve the formal presentation.
+**When a mathematical suggestion or doubt is raised**: the original document is the object under revision, not an authority for truth, so neither adoption nor dismissal rests on it. What follows instead:
+
+- a suggestion the document does not support is not written in — and not
+  dropped in silence either: it is reported, with the sentence it would
+  change;
+- a doubt about the document itself is reported with a reproducible check
+  attached — a proof, a computation, a reference — and left to the author:
+  fidelity to the original is no reason to keep an error, and it is no
+  licence to correct one without evidence;
+- what survives that exchange is the formal presentation, which is what
+  this guide governs. Inventing mathematics is out of scope; so is hiding
+  behind fidelity when a doubt has been found.
 
 **Nature**: living document; it evolves with each revision (§10.3).
 
@@ -57,7 +68,7 @@ deduce from the rest.
 
 ### 1.2 Audience
 - **Expert scientific audience**: The paper is aimed at scientists with advanced training in mathematics, but its multi-domain scope requires familiarity with number theory, complex analysis, Hermitian operators, quantum physics, geometry, and computational verification. The artificial separation of mathematics into "departments" does not reflect the interdisciplinary nature of the problems addressed.
-- **Do not sacrifice readability "stupidly"**: Do not use less clear or less concise words merely so that the text sounds less dense or less specialized. An expert audience expects and appreciates technical precision and appropriate terminology. Avoid periphrases that seek to "soften" the content at the cost of clarity.
+- **Do not trade clarity for the appearance of simplicity**: Do not use less clear or less concise words merely so that the text sounds less dense or less specialized. An expert audience expects and appreciates technical precision and appropriate terminology. Avoid periphrases that seek to "soften" the content at the cost of clarity.
 - **Clarity over artificial simplicity**: Prefer precise, concise technical terms over unnecessary periphrases. Readability comes from structure, coherence, and precision, not from avoiding specialized terminology. The paper addresses deep mathematical problems that require a multi-domain approach; the writing must reflect this complexity without artificiality.
 
 ### 1.3 Paragraph structure
@@ -153,7 +164,7 @@ per construction type** —`\tref` → "Theorem X.Y.Z", `\dref` → "Definition 
 analogues — **or** loads the `cleveref` package, which covers them with `\cref`, `\autoref`, and
 `\eqref`. The concrete list of a repo is its own; only the use is prescribed here.
 
-**Trap**: if the preamble defines its own reference macros using the names of
+**Caution**: if the preamble defines its own reference macros using the names of
 `cleveref` (`\cref` among them), do not load `cleveref` —nor copy code that uses it—
 without renaming those macros first: the package and the in-house macro collide on the same
 name.
@@ -736,7 +747,7 @@ When a set of rules (from this guide or a new taxonomy) grows, the sought refact
 - Remove the **intermediate rules** that, under a more integrative context, would be **obvious to a larger model**.
 - Keep **only the rule that contributes something not deducible** from the others.
 - Practical consequence: prefer **principles + verifiable (auditable) criteria** over **enumerated rule lists resulting from past iterations**.
-- Every surviving rule is justified on a concrete front (header, "No silly justifications"); if it contributes nothing non-deductive and has no front, it is removed.
+- Every surviving rule is justified on a concrete front (header, "No justification by assertion"); if it contributes nothing non-deductive and has no front, it is removed.
 
 ---
 
