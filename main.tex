@@ -25,8 +25,12 @@
 % draft marker of the author's manuscript (v134); unused in the text, kept for fidelity
 \newcommand{\pending}[1]{{\color{red}[#1]}}
 % ---------------------------------------------------------------------------
-% Witness system.  Colour by class; a bare status tag stays inline, while a
-% witness with names gets a line of its own in list form, P[name1, name2].
+% Witness system.  Colour by class; a mark with ids stays inline \tier[ids]{X}
+% and moves to a line of its own in list form, P[name1, name2], only when the
+% four gates of docs/citations.md section 8.5 all hold: two ids or more at 35
+% characters or more, the mark closing its sentence (r = 0), not closing a
+% list item (i = 0), and standing 75 words or more from the nearest witness
+% block of its blank-line paragraph (d >= 75); every other site stays inline.
 % Every mark selects its own font with \normalfont..., so neither an enclosing
 % \itshape (amsthm's plain theorem style) nor an open \emph can leak into it.
 % ---------------------------------------------------------------------------
@@ -306,8 +310,8 @@ $\golden$ is its number.
 $\pi$ and $\golden$ are irrational with respect to each other, and that keeps the two directions
 apart: a step of scale $\golden$ turns a phase by $\log\golden$, and $\log\golden/\pi$ is irrational,
 for $\log\golden=(p/q)\pi$ would make the algebraic number $\golden^{q}$ equal to $e^{p\pi}$, which is
-transcendental by the Gelfond--Schneider theorem~\cite{Sch35}
-\tier[exp\_pi\_transcendental, golden\_isAlgebraic, log\_golden\_div\_pi\_irrational]{P}. Incommensurate frequencies do not lock into a common cycle, and $\golden$, the number least
+transcendental by the Gelfond--Schneider theorem~\cite{Sch35}.
+\witness{P}{exp\_pi\_transcendental, golden\_isAlgebraic, log\_golden\_div\_pi\_irrational} Incommensurate frequencies do not lock into a common cycle, and $\golden$, the number least
 well approximated by fractions~\cite{Hur91}, is the step least able to lock~\cite{Gre79}. The two
 directions meet only where $\golden$ produces its own fractions: its period modulo $N$, which for
 $N=16$ and $N=9$ is $24$, the same $24$ that the angular side carries in the Dedekind $\eta$ of the
@@ -1167,7 +1171,8 @@ saturation entropy and the Hubble rate of the level, which~\cite{CW6} defines se
 counted once. W5, W6, W7, W8 and W10 are properties the object could have lacked. W11 is an analogy,
 stated as such. The $\tfrac12$ of the criteria is of two kinds. As the fixed point of an involution
 it is a theorem: of $x\mapsto1-x$ and of the Galois conjugation, the order-two monodromy $\pi$, and
-the maximum of the binary entropy \tier[binEntropy\_half, fibre\_half\_turn, cpt\_involution]{P}. As a
+the maximum of the binary entropy.
+\witness{P}{binEntropy\_half, fibre\_half\_turn, cpt\_involution} As a
 threshold set on a function, the threshold of objectivity of W1 and the threshold set on the
 Gaussian window of Imported statement~\ref{imp:gauss}, it is an identification of that threshold with the modulus.
 
@@ -1744,8 +1749,8 @@ the wavelength $\tau(\sigma)=M_{\mathrm{PCF}}\golden^{-\sigma}$ of Imported
 statement~\ref{imp:lengths} it accumulates exactly a half-turn at every level,
 $\varepsilon(\sigma)\tau(\sigma)=\varepsilon_0M_{\mathrm{PCF}}=\pi$ \tier[closure\_each\_level]{P}. The
 half-turn is carried by the reciprocal length, not by the ring: over the ring $M_{\mathrm{PCF}}\golden^{\sigma}$
-the phase is $\pi\golden^{2\sigma}$, a half-turn only at $\sigma=0$
-\tier[phase\_on\_cell, phase\_on\_cell\_halfturn\_iff]{P}. This is the pair $z\tau=M_{\mathrm{PCF}}$ again:
+the phase is $\pi\golden^{2\sigma}$, a half-turn only at $\sigma=0$.
+\witness{P}{phase\_on\_cell, phase\_on\_cell\_halfturn\_iff} This is the pair $z\tau=M_{\mathrm{PCF}}$ again:
 the throat grows as the period of the half-turn shrinks. The accumulated phase $\pi$ acts on the
 fibre, of modulus $\tfrac12$ at every phase \tier[worldline\_modulus]{P}, as $e^{i\pi}=-1$, of order
 two \tier[fibre\_half\_turn]{P}; it is $\pi$ and not $2\pi$ because the modulus is $\tfrac12$
@@ -1777,8 +1782,8 @@ $m^2=(n/R)^2+(wR/\alpha')^2$ is invariant under $R\mapsto\alpha'/R$, $(n,w)\maps
 \tier[closed\_string\_invariance]{P}~\cite{Pol98}, while with $\alpha'=M_{\mathrm{PCF}}$ the dual of the radius
 $z(\sigma)$ is the loop $\tau(\sigma)$ \tier[dual\_radius\_is\_loop]{P}. Three comparisons of $N$ with
 $S$ follow. First, $N$ exceeds $S$ from $\sigma=3$ on: $\golden^{3}=2+\sqrt5>\pi$
-\tier[golden\_cube\_gt\_pi]{P}, so $\pi z<z^{2}$ for every $\sigma\geq3$
-\tier[ring\_count\_exceeds\_bound, ring\_count\_exceeds\_bound\_from\_three]{P}. Second, the
+\tier[golden\_cube\_gt\_pi]{P}, so $\pi z<z^{2}$ for every $\sigma\geq3$.
+\witness{P}{ring\_count\_exceeds\_bound, ring\_count\_exceeds\_bound\_from\_three} Second, the
 expression $4\pi z^{2}/(4\cdot\tfrac12)=2\pi z^{2}$ equals $S=\pi z$ only at $z=\tfrac12$
 \tier[area\_law\_4d\_meets\_weld\_iff]{P}, that is at $\sigma=-\log_\golden2$, below the bottom of the
 tower. Third, $\pi\sqrt{N}=\pi z=S$ exactly \tier[cardy\_saturates\_bound]{P}, and the count behind
@@ -1796,7 +1801,8 @@ $2.44$), the logarithmic correction $(c+3)/4$ of Cardy's formula at $c=3$ \tier[
 changes $S$, the masses or the lattice counts of the angular direction above.
 
 This is why the bottom is a half-turn and the phase a quarter-turn: for the modular matrix $S$,
-the half-turn is $S^2=-1$ and the quarter-turn is $S$ itself \tier[quarter\_and\_half\_turn]{P}. The same pair of turns acts on the three-sphere in which the square torus sits as the Clifford torus. The tori $|z_1|=\cos\eta$, $|z_2|=\sin\eta$ that foliate it are flat, of modulus $\tau=i\tan\eta$, and with $\tan\eta_n=\golden^{-2n}$ they are the tower of tori of the window, $\tau_n=i\golden^{-2n}$ of Imported statement~\ref{imp:gauss}, not the lattice torus of every level, whose modulus stays $\tau=i$; the two meet only at the level $0$, where the window torus is the Clifford torus \tier[tan\_eta, level\_zero\_is\_clifford, clifford\_square]{P}. The exchange $z_1\leftrightarrow z_2$ is $\eta\mapsto\pi/2-\eta$, the mirror $n\mapsto-n$ of Imported statement~\ref{imp:gauss} \tier[swap\_is\_mirror, S\_acts\_as\_mirror]{P}, and each window torus projects stereographically, from a point of the circle $z_1=0$, onto a torus of revolution with $R/r=\sqrt{1+\golden^{4n}}$, $\sqrt2$ at the level $0$ \tier[stereo\_ratio, clifford\_stereographic\_torus]{P}. The map $J(z_1,z_2)=(-\bar z_2,\bar z_1)$, the quaternion $j$, has order four and square $-1$ \tier[J\_sq, J\_four]{P}: on the base of the Hopf fibration it is the antipodal map of W10 \tier[J\_lifts\_W10]{P}, on the tori it is the mirror \tier[J\_swaps\_moduli]{P}, and its square is the half-turn of the fibre, $-z=e^{i\pi}z$, which the base does not see \tier[antipode\_is\_half\_turn, hopf\_blind\_to\_half\_turn]{P} (\testref{test\_j\_squares\_to\_minus\_one\_and\_the\_half\_turn\_is\_invisible}). The antipodal map, the mirror and the half-turn are thus one quarter-turn and its square. The fibration itself is homogeneous: its isometries carry any fibre to any other; its tori are the preimages of the parallels of the base and need a chosen axis, which the same isometries carry to any other; the torus $\eta=\pi/4$ is fixed by the mirror, and the levels $\eta_n$ are placed by $\golden$ (Imported statement~\ref{imp:gauss}).
+the half-turn is $S^2=-1$ and the quarter-turn is $S$ itself \tier[quarter\_and\_half\_turn]{P}. The same pair of turns acts on the three-sphere in which the square torus sits as the Clifford torus. The tori $|z_1|=\cos\eta$, $|z_2|=\sin\eta$ that foliate it are flat, of modulus $\tau=i\tan\eta$, and with $\tan\eta_n=\golden^{-2n}$ they are the tower of tori of the window, $\tau_n=i\golden^{-2n}$ of Imported statement~\ref{imp:gauss}, not the lattice torus of every level, whose modulus stays $\tau=i$; the two meet only at the level $0$, where the window torus is the Clifford torus.
+\witness{P}{tan\_eta, level\_zero\_is\_clifford, clifford\_square} The exchange $z_1\leftrightarrow z_2$ is $\eta\mapsto\pi/2-\eta$, the mirror $n\mapsto-n$ of Imported statement~\ref{imp:gauss} \tier[swap\_is\_mirror, S\_acts\_as\_mirror]{P}, and each window torus projects stereographically, from a point of the circle $z_1=0$, onto a torus of revolution with $R/r=\sqrt{1+\golden^{4n}}$, $\sqrt2$ at the level $0$ \tier[stereo\_ratio, clifford\_stereographic\_torus]{P}. The map $J(z_1,z_2)=(-\bar z_2,\bar z_1)$, the quaternion $j$, has order four and square $-1$ \tier[J\_sq, J\_four]{P}: on the base of the Hopf fibration it is the antipodal map of W10 \tier[J\_lifts\_W10]{P}, on the tori it is the mirror \tier[J\_swaps\_moduli]{P}, and its square is the half-turn of the fibre, $-z=e^{i\pi}z$, which the base does not see \tier[antipode\_is\_half\_turn, hopf\_blind\_to\_half\_turn]{P} (\testref{test\_j\_squares\_to\_minus\_one\_and\_the\_half\_turn\_is\_invisible}). The antipodal map, the mirror and the half-turn are thus one quarter-turn and its square. The fibration itself is homogeneous: its isometries carry any fibre to any other; its tori are the preimages of the parallels of the base and need a chosen axis, which the same isometries carry to any other; the torus $\eta=\pi/4$ is fixed by the mirror, and the levels $\eta_n$ are placed by $\golden$ (Imported statement~\ref{imp:gauss}).
 \witness{N}{\testref{test\_a\_torus\_is\_the\_preimage\_of\_a\_parallel\_and\_asks\_for\_an\_axis}, \testref{test\_the\_flat\_tori\_have\_modulus\_i\_tan\_eta}}
 
 \begin{definition}[The hypertorus]\label{def:hypertorus}
@@ -1806,7 +1812,8 @@ fibre of modulus $\tfrac12$ whose half-turn period is $\tau(\sigma)=M_{\mathrm{P
 \end{definition}
 \noindent Each of its three pieces is proved above: $\tau=i$ at every level
 \tier[lattice\_tower\_tau]{P}, the half-turn at every level \tier[closure\_each\_level]{P}, and the
-throat \tier[pseudosphere\_unit\_speed, ring\_ratio]{P}. For a reader of AdS/CFT the difference with the usual throat is that the radial
+throat.
+\witness{P}{pseudosphere\_unit\_speed, ring\_ratio} For a reader of AdS/CFT the difference with the usual throat is that the radial
 direction is not integrated out to leave a boundary theory: bulk and boundary are kept, and the
 boundary torus is the same at every level. The masses use only a minimal part of it: the measure,
 the boundaries, the phase and the bottom.
@@ -1834,7 +1841,8 @@ $e^{i\sigma\log\golden}$, turns by $\log\golden$ per level, and $\log\golden/\pi
 does: for every continuous function on the circle, its average along the orbit equals its average
 over the circle~\cite{Wey16}; at each point of the orbit a product is the product, and along the
 orbit the connected part $\langle fg\rangle-\langle f\rangle\langle g\rangle$ tends to
-$\int fg-\int f\int g$ \tier[weyl\_equidistribution, orbit\_connected\_part, single\_theory\_factorizes]{P}. The connected term that item (e) of the proof after Imported
+$\int fg-\int f\int g$.
+\witness{P}{weyl\_equidistribution, orbit\_connected\_part, single\_theory\_factorizes} The connected term that item (e) of the proof after Imported
 statement~\ref{imp:adscft} attributes to an average over several states is the one the orbit
 produces: the average over a uniform family of phases is the average over the circle, so one orbit
 gives, at each point, the factorisation of one state and, along itself, the connected part of an
@@ -2029,8 +2037,8 @@ distance is at least $7.6$, reached at $-1$, and without the correlation it woul
 result does not depend on it. Planck alone gives $583.877$, $2.2$ to
 $3.1$ standard deviations from $584$ as the correlation of $\Omega_m$ and $H_0$ runs from $-1$ to
 $0$; the local $H_0$ with the $\omega_m$ of Planck, a combination that $\Lambda$CDM does not
-reconcile, gives $583.40$, nearest to $583$ and $5.0$ standard deviations from it
-\tier[\testref{test\_data\_readings}, \testref{test\_the\_planck\_level\_is\_2\_2\_to\_3\_1\_sigma\_from\_584}]{N}. The
+reconcile, gives $583.40$, nearest to $583$ and $5.0$ standard deviations from it.
+\witness{N}{\testref{test\_data\_readings}, \testref{test\_the\_planck\_level\_is\_2\_2\_to\_3\_1\_sigma\_from\_584}} The
 hypothesis is therefore excluded, by the criterion stated in advance, and the other determinations do not undo it: Planck alone agrees with the combination, $1.4$ to $1.8$ standard deviations from it in $\Omega_\Lambda h^2$, and differs only in precision, so it does not favour $584$ (\testref{test\_desi\_against\_planck}); the local $H_0$ moves the nearest integer to $583$ and excludes that one \tier[\testref{test\_the\_worst\_case\_is\_deci}]{N}. A tower with a rational step $p/q$ in place of $\golden$ reads the same data at other levels: with $21/13$ the bottom moves by $0.8$ standard deviations, which the data of \S\ref{sec:data} do not exclude, and the observer's level by $71$ (\testref{test\_rational\_step\_versus\_the\_contrast}); it stays within three standard deviations of the golden reading only from $144/89$ on, and each further depth asks for the next fraction, the convergents of $\golden$. This compares the steps with each other, not with a datum: what singles out $\golden$ is the clock and the additive law, not the data \tier[\testref{test\_three\_sigma\_criterion}]{N}. No measurement error is known that would remove the exclusion, the unit is
 fixed by an argument independent of the data and cannot be moved, and no level of the structure
 singles out $584$ ($584\equiv8\bmod 24$), so there is no mechanism to protect. An evolving dark
@@ -2468,7 +2476,7 @@ contact configurations; (12) the lattice counts of \S\ref{ssec:math} and the vec
 statement stated; (13) Figure~\ref{fig:mobius}, checking that $z\tau$ is constant; (14) the three
 gaps of the marks on the ring; (15) the exact count of states at level $N/2$ against $S$; (16) the reconstruction of the lepton masses from $M$; (17) the level $\sigma_{\mathrm{obs}}$ read from the observed $\Lambda$; (18) the observer's level and the unit of curvature; (19) the phase of the tower against its asymptotic form, and the form of~\cite{MQ18}; (20) the contrast with the two observed candidates; (21) the two-brane model fitted to the same candidates; (22) the unit of curvature and the value of~\cite{CW6}; (23) the lattice, the bottom and the observer's lattice point with the $H_0$ it requires; (24) the two dimensionful data and the top; (25) the self-dual Gaussian as a window on the index and as a weight on the scale; (26) the edge of the window and $\sigma_G$; (27) the window as a nome, the tower of tori, $S$ as the mirror and the crossing of $\tfrac12$ against $\pi/2$; (28) Poisson summation and $\vartheta_3(e^{-\pi})$; (29) the density of dark energy at the lattice point; (30) the mirror-invariant throat; (31) the metric of the modulus of the ring and the conjectures; (32) the level of the observer read from each determination against the lattice; (33) the welded tension, the Higuchi ratio, the Regge scale in the two units and the count of graviton modes below $1000$~TeV; (34) the exponential quintessence of slope $1/\sqrt2$ and the fit of~\cite{AAN25}; (35) the threshold $\tfrac12$: the Fisher time, the binary entropy and one bit per eigenvalue; (36) the orbit of the phase of the tower, the horizon of $S(12)$ and the black-hole threshold of the two-brane throat; (37) the entropy, the modes and the bits, the vector ratio as a function of the depth alone, the gluons in the graviton throat, the placement face of $M$, and the ratio $700/380$; (38) the area quantum of (B1) against a Shannon bit; (39) Figure~\ref{fig:throattiling}, checking that the boundaries of the tiles continue from ring to ring and that the weighted count is $S$; (40) the dictionary on a regular tiling against the cusp: the open legs of $\{7,3\}$ and the constant of Crofton, the pairs of a tiling and a bond dimension, the metric of the cusp, the two tiles and their substitution, the weighted count to $60$ digits, and the lattice count of \S\ref{ssec:math}; (41) Figure~\ref{fig:tilingstrip}, the tiles inside each disk of five regular tilings, the tangencies of the levels with their edges, and the approach of the Fibonacci ratios to $\golden$; (42) the weld time as the Galois coordinate, the step of level as an exchange and a shift, the ring labelled by a unit, the orthogonalisation at the half-turn, the rational step against the contrast, the trace $3$, and the ratios of the operator of Imported statement~\ref{imp:A1}; (43) the substitutions on two letters and the four conditions, the diagonal of the cube, Binet's bound on the tile count, the kernel of a rational step and the Bragg peaks of the Fibonacci chain; (44) Figure~\ref{fig:background}, checking numerically each statement drawn; (45) the level of the observer along $\Lambda$CDM, the asymptotic level and the $N$-bound, the limit of compression at $z=\tfrac12$ and the first expansion, the constant of the first patch against that of the throat in every dimension, the observed constant as the constant of the throat divided by the cells, and the halves of de~Sitter space that the observer reaches and receives; (46) the Hopf foliation by the tori of the window, the mirror, the map $J$, the homogeneity of the fibration and the axis of its tori.
 
-The package is exercised by the test suite of the note: \code{uv run pytest tests/ -q} runs all $520$ tests in about a minute, \code{uv run pytest tests/ -q -m 'not slow'} the $516$ that each take under ten seconds, and \code{pnpm run test} the same suite. A test either recomputes a number from its closed form or reads it from what its section prints, always with an explicit tolerance: a rounding tolerance is the width of the printed precision, $5\times10^{-5}$ for a value printed to four decimals, and no tolerance is widened to make a test pass. Every number and every figure of this note therefore names the test that checks it, as \testref{test\_bottom\_of\_the\_throat} names the counts at the bottom of the throat; the map of the forty-six sections to the tests is in \code{tests/README.md}.
+The package is exercised by the test suite of the note: \code{uv run pytest tests/ -q} runs all $535$ tests in about a minute, \code{uv run pytest tests/ -q -m 'not slow'} the $531$ that each take under ten seconds, and \code{pnpm run test} the same suite. A test either recomputes a number from its closed form or reads it from what its section prints, always with an explicit tolerance: a rounding tolerance is the width of the printed precision, $5\times10^{-5}$ for a value printed to four decimals, and no tolerance is widened to make a test pass. Every number and every figure of this note therefore names the test that checks it, as \testref{test\_bottom\_of\_the\_throat} names the counts at the bottom of the throat; the map of the forty-six sections to the tests is in \code{tests/README.md}.
 
 Lean~4: \code{TorreKK\_LYR\_v34.lean}, one hundred and sixty-three theorems and six axioms, no \code{sorry}, compiled with no errors;
 the Mathlib names at risk are listed below.
