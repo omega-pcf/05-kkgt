@@ -70,7 +70,7 @@ the sentence it marks, before the final punctuation.
 | **Convention harmonisation** 2026-11-15 | `\Lean{}` **170 → 0**, `\LeanCW{}` **6 → 0**, blocks **16 → 18**, one tag per claim | §6 |
 | **Blocked on nothing** | the three "no provenance" numbers are gone from the text | §1.5 |
 
-Test suite: **490** tests (was 484), **486** without the slow mark (was 480);
+Test suite: **535** tests (was 490), **531** without the slow mark (was 486);
 `main.tex` (Code and data) and `tests/README.md` updated.
 
 ---
@@ -268,7 +268,7 @@ manuscript quotes.
 
 ### 1.7 Counters `[x]`
 
-`main.tex` (Code and data): “runs all **$490$** tests … the **$486$** that
+`main.tex` (Code and data): “runs all **$535$** tests … the **$531$** that
 each take under ten seconds” (was 484/480). `tests/README.md` lines 14-15
 updated to match. Six tests were added (§1.2), none marked slow.
 
@@ -303,10 +303,10 @@ Deleted from the previous document because they no longer describe anything:
 ## 3. Fresh coverage of the current manuscript — open rows
 
 Inventory of the current `main.tex` (after the 2026-11-15 convention pass):
-**236 inline tags** (8 body `\tier{N}` + 1 legend `\tier{N}` + 13 bare
-`\tier{P}` + 47 `\tier[\testref{…}]{N}` + 167 `\tier[names]{P}`), **18
-`\witness{…}` blocks** (9 `P`, 9 `N`), **12 `\wtag` labels**, **11
-`[P] in~\cite{…}`**, and **0 `\Lean{}`/`\LeanCW{}`**.
+**231 inline tags** (3 body `\tier{N}` + 1 legend `\tier{N}` + 13 bare
+`\tier{P}` + 54 `\tier[\testref{…}]{N}` + 160 `\tier[names]{P}`), **26
+`\witness{…}` blocks** (16 `P`, 10 `N`), **12 `\wtag` labels**, **2 `[P]`
+in the prose**, and **0 `\Lean{}`/`\LeanCW{}`**.
 No tag sits on its own line, no two tags are adjacent, no tag is preceded by
 a full stop without carrying its own witness, and every caption is tag-free.
 (The line numbers in the tables below are the ones of the previous pass; the
@@ -343,7 +343,7 @@ D39–D41 in §1.2; D06, D12, D16, D23, D35, C11, C18 in §1.3–§1.5.)
 | **L2023** (old L1694) | `583.877`, `583.40` and `5.0 σ` are asserted by `test_data_readings`; **“2.2 to 3.1 standard deviations” is not** → **§5.9** |
 | **L2149** | `\tier{P} for the identity` — the sentence has no witness in it for that first tag (the fused `\cite` covers only “for the weld”) → **§5.10 [x]** |
 | **L1477** (D20) | `11.97 (\eqref{eq:sigmaIR}) [N]` `[x]`. Optional: fold `test_alternatives_for_the_bottom_level` into the tag — it asserts `11.97` |
-| **P sites** | 16 bare `\tier{P}`, 11 `[P] in~\cite{…}`, 16 witness blocks, 12 `\wtag`: all grammatical, no action |
+| **P sites** | 13 bare `\tier{P}`, 2 `[P]`, 26 witness blocks, 12 `\wtag`: all grammatical, no action |
 
 ---
 

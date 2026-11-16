@@ -12,7 +12,8 @@ docs/
 ├── figures.md         # Deterministic figure pipeline (the five PDFs)
 ├── installation.md    # Prerequisites and setup
 ├── usage.md           # Build and release commands
-└── witness-decisions.md # The witness/tier decision log
+├── witness-decisions.md # The witness/tier decision log
+├── witness-rationale.md  # Why the marks exist (convention rationale, EN)
 ```
 
 ## Contents
@@ -23,6 +24,7 @@ docs/
 - **installation.md**: Prerequisites and setup instructions.
 - **usage.md**: Daily workflow, conventional commits, build and release commands.
 - **witness-decisions.md**: Every decision behind the witness tiers and the open/closed gates.
+- **witness-rationale.md**: The rationale of the witness marks: evidence classes, usability, succinctness.
 
 ## Conventions
 

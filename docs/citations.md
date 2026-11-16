@@ -146,6 +146,9 @@ fails the build otherwise.
 The manuscript marks the status of each claim inline, with an unbreakable
 tag set in footnotesize and in its own colour. This section is the contract
 of that device, written down here for whoever writes or edits the text.
+The justification of the device — why a mark of this kind belongs in a
+paper of pure mathematics, and what it does not claim — is argued in
+`docs/witness-rationale.md`; this section states only the contract.
 
 ### 8.1 Grammar — one macro, one optional argument
 
@@ -225,8 +228,9 @@ citation, `in~\cite{CW6}`.
    checking the test really recomputes the number next to it.
 5. **`\tier{P}` without a bracket** means proved here, with no theorem name
    quoted at that point; the name, when it is quoted, goes into the tag
-   itself (`\tier[name]{P}`) or, at the end of a claim that carries two
-   names or more, into a `\witness{}` block — see §8.5.
+   itself (`\tier[name]{P}`) or, when the claim carries two ids or more and
+   closes its sentence, into a `\witness{}` block — the four gates of §8.5
+   decide which of the two.
    Proved in an external source is not "here": that is `[P] in~\cite{key}`,
    one bracket for the tag and one for the citation, each printed by its own
    macro.
@@ -291,20 +295,116 @@ reader how many witnesses a claim carries and where they sit, not what
 kind of evidence it is; reading the shape as "the proof is a block, the
 test is inline" was the drift this rule closes.
 
-- **Inline** `\tier[ids]{X}` when the claim carries **one id**, or when
-  its ids sit **inside the sentence that makes the claim** (the claim goes
-  on in that sentence).
-- **A line of its own** `\witness{X}{ids}` when a claim **ends with two
-  ids or more**: the block is flush right and is the last thing in its
-  paragraph — the form of the family (`\ProofWitnessBlock` in
-  03-crystalline-worldsheet).
-- A claim that ends but whose **sentence** goes on (`;` opening the next
-  clause of the same sentence) stays inline even with several ids: a
-  `\witness{}` ends the paragraph, so it can never be set in the middle of
-  one.
+The criterion is **quantitative**: five quantities read off `main.tex`
+with no judgement call, four gates, one reading pass to review it.  It
+replaces the earlier one-liner ("two ids or more at the end of a claim"),
+which never said what "the end of a claim" is.
 
-State after the 2026-11 pass: **18 blocks** — 9 `P` and 9 `N`, every one of
-them with two ids or more; **no single-id block is left** (the seven that
-had one id moved inline, e.g. `\tier[sq\_add\_inv\_sq]{P}`); two multi-id
-`N` tags remain inline because their sentence continues after the claim.
-`\Lean{}` and `\LeanCW{}`: **0 occurrences** in `main.tex`.
+**The rule in one sentence.**  A claim whose id list carries **two ids or
+more and 35 characters or more** goes on a line of its own
+`\witness{X}{ids}` **only if the mark closes its sentence, does not close
+a list item, and stands at least 75 words from the nearest block of its
+paragraph**; every other site stays inline `\tier[ids]{X}`.
+
+#### The quantities
+
+| Symbol | Quantity | How to measure |
+|---|---|---|
+| `k` | ids of the claim | count of `,` + 1 in the optional argument of `\tier`, resp. in the second argument of `\witness` |
+| `L` | length of the id list, in characters | that argument with `\_` unescaped to `_`, `\testref{…}` reduced to its name, braces dropped |
+| `r` | **sentence residual** — words of the *same sentence* that follow the mark | words between the mark and the next `.`, `!` or `?`, math and macros not counted; `r = 0` means the mark is the last element of its sentence |
+| `d` | distance in words to the nearest `\witness` block of the same paragraph | paragraphs are blank-line separated; `—` when the paragraph has no block |
+| `i` | 1 if the mark closes a `\item` of an enumeration, 0 otherwise | the last `\item`/`\item[` before the mark opens the item the mark ends |
+
+#### The four gates
+
+A claim with `k ≥ 2` is set as a block **iff all four hold**:
+
+1. **`k ≥ 2`.**  One id never earns a line of its own: the seven
+   single-id blocks of the 2026-11 pass moved inline for exactly this
+   reason (`\tier[sq\_add\_inv\_sq]{P}` and its six siblings).
+2. **`L ≥ 35`.**  35 characters is the shortest id list the manuscript
+   already prints as a block — `certainty_principle, log_from_scale`,
+   `main.tex:899`.  Below that the flush-right line costs a paragraph
+   break and buys no room: the bracket fits in the sentence.
+3. **`r = 0`.**  `\witness` issues `\par … \par` (preamble,
+   `main.tex:94-98`), so it always ends the paragraph where it sits and
+   the text after it opens a new one.  Any residual — a trailing clause
+   (`; …`, `, so …`, `which …`), a parenthetical
+   (`(Figure~\ref{fig:background}(a))`), a closing `\testref` — would be
+   stranded at the head of a new paragraph, and the sentence it belongs
+   to would be torn in two.  **`r ≥ 1` ⇒ inline, no exception.**  The
+   residual is counted, not estimated: in the current inventory no site
+   has `1 ≤ r ≤ 5` whose residual could read as a sentence of its own —
+   the small residuals are reference parentheticals and final
+   `\testref`s, which are parts of the sentence they follow.
+4. **`i = 0` and `d ≥ 75`.**  A block inside an enumeration would close
+   the item's paragraph and set the mark off from the rest of the list;
+   no block of the manuscript sits inside one.  And a second block a few
+   lines below the first is monotone prose: 75 words is the tightest
+   block-to-block distance the manuscript already accepts (the two blocks
+   of `main.tex:2075` and `main.tex:2083`), so `d < 75` keeps the claim
+   inline.
+
+The four gates read as a paragraph, but they are each a number: the
+criterion is reproducible by anyone who opens `main.tex`, and it reproduces
+the applied state without a single exception — all 26 blocks of the
+manuscript have `k ≥ 2`, `L ≥ 35`, `r = 0`, `i = 0` and either no block in
+their paragraph or `d ≥ 75`.
+
+#### The sites the rule flags
+
+Every inline mark with `k ≥ 2` whose sentence ends at the mark (`r = 0`),
+with the tail of the sentence it closes.  Thirteen sites; twelve of them
+pass gates 1–3 (`L ≥ 35`), and gate 4 keeps four of those inline (the
+`stereo_ratio` row fails it too once the `tan_eta` row below it takes its
+line — see the note under the table).
+
+| `main.tex` | `k` | `L` | `r` | `d` | `i` | the sentence ends with | verdict |
+|---|---|---|---|---|---|---|---|
+| 310 | 3 | 71 | 0 | — | 0 | `…which is transcendental by the Gelfond--Schneider theorem~\cite{Sch35}` | **→ block** |
+| 946 | 2 | 29 | 0 | — | 0 | `…those of $S$ and $ST$, are computed in Lean` | stays inline — `L = 29 < 35`, gate 2 |
+| 1128 | 2 | 36 | 0 | — | 1 | `…with $G_N=\tfrac12$, the entropy law of a de~Sitter horizon` | stays inline — closes a `\item` of the W list, gate 4 |
+| 1170 | 3 | 48 | 0 | — | 0 | `…monodromy $\pi$, and the maximum of the binary entropy` | **→ block** |
+| 1500 | 3 | 47 | 0 | — | 1 | `…the clock $24$, and $\eta^{12}$ picks up exactly $e^{i\pi}=-1$` | stays inline — closes an `\item`, gate 4 |
+| 1748 | 2 | 41 | 0 | — | 0 | `…the phase is $\pi\golden^{2\sigma}$, a half-turn only at $\sigma=0$` | **→ block** |
+| 1766 | 2 | 42 | 0 | 70 | 0 | `…with Fibonacci numbers, $\golden^{2\sigma}$ is irrational` | stays inline — a block already stands 70 words away, gate 4 |
+| 1781 | 2 | 61 | 0 | 94 | 0 | `…so $\pi z<z^{2}$ for every $\sigma\geq3$` | **→ block** |
+| 1799 (`stereo_ratio, clifford_stereographic_torus`) | 2 | 42 | 0 | 61* | 0 | `…of revolution with $R/r=\sqrt{1+\golden^{4n}}$, $\sqrt2$ at the level $0$` | stays inline — `d = 61 < 75` once `tan_eta` takes its line, gate 4 (*148 before that move) |
+| 1799 (`tan_eta, level_zero_is_clifford, clifford_square`) | 3 | 48 | 0 | 197 | 0 | `…$0$, where the window torus is the Clifford torus` | **→ block** |
+| 1809 | 2 | 35 | 0 | — | 0 | `…and the throat` | **→ block** |
+| 1837 | 3 | 69 | 0 | — | 0 | `…tends to $\int fg-\int f\int g$` | **→ block** |
+| 2033 | 2 | 70 | 0 | — | 0 | `…$5.0$ standard deviations from it` | **→ block** |
+
+The line numbers are those of the manuscript as this section was written;
+the tail of the sentence identifies the site when a concurrent editing
+pass moves it.
+
+**Applied 2026-11-15: eight of the nine rows.**  The manuscript stands at
+**26 blocks** (18 + 8) and leaves **26 inline marks with two ids or more**
+(34 − 8).  The `stereo_ratio` row reverted on re-reading it against the
+applied text: once `tan_eta` took its line, the distance to the block
+above it fell to **61 words**, so gate 4 keeps it inline — the outcome the
+note above the table had predicted.
+
+#### How the criterion is reviewed
+
+One reading pass over the table above — it prints, for every flagged
+site, the tail of the sentence the mark closes, so the whole check is one
+question per row: *does any word of that sentence follow the mark?*  The
+same pass is what confirms gates 4 (`i`, `d`) for a new site, since both
+are read from the two lines around it.  No style test is written for
+this: a CI check that re-derives what this section already guarantees
+would test the document against itself; the census
+(`tests/test_section_census.py`) guards what the build depends on — the
+test references the manuscript cites — and nothing here does.
+
+#### State after the application pass (2026-11-15)
+
+**26 blocks** — 16 `P` and 10 `N`, every one of them with `k ≥ 2`,
+`L ≥ 35`, `r = 0`, `i = 0` and `d ≥ 75` (or no block in its paragraph);
+**no single-id block is left**.  **26 inline marks carry two ids or
+more** — 24 `P` and 2 `N` — of which **13 close their sentence** and are
+the table above.  The two multi-id `N` marks left are `main.tex:1033` and
+`main.tex:2121`, whose sentence goes on after the claim.  `\Lean{}` and
+`\LeanCW{}`: **0 occurrences** in `main.tex`.
