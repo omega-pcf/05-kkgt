@@ -259,6 +259,7 @@ class TestTexTestRefs:
             # the numbers the missing-tests pass of the Needs-the-author list
             # let us tie: each written from the manuscript's own claim
             "test_the_three_spacings_have_the_variance_of_the_ensemble",
+            "test_alternatives_for_the_bottom_level",
             "test_the_residues_of_phi_to_the_twelve",
             "test_deep_chain_yields_the_j1_zeros",
             "test_a_random_scale_lands_within_point_zero_four_of_an_integer_level",

@@ -11,8 +11,8 @@ citation is left, and that each of the five figures names the test that
 writes it.
 
 ```bash
-uv run pytest tests/ -q                 # whole suite   (535 tests, ~58 s)
-uv run pytest tests/ -q -m 'not slow'   # without >10 s (531 tests, ~60 s)
+uv run pytest tests/ -q                 # whole suite   (533 tests, ~60 s)
+uv run pytest tests/ -q -m 'not slow'   # without >10 s (529 tests, ~62 s)
 pnpm run test                           # same, through package.json
 
 PYTHONPATH=tests/src uv run python -m kkgt.sections        # the 46 sections

@@ -102,15 +102,18 @@ class TestSection1Numbers:
         """Contract: the summary lines section 1 must keep printing."""
         run_section(1).has(block)
 
-    @pytest.mark.parametrize(
-        "label,printed", [("M", 11.96), ("m_p/3", 11.97), ("m_e", 25.3)]
-    )
-    def test_alternatives_for_the_bottom_level(self, run_section, label, printed):
-        """v2 of section 1: the level read from the scale depends on m0."""
-        got = run_section(1).value(
-            rf"sigma_IR with m0 = {label}\s+([-\d.]+)", label=f"sigma_IR m0={label}"
-        )
-        assert got == pytest.approx(printed, abs=5e-3)
+    def test_alternatives_for_the_bottom_level(self, run_section):
+        """v2 of section 1: the level read from the scale depends on m0.
+
+        One node rather than a parametrised triple: the manuscript cites
+        this test by name, and a parametrised id carries its parameters.
+        """
+        run = run_section(1)
+        for label, printed in [("M", 11.96), ("m_p/3", 11.97), ("m_e", 25.3)]:
+            got = run.value(
+                rf"sigma_IR with m0 = {label}\s+([-\d.]+)", label=f"sigma_IR m0={label}"
+            )
+            assert got == pytest.approx(printed, abs=5e-3), (label, got)
 
     def test_mpcf_framework_unit(self, run_section):
         """M_PCF log phi = 6 sqrt(3) pi -> 67.846 (same value as section 12)."""
