@@ -65,10 +65,24 @@ deduce from the rest.
 - **Formal**: No informality. Rigorously academic.
 - **Direct**: Explain one thing once, well. No repetition.
 - **Intellectually honest**: If it contradicts orthodoxy, say so explicitly (not hidden).
-- **Non-apologetic**: It is what it is. If it is unusual, it is because the structure requires it.
+- **Non-apologetic**: the work is stated as it is, and an unusual choice
+  is justified where it is made — by the problem, not by a preference.
+  "Because the structure requires it" is not such a justification: it
+  names nothing. The one that holds is specific: a question taken
+  seriously, and read with its history, spills across areas of
+  mathematics that were not separated under those names two centuries
+  ago, and the zeta function and the golden ratio are questions of that
+  kind by their nature. The division of the fields has ordinary reasons
+  behind it — peer review and editorial work are costly, and
+  specialization carries them — and this work does not argue with them.
+  The context the problem brings in belongs in the paper; leaving it out
+  for convenience is what would have to be apologised for.
 
 ### 1.2 Audience
-- **Expert scientific audience**: The paper is aimed at scientists with advanced training in mathematics, but its multi-domain scope requires familiarity with number theory, complex analysis, Hermitian operators, quantum physics, geometry, and computational verification. The artificial separation of mathematics into "departments" does not reflect the interdisciplinary nature of the problems addressed.
+- **Expert scientific audience**: The paper is aimed at scientists with advanced training in mathematics, but its multi-domain scope requires familiarity with number theory, complex analysis, Hermitian operators, quantum physics, geometry, and computational verification. The division of mathematics into fields has ordinary reasons — peer
+review and editorial work are costly, and specialization carries them —
+and this work does not argue against it; it follows the problem across
+fields that were not separated under those names two centuries ago.
 - **Do not trade clarity for the appearance of simplicity**: Do not use less clear or less concise words merely so that the text sounds less dense or less specialized. An expert audience expects and appreciates technical precision and appropriate terminology. Avoid periphrases that seek to "soften" the content at the cost of clarity.
 - **Clarity over artificial simplicity**: Prefer precise, concise technical terms over unnecessary periphrases. Readability comes from structure, coherence, and precision, not from avoiding specialized terminology. The paper addresses deep mathematical problems that require a multi-domain approach; the writing must reflect this complexity without artificiality.
 
