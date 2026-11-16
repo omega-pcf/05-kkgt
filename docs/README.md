@@ -11,7 +11,9 @@ docs/
 ├── citations.md       # CSL single-source citation pipeline + witness (tier) contract
 ├── figures.md         # Deterministic figure pipeline (the five PDFs)
 ├── installation.md    # Prerequisites and setup
-├── style-guide.md     # Family style guide v2.1: editorial (§1–§12), code quality D1–D7 (§13), tex/proofreading (§14)
+├── style-guide.md     # Family style guide v2.2: editorial (§1–§12), code quality D1–D7 (§13), tex/proofreading (§14)
+├── style/             # Portable extracts of the style guide
+│   └── grammar.md     # Grammar and usage rules of human language (ES/EN/FR/IT examples)
 ├── usage.md           # Build and release commands
 ├── witness-rationale.md  # Why the marks exist (convention rationale, EN)
 ├── specs/            # Design specifications (dated, id'd, ISO header)
@@ -34,7 +36,8 @@ inventories, decision logs, verdict tables — goes to `docs/reports/`.
 - **citations.md**: How `citation.csl.json` drives the bibliography, CITATION.cff and .zenodo.json; §8 is the witness (tier) contract, §8.5 the quantified inline / line-of-its-own criterion.
 - **figures.md**: What `pnpm run generate:figures` guarantees and why (byte-stable, text-extractable PDFs); the concrete figure-1 incident is [FIG-001](reports/20261116_FIG-001_figure_1_deembed.md).
 - **installation.md**: Prerequisites and setup instructions.
-- **style-guide.md**: The family style guide (v2.1): editorial rules (§1–§12), the software-quality doctrine D1–D7 (§13) and the tex/proofreading pipeline with its cited sources (§14). Generic across the family: this repository's own conventions are linked, never copied — witness contract in `citations.md` §8, rationale in `witness-rationale.md`.
+- **style-guide.md**: The family style guide (v2.2): editorial rules (§1–§12), including the rigorous IMRAD structure of §7 (section roles, antecedent before use, discourse thread, and the principal author's exclusive decision on moving content between sections), the software-quality doctrine D1–D7 (§13) and the tex/proofreading pipeline with its cited sources (§14). Generic across the family: this repository's own conventions are linked, never copied — witness contract in `citations.md` §8, rationale in `witness-rationale.md`, grammar rules in `style/grammar.md`.
+- **style/grammar.md**: The grammar and usage rules extracted from `style-guide.md` §1.5 — language-neutral (complete structure, agreement, clear reference, voice, punctuation, economy), worked in Spanish, English, French and Italian, with the RAE-checked Spanish `se` verbs and their sources.
 - **usage.md**: Daily workflow, conventional commits, build and release commands.
 - **witness-rationale.md**: The rationale of the witness marks: evidence classes, usability, succinctness.
 - **specs/**: Design specifications — proposals that change the pipeline or a

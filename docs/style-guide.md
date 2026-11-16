@@ -4,7 +4,7 @@
 |---|---|
 | **Document** | `docs/style-guide.md` |
 | **Status** | In force |
-| **Version** | 2.1 (generic family port) |
+| **Version** | 2.2 (generic family port) |
 | **Date** | 2026-11-16 |
 | **Language** | English |
 | **Scope** | Editorial style (§1–§12) · Software and code quality (§13) · TeX pipeline and proofreading (§14) — generic to the family: free of conventions specific to any concrete repository |
@@ -56,6 +56,7 @@ deduce from the rest.
 | Build, release, and commit convention commands | [`docs/usage.md`](usage.md) |
 | Requirements and installation | [`docs/installation.md`](installation.md) |
 | Concrete reports of this repo (inventories, decisions, verdicts, incidents) | [`docs/reports/`](reports/README.md) |
+| Grammar and usage rules for human languages (§1.5, examples in ES/EN/FR/IT) | [`docs/style/grammar.md`](style/grammar.md) |
 
 ---
 
@@ -64,27 +65,27 @@ deduce from the rest.
 ### 1.1 Principle
 - **Formal**: No informality. Rigorously academic.
 - **Direct**: Explain one thing once, well. No repetition.
+- **Impersonal, non-deictic register**: in the documents this family
+  writes there is no second-person inflection and no address to the
+  reader as subject; the discourse is centred on the object of work, and
+  praise, blame and other marks of subjectivity are excluded — a
+  convention of register, not a rule of the language, stated with its
+  examples in [`style/grammar.md`](style/grammar.md) §G8.
 - **Intellectually honest**: If it contradicts orthodoxy, say so explicitly (not hidden).
 - **Non-apologetic**: the work is stated as it is, and an unusual choice
   is justified where it is made — by the problem, not by a preference.
-  "Because the structure requires it" is not such a justification: it
-  names nothing. The one that holds is specific: a question taken
-  seriously, and read with its history, spills across areas of
+  An appeal to the way the field is arranged names nothing and is not a
+  justification. The justification that holds is specific: a question
+  taken seriously, and read with its history, spills across areas of
   mathematics that were not separated under those names two centuries
   ago, and the zeta function and the golden ratio are questions of that
-  kind by their nature. The division of the fields has ordinary reasons
-  behind it — peer review and editorial work are costly, and
-  specialization carries them — and this work does not argue with them.
-  The context the problem brings in belongs in the paper; leaving it out
-  for convenience is what would have to be apologised for.
+  kind by their nature. The context the problem brings in belongs in the
+  paper; leaving it out for convenience is what would have to be
+  apologised for.
 
 ### 1.2 Audience
-- **Expert scientific audience**: The paper is aimed at scientists with advanced training in mathematics, but its multi-domain scope requires familiarity with number theory, complex analysis, Hermitian operators, quantum physics, geometry, and computational verification. The division of mathematics into fields has ordinary reasons — peer
-review and editorial work are costly, and specialization carries them —
-and this work does not argue against it; it follows the problem across
-fields that were not separated under those names two centuries ago.
-- **Do not trade clarity for the appearance of simplicity**: Do not use less clear or less concise words merely so that the text sounds less dense or less specialized. An expert audience expects and appreciates technical precision and appropriate terminology. Avoid periphrases that seek to "soften" the content at the cost of clarity.
-- **Clarity over artificial simplicity**: Prefer precise, concise technical terms over unnecessary periphrases. Readability comes from structure, coherence, and precision, not from avoiding specialized terminology. The paper addresses deep mathematical problems that require a multi-domain approach; the writing must reflect this complexity without artificiality.
+- **Expert scientific audience**: The paper is aimed at scientists with advanced training in mathematics, but its multi-domain scope requires familiarity with number theory, complex analysis, Hermitian operators, quantum physics, geometry, and computational verification. The division of mathematics into fields has ordinary reasons — peer review and editorial work are costly, and specialization carries them — and this work does not argue against it.
+- **Clarity over artificial simplicity**: do not use less clear or less concise words merely so that the text sounds less dense or less specialized, and avoid periphrases that "soften" the content at the cost of clarity — an expert audience expects technical precision and appropriate terminology. Readability comes from structure, coherence and precision, not from avoiding specialized terminology: the paper's deep, multi-domain problems require writing that reflects that complexity without artificiality.
 
 ### 1.3 Paragraph structure
 - **Topic + justification + consequence**
@@ -97,57 +98,14 @@ fields that were not separated under those names two centuries ago.
 - Excessive parentheticals → see **§6, pattern 4**
 - Repetition of the same idea with different notation
 
-(Enumerations and bullet lists are valid when they improve clarity or structure; they are evaluated case by case, not eliminated systematically.)
+(Whether an enumeration or a bullet list is valid is one rule, not three: §6.1.)
 
-### 1.5 Grammar and punctuation in Spanish
+### 1.5 Grammar and punctuation
 
-**Fundamental principle**: Rigorous mathematical writing does not justify neglecting the grammar, punctuation, or literary conventions of Spanish. Mathematical abstraction and linguistic elegance are complementary, not antagonistic.
-
-**Common problem**: There is an artificial tendency in mathematical writing to omit prepositions, conjunctions, and other necessary grammatical elements under the false premise that "mathematical concision" requires sacrificing grammatical correctness. This practice creates ambiguity, hinders reading, and contradicts the goal of clarity and precision.
-
-**Golden rules**:
-
-1. **Complete sentences**: Every sentence must have a complete grammatical structure. Do not omit necessary prepositions, conjunctions, or articles.
-   - ❌ "corresponde a rotación hiperbólica" (after an equation, the connection is missing)
-   - ✅ "y que corresponde a rotación hiperbólica" (a conjunction connecting with the previous sentence)
-
-2. **Necessary prepositions**: Use prepositions correctly to establish clear relations between concepts.
-   - ❌ "El mapa preserva estructura algebraica mediante isomorfismo grupo de Lorentz"
-   - ✅ "El mapa preserva la estructura algebraica mediante isomorfismo entre el grupo de Lorentz y..."
-
-3. **Punctuation for clarity**: Commas, semicolons, and colons must be used according to the rules of Spanish to avoid ambiguity and facilitate reading.
-   - Use commas to separate elements in enumerations
-   - Use semicolons to separate related but independent clauses
-   - Use colons before enumerations or explanations
-
-4. **Connecting conjunctions**: When several related concepts or results are presented, use appropriate conjunctions ("y", "que", "donde", "mediante", etc.) to establish clear relations.
-
-5. **Definite articles**: Do not omit articles when they are grammatically necessary for the clarity and correctness of Spanish.
-
-6. **Reflexive passive and reflexive verbs**: When a mathematical object (representation, function, transformation, definition, construction, operator, matrix, space, metric, structure, system, operation, method, procedure, algorithm, theorem, proposition, lemma, corollary) performs an action on itself or has an inherent property, the reflexive construction "se + verb" (reflexive passive voice) must be used.
-   - ❌ "La representación algebraica escribe $\mathbb{C} = ...$" (incorrect: it suggests the representation actively "writes")
-   - ✅ "La representación algebraica se escribe como $\mathbb{C} = ...$" (correct: it indicates how the representation is expressed)
-   - ❌ "La representación polar descompone $\mathbb{C} \cong ...$" (incorrect: it suggests active action)
-   - ✅ "La representación polar se descompone como $\mathbb{C} \cong ...$" (correct: it indicates how the representation is structured)
-   - ❌ "La representación euclidiana identifica $\mathbb{C} \cong ...$" (incorrect: the representation is not an agent that "identifies")
-   - ✅ "En la representación euclidiana, $\mathbb{C}$ se identifica con ..." (correct: it indicates how the identification is established)
-   - ❌ "La función define..." (when the function is the object being defined)
-   - ✅ "La función se define como..." (when the function is being defined)
-   - ❌ "La transformación preserva..." (it can be correct if the transformation is the active subject)
-   - ✅ "La transformación se preserva bajo..." (when speaking of a property that is maintained)
-
-   **Practical rule**: If the mathematical object is the **subject of the sentence** and the action describes **how that object is expressed, structured, defined, or characterized**, use "se + verb". If the object is the **active agent** performing an action on another object, use the verb without "se".
-
-   **Avoid constructions in which mathematical objects are subjects of transitive verbs suggesting active action**: When a mathematical object cannot be an active agent (such as "representación", "definición", "construcción"), avoid using it as the subject of transitive verbs such as "identifica", "define", "construye", etc. Instead, use constructions such as "En X, Y se identifica con...", "Mediante X, Y se define como...", or "X establece la identificación/definición de...".
-
-   **Common verbs requiring "se" in mathematical contexts**:
-   - `se escribe`, `se define`, `se descompone`, `se caracteriza`, `se parametriza`, `se clasifica`, `se identifica`, `se representa`, `se expresa`, `se formula`, `se construye`, `se establece`, `se determina`, `se calcula`, `se evalúa`, `se resuelve`, `se aplica`, `se utiliza`, `se emplea`, `se preserva` (when it is a property), `se mantiene`, `se conserva`, `se genera`, `se produce`, `se obtiene`, `se resulta`, `se aparece`, `se surge`, `se emerge`, `se muestra`, `se revela`, `se establece`
-
-**Justification**: Mathematical precision and grammatical correctness reinforce each other: a grammatically correct sentence eliminates interpretive ambiguities, and the reflexive passive is required in Spanish to express inherent properties and mathematical structures; omitting it yields ungrammatical constructions.
-
-**Improvement example**:
-- ❌ "La transformación preserva estructura, métrica, simetrías mediante isomorfismo grupo Lorentz corresponde rotación hiperbólica"
-- ✅ "La transformación preserva la estructura, la métrica y las simetrías mediante un isomorfismo entre el grupo de Lorentz y las transformaciones conformes, y que corresponde a una rotación hiperbólica"
+Language-neutral grammar rules for the texts we write — complete structure, agreement,
+clear reference, voice, punctuation, economy — with worked examples in Spanish, English,
+French and Italian, the RAE-checked Spanish `se` verbs and the sources:
+[`style/grammar.md`](style/grammar.md).
 
 ---
 
@@ -265,7 +223,7 @@ The modulus is defined as...
 2. It does not explain the MEANING of the modulus, it only lists attributes without context
 3. The enumeration adds no clarity because it only repeats what the later explanation already says
 
-**Note**: An enumeration would be valid if it organized technical information clearly and added structural value, not if it merely repeated what is already stated afterwards.
+**Note**: whether an enumeration is valid at all is one rule — it must add structure, not repeat what the text already says (§6.1).
 
 ---
 
@@ -445,7 +403,7 @@ The real spectrum implies that...
 The operator is Hermitian, ensuring real spectrum and generating an orthogonal decomposition of $\mathcal{H}$. The Hermiticity arises from [justification]. The real spectrum is a consequence of [construction].
 ```
 
-**Note**: Bullet lists are appropriate when they organize technical information clearly and the subsequent amplification adds context or justification, not repetition.
+**Note**: the validity of the list itself is §6.1; what the amplification must add here is context or justification, not repetition.
 
 ### 6.3 Pattern 3: "Note that", "It is important to note that"
 ❌ "Note that this implies that..."
@@ -460,19 +418,87 @@ AI-generated artifacts also appear in **code** —monolithic modules, self-testi
 
 ---
 
-## 7. SECTION-TO-SECTION COHERENCE
+## 7. SECTION STRUCTURE AND DISCOURSE COHERENCE
 
-### 7.1 Within a section
+Every paper of this family follows a rigorous **IMRAD** structure (Introduction ·
+Methods · Results · Discussion). The structure is not decoration: the ICMJE states that
+it is "not an arbitrary publication format but a reflection of the process of scientific
+discovery", and the practice long predates this family (§7.7). What follows are rules
+that can be checked against the text.
+
+### 7.1 Role of each section: what it carries, what it must not
+
+| Section | Carries | Must not carry |
+|---|---|---|
+| **Introduction** | the problem and its significance, the prior work that bears on it, and the aim of the work | data, results or conclusions of the work being reported |
+| **Methods** | how and why the work was done, at the level a reader needs to redo it; only what was available when the plan was written | anything obtained while the work was running |
+| **Results** | the findings, in logical order, most important first, with every outcome the Methods declared | a second copy of what the tables and figures already show |
+| **Discussion** | what the findings mean in the context of the evidence, and the limitations | a detailed repetition of data given in the Introduction or the Results |
+
+Verifiable rules behind the table:
+
+- **Introduction**: cite only directly pertinent references, and state the aim.
+- **Methods**: reproducible detail; information produced during the work belongs to Results.
+- **Results**: do not repeat all the data of the tables and figures in the text.
+- **Discussion**: do not repeat in detail data or information given elsewhere in the
+  manuscript; link the conclusions to the goals and claim no more than the data support.
+- **Nothing is stated twice**: a sentence that appears in two sections is a defect, not
+  emphasis.
+- **A deductive paper has no experiment to replicate**: where a column has no empirical
+  counterpart, the commitment is the same one stated in that form — the construction is
+  specified so that the reader can redo it, and the consequences are stated before they
+  are used.
+
+### 7.2 Antecedent before use
+
+- Nothing is used before it is introduced: no symbol, term, notation, result, pronoun
+  or demonstrative may appear before its antecedent exists in the text. A pronoun with
+  no antecedent, two possible antecedents, or several pronoun/antecedent pairs in one
+  sentence are the three failure modes (§7.7).
+- **Check**: box every pronoun, demonstrative and new symbol, and arrow its referent; an
+  arrow that leaves the box undefined is a defect. The technique is §14.3.
+- **Equations**: a symbol introduced by a display is declared inside or immediately
+  after it (§4.2).
+
+### 7.3 The discourse thread
+
+- Each paragraph inherits its subject from the paragraph before it and leaves the next
+  one set up: the first sentence states what the paragraph is about, and the transition
+  names the relation — it expands the previous paragraph, contrasts with it, or starts
+  a new direction.
+- **Check**: read only the first sentence of each paragraph in order; the sequence must
+  reconstruct the argument on its own.
+- Between sections the thread is carried by the reference macros of §2.2, never by
+  "in the previous section" (§7.6).
+
+### 7.4 Where content moves between sections
+
+- Relocating a paragraph, a definition or a result across sections changes the discourse
+  structure and the antecedent order of the whole text: **only the principal author
+  decides it.** The editorial layer detects the mismatch and reports it — the two
+  sections and the sentence that would move — and does not relocate content itself.
+- This is a boundary of role, not a preference: every other rule in this guide is
+  editorial, this one is not.
+
+### 7.5 Within a section
 - **First definition**: introduce complete notation, be explicit
 - **Later definitions**: reuse notation, do not re-declare it
 - **Transitions**: "Now consider...", "The next step...", "To understand [previous result]..."
 
-### 7.2 Between sections
+### 7.6 Between sections
 - **Cross-references**: use the macros of §2.2 (`\tref{...}`, `\dref{...}`, `\pref{...}`…), not "in the previous section" nor a hand-written `Proposition~\ref{...}`
 - **Notation**: if you change it (e.g., from real to complex), explain the transition
 - **Assumptions**: if a section assumes a result from a previous one, mention it explicitly
 
----
+### 7.7 Sources for this section (all retrieved on 2026-11-16)
+
+- ICMJE — *Recommendations*, IV.A: structure, Introduction, Methods, Results, Discussion: https://www.icmje.org/recommendations/browse/manuscript-preparation/preparing-for-submission.html
+- PLOS ONE — *Submission guidelines*, manuscript organization and section roles: https://journals.plos.org/plosone/s/submission-guidelines
+- Council of Science Editors — *The CSE Manual* (the successor of the CBE manual, *Scientific Style and Format*): https://www.councilscienceeditors.org/cse-manual
+- Wu, J. (2011) — *Improving the writing of research papers: IMRAD and beyond*, Landscape Ecology 26:1345–1349 (IMRAD's history: Pasteur 1876, ANSI Z39.16-1972): https://doi.org/10.1007/s10980-011-9674-3
+- *The Chicago Manual of Style*, 17th ed., §5.28 *Antecedents of pronouns*: https://www.chicagomanualofstyle.org/book/ed17/part2/ch05/psec028.html
+- GSA/plainlanguage.gov — *Have a topic sentence* and *Use transition words* (Garner, *Legal Writing in Plain English*, 2001): https://github.com/GSA/plainlanguage.gov/tree/main/_pages/guidelines/organize
+- Academia Stack Exchange (community discussion, not an authority) — *Mathematical papers and the IMRaD-structure* (2023-11-27): https://academia.stackexchange.com/questions/204285/mathematical-papers-and-the-imrad-structure-how-comparable-are-they-with-each-o
 
 ## 8. CHECKLISTS BY ENVIRONMENT TYPE
 
@@ -502,10 +528,10 @@ AI-generated artifacts also appear in **code** —monolithic modules, self-testi
 ## 9. SPECIAL CASES: CONTRADICTING ORTHODOXY
 
 A conflict with a convention or with the literature is justified by what
-the paper derives, never by announcing a reason for it. "The geometric
-structure requires it" is not such a reason when it is quoted as the
-premise: it is the conclusion, and the sentence that uses it as a premise
-is circular - the excuse the section used to license.
+the paper derives, never by announcing a reason for it. A statement of
+the form "the geometry requires it" is not a reason when it appears as
+the premise: it is the conclusion, and the sentence that uses it as a
+premise is circular.
 
 Four things carry the claim, in this order:
 
@@ -658,8 +684,7 @@ When the user provides a section reference (a number such as "1.5" or a descript
 ### 12.3 Search Protocol
 
 **Step 1: Interpret the reference**
-- If it is a number (e.g., "1.5", "2.3", "8.1.5"): search for section titles containing that number
-- If it is a descriptive string (e.g., `fundamento y alcance`, `coherencia de axiomas`): search for titles or content containing those keywords
+- Number or descriptive string: search section titles for it; the forms a valid reference takes are §12.5
 
 **Step 2: Search in the source document**
 - Search for the pattern in section titles (e.g., `### 1.5`, `#### 2.3.1`)
@@ -803,13 +828,9 @@ Commands of the family's pipeline and cited external rules; it does not duplicat
 
 ### 14.1 Family pipeline commands
 
-| What | Where it is documented |
-|---|---|
-| Compile the PDF (`pnpm run build`), release (`pnpm run release`), and daily workflow | [`docs/usage.md`](usage.md) |
-| Regenerate the figures (`pnpm run generate:figures`) and determinism guarantees | [`docs/figures.md`](figures.md) |
-| Citation pipeline (`citation.csl.json` → `src/bibliography.bib`, `CITATION.cff`, `.zenodo.json`) | [`docs/citations.md`](citations.md) §1–§7 |
-| Requirements and installation (Node, pnpm, Docker, uv) | [`docs/installation.md`](installation.md) |
-| Witnesses, `\testref`, and the census of the cited tests | [`docs/citations.md`](citations.md) §8 (rationale in [`docs/witness-rationale.md`](witness-rationale.md)) |
+Every repository-specific document — commands, figures, citation pipeline, requirements,
+witnesses — is listed in the **Linked documents** table in the header of this guide; it
+is not repeated here.
 
 - **Suppression of chktex warnings**, from narrowest to broadest scope: `% chktex N` at the end of the line → `% chktex-file N` in the file → `--nowarn N` in `CmdLine` of `.chktexrc`. `lacheck` does **not** support per-warning suppression: it does not work as a gate (sources in §14.5). The lint status of each repo is its own and is not asserted here.
 - **§13 remains normative for all new code**, regardless of the pipeline the repo uses.
