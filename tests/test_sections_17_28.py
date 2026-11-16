@@ -428,8 +428,8 @@ class TestSection28PoissonTheta:
         """main.tex L1541-1543: lambda(-1/tau) = 1 - lambda(tau), lambda(i) = 1/2.
 
         lambda = (theta_2/theta_3)^4 at tau = i t. The laws are asserted to
-        1e-16 -- the precision main.tex used to state (witness-decisions
-        5.6, dropped concurrently); at float64 the residual is one ulp
+        1e-16 -- the precision main.tex used to state (DEC-001 section 5.6,
+        dropped concurrently); at float64 the residual is one ulp
         (1.1e-16), hence mpmath at 50 digits.
         """
         import mpmath as mp
