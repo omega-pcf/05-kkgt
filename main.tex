@@ -102,16 +102,6 @@
   \par}
 % witness label of the W list: W1[CLPW]
 \newcommand{\wtag}[2]{{\normalfont\bfseries\tiercol{W}#1\mdseries\ttfamily[#2]}}
-% unmarked footnote of the first page: amsart carries its own date, subject
-% classification and key words as unmarked first-page footnotes
-% (\@adminfootnotes), and the AMS Author Handbook (Author_Handbook_Journals,
-% sec. 1) asks for "unmarked, unnumbered footnotes on the first page"; the
-% tier legend is set there instead of in the body of the cover.
-\newcommand{\firstpagefootnote}[1]{%
-  \begingroup
-  \let\@makefnmark\relax \let\@thefnmark\relax
-  \@footnotetext{#1}%
-  \endgroup}
 \makeatother
 \setlength{\emergencystretch}{2em}
 
@@ -127,9 +117,8 @@
 \newtheorem{imported}{Imported statement}
 \renewcommand{\theimported}{I\arabic{imported}}
 
-\title[One object instead of a choice of vacuum]{\textbf{One object instead of a choice of vacuum to put the observer in de~Sitter space}\\[2pt]
-From wormholes, black holes and baby universes to the criteria for an observer in de~Sitter,
-contrasted with the Kaluza--Klein graviton candidates and with the cosmological constant}
+\title[One object instead of a choice of vacuum]{\textbf{One object instead of a choice of vacuum\\to put the observer in de~Sitter space}\\[2pt]
+From wormholes, black holes and baby universes\\to the criteria for an observer in de~Sitter,\\contrasted with the Kaluza--Klein graviton candidates\\and with the cosmological constant}
 % amsart prints the \address/\email blocks from \enddoc@text, i.e. at the end
 % of the document (amsart.cls: \AtEndDocument{\enddoc@text}); that is the
 % placement the author chose, kept as the class default.  The byline follows
@@ -188,14 +177,6 @@ the note leaves open is one number, the ratio of the lepton scale to the Planck 
 \keywords{de Sitter space, wormholes, Kaluza--Klein gravitons, golden ratio,
 Randall--Sundrum model, cosmological constant, formal verification, Lean 4}
 
-% tier legend: unmarked footnote at the foot of the first page.  It is set
-% before \maketitle so that the insertion lands on page 1 (the abstract box
-% is unbreakable in amsart and, with the affiliations now on the cover,
-% starts on page 2; a footnote issued after \maketitle would follow it there).
-\firstpagefootnote{%
-\emph{Tiers:} \tier{P} proved in Lean, machine-checked; \tier{N} verified numerically, with the
-name of the test that checks it.}
-
 \maketitle
 
 \tableofcontents
@@ -251,7 +232,16 @@ another line on how the observer is placed: classical objectivity emerges when t
 environment~\cite{Zur09}, with a threshold and a ceiling in the quantum Fisher
 information~\cite{Kie26}. The framework of~\cite{CW6} joins the baby universes and this line. Its observer is a worldline that
 accumulates Fisher information up to that ceiling, as the observer of~\cite{CLPW23} is a worldline
-carrying a clock; in it each level becomes objective at the threshold $\tfrac12$. That $\tfrac12$ appears three times, proved in~\cite{CW6} and here: the Fisher time
+carrying a clock; in it each level becomes objective at the threshold $\tfrac12$.
+
+\emph{Evidence tags.} A claim carries its class of evidence in brackets:
+\tier{P} proved in Lean~4, machine-checked, with the declaration named in
+the bracket; \tier{N} checked numerically, with the test that checks it
+named where the check is ours and the citation where the claim is the
+literature's. A bracket may hold several witnesses, and a tag on its own
+line closes the claim of its paragraph.
+
+That $\tfrac12$ appears three times, proved in~\cite{CW6} and here: the Fisher time
 $\tau_F=\tau_D/\sqrt{2f}$ equals the decoherence time $\tau_D$ if and only if $f=\tfrac12$
 \tier[fisher\_time\_eq\_decoherence\_iff]{P}, the binary entropy is maximal there, one bit
 \tier[binEntropy\_half]{P}, and an eigenvalue of modulus $\mu$ carries one bit of Fisher information if and
@@ -1481,7 +1471,7 @@ determination.
 The left side is the golden valuation of the scale (Imported statement~\ref{imp:valuation}); with
 $\lambda=\log_\golden2=1.4404$ the same number is $8.30$ in powers of $2$, and integrality is a
 statement in powers of $\golden$, the grading of the tower. The placement face of $M$, $m_p/3$, gives the same value,
-$11.97$ (\eqref{eq:sigmaIR}) \tier{N}. The unit was fixed by (F1) before the data, and no other scale is tried against
+$11.97$ (\eqref{eq:sigmaIR}) \tier[\testref{test\_alternatives\_for\_the\_bottom\_level}]{N}. The unit was fixed by (F1) before the data, and no other scale is tried against
 them.
 
 \emph{The clock.} We call the \emph{clock of $\golden$ modulo $N$} the order of
@@ -2476,7 +2466,7 @@ contact configurations; (12) the lattice counts of \S\ref{ssec:math} and the vec
 statement stated; (13) Figure~\ref{fig:mobius}, checking that $z\tau$ is constant; (14) the three
 gaps of the marks on the ring; (15) the exact count of states at level $N/2$ against $S$; (16) the reconstruction of the lepton masses from $M$; (17) the level $\sigma_{\mathrm{obs}}$ read from the observed $\Lambda$; (18) the observer's level and the unit of curvature; (19) the phase of the tower against its asymptotic form, and the form of~\cite{MQ18}; (20) the contrast with the two observed candidates; (21) the two-brane model fitted to the same candidates; (22) the unit of curvature and the value of~\cite{CW6}; (23) the lattice, the bottom and the observer's lattice point with the $H_0$ it requires; (24) the two dimensionful data and the top; (25) the self-dual Gaussian as a window on the index and as a weight on the scale; (26) the edge of the window and $\sigma_G$; (27) the window as a nome, the tower of tori, $S$ as the mirror and the crossing of $\tfrac12$ against $\pi/2$; (28) Poisson summation and $\vartheta_3(e^{-\pi})$; (29) the density of dark energy at the lattice point; (30) the mirror-invariant throat; (31) the metric of the modulus of the ring and the conjectures; (32) the level of the observer read from each determination against the lattice; (33) the welded tension, the Higuchi ratio, the Regge scale in the two units and the count of graviton modes below $1000$~TeV; (34) the exponential quintessence of slope $1/\sqrt2$ and the fit of~\cite{AAN25}; (35) the threshold $\tfrac12$: the Fisher time, the binary entropy and one bit per eigenvalue; (36) the orbit of the phase of the tower, the horizon of $S(12)$ and the black-hole threshold of the two-brane throat; (37) the entropy, the modes and the bits, the vector ratio as a function of the depth alone, the gluons in the graviton throat, the placement face of $M$, and the ratio $700/380$; (38) the area quantum of (B1) against a Shannon bit; (39) Figure~\ref{fig:throattiling}, checking that the boundaries of the tiles continue from ring to ring and that the weighted count is $S$; (40) the dictionary on a regular tiling against the cusp: the open legs of $\{7,3\}$ and the constant of Crofton, the pairs of a tiling and a bond dimension, the metric of the cusp, the two tiles and their substitution, the weighted count to $60$ digits, and the lattice count of \S\ref{ssec:math}; (41) Figure~\ref{fig:tilingstrip}, the tiles inside each disk of five regular tilings, the tangencies of the levels with their edges, and the approach of the Fibonacci ratios to $\golden$; (42) the weld time as the Galois coordinate, the step of level as an exchange and a shift, the ring labelled by a unit, the orthogonalisation at the half-turn, the rational step against the contrast, the trace $3$, and the ratios of the operator of Imported statement~\ref{imp:A1}; (43) the substitutions on two letters and the four conditions, the diagonal of the cube, Binet's bound on the tile count, the kernel of a rational step and the Bragg peaks of the Fibonacci chain; (44) Figure~\ref{fig:background}, checking numerically each statement drawn; (45) the level of the observer along $\Lambda$CDM, the asymptotic level and the $N$-bound, the limit of compression at $z=\tfrac12$ and the first expansion, the constant of the first patch against that of the throat in every dimension, the observed constant as the constant of the throat divided by the cells, and the halves of de~Sitter space that the observer reaches and receives; (46) the Hopf foliation by the tori of the window, the mirror, the map $J$, the homogeneity of the fibration and the axis of its tori.
 
-The package is exercised by the test suite of the note: \code{uv run pytest tests/ -q} runs all $535$ tests in about a minute, \code{uv run pytest tests/ -q -m 'not slow'} the $531$ that each take under ten seconds, and \code{pnpm run test} the same suite. A test either recomputes a number from its closed form or reads it from what its section prints, always with an explicit tolerance: a rounding tolerance is the width of the printed precision, $5\times10^{-5}$ for a value printed to four decimals, and no tolerance is widened to make a test pass. Every number and every figure of this note therefore names the test that checks it, as \testref{test\_bottom\_of\_the\_throat} names the counts at the bottom of the throat; the map of the forty-six sections to the tests is in \code{tests/README.md}.
+The package is exercised by the test suite of the note: \code{uv run pytest tests/ -q} runs all $533$ tests in about a minute, \code{uv run pytest tests/ -q -m 'not slow'} the $529$ that each take under ten seconds, and \code{pnpm run test} the same suite. A test either recomputes a number from its closed form or reads it from what its section prints, always with an explicit tolerance: a rounding tolerance is the width of the printed precision, $5\times10^{-5}$ for a value printed to four decimals, and no tolerance is widened to make a test pass. Every number and every figure of this note therefore names the test that checks it, as \testref{test\_bottom\_of\_the\_throat} names the counts at the bottom of the throat; the map of the forty-six sections to the tests is in \code{tests/README.md}.
 
 Lean~4: \code{TorreKK\_LYR\_v34.lean}, one hundred and sixty-three theorems and six axioms, no \code{sorry}, compiled with no errors;
 the Mathlib names at risk are listed below.
