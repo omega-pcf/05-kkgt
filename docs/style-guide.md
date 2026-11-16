@@ -1,791 +1,792 @@
-# GUÍA DE ESTILO — Coherencia formal interna y calidad de código
+# STYLE GUIDE — Internal formal coherence and code quality
 
-| Campo | Valor |
+| Field | Value |
 |---|---|
-| **Documento** | `docs/style-guide.md` |
-| **Estado** | Vigente |
-| **Versión** | 2.1 (port genérico de familia) |
-| **Fecha** | 2026-11-16 |
-| **Ámbito** | Estilo editorial (§1–§12) · Calidad de software y código (§13) · Pipeline tex y proofreading (§14) — genérico de familia: sin convenciones propias de un repositorio concreto |
+| **Document** | `docs/style-guide.md` |
+| **Status** | In force |
+| **Version** | 2.1 (generic family port) |
+| **Date** | 2026-11-16 |
+| **Language** | English |
+| **Scope** | Editorial style (§1–§12) · Software and code quality (§13) · TeX pipeline and proofreading (§14) — generic to the family: free of conventions specific to any concrete repository |
 
-**Objetivo**: Establecer coherencia interna en lenguaje formal, notación, estructura. NO es imitar Elsevier. Es ser **extremadamente serio** sin forzar en caja artificial.
+**Objective**: Establish internal coherence in formal language, notation, and structure. The goal is NOT to imitate Elsevier. The goal is to be **extremely serious** without forcing matters into an artificial straitjacket.
 
-**Marco (propósito)**:
-- **Meta del documento**: maximizar **auditabilidad, best practices y correctness**.
-- **Estilo buscado**: elegante y **sucinto**; la succinctness es un objetivo explícito, no una preferencia estética.
-- **Sin justificaciones tontas**: toda prescripción se justifica en un frente concreto —matemático, de convención, de agudeza/characterización, de claridad lingüística—; la creatividad argumentativa queda siempre subordinada al correctness.
+**Framework (purpose)**:
+- **Goal of the document**: maximize **auditability, best practices, and correctness**.
+- **Target style**: elegant and **succinct**; succinctness is an explicit goal, not an aesthetic preference.
+- **No silly justifications**: every prescription is justified on a concrete front — mathematical, conventional, insight/characterization, or linguistic clarity; argumentative creativity is always subordinated to correctness.
 
-**PRINCIPIO EDITORIAL FUNDAMENTAL**: Este guide es **editorial**, no **autoril** —en cuanto al texto (§1–§12); la calidad del código que lo sostiene se prescribe en §13. Su función es:
-- ✅ Prescribir **estilo, formato, coherencia de notación, estructura de presentación**
-- ✅ Asegurar **claridad, rigor formal, consistencia** en la escritura
-- ❌ **NO** prescribir contenido matemático específico (conceptos, teoremas, construcciones)
-- ❌ **NO** agregar conceptos que no estén en el texto original sin verificación explícita
-- ❌ **NO** hacer afirmaciones matemáticas que requieran justificación técnica
+**FUNDAMENTAL EDITORIAL PRINCIPLE**: This guide is **editorial**, not **authorial** — with respect to the text (§1–§12); the quality of the code that supports it is prescribed in §13. Its function is to:
+- ✅ Prescribe **style, format, coherence of notation, presentation structure**
+- ✅ Ensure **clarity, formal rigor, and consistency** in the writing
+- ❌ **NOT** prescribe specific mathematical content (concepts, theorems, constructions)
+- ❌ **NOT** add concepts that are not in the original text without explicit verification
+- ❌ **NOT** make mathematical claims that require technical justification
 
-**Cuando se encuentre una sugerencia de contenido matemático**: Verificar primero contra el documento fuente original del repositorio. Si no está fundamentado, mantener fidelidad al original y solo mejorar la presentación formal.
+**When a mathematical content suggestion is found**: Verify it first against the repository's original source document. If it is not grounded, remain faithful to the original and only improve the formal presentation.
 
-**Naturaleza**: documento vivo; evoluciona con cada revisión (§10.3).
+**Nature**: living document; it evolves with each revision (§10.3).
 
-**Procedencia**: port de `01-primitive-complex-field-dup/docs/style/STYLE_GUIDE.md` v2.1
-(2026-11-16), la guía de la familia. El port retira lo propio de ese repositorio (sus
-macros, su documento fuente, sus sitios de manuscrito, sus comandos verificados) y en su
-lugar enlaza; el criterio de retención es el de §13.7: ninguna regla que un modelo más
-grande deduzca del resto.
+**Provenance**: port of `01-primitive-complex-field-dup/docs/style/STYLE_GUIDE.md` v2.1
+(2026-11-16), the guide of the family. The port strips away what is specific to that repository (its
+macros, its source document, its manuscript sites, its verified commands) and links to it
+instead; the retention criterion is that of §13.7: no rule that a larger model would
+deduce from the rest.
 
-**Documentos enlazados — las convenciones propias de cada repositorio no se copian aquí:**
+**Linked documents — each repository's own conventions are not copied here:**
 
-| Convención propia del repositorio | Hogar |
+| Repository-specific convention | Home |
 |---|---|
-| Testigos (`\tier`, `\witness`, `\testref`): gramática, reglas de escritura, alfabeto, criterio cuantificado inline / línea propia, y el censo de los tests citados | [`docs/citations.md`](citations.md) §8 |
-| Justificación de los testigos: por qué existen y qué no afirman | [`docs/witness-rationale.md`](witness-rationale.md) |
-| Pipeline de figuras determinista y byte-estable (`pnpm run generate:figures`) | [`docs/figures.md`](figures.md) |
-| Pipeline de citas (`citation.csl.json` → `src/bibliography.bib`, `CITATION.cff`, `.zenodo.json`) | [`docs/citations.md`](citations.md) §1–§7 |
-| Comandos de build, release y convención de commits | [`docs/usage.md`](usage.md) |
-| Requisitos e instalación | [`docs/installation.md`](installation.md) |
-| Informes concretos de este repo (inventarios, decisiones, veredictos, incidentes) | [`docs/reports/`](reports/README.md) |
+| Witnesses (`\tier`, `\witness`, `\testref`): grammar, writing rules, alphabet, quantified inline criterion / own line, and the census of the cited tests | [`docs/citations.md`](citations.md) §8 |
+| Rationale for the witnesses: why they exist and what they do not assert | [`docs/witness-rationale.md`](witness-rationale.md) |
+| Deterministic, byte-stable figure pipeline (`pnpm run generate:figures`) | [`docs/figures.md`](figures.md) |
+| Citation pipeline (`citation.csl.json` → `src/bibliography.bib`, `CITATION.cff`, `.zenodo.json`) | [`docs/citations.md`](citations.md) §1–§7 |
+| Build, release, and commit convention commands | [`docs/usage.md`](usage.md) |
+| Requirements and installation | [`docs/installation.md`](installation.md) |
+| Concrete reports of this repo (inventories, decisions, verdicts, incidents) | [`docs/reports/`](reports/README.md) |
 
 ---
 
-## 1. VOZ Y TONO
+## 1. VOICE AND TONE
 
-### 1.1 Principio
-- **Formal**: Sin casualidad. Académico riguroso.
-- **Directo**: Explicar una cosa una sola vez, bien. Sin repetición.
-- **Intelectualmente honesto**: Si contradice ortodoxia, decirlo explícitamente (no escondido).
-- **No apologético**: Esto es lo que es. Si es inusual, es porque la estructura lo requiere.
+### 1.1 Principle
+- **Formal**: No informality. Rigorously academic.
+- **Direct**: Explain one thing once, well. No repetition.
+- **Intellectually honest**: If it contradicts orthodoxy, say so explicitly (not hidden).
+- **Non-apologetic**: It is what it is. If it is unusual, it is because the structure requires it.
 
-### 1.2 Audiencia
-- **Público científico experto**: El paper está dirigido a científicos con formación avanzada en matemáticas, pero su alcance multi-dominio requiere familiaridad con teoría de números, análisis complejo, operadores hermíticos, física cuántica, geometría, y verificación computacional. La separación artificial de las matemáticas en "departamentos" no refleja la naturaleza interdisciplinaria de los problemas abordados.
-- **No sacrificar legibilidad de forma "tonta"**: No usar palabras menos claras o concisas solo para que el texto suene menos denso o especializado. La audiencia experta espera y aprecia precisión técnica y terminología apropiada. Evitar perífrasis que busquen "suavizar" el contenido a costa de claridad.
-- **Claridad sobre simplicidad artificial**: Preferir términos técnicos precisos y concisos sobre perífrasis innecesarias. La legibilidad viene de la estructura, la coherencia y la precisión, no de evitar terminología especializada. El paper aborda problemas matemáticos profundos que requieren un acercamiento multi-dominio; la escritura debe reflejar esta complejidad sin artificialidad.
+### 1.2 Audience
+- **Expert scientific audience**: The paper is aimed at scientists with advanced training in mathematics, but its multi-domain scope requires familiarity with number theory, complex analysis, Hermitian operators, quantum physics, geometry, and computational verification. The artificial separation of mathematics into "departments" does not reflect the interdisciplinary nature of the problems addressed.
+- **Do not sacrifice readability "stupidly"**: Do not use less clear or less concise words merely so that the text sounds less dense or less specialized. An expert audience expects and appreciates technical precision and appropriate terminology. Avoid periphrases that seek to "soften" the content at the cost of clarity.
+- **Clarity over artificial simplicity**: Prefer precise, concise technical terms over unnecessary periphrases. Readability comes from structure, coherence, and precision, not from avoiding specialized terminology. The paper addresses deep mathematical problems that require a multi-domain approach; the writing must reflect this complexity without artificiality.
 
-### 1.3 Estructura de párrafos
-- **Tema + justificación + consecuencia**
-- No: "Esto es A, que es importante porque B, además es C, y también D, finalmente E"
-- Sí: "Esto es A. Por [razón técnica], esto implica B y C. Esto se diferencia de [ortodoxia] porque [explicación geométrica/estructural]."
+### 1.3 Paragraph structure
+- **Topic + justification + consequence**
+- No: "This is A, which is important because B, it is also C, and also D, finally E"
+- Yes: "This is A. For [technical reason], this implies B and C. This differs from [orthodoxy] because [geometric/structural explanation]."
 
-### 1.4 Evitar
-- Enumeraciones mecánicas innecesarias y listas bullet con amplificación posterior repetitiva → ver **§6, patrones 1–2** (ambas son patrones AI)
-- "Observar que", "Es importante notar que", "Cabe mencionar que" → ver **§6, patrón 3**
-- Parentéticas excesivas → ver **§6, patrón 4**
-- Repetición de la misma idea con distinta notación
+### 1.4 Avoid
+- Unnecessary mechanical enumerations and bullet lists with repetitive later amplification → see **§6, patterns 1–2** (both are AI patterns)
+- "Note that", "It is important to note that", "Worth mentioning that" → see **§6, pattern 3**
+- Excessive parentheticals → see **§6, pattern 4**
+- Repetition of the same idea with different notation
 
-(Las enumeraciones y listas bullet son válidas cuando mejoran claridad o estructura; se evaluán caso por caso, no se eliminan sistemáticamente.)
+(Enumerations and bullet lists are valid when they improve clarity or structure; they are evaluated case by case, not eliminated systematically.)
 
-### 1.5 Gramática y puntuación en español
+### 1.5 Grammar and punctuation in Spanish
 
-**Principio fundamental**: La escritura matemática rigurosa no justifica el descuido de la gramática, la puntuación ni las convenciones literarias del español. La abstracción matemática y la elegancia lingüística son complementarias, no antagónicas.
+**Fundamental principle**: Rigorous mathematical writing does not justify neglecting the grammar, punctuation, or literary conventions of Spanish. Mathematical abstraction and linguistic elegance are complementary, not antagonistic.
 
-**Problema común**: Existe una tendencia artificial en la escritura matemática de omitir preposiciones, conjunciones y elementos gramaticales necesarios bajo la falsa premisa de que la "concisión matemática" requiere sacrificar la corrección gramatical. Esta práctica genera ambigüedad, dificulta la lectura y contradice el objetivo de claridad y precisión.
+**Common problem**: There is an artificial tendency in mathematical writing to omit prepositions, conjunctions, and other necessary grammatical elements under the false premise that "mathematical concision" requires sacrificing grammatical correctness. This practice creates ambiguity, hinders reading, and contradicts the goal of clarity and precision.
 
-**Reglas de oro**:
+**Golden rules**:
 
-1. **Completar frases**: Toda oración debe tener estructura gramatical completa. No omitir preposiciones, conjunciones o artículos necesarios.
-   - ❌ "corresponde a rotación hiperbólica" (después de una ecuación, falta conexión)
-   - ✅ "y que corresponde a rotación hiperbólica" (conjunción que conecta con la frase anterior)
+1. **Complete sentences**: Every sentence must have a complete grammatical structure. Do not omit necessary prepositions, conjunctions, or articles.
+   - ❌ "corresponde a rotación hiperbólica" (after an equation, the connection is missing)
+   - ✅ "y que corresponde a rotación hiperbólica" (a conjunction connecting with the previous sentence)
 
-2. **Preposiciones necesarias**: Usar preposiciones correctamente para establecer relaciones claras entre conceptos.
+2. **Necessary prepositions**: Use prepositions correctly to establish clear relations between concepts.
    - ❌ "El mapa preserva estructura algebraica mediante isomorfismo grupo de Lorentz"
    - ✅ "El mapa preserva la estructura algebraica mediante isomorfismo entre el grupo de Lorentz y..."
 
-3. **Puntuación para claridad**: Las comas, puntos y comas, y dos puntos deben usarse según las reglas del español para evitar ambigüedades y facilitar la lectura.
-   - Usar comas para separar elementos en enumeraciones
-   - Usar punto y coma para separar cláusulas relacionadas pero independientes
-   - Usar dos puntos antes de enumeraciones o explicaciones
+3. **Punctuation for clarity**: Commas, semicolons, and colons must be used according to the rules of Spanish to avoid ambiguity and facilitate reading.
+   - Use commas to separate elements in enumerations
+   - Use semicolons to separate related but independent clauses
+   - Use colons before enumerations or explanations
 
-4. **Conjunciones de conexión**: Cuando se presentan múltiples conceptos o resultados relacionados, usar conjunciones apropiadas ("y", "que", "donde", "mediante", etc.) para establecer relaciones claras.
+4. **Connecting conjunctions**: When several related concepts or results are presented, use appropriate conjunctions ("y", "que", "donde", "mediante", etc.) to establish clear relations.
 
-5. **Artículos definidos**: No omitir artículos cuando son gramaticalmente necesarios para la claridad y corrección del español.
+5. **Definite articles**: Do not omit articles when they are grammatically necessary for the clarity and correctness of Spanish.
 
-6. **Voz pasiva refleja y verbos reflexivos**: Cuando un objeto matemático (representación, función, transformación, definición, construcción, operador, matriz, espacio, métrica, estructura, sistema, operación, método, procedimiento, algoritmo, teorema, proposición, lema, corolario) realiza una acción sobre sí mismo o tiene una propiedad inherente, se debe usar la construcción reflexiva "se + verbo" (voz pasiva refleja).
-   - ❌ "La representación algebraica escribe $\mathbb{C} = ...$" (incorrecto: sugiere que la representación "escribe" activamente)
-   - ✅ "La representación algebraica se escribe como $\mathbb{C} = ...$" (correcto: indica cómo se expresa la representación)
-   - ❌ "La representación polar descompone $\mathbb{C} \cong ...$" (incorrecto: sugiere acción activa)
-   - ✅ "La representación polar se descompone como $\mathbb{C} \cong ...$" (correcto: indica cómo se estructura la representación)
-   - ❌ "La representación euclidiana identifica $\mathbb{C} \cong ...$" (incorrecto: la representación no es un agente que "identifica")
-   - ✅ "En la representación euclidiana, $\mathbb{C}$ se identifica con ..." (correcto: indica cómo se establece la identificación)
-   - ❌ "La función define..." (cuando la función es el objeto definido)
-   - ✅ "La función se define como..." (cuando se está definiendo la función)
-   - ❌ "La transformación preserva..." (puede ser correcto si la transformación es el sujeto activo)
-   - ✅ "La transformación se preserva bajo..." (cuando se habla de una propiedad que se mantiene)
+6. **Reflexive passive and reflexive verbs**: When a mathematical object (representation, function, transformation, definition, construction, operator, matrix, space, metric, structure, system, operation, method, procedure, algorithm, theorem, proposition, lemma, corollary) performs an action on itself or has an inherent property, the reflexive construction "se + verb" (reflexive passive voice) must be used.
+   - ❌ "La representación algebraica escribe $\mathbb{C} = ...$" (incorrect: it suggests the representation actively "writes")
+   - ✅ "La representación algebraica se escribe como $\mathbb{C} = ...$" (correct: it indicates how the representation is expressed)
+   - ❌ "La representación polar descompone $\mathbb{C} \cong ...$" (incorrect: it suggests active action)
+   - ✅ "La representación polar se descompone como $\mathbb{C} \cong ...$" (correct: it indicates how the representation is structured)
+   - ❌ "La representación euclidiana identifica $\mathbb{C} \cong ...$" (incorrect: the representation is not an agent that "identifies")
+   - ✅ "En la representación euclidiana, $\mathbb{C}$ se identifica con ..." (correct: it indicates how the identification is established)
+   - ❌ "La función define..." (when the function is the object being defined)
+   - ✅ "La función se define como..." (when the function is being defined)
+   - ❌ "La transformación preserva..." (it can be correct if the transformation is the active subject)
+   - ✅ "La transformación se preserva bajo..." (when speaking of a property that is maintained)
 
-   **Regla práctica**: Si el objeto matemático es el **sujeto de la oración** y la acción describe **cómo se expresa, estructura, define o caracteriza** ese objeto, usar "se + verbo". Si el objeto es el **agente activo** que realiza una acción sobre otro objeto, usar el verbo sin "se".
+   **Practical rule**: If the mathematical object is the **subject of the sentence** and the action describes **how that object is expressed, structured, defined, or characterized**, use "se + verb". If the object is the **active agent** performing an action on another object, use the verb without "se".
 
-   **Evitar construcciones donde objetos matemáticos son sujetos de verbos transitivos que sugieren acción activa**: Cuando un objeto matemático no puede ser un agente activo (como "representación", "definición", "construcción"), evitar usarlo como sujeto de verbos transitivos como "identifica", "define", "construye", etc. En su lugar, usar construcciones como "En X, Y se identifica con...", "Mediante X, Y se define como...", o "X establece la identificación/definición de...".
+   **Avoid constructions in which mathematical objects are subjects of transitive verbs suggesting active action**: When a mathematical object cannot be an active agent (such as "representación", "definición", "construcción"), avoid using it as the subject of transitive verbs such as "identifica", "define", "construye", etc. Instead, use constructions such as "En X, Y se identifica con...", "Mediante X, Y se define como...", or "X establece la identificación/definición de...".
 
-   **Verbos comunes que requieren "se" en contexto matemático**:
-   - `se escribe`, `se define`, `se descompone`, `se caracteriza`, `se parametriza`, `se clasifica`, `se identifica`, `se representa`, `se expresa`, `se formula`, `se construye`, `se establece`, `se determina`, `se calcula`, `se evalúa`, `se resuelve`, `se aplica`, `se utiliza`, `se emplea`, `se preserva` (cuando es propiedad), `se mantiene`, `se conserva`, `se genera`, `se produce`, `se obtiene`, `se resulta`, `se aparece`, `se surge`, `se emerge`, `se muestra`, `se revela`, `se establece`
+   **Common verbs requiring "se" in mathematical contexts**:
+   - `se escribe`, `se define`, `se descompone`, `se caracteriza`, `se parametriza`, `se clasifica`, `se identifica`, `se representa`, `se expresa`, `se formula`, `se construye`, `se establece`, `se determina`, `se calcula`, `se evalúa`, `se resuelve`, `se aplica`, `se utiliza`, `se emplea`, `se preserva` (when it is a property), `se mantiene`, `se conserva`, `se genera`, `se produce`, `se obtiene`, `se resulta`, `se aparece`, `se surge`, `se emerge`, `se muestra`, `se revela`, `se establece`
 
-**Justificación**: La precisión matemática y la corrección gramatical se refuerzan mutuamente: una frase gramaticalmente correcta elimina ambigüedades de interpretación, y la voz pasiva refleja es necesaria en español para expresar propiedades inherentes y estructuras matemáticas; su omisión genera construcciones agramaticales.
+**Justification**: Mathematical precision and grammatical correctness reinforce each other: a grammatically correct sentence eliminates interpretive ambiguities, and the reflexive passive is required in Spanish to express inherent properties and mathematical structures; omitting it yields ungrammatical constructions.
 
-**Ejemplo de mejora**:
+**Improvement example**:
 - ❌ "La transformación preserva estructura, métrica, simetrías mediante isomorfismo grupo Lorentz corresponde rotación hiperbólica"
 - ✅ "La transformación preserva la estructura, la métrica y las simetrías mediante un isomorfismo entre el grupo de Lorentz y las transformaciones conformes, y que corresponde a una rotación hiperbólica"
 
 ---
 
-## 2. NOTACIÓN UNIFICADA
+## 2. UNIFIED NOTATION
 
-### 2.1 Macros de Notación (declaradas en el preámbulo de cada repo)
+### 2.1 Notation Macros (declared in each repo's preamble)
 
-**Principio**: Solo usar macros para notación específica del documento que:
-- Se repite frecuentemente
-- Es compleja o larga de escribir
-- Podría cambiar o necesitar ajustes globales
+**Principle**: Use macros only for document-specific notation that:
+- Is frequently repeated
+- Is complex or long to write
+- Could change or require global adjustments
 
-**Macros disponibles**: las que declare el preámbulo del propio repositorio. Este
-documento no las lista —son notación de ese documento, no de familia—; la fuente es su
-`.tex` raíz y su preámbulo.
+**Available macros**: those declared by the preamble of the repository itself. This
+document does not list them — they are that document's notation, not the family's; the source is its
+root `.tex` and its preamble.
 
-**Notación estándar (NO usar macros):**
-- ✅ Usar directamente `\mathbb{C}`, `\mathbb{R}`, `\mathbb{Z}`, `\mathbb{Q}`, `\mathbb{N}` (estándar, bien conocida)
-- ✅ Usar directamente `\varphi` para la razón áurea (estándar)
-- ✅ Usar directamente `\mathcal{C}`, `\mathcal{H}`, etc. (estándar)
+**Standard notation (do NOT use macros):**
+- ✅ Use `\mathbb{C}`, `\mathbb{R}`, `\mathbb{Z}`, `\mathbb{Q}`, `\mathbb{N}` directly (standard, well known)
+- ✅ Use `\varphi` directly for the golden ratio (standard)
+- ✅ Use `\mathcal{C}`, `\mathcal{H}`, etc. directly (standard)
 
-**Razón**: Los macros para notación estándar agregan complejidad innecesaria sin beneficio real. Solo tienen sentido para notación específica del documento que se repite mucho.
+**Reason**: Macros for standard notation add unnecessary complexity with no real benefit. They only make sense for document-specific notation that repeats a great deal.
 
-### 2.2 Macros de Referencias Cruzadas (declarados en el preámbulo de cada repo)
+### 2.2 Cross-Reference Macros (declared in each repo's preamble)
 
-Para referencias consistentes a construcciones matemáticas, cada repo declara **un macro
-por tipo de construcción** —`\tref` → "Teorema X.Y.Z", `\dref` → "Definición X.Y.Z",
-`\pref` → "Proposición X.Y.Z", `\lref`, `\cref`, `\oref`, `\corref`, `\conjref`
-análogos— **o** carga el paquete `cleveref`, que los cubre con `\cref`, `\autoref` y
-`\eqref`. La lista concreta de un repo es suya; aquí sólo se prescribe el uso.
+For consistent references to mathematical constructions, each repo declares **one macro
+per construction type** —`\tref` → "Theorem X.Y.Z", `\dref` → "Definition X.Y.Z",
+`\pref` → "Proposition X.Y.Z", `\lref`, `\cref`, `\oref`, `\corref`, `\conjref`
+analogues — **or** loads the `cleveref` package, which covers them with `\cref`, `\autoref`, and
+`\eqref`. The concrete list of a repo is its own; only the use is prescribed here.
 
-**Trampa**: si el preámbulo define sus propias macros de referencia con los nombres de
-`cleveref` (`\cref` entre ellos), no cargar `cleveref` —ni copiar código que lo use—
-sin renombrar antes esas macros: el paquete y la macro propia colisionan en el mismo
-nombre.
+**Trap**: if the preamble defines its own reference macros using the names of
+`cleveref` (`\cref` among them), do not load `cleveref` —nor copy code that uses it—
+without renaming those macros first: the package and the in-house macro collide on the same
+name.
 
-**Uso recomendado:**
-- ✅ Usar estos macros en lugar de escribir manualmente "Teorema~\ref{...}"
-- ✅ Ejemplo: `Como se muestra en \pref{prop:<etiqueta>}...` en lugar de `Como se muestra en Proposición~\ref{prop:<etiqueta>}...`
-- ✅ Esto asegura formato consistente y facilita cambios globales
+**Recommended usage:**
+- ✅ Use these macros instead of manually writing "Theorem~\ref{...}"
+- ✅ Example: `As shown in \pref{prop:<label>}...` instead of `As shown in Proposition~\ref{prop:<label>}...`
+- ✅ This ensures consistent formatting and facilitates global changes
 
-### 2.3 Complejos
-- **Módulo**: siempre `|z|` en contexto algebraico, "magnitud" en contexto geométrico
-- **Variable compleja**: `z = x + iy` en primera definición, luego solo `z`
-- **Euler**: `e^{i\theta}` (no `e^{i\theta}` variaciones)
+### 2.3 Complex numbers
+- **Modulus**: always `|z|` in algebraic contexts, "magnitude" in geometric contexts
+- **Complex variable**: `z = x + iy` at first definition, then just `z`
+- **Euler**: `e^{i\theta}` (no `e^{i\theta}` variants)
 
-### 2.4 Espacios
-- **Plano complejo**: `ℂ` (usar `\mathbb{C}`)
-- **Números reales**: `ℝ` (usar `\mathbb{R}`)
-- **Enteros**: `ℤ` (usar `\mathbb{Z}`)
-- **Hilbert**: `ℋ` o `H` (ELEGIR UNO por sección y mantener)
-- **Espacios de Sobolev/L²**: `L²(domain)` - ser explícito sobre dominio
+### 2.4 Spaces
+- **Complex plane**: `ℂ` (use `\mathbb{C}`)
+- **Real numbers**: `ℝ` (use `\mathbb{R}`)
+- **Integers**: `ℤ` (use `\mathbb{Z}`)
+- **Hilbert**: `ℋ` or `H` (CHOOSE ONE per section and keep it)
+- **Sobolev/L² spaces**: `L²(domain)` - be explicit about the domain
 
-### 2.5 Operadores
-- **Operador propio del documento**: si se repite mucho y su nombre es largo, declararle macro en el preámbulo y usarla siempre; un operador estándar nunca lleva macro (§2.1)
-- **Fourier**: `ℱ` (usar `\mathcal{F}`)
-- **Integral**: siempre `∫_X f(x) dx` con limites claros
+### 2.5 Operators
+- **Document-specific operator**: if it repeats a great deal and its name is long, declare a macro for it in the preamble and always use it; a standard operator never takes a macro (§2.1)
+- **Fourier**: `ℱ` (use `\mathcal{F}`)
+- **Integral**: always `∫_X f(x) dx` with clear limits
 
-### 2.6 Razón áurea
-- **Símbolo**: φ (usar `\varphi`, no variaciones)
-- **Valor**: φ ≈ 1.618... (si se necesita numérico) o solo φ (algebraico)
-- **Potencias**: `φ^σ` o `φ^n` - ser consistente con índice
+### 2.6 Golden ratio
+- **Symbol**: φ (use `\varphi`, not variants)
+- **Value**: φ ≈ 1.618... (if a numeric value is needed) or just φ (algebraic)
+- **Powers**: `φ^σ` or `φ^n` - be consistent with the index
 
-### 2.7 Conjuntos/Indexación
-- **Índices discretos**: `k, n, m ∈ ℤ` o `σ ∈ ℤ`
-- **Parámetros continuos**: `t ∈ ℝ`, `θ ∈ [0, 2π)`
-- **Secuencias**: `{a_n}_{n∈ℕ}` o solo `{a_n}` si contexto es claro
+### 2.7 Sets/indexing
+- **Discrete indices**: `k, n, m ∈ ℤ` or `σ ∈ ℤ`
+- **Continuous parameters**: `t ∈ ℝ`, `θ ∈ [0, 2π)`
+- **Sequences**: `{a_n}_{n∈ℕ}` or just `{a_n}` if the context is clear
 
 ---
 
-## 3. ESTRUCTURA DE DEFINICIONES
+## 3. STRUCTURE OF DEFINITIONS
 
-### 3.1 Formato estándar
+### 3.1 Standard format
 ```
-\begin{definition}[Nombre descriptivo]
-[ENUNCIADO CONCISO EN UNA FRASE]
+\begin{definition}[Descriptive name]
+[CONCISE STATEMENT IN ONE SENTENCE]
 
-Para [elementos en juego], [propiedad fundamental]:
+For [elements at play], [fundamental property]:
 \[
-[fórmula principal]
+[main formula]
 \]
 
-[CONTEXTO/SIGNIFICADO: 1-2 párrafos máximo explicando qué significa, por qué importa, cómo se relaciona con lo anterior]
+[CONTEXT/MEANING: at most 1-2 paragraphs explaining what it means, why it matters, how it relates to the preceding material]
 \end{definition}
 ```
 
-### 3.2 Ejemplo BUENO
+### 3.2 GOOD example
 ```
-\begin{definition}[Módulo en el plano complejo]
-Para $z = x + iy \in \mathbb{C}$ con $x, y \in \mathbb{R}$, el módulo es la norma euclidiana:
+\begin{definition}[Modulus in the complex plane]
+For $z = x + iy \in \mathbb{C}$ with $x, y \in \mathbb{R}$, the modulus is the Euclidean norm:
 \[
 |z| := \sqrt{x^2 + y^2}
 \]
-Geométricamente, $|z|$ es la distancia del punto $z$ al origen. Esta magnitud hereda las propiedades de la norma euclidiana en $\mathbb{R}^2$, incluyendo la desigualdad triangular: $|z_1 + z_2| \leq |z_1| + |z_2|$.
+Geometrically, $|z|$ is the distance from the point $z$ to the origin. This magnitude inherits the properties of the Euclidean norm on $\mathbb{R}^2$, including the triangle inequality: $|z_1 + z_2| \leq |z_1| + |z_2|$.
 \end{definition}
 ```
 
-### 3.3 Ejemplo MALO
+### 3.3 BAD example
 ```
-\begin{definition}[Módulo]
-Se define el módulo como...
-\textbf{Propiedades:}
+\begin{definition}[Modulus]
+The modulus is defined as...
+\textbf{Properties:}
 \begin{itemize}
-\item Es siempre positivo
-\item Satisface la desigualdad triangular
-\item Es invariante bajo rotación
+\item It is always positive
+\item It satisfies the triangle inequality
+\item It is invariant under rotation
 \item Etc.
 \end{itemize}
-[Explicación adicional que repite propiedades]
+[Additional explanation that repeats the properties]
 \end{definition}
 ```
 
-**Por qué**: El malo tiene 3 problemas:
-1. Repite contenido ("Es positivo" → "propiedades" → explicación)
-2. No explica SIGNIFICADO de módulo, solo lista atributos sin contexto
-3. La enumeración no añade claridad porque solo repite lo mismo que la explicación posterior
+**Why**: The bad one has 3 problems:
+1. It repeats content ("It is positive" → "properties" → explanation)
+2. It does not explain the MEANING of the modulus, it only lists attributes without context
+3. The enumeration adds no clarity because it only repeats what the later explanation already says
 
-**Nota**: Una enumeración sería válida si organizara información técnica de forma clara y añadiera valor estructural, no si solo repite lo que ya se dice después.
+**Note**: An enumeration would be valid if it organized technical information clearly and added structural value, not if it merely repeated what is already stated afterwards.
 
 ---
 
-## 4. ECUACIONES Y FÓRMULAS
+## 4. EQUATIONS AND FORMULAS
 
-### 4.1 Regla: **Ecuación ↔ Texto**
-Toda fórmula debe estar integrada con texto, nunca aislada.
+### 4.1 Rule: **Equation ↔ Text**
+Every formula must be integrated with text, never isolated.
 
-#### 4.1.1 MALO
+#### 4.1.1 BAD
 ```
-El operador está definido como:
+The operator is defined as:
 \[
 \hat{\Omega} = \begin{pmatrix} a & b \\ c & d \end{pmatrix}
 \]
 ```
 
-#### 4.1.2 BUENO
+#### 4.1.2 GOOD
 ```
-El operador $\hat{\Omega}$ es una transformación lineal representada en base estándar como:
+The operator $\hat{\Omega}$ is a linear transformation represented in the standard basis as:
 \[
 \hat{\Omega} = \begin{pmatrix} a & b \\ c & d \end{pmatrix}
 \]
-donde $a, b, c, d$ son coeficientes que satisfacen [propiedad]. Esta forma diagonal revela que $\hat{\Omega}$ actúa como [interpretación geométrica].
+where $a, b, c, d$ are coefficients satisfying [property]. This diagonal form reveals that $\hat{\Omega}$ acts as [geometric interpretation].
 ```
 
-### 4.2 Declaración explícita de símbolos
-Si una ecuación introduce variables nuevas, declararlas DENTRO o INMEDIATAMENTE DESPUÉS:
+### 4.2 Explicit declaration of symbols
+If an equation introduces new variables, declare them INSIDE or IMMEDIATELY AFTER:
 
 ```
-La relación de acoplamiento viene dada por:
+The coupling relation is given by:
 \[
 z = \varphi y
 \]
-donde $z$ denota la coordenada vertical, $y$ la coordenada imaginaria horizontal, y $\varphi$ es la razón áurea.
+where $z$ denotes the vertical coordinate, $y$ the horizontal imaginary coordinate, and $\varphi$ is the golden ratio.
 ```
 
-### 4.3 Alineación y espaciado
-- **Ecuaciones cortas (<60 caracteres)**: `\[...\]` (displaymath)
-- **Ecuaciones largas o múltiples**: `\begin{align*}...\end{align*}`
-- **Entre ecuaciones**: párrafo de transición, no líneas en blanco + ecuación
+### 4.3 Alignment and spacing
+- **Short equations (<60 characters)**: `\[...\]` (displaymath)
+- **Long or multiple equations**: `\begin{align*}...\end{align*}`
+- **Between equations**: a transition paragraph, not blank lines + equation
 
 ---
 
-## 5. PROPOSICIONES, TEOREMAS, COROLARIOS
+## 5. PROPOSITIONS, THEOREMS, COROLLARIES
 
-### 5.1 Estructura
+### 5.1 Structure
 ```
-\begin{theorem}[Nombre descriptivo]\label{thm:...}
-[ENUNCIADO FORMAL EN UNA O DOS LÍNEAS]
+\begin{theorem}[Descriptive name]\label{thm:...}
+[FORMAL STATEMENT IN ONE OR TWO LINES]
 
-Si [hipótesis], entonces [conclusión]:
+If [hypothesis], then [conclusion]:
 \[
-[fórmula concisa]
+[concise formula]
 \]
 \begin{proof}
-[Argumento principal en prosa, estructurado lógicamente]
-[Si hay pasos algebraicos clave, mostrar UNO o DOS]
-[Conclusión: "Por lo tanto, [conclusión del teorema]"]
+[Main argument in prose, logically structured]
+[If there are key algebraic steps, show ONE or TWO]
+[Conclusion: "Therefore, [theorem's conclusion]"]
 \end{proof}
 \end{theorem}
 ```
 
-### 5.2 Diferencia: Theorem vs Proposition vs Lemma
-- **Theorem**: Resultado PRINCIPAL. Puede cambiar toda una perspectiva.
-- **Proposition**: Resultado IMPORTANTE pero subordinado. Herramienta para teoremas.
-- **Lemma**: Resultado TÉCNICO necesario. No interesa por sí solo.
+### 5.2 Difference: Theorem vs Proposition vs Lemma
+- **Theorem**: The MAIN result. It can change an entire perspective.
+- **Proposition**: An IMPORTANT but subordinate result. A tool for theorems.
+- **Lemma**: A necessary TECHNICAL result. It is not interesting in its own right.
 
-Si no es claro cuál es, errar hacia **Proposition** (es lo más flexible).
+If it is not clear which one it is, err toward **Proposition** (the most flexible).
 
-### 5.3 Observación vs Remark
-- **Observation** (Observación): Insight geométrico o estructural que sale NATURALMENTE del teorema.
-- **Remark** (Nota): Aclaración técnica o contexto sobre notación/convención.
+### 5.3 Observation vs Remark
+- **Observation** (*Observación*): a geometric or structural insight that arises NATURALLY from the theorem.
+- **Remark** (*Nota*): a technical clarification or context about notation/convention.
 
-### 5.4 Párrafos dentro de entornos de teoremas
+### 5.4 Paragraphs inside theorem environments
 
-**Verificado (2026-11-16)**: una línea en blanco en el fuente **sí** produce un párrafo nuevo dentro de `theorem`, `proposition`, `definition`, `corollary` (amsthm + la clase del documento + su `\parskip`). La premisa que antes encabezaba esta sección («los entornos de `amsthm` no muestran el salto aunque haya líneas en blanco») es **falsa** en el pipeline de la familia y se retiró; la evidencia es el PDF construido de cada repo, no una regla aquí.
+**Verified (2026-11-16)**: a blank line in the source **does** produce a new paragraph inside `theorem`, `proposition`, `definition`, `corollary` (amsthm + the document class + its `\parskip`). The premise that previously headed this section ("the `amsthm` environments do not show the break even with blank lines") is **false** in the family's pipeline and was removed; the evidence is the built PDF of each repo, not a rule here.
 
-- ✅ Separar párrafos del enunciado con **línea en blanco** (convención LaTeX).
-- ❌ `\par` explícito: es exactamente lo que hace la línea en blanco; no aporta nada y hoy sobra.
-- **Regla práctica**: un enunciado de más de 3-4 oraciones o que trata varios conceptos se divide en párrafos con línea en blanco.
+- ✅ Separate the paragraphs of the statement with a **blank line** (LaTeX convention).
+- ❌ explicit `\par`: it is exactly what the blank line does; it adds nothing and is redundant today.
+- **Practical rule**: a statement of more than 3-4 sentences or covering several concepts is split into paragraphs with a blank line.
 
-**Evitar**: cuerpo de teorema escrito como una sola línea larga de fuente: se vuelve ilegible en el origen aunque el PDF salga bien.
+**Avoid**: a theorem body written as a single long line of source: it becomes unreadable in the source even if the PDF comes out fine.
 
-### 5.5 Enumeración en enunciados de proposiciones/teoremas
+### 5.5 Enumeration in proposition/theorem statements
 
-**Regla para enunciados**:
-- ✅ **Usar enumeración** cuando hay múltiples resultados relacionados que se demuestran juntos pero son conceptualmente distintos:
+**Rule for statements**:
+- ✅ **Use enumeration** when there are multiple related results that are proven together but are conceptually distinct:
   ```
   \begin{proposition}[...]
-  Al incrementar $\sigma \to \sigma+1$:
+  As $\sigma \to \sigma+1$ increases:
   \begin{enumerate}
   \item $\varepsilon(\sigma+1) = \varphi \cdot \varepsilon(\sigma)$
   \item $|z|_{\sigma+1} = \varphi |z|_\sigma$
   \end{enumerate}
   \end{proposition}
   ```
-- ❌ **Evitar enumeración** cuando los resultados se pueden expresar fluidamente en una o dos oraciones:
+- ❌ **Avoid enumeration** when the results can be expressed fluently in one or two sentences:
   ```
-  ❌ "El operador tiene tres propiedades: (1) Es hermítico, (2) Tiene espectro real, (3) Genera descomposición ortogonal"
-  ✅ "El operador es hermítico, tiene espectro real y genera una descomposición ortogonal."
+  ❌ "The operator has three properties: (1) It is Hermitian, (2) It has real spectrum, (3) It generates an orthogonal decomposition"
+  ✅ "The operator is Hermitian, has real spectrum and generates an orthogonal decomposition."
   ```
 
-**Regla para proofs**:
-- ✅ **Proof conciso**: Un párrafo fluido que conecta los pasos lógicamente, usando referencias a la enumeración cuando aplica:
+**Rule for proofs**:
+- ✅ **Concise proof**: a fluent paragraph that connects the steps logically, using references to the enumeration where it applies:
   ```
-  \begin{proof}[Por método]
-  Por [teorema], [paso 1]. De [definición], [paso 2] implica (1). [Conclusión] establece (2).
+  \begin{proof}[By <method>]
+  By [theorem], [step 1]. From [definition], [step 2] implies (1). [Conclusion] establishes (2).
   \end{proof}
   ```
-- ❌ **Evitar**: Múltiples párrafos con `\par` a menos que cada párrafo trate un concepto completamente distinto. Un proof no debe ser una lista de pasos separados.
-- ✅ **Balance**: El proof debe ser suficientemente completo para ser riguroso, pero no tan verboso que repita información del enunciado o sea artificialmente extenso.
+- ❌ **Avoid**: multiple paragraphs with `\par` unless each paragraph treats a completely different concept. A proof must not be a list of separated steps.
+- ✅ **Balance**: the proof must be complete enough to be rigorous, but not so verbose that it repeats information from the statement or is artificially long.
 
-**Criterio de decisión**: Si al leer el enunciado con enumeración es inmediatamente claro qué se está afirmando, y el proof puede referirse a los puntos numerados de forma natural, usar enumeración. Si la enumeración solo añade estructura artificial sin mejorar claridad, usar texto corrido.
+**Decision criterion**: if, upon reading the enumerated statement, it is immediately clear what is being asserted, and the proof can refer to the numbered points naturally, use enumeration. If the enumeration only adds artificial structure without improving clarity, use running text.
 
-### 5.6 Balance estilístico: Rigor filosófico sin redundancia artificial
+### 5.6 Stylistic balance: philosophical rigor without artificial redundancy
 
-**Tensión entre dos extremos**: (1) condensación artificial extrema estilo Elsevier que sacrifica claridad conceptual, y (2) verbosidad excesiva que repite información sin añadir valor.
+**Tension between two extremes**: (1) extreme artificial condensation in the Elsevier style that sacrifices conceptual clarity, and (2) excessive verbosity that repeats information without adding value.
 
-**Criterio**: El texto debe fluir como una conversación entre científicos que se respetan mutuamente: suficiente contexto para entender el significado profundo (el "por qué" y el significado, a la manera de una carta científica del siglo XIX), pero sin repetir lo obvio hasta que un lector experto piense "ya lo entendí, sigue adelante".
+**Criterion**: the text should flow like a conversation between scientists who respect each other: enough context to understand the deep meaning (the "why" and the significance, in the manner of a nineteenth-century scientific letter), but without repeating the obvious until an expert reader thinks "I already understood that, move on".
 
-**Principios del balance**:
-- ✅ **Explicar el significado**: Incluir frases que expliquen por qué algo es importante o qué significa conceptualmente (ej: "Esta simultaneidad emerge de la necesidad de preservar...")
-- ✅ **Naturalidad filosófica**: Usar lenguaje que refleje el pensamiento matemático profundo, no solo la mecánica (ej: "La coherencia geométrica demanda..." en lugar de solo "Por lo tanto...")
-- ❌ **Evitar redundancia**: No repetir en el proof lo que ya se estableció en el enunciado. Si el enunciado dice "preservar la estructura geométrica bajo transformaciones de escala", el proof puede referirse simplemente a "coherencia geométrica" sin repetir toda la frase.
-- ❌ **Evitar condensación artificial**: No eliminar palabras necesarias solo para sonar "más técnico". Preferir "El acoplamiento temporal establece:" sobre "Del acoplamiento temporal:" cuando la primera forma es más clara.
-- ✅ **DRY en conceptos, no en explicación**: No repetir conceptos, pero sí explicar el significado cuando añade valor conceptual.
+**Principles of the balance**:
+- ✅ **Explain the meaning**: include sentences that explain why something matters or what it means conceptually (e.g., "This simultaneity arises from the need to preserve...")
+- ✅ **Philosophical naturalness**: use language that reflects deep mathematical thought, not just the mechanics (e.g., "Geometric coherence demands..." instead of merely "Therefore...")
+- ❌ **Avoid redundancy**: do not repeat in the proof what was already established in the statement. If the statement says "preserve the geometric structure under scale transformations", the proof can simply refer to "geometric coherence" without repeating the whole phrase.
+- ❌ **Avoid artificial condensation**: do not delete necessary words just to sound "more technical". Prefer "The temporal coupling establishes:" over "From the temporal coupling:" when the first form is clearer.
+- ✅ **DRY in concepts, not in explanation**: do not repeat concepts, but do explain the meaning when it adds conceptual value.
 
-**Ejemplo de buen balance**:
+**Example of good balance**:
 ```
-\begin{proposition}[Escalamiento simultáneo del parámetro de escala y del módulo complejo]
-La estructura autosimilar del sistema establece que al avanzar $\sigma \to \sigma+1$:
+\begin{proposition}[Simultaneous scaling of the scale parameter and the complex modulus]
+The self-similar structure of the system establishes that as $\sigma \to \sigma+1$:
 \begin{enumerate}
 \item $\varepsilon(\sigma+1) = \varphi \cdot \varepsilon(\sigma)$
 \item $|z|_{\sigma+1} = \varphi |z|_\sigma$
 \end{enumerate}
-Esta simultaneidad emerge de la necesidad de preservar la estructura geométrica...
+This simultaneity arises from the need to preserve the geometric structure...
 \end{proposition}
 
-\begin{proof}[Por cálculo directo]
-El acoplamiento temporal establece: [ecuación]
-De la definición del operador: [ecuación]
-el escalamiento de la fase requiere (1).
-La coherencia geométrica demanda (2), completando la demostración.
+\begin{proof}[By direct calculation]
+The temporal coupling establishes: [equation]
+From the definition of the operator: [equation]
+the scaling of the phase requires (1).
+Geometric coherence demands (2), completing the proof.
 \end{proof}
 ```
 
-**Contraste con extremos**:
-- ❌ **Demasiado condensado**: "Del acoplamiento temporal, $\varepsilon(\sigma+1) = \varphi\varepsilon(\sigma)$ y $|z|_{\sigma+1} = \varphi|z|_\sigma$." (Pierde significado conceptual)
-- ❌ **Demasiado verboso**: Repetir "preservar la estructura geométrica bajo transformaciones de escala" tanto en enunciado como en proof (Redundante)
+**Contrast with the extremes**:
+- ❌ **Too condensed**: "From the temporal coupling, $\varepsilon(\sigma+1) = \varphi\varepsilon(\sigma)$ and $|z|_{\sigma+1} = \varphi|z|_\sigma$." (It loses conceptual meaning)
+- ❌ **Too verbose**: repeating "preserve the geometric structure under scale transformations" in both the statement and the proof (Redundant)
 
 ---
 
-## 6. EVITAR PATRONES AI
+## 6. AVOIDING AI PATTERNS
 
-### 6.1 Patrón 1: Enumeración repetitiva innecesaria
-❌ "Este concepto tiene varias propiedades. Primero, A. Segundo, B. Tercero, C. Estas propiedades implican que..." (cuando la enumeración no añade claridad)
+### 6.1 Pattern 1: unnecessary repetitive enumeration
+❌ "This concept has several properties. First, A. Second, B. Third, C. These properties imply that..." (when the enumeration adds no clarity)
 
-✅ "Este concepto tiene tres propiedades distinguidas: A implica X, B implica Y, C implica Z. En conjunto, esto significa que..."
+✅ "This concept has three distinguished properties: A implies X, B implies Y, C implies Z. Together, this means that..."
 
-**Nota**: Las enumeraciones estructuradas (con `\textbf{}` o listas) son válidas cuando mejoran la claridad, organización o legibilidad. No deben eliminarse sistemáticamente; deben evaluarse caso por caso según su utilidad.
+**Note**: Structured enumerations (with `\textbf{}` or lists) are valid when they improve clarity, organization, or readability. They must not be eliminated systematically; they must be evaluated case by case according to their usefulness.
 
-### 6.2 Patrón 2: Lista bullet + amplificación repetitiva
+### 6.2 Pattern 2: bullet list + repetitive amplification
 ❌
 ```
-El operador tiene las siguientes características:
-• Es hermítico
-• Tiene espectro real
-• Genera una descomposición ortogonal
+The operator has the following characteristics:
+• It is Hermitian
+• It has real spectrum
+• It generates an orthogonal decomposition
 
-La hermiticidad del operador significa que...
-El espectro real implica que...
+The Hermiticity of the operator means that...
+The real spectrum implies that...
 ```
-(cuando la amplificación repite exactamente lo mismo que la lista)
+(when the amplification repeats exactly what the list already says)
 
 ✅
 ```
-El operador es hermítico, asegurando espectro real y generando una descomposición ortogonal de $\mathcal{H}$. La hermiticidad emerge de [justificación]. El espectro real es consecuencia de [construcción].
+The operator is Hermitian, ensuring real spectrum and generating an orthogonal decomposition of $\mathcal{H}$. The Hermiticity arises from [justification]. The real spectrum is a consequence of [construction].
 ```
 
-**Nota**: Las listas bullet son apropiadas cuando organizan información técnica de forma clara y la amplificación posterior añade contexto o justificación, no repetición.
+**Note**: Bullet lists are appropriate when they organize technical information clearly and the subsequent amplification adds context or justification, not repetition.
 
-### 6.3 Patrón 3: "Observar que", "Es importante notar que"
-❌ "Observe que esto implica que..."
-✅ "Por lo tanto..." o "Esto implica..." o nada (dejar que la lógica sea clara)
+### 6.3 Pattern 3: "Note that", "It is important to note that"
+❌ "Note that this implies that..."
+✅ "Therefore..." or "This implies..." or nothing (let the logic be clear)
 
-### 6.4 Patrón 4: Parentéticas excesivas
-❌ "El operador (que definimos antes) tiene (como mencionamos) la propiedad (importante) de..."
-✅ "El operador tiene la propiedad de..." [Y usar \ref{} si necesitas remitir a definición anterior]
+### 6.4 Pattern 4: excessive parentheticals
+❌ "The operator (which we defined earlier) has (as we mentioned) the (important) property of..."
+✅ "The operator has the property of..." [and use \ref{} if you need to refer to a previous definition]
 
-### 6.5 Patrón 5: Artefactos de AI en el código (→ §13)
-Los artefactos generados por AI aparecen también en **código** —módulos monolitos, self-testing, stdout como API, registro por `append` con efectos de import, CLI a mano, asserts de frases de prosa, tolerancias por sitio— con la misma forma que los patrones 1–4: repetición disfrazada de utilidad y atajos que delegan trabajo en quien lea después. Su nomenclatura (**D1–D7**), la remediación con librerías estándar y la checklist correspondientes están en **§13**; aquí no se duplican.
-
----
-
-## 7. COHERENCIA SECCIÓN A SECCIÓN
-
-### 7.1 Dentro de una sección
-- **Primera definición**: Introducir notación completa, ser explícito
-- **Definiciones posteriores**: Reutilizar notación, no re-declarar
-- **Transiciones**: "Ahora consideremos...", "El siguiente paso...", "Para entender [resultado anterior]..."
-
-### 7.2 Entre secciones
-- **Cross-references**: usar los macros de §2.2 (`\tref{...}`, `\dref{...}`, `\pref{...}`…), no «en la sección anterior» ni `Proposición~\ref{...}` escrito a mano
-- **Notación**: Si cambias (ej: de real a complejo), explicar transición
-- **Supuestos**: Si una sección asume resultado de anterior, mencionarlo explícitamente
+### 6.5 Pattern 5: AI artifacts in code (→ §13)
+AI-generated artifacts also appear in **code** —monolithic modules, self-testing, stdout as API, logging via `append` with import side effects, hand-rolled CLI, prose-sentence asserts, per-site tolerances— with the same shape as patterns 1–4: repetition disguised as utility and shortcuts that delegate work to whoever reads next. Their nomenclature (**D1–D7**), the remediation with standard libraries, and the corresponding checklist are in **§13**; they are not duplicated here.
 
 ---
 
-## 8. CHECKLISTS POR TIPO DE AMBIENTE
+## 7. SECTION-TO-SECTION COHERENCE
 
-### 8.1 Para cada DEFINITION
-- [ ] ¿Enunciado conciso? (máx 2 líneas)
-- [ ] ¿Fórmula principal clara?
-- [ ] ¿Contexto/significado explicado en 1-2 párrafos?
-- [ ] ¿Qué problema resuelve o qué intuición clarifica?
-- [ ] ¿Cero bullet lists?
+### 7.1 Within a section
+- **First definition**: introduce complete notation, be explicit
+- **Later definitions**: reuse notation, do not re-declare it
+- **Transitions**: "Now consider...", "The next step...", "To understand [previous result]..."
 
-### 8.2 Para cada THEOREM/PROPOSITION
-- [ ] ¿Hipótesis y conclusión claras?
-- [ ] ¿Proof es argumento (no lista de pasos)?
-- [ ] ¿Conexión con resultado anterior explícita?
-- [ ] ¿Label descriptivo?
-
-### 8.3 Para cada PROOF
-- [ ] ¿Párrafo introductorio explica estrategia?
-- [ ] ¿Pasos principales en prosa (no numerados)?
-- [ ] ¿Ecuaciones muestran NO demuestran?
-- [ ] ¿Conclusión: "Por lo tanto..." es clara?
-
-(La checklist de código va en §13.6.)
+### 7.2 Between sections
+- **Cross-references**: use the macros of §2.2 (`\tref{...}`, `\dref{...}`, `\pref{...}`…), not "in the previous section" nor a hand-written `Proposition~\ref{...}`
+- **Notation**: if you change it (e.g., from real to complex), explain the transition
+- **Assumptions**: if a section assumes a result from a previous one, mention it explicitly
 
 ---
 
-## 9. CASOS ESPECIALES: CONTRADECIR ORTODOXIA
+## 8. CHECKLISTS BY ENVIRONMENT TYPE
 
-Cuando el paper contradice convenciones (porque la estructura geométrica lo requiere):
+### 8.1 For each DEFINITION
+- [ ] Concise statement? (max 2 lines)
+- [ ] Clear main formula?
+- [ ] Context/meaning explained in 1-2 paragraphs?
+- [ ] What problem does it solve or what intuition does it clarify?
+- [ ] Zero bullet lists?
 
-**Formato explícito:**
+### 8.2 For each THEOREM/PROPOSITION
+- [ ] Clear hypothesis and conclusion?
+- [ ] Is the proof an argument (not a list of steps)?
+- [ ] Explicit connection to a previous result?
+- [ ] Descriptive label?
+
+### 8.3 For each PROOF
+- [ ] Does the introductory paragraph explain the strategy?
+- [ ] Main steps in prose (not numbered)?
+- [ ] Do the equations show, not prove?
+- [ ] Is the conclusion "Therefore..." clear?
+
+(The code checklist is in §13.6.)
+
+---
+
+## 9. SPECIAL CASES: CONTRADICTING ORTHODOXY
+
+When the paper contradicts conventions (because the geometric structure requires it):
+
+**Explicit format:**
 ```
-En contraste con [convención estándar], aquí encontramos que [resultado disruptivo].
-Esto no contradice [teoría estándar], sino que revela que [interpretación que reconcilia].
-La razón es que [explicación geométrica/estructural profunda].
-```
-
-**No esconder**. No pedir perdón. Ser claro sobre QUÉ contradice y POR QUÉ es necesario.
-
----
-
-## 10. APLICACIÓN DEL GUIDE
-
-### 10.1 Plantilla: Sección I
-
-Sección I debe servir como patrón. Una vez esté perfecta:
-- Cada definición sigue estructura estándar
-- Cada párrafo es necesario (sin repetición)
-- Notación es consistente
-- Voz es formal, seria, clara
-- NO hay bullet lists sin justificación
-
-Luego, las otras secciones deben **coincidir exactamente** en estilo.
-
-### 10.2 Procedimiento de uso
-
-1. **Antes de revisar sección**: Leer este guide
-2. **Mientras revisas**: Comparar contra checklists (§8 para texto, §14.4 para pipeline/proofreading, §13.6 para código)
-3. **Si encuentras sección que NO cumple**: Preguntar "¿Qué regla quebrantó?" → luego arreglarlo
-4. **Cuando encuentres NUEVA pauta** (patrón repetido, incoherencia): Agregar al guide
-5. **Verificación de contenido**: Antes de agregar conceptos matemáticos nuevos, verificar contra el documento fuente original del repo (regla completa en el Principio editorial de la cabecera). Si no está fundamentado, mantener fidelidad al original.
-
-**Ejemplo de la regla 5**: una sugerencia de formalización que introduce "kernel modular K(z,w)" cuando el original solo menciona "kernel" o "kernel PCF" debe revisarse primero para ver si está justificada; en caso de duda, mantener el texto original y solo mejorar la presentación formal.
-
-### 10.3 Ciclo de mantenimiento
-
-1. Aplicar este guide a **Sección I (Introducción)** completamente
-2. Validar que queda como template
-3. Replicar en Sección II y III
-4. Ajustar guide según aprendamos
-
-**Goal final**: Paper que sea **riguroso, claro, serio, sin artificialidad** y que sea genuinamente legible para su audiencia científica experta, con formación en teoría de números, análisis complejo, operadores hermíticos, física cuántica, geometría y verificación computacional, entre otros.
-
----
-
-## 11. DETECCIÓN PROACTIVA DE INCONSISTENCIAS Y SUGERENCIAS EDITORIALES
-
-### 11.1 Principio
-El AI debe actuar como editor proactivo: detectar inconsistencias matemáticas, lógicas o estilísticas, incluso cuando no están explícitamente solicitadas en el prompt.
-
-### 11.2 Protocolo de Detección
-
-**Durante la tarea**, señalar cualquier:
-- Inconsistencia matemática (contradicción, notación inconsistente, concepto no definido)
-- "Feeling" fuerte de que algo valdría la pena editar (ambigüedad, falta de claridad, posible error)
-- Desconexión entre el texto y el contenido matemático desarrollado
-
-**Al finalizar la tarea (antes de commit si aplica):**
-
-1. **Evaluar la intensidad de la sensación:**
-   - **Fuerte**: Inconsistencia clara, posible error matemático, contradicción lógica
-   - **Moderada**: Ambigüedad, falta de claridad, posible mejora
-   - **Débil**: Sugerencia menor, optimización estilística
-
-2. **Si la sensación es FUERTE o MODERADA:** presentar la sugerencia al usuario al final del task, con un análisis desmenuzado:
-   - **Qué detectaste**: Descripción específica de la inconsistencia/sugerencia
-   - **Dónde está**: Ubicación exacta (archivo, líneas, sección)
-   - **Por qué es relevante**: Impacto potencial (matemático, lógico, estilístico)
-   - **Contexto cognitivo**: Qué te hizo pensar que hay un problema (patrón, contradicción, falta de definición, etc.)
-   - **Opciones**: Qué se podría hacer (corregir, verificar contra original, investigar más)
-
-3. **Si el prompt incluye hacer commit al finalizar:**
-   - **ANTES de ejecutar el commit**, presentar las sugerencias detectadas
-   - Dar opción explícita al usuario: revisar y decidir sobre las sugerencias primero · proceder con el commit de todas formas · modificar el commit para incluir correcciones
-
-### 11.3 Formato de Presentación
-
-```
----
-🔍 **SUGERENCIA EDITORIAL DETECTADA**
-
-**Tipo**: [Inconsistencia matemática / Ambigüedad / Posible error / Mejora sugerida]
-**Intensidad**: [Fuerte / Moderada]
-**Ubicación**: [archivo:líneas]
-
-**Qué detecté**: [Descripción específica del problema]
-
-**Análisis cognitivo**: 
-- [Qué patrón/contradicción/falta te hizo pensar que hay un problema]
-- [Por qué es relevante matemáticamente/lógicamente]
-- [Qué impacto podría tener si no se corrige]
-
-**Opciones**:
-1. [Opción 1: acción sugerida]
-2. [Opción 2: alternativa]
-3. [Opción 3: investigar más antes de decidir]
-
-¿Deseas que proceda con el commit o prefieres revisar esto primero?
----
+In contrast with [standard convention], here we find that [disruptive result].
+This does not contradict [standard theory], but rather reveals that [reconciling interpretation].
+The reason is that [deep geometric/structural explanation].
 ```
 
-### 11.4 Ejemplos
-
-1. **Inconsistencia matemática**: un concepto se nombra de una forma en una sección y de otra en el desarrollo (desconexión terminológica) → verificar si está fundamentado o es una adición no justificada.
-2. **Falta de definición**: se usa un símbolo nuevo sin definición previa → el lector no puede seguir el argumento → agregar definición o referencia cruzada.
-3. **Contradicción lógica**: se afirma X en una sección y no-X en otra → rompe la coherencia del argumento → verificar cuál es la afirmación correcta según el documento original.
-
-### 11.5 Límites
-- **NO** interrumpir el flujo de trabajo principal con sugerencias menores
-- **NO** hacer cambios sin consultar si la sensación es fuerte
-- **SÍ** presentar sugerencias al final, antes de commit
-- **SÍ** ser específico y desmenuzado en el análisis
+**Do not hide**. Do not apologize. Be clear about WHAT it contradicts and WHY it is necessary.
 
 ---
 
-## 12. COMPARACIÓN DEL DOCUMENTO FUENTE CON EL MANUSCRIPTO
+## 10. APPLICATION OF THE GUIDE
 
-### 12.1 ⚠️ REGLA CRÍTICA: NO EDITAR EL DOCUMENTO FUENTE ORIGINAL
+### 10.1 Template: Section I
 
-**El documento fuente original que el repositorio recibió NO debe ser modificado.** Todas las correcciones, mejoras y actualizaciones deben realizarse Únicamente en el `.tex` del repositorio (el archivo raíz y los `.tex` que incluya).
+Section I must serve as the pattern. Once it is perfect:
+- Every definition follows the standard structure
+- Every paragraph is necessary (no repetition)
+- Notation is consistent
+- The voice is formal, serious, clear
+- There are NO unjustified bullet lists
 
-- ✅ **SÍ**: Editar el `.tex` del repo para corregir terminología, mejorar presentación, etc.
-- ❌ **NO**: Editar el documento fuente original bajo ninguna circunstancia
-- ✅ **SÍ**: Usarlo como referencia para verificar contenido original
-- ✅ **SÍ**: Compararlo con el `.tex` del repo para detectar inconsistencias
+Then, the other sections must **match exactly** in style.
 
-### 12.2 Propósito
-Cuando el usuario proporciona una referencia de sección (número como "1.5" o string descriptivo como "fundamento y alcance del presente trabajo"), generar un informe conciso de diferencias entre la versión fuente y la versión correspondiente del manuscrito LaTeX.
+### 10.2 Usage procedure
 
-### 12.3 Protocolo de Búsqueda
+1. **Before reviewing a section**: read this guide
+2. **While reviewing**: compare against the checklists (§8 for text, §14.4 for pipeline/proofreading, §13.6 for code)
+3. **If you find a section that does NOT comply**: ask "Which rule was broken?" → then fix it
+4. **When you find a NEW guideline** (repeated pattern, inconsistency): add it to the guide
+5. **Content verification**: before adding new mathematical concepts, verify them against the repository's original source document (full rule in the Editorial principle of the header). If it is not grounded, remain faithful to the original.
 
-**Paso 1: Interpretar la referencia**
-- Si es un número (ej: "1.5", "2.3", "8.1.5"): buscar títulos de sección que contengan ese número
-- Si es un string descriptivo (ej: "fundamento y alcance", "coherencia de axiomas"): buscar títulos o contenido que contenga esas palabras clave
+**Example of rule 5**: a formalization suggestion that introduces "kernel modular K(z,w)" when the original only mentions "kernel" or "kernel PCF" must first be reviewed to see whether it is justified; in case of doubt, keep the original text and only improve the formal presentation.
 
-**Paso 2: Buscar en el documento fuente**
-- Buscar el patrón en títulos de sección (ej: `### 1.5`, `#### 2.3.1`)
-- Extraer el contenido completo de la sección (incluyendo párrafos siguientes hasta la siguiente sección o subsección)
+### 10.3 Maintenance cycle
 
-**Paso 3: Buscar en el manuscrito LaTeX**
-- Buscar en todos los `.tex` del repositorio
-- Buscar títulos equivalentes (ej: `\subsection{...}`, `\subsubsection{...}`) o contenido que corresponda a la misma sección
-- Extraer el contenido completo correspondiente
+1. Apply this guide fully to **Section I (Introduction)**
+2. Validate that it stands as the template
+3. Replicate in Sections II and III
+4. Adjust the guide as we learn
 
-**Paso 4: Comparar y generar informe**
-
-### 12.4 Formato del Informe
-
-El informe debe ser **muy conciso** e incluir:
-
-1. **Ubicación**: Líneas y títulos exactos en ambos documentos
-2. **Cambios principales**: Lista breve de diferencias estructurales y de contenido
-3. **Resumen**: Síntesis de si el contenido conceptual es equivalente o si hay diferencias sustanciales
-
-**Estructura del informe:**
-```
-## Informe de Comparación: Sección [referencia]
-
-### Ubicación
-- **Documento fuente**: Líneas X-Y (título: `...`)
-- **Manuscrito `.tex` (archivo)**: Líneas X-Y (título: `...`)
-
-### Cambios principales
-Lista breve de diferencias estructurales y de contenido, incluyendo:
-
-**A. Diferencias de contenido/concepto:**
-1. [Diferencia terminológica, conceptual, o de información]
-
-**B. Diferencias de estilo/estructura:**
-1. [Repetición de estructuras, falta de paralelismo, verbos vagos, etc. - ver §1 (Evitar) y §6]
-2. [Problemas de fluidez, claridad, o presentación]
-
-**C. Diferencias de formato (solo si afectan significado):**
-1. [Notación matemática diferente, referencias, etc.]
-
-### Resumen
-[Breve síntesis de equivalencia conceptual o diferencias sustanciales, incluyendo recomendaciones de corrección si hay problemas de estilo]
-```
-
-### 12.5 Ejemplos de Referencias Válidas
-
-- Números de sección: `1.5`, `2.3`, `8.1.5`, `III.1.5`
-- Strings descriptivos: `fundamento y alcance`, `coherencia de axiomas`, `verificación computacional`
-- Referencias mixtas: `§1.5`, `Sección 1.5`
-
-### 12.6 Notas Importantes
-
-- **Buscar en ambos documentos**: Siempre comparar la fuente con el manuscrito, no solo uno
-- **Herramientas del repo** (sustituyen la búsqueda a mano): cuando un repo trae scripts de comparación —referencias `§X.Y` de la fuente ausentes en el `.tex`, `§` → labels LaTeX, numeración fuente vs. PDF— se usan éstos; el inventario de scripts es de cada repo y no se lista aquí
-- **Contexto suficiente**: Incluir suficiente contexto (párrafos anteriores/posteriores) para identificar la sección correcta
-- **Formato diferente**: Recordar que la fuente puede usar Markdown mientras el manuscrito usa LaTeX - las diferencias de formato (notación matemática, referencias) son esperadas y no deben considerarse como diferencias de contenido a menos que cambien el significado
-- **Concisión**: El informe debe ser breve y directo, enfocándose en diferencias sustanciales de contenido, no en diferencias menores de formato
+**Final goal**: a paper that is **rigorous, clear, serious, without artificiality** and genuinely readable for its expert scientific audience, trained in number theory, complex analysis, Hermitian operators, quantum physics, geometry, and computational verification, among others.
 
 ---
 
-## 13. CALIDAD DE SOFTWARE Y CÓDIGO
+## 11. PROACTIVE DETECTION OF INCONSISTENCIES AND EDITORIAL SUGGESTIONS
 
-Las secciones §1–§12 prescriben la calidad del **texto**. Esta sección prescribe la del **código** que lo produce, lo verifica y le da soporte (scripts, tests, módulos de apoyo). Es de obligado cumplimiento en cualquier revisión de código del repositorio, con independencia de quién lo haya escrito.
+### 11.1 Principle
+The AI should act as a proactive editor: detect mathematical, logical, or stylistic inconsistencies, even when they are not explicitly requested in the prompt.
 
-### 13.1 Doctrina
+### 11.2 Detection Protocol
 
-- **No self-baked.** Ante cualquier necesidad funcional se usa la librería estándar o una librería consolidada del ecosistema. Con generación asistida por AI no existen pretextos de legado («así lo heredamos de un Fortran de los 90»): el código se reescribe contra la librería estándar.
-- **Librería estándar primero.** La tabla §13.3 es normativa: `argparse` para CLI, `logging` para registro, `dataclasses` para datos, `numpy.testing` para verificación numérica, `pytest` para tests.
-- **Code review seria.** Ningún módulo se incorpora sin revisión de código explícita —estructura, contratos, tests, naming—; la revisión no es formalidad ni trámite.
-- **El módulo de producción nunca se testea a sí mismo.** Los asserts residen en la suite, nunca en el código que se ejecuta (defecto **D2**).
+**During the task**, flag any of:
+- Mathematical inconsistency (contradiction, inconsistent notation, undefined concept)
+- A strong "feeling" that something is worth editing (ambiguity, lack of clarity, possible error)
+- Disconnection between the text and the mathematical content developed
 
-### 13.2 Taxonomía de defectos (D1–D7)
+**At task completion (before committing, if applicable):**
 
-Nomenclatura estable, citable en auditorías (p. ej. «D4 ×47»):
+1. **Assess the intensity of the feeling:**
+   - **Strong**: clear inconsistency, possible mathematical error, logical contradiction
+   - **Moderate**: ambiguity, lack of clarity, possible improvement
+   - **Weak**: minor suggestion, stylistic optimization
 
-- **D1 — Módulo monolito**: un solo archivo que mezcla datos, lógica y presentación sin fronteras internas; cambiar una cosa obliga a tocar todo.
-- **D2 — Self-testing**: asserts de validación dentro del código de producción; el módulo se testea a sí mismo.
-- **D3 — API que imprime / tests que parsean stdout**: la interfaz devuelve texto por impresión y los tests lo analizan por parseo en lugar de recibir valores.
-- **D4 — Registro por `append` con efectos secundarios de import**: el registro se llena con `SECCIONES.append((46, '…', fn))` repetido (p. ej. ×47), de modo que simplemente importar el módulo ya tiene efectos sobre el estado global.
-- **D5 — CLI a mano y `print` como log**: uso directo de `sys.argv` sin `argparse`, y `print` en lugar de `logging`.
-- **D6 — Asserts de frases literales de prosa**: p. ej. `assert "rel. 6.1e-05" in run.stdout`; el test afirma un string, no un valor, y se rompe ante cualquier reflow del texto.
-- **D7 — Tolerancias ad hoc escritas por sitio**: cada comparación numérica arrastra su propia tolerancia literal, sin una única fuente que defina la precisión.
+2. **If the feeling is STRONG or MODERATE:** present the suggestion to the user at the end of the task, with a detailed analysis:
+   - **What you detected**: specific description of the inconsistency/suggestion
+   - **Where it is**: exact location (file, lines, section)
+   - **Why it is relevant**: potential impact (mathematical, logical, stylistic)
+   - **Cognitive context**: what made you think there is a problem (pattern, contradiction, missing definition, etc.)
+   - **Options**: what could be done (correct, verify against the original, investigate further)
 
-### 13.3 Autohecho → estándar
+3. **If the prompt includes committing at the end:**
+   - **BEFORE running the commit**, present the detected suggestions
+   - Give the user an explicit choice: review and decide on the suggestions first · proceed with the commit anyway · modify the commit to include corrections
 
-| Autohecho (defecto) | Estándar obligatorio |
+### 11.3 Presentation Format
+
+```
+---
+🔍 **EDITORIAL SUGGESTION DETECTED**
+
+**Type**: [Mathematical inconsistency / Ambiguity / Possible error / Suggested improvement]
+**Severity**: [Strong / Moderate]
+**Location**: [file:lines]
+
+**What I detected**: [Specific description of the problem]
+
+**Cognitive analysis**: 
+- [Which pattern/contradiction/missing definition made you think there is a problem]
+- [Why it is relevant mathematically/logically]
+- [What impact it could have if it is not corrected]
+
+**Options**:
+1. [Option 1: suggested action]
+2. [Option 2: alternative]
+3. [Option 3: investigate further before deciding]
+
+Would you like me to proceed with the commit, or would you prefer to review this first?
+---
+```
+
+### 11.4 Examples
+
+1. **Mathematical inconsistency**: a concept is named one way in a section and another way in the development (terminological disconnect) → verify whether it is grounded or an unjustified addition.
+2. **Missing definition**: a new symbol is used without a prior definition → the reader cannot follow the argument → add a definition or cross-reference.
+3. **Logical contradiction**: X is asserted in one section and not-X in another → it breaks the coherence of the argument → verify which assertion is correct according to the original document.
+
+### 11.5 Limits
+- **Do NOT** interrupt the main workflow with minor suggestions
+- **Do NOT** make changes without consulting when the feeling is strong
+- **DO** present suggestions at the end, before committing
+- **DO** be specific and detailed in the analysis
+
+---
+
+## 12. COMPARING THE SOURCE DOCUMENT WITH THE MANUSCRIPT
+
+### 12.1 ⚠️ CRITICAL RULE: DO NOT EDIT THE ORIGINAL SOURCE DOCUMENT
+
+**The original source document that the repository received must not be modified.** All corrections, improvements, and updates must be made ONLY in the repo's `.tex` (the root file and the `.tex` files it includes).
+
+- ✅ **YES**: edit the repo's `.tex` to correct terminology, improve presentation, etc.
+- ❌ **NO**: edit the original source document under any circumstances
+- ✅ **YES**: use it as a reference to verify the original content
+- ✅ **YES**: compare it with the repo's `.tex` to detect inconsistencies
+
+### 12.2 Purpose
+When the user provides a section reference (a number such as "1.5" or a descriptive string such as `fundamento y alcance del presente trabajo`), generate a concise report of differences between the source version and the corresponding version of the LaTeX manuscript.
+
+### 12.3 Search Protocol
+
+**Step 1: Interpret the reference**
+- If it is a number (e.g., "1.5", "2.3", "8.1.5"): search for section titles containing that number
+- If it is a descriptive string (e.g., `fundamento y alcance`, `coherencia de axiomas`): search for titles or content containing those keywords
+
+**Step 2: Search in the source document**
+- Search for the pattern in section titles (e.g., `### 1.5`, `#### 2.3.1`)
+- Extract the full content of the section (including following paragraphs up to the next section or subsection)
+
+**Step 3: Search in the LaTeX manuscript**
+- Search across all `.tex` files in the repository
+- Search for equivalent titles (e.g., `\subsection{...}`, `\subsubsection{...}`) or content corresponding to the same section
+- Extract the corresponding full content
+
+**Step 4: Compare and generate the report**
+
+### 12.4 Report Format
+
+The report must be **very concise** and include:
+
+1. **Location**: exact lines and titles in both documents
+2. **Main changes**: a short list of structural and content differences
+3. **Summary**: a synthesis of whether the conceptual content is equivalent or whether there are substantial differences
+
+**Report structure:**
+```
+## Comparison Report: Section [reference]
+
+### Location
+- **Source document**: lines X-Y (title: `...`)
+- **Manuscript `.tex` (file)**: lines X-Y (title: `...`)
+
+### Main changes
+Short list of structural and content differences, including:
+
+**A. Content/concept differences:**
+1. [Terminological, conceptual, or informational difference]
+
+**B. Style/structure differences:**
+1. [Repetition of structures, lack of parallelism, vague verbs, etc. - see §1 (Avoid) and §6]
+2. [Flow, clarity, or presentation problems]
+
+**C. Format differences (only if they affect meaning):**
+1. [Different mathematical notation, references, etc.]
+
+### Summary
+[Brief synthesis of conceptual equivalence or substantial differences, including correction recommendations if there are style problems]
+```
+
+### 12.5 Examples of Valid References
+
+- Section numbers: `1.5`, `2.3`, `8.1.5`, `III.1.5`
+- Descriptive strings: `fundamento y alcance`, `coherencia de axiomas`, `verificación computacional`
+- Mixed references: `§1.5`, `Sección 1.5`
+
+### 12.6 Important Notes
+
+- **Search both documents**: always compare the source with the manuscript, not just one of them
+- **Repo tools** (they replace hand search): when a repo ships comparison scripts —source `§X.Y` references missing in the `.tex`, `§` → LaTeX labels, source vs. PDF numbering— use those; the script inventory belongs to each repo and is not listed here
+- **Enough context**: include enough context (preceding/following paragraphs) to identify the correct section
+- **Different format**: remember that the source may use Markdown while the manuscript uses LaTeX - format differences (mathematical notation, references) are expected and must not be treated as content differences unless they change the meaning
+- **Concision**: the report must be brief and direct, focusing on substantial content differences, not on minor format differences
+
+---
+
+## 13. SOFTWARE AND CODE QUALITY
+
+Sections §1–§12 prescribe the quality of the **text**. This section prescribes the quality of the **code** that produces it, verifies it, and supports it (scripts, tests, supporting modules). It is mandatory in any code review of the repository, regardless of who wrote it.
+
+### 13.1 Doctrine
+
+- **Not self-baked.** For any functional need, use the standard library or a consolidated library from the ecosystem. With AI-assisted generation there are no legacy excuses ("that's how we inherited it from a Fortran of the 90s"): the code is rewritten against the standard library.
+- **Standard library first.** The table §13.3 is normative: `argparse` for CLI, `logging` for logging, `dataclasses` for data, `numpy.testing` for numerical verification, `pytest` for tests.
+- **Serious code review.** No module is incorporated without explicit code review —structure, contracts, tests, naming—; the review is neither a formality nor a mere procedure.
+- **The production module never tests itself.** Asserts live in the suite, never in the code that runs (defect **D2**).
+
+### 13.2 Defect taxonomy (D1–D7)
+
+Stable nomenclature, citable in audits (e.g., "D4 ×47"):
+
+- **D1 — Monolithic module**: a single file mixing data, logic, and presentation with no internal boundaries; changing one thing forces touching everything.
+- **D2 — Self-testing**: validation asserts inside production code; the module tests itself.
+- **D3 — Printing API / tests that parse stdout**: the interface returns text by printing and the tests parse it instead of receiving values.
+- **D4 — Logging via `append` with import side effects**: the log is filled with repeated `SECCIONES.append((46, '…', fn))` (e.g., ×47), so merely importing the module already has effects on global state.
+- **D5 — Hand-rolled CLI and `print` as log**: direct use of `sys.argv` without `argparse`, and `print` instead of `logging`.
+- **D6 — Asserts on literal prose sentences**: e.g., `assert "rel. 6.1e-05" in run.stdout`; the test asserts a string, not a value, and breaks on any reflow of the text.
+- **D7 — Ad hoc tolerances written per site**: every numerical comparison drags along its own literal tolerance, with no single source defining the precision.
+
+### 13.3 Self-baked → standard
+
+| Self-baked (defect) | Mandatory standard |
 |---|---|
-| `assert` internos del código de producción (D2) | `numpy.testing` — `assert_allclose` con `rtol` explícito y mensaje de fallo; precondiciones de entrada con `raise`. Lo que es test va a **`pytest`**. |
-| API que imprime y tests que parsean stdout (D3) | **`dataclasses`** que devuelven objetos; **`syrupy`** / **`pytest-snapshot`** únicamente para el contrato de stdout que el paper cita (§13.4) |
-| Registro por `append` con efectos de import (D4) | Mapa declarativo o decorador `@section(n, title)`; nunca `append` esparcido por el archivo |
-| CLI a mano con `sys.argv` y `print` como log (D5) | **`argparse`** para CLI; **`logging`** para registro; el reporte se renderiza desde datos estructurados, no desde strings impresos |
-| Verificación numérica escrita a mano y tolerancias por sitio (D6, D7) | **`numpy.testing`** + un **único helper de tolerancia**, cuyo valor es el ancho de la precisión que el documento imprime |
+| Internal `assert`s in production code (D2) | `numpy.testing` — `assert_allclose` with explicit `rtol` and failure message; input preconditions with `raise`. What is a test goes to **`pytest`**. |
+| Printing API and tests that parse stdout (D3) | **`dataclasses`** returning objects; **`syrupy`** / **`pytest-snapshot`** only for the stdout contract the paper cites (§13.4) |
+| Logging via `append` with import effects (D4) | Declarative map or `@section(n, title)` decorator; never `append` scattered through the file |
+| Hand-rolled CLI with `sys.argv` and `print` as log (D5) | **`argparse`** for CLI; **`logging`** for logging; the report is rendered from structured data, not from printed strings |
+| Hand-written numerical verification and per-site tolerances (D6, D7) | **`numpy.testing`** + a **single tolerance helper**, whose value is the width of the precision the document prints |
 
-**Además**: invariantes aleatorizadas → **`hypothesis`**, donde aporte cobertura real.
+**In addition**: randomized invariants → **`hypothesis`**, where it provides real coverage.
 
-### 13.4 Contrato de salida
+### 13.4 Output contract
 
-Si el documento **cita lo que un script imprime** (una cifra, un ratio, un renglón de salida), ese stdout se congela con un **test golden/snapshot** (`syrupy` o `pytest-snapshot`): el test falla si la salida citada cambia. Todo lo demás pasa a afirmar **valores**, nunca strings — así se elimina D6 por construcción.
+If the document **cites what a script prints** (a figure, a ratio, an output line), that stdout is frozen with a **golden/snapshot test** (`syrupy` or `pytest-snapshot`): the test fails if the cited output changes. Everything else moves to asserting **values**, never strings — this eliminates D6 by construction.
 
-### 13.5 Naming de tests y testigos
+### 13.5 Naming of tests and witnesses
 
-- **Ids de test**: `test_<qué_afirma>` en snake_case, atados al claim que verifican (no al archivo que ejecutan).
-- **Testigos internos** (`\tier`, `\witness`, `\testref`, y el censo de los ids citados): su gramática, sus reglas de escritura y su alfabeto son convención de cada repo y **no se copian aquí** — contrato en [`docs/citations.md`](citations.md) §8, justificación en [`docs/witness-rationale.md`](witness-rationale.md). Sólo el principio se enuncia: el nombre del testigo coincide **carácter a carácter** con el archivo `.lean` o la suite que lo declara; cualquier desviación es un defecto.
+- **Test ids**: `test_<qué_afirma>` in snake_case, tied to the claim they verify (not to the file they run).
+- **Internal witnesses** (`\tier`, `\witness`, `\testref`, and the census of the cited ids): their grammar, writing rules, and alphabet are each repo's convention and **are not copied here** — contract in [`docs/citations.md`](citations.md) §8, rationale in [`docs/witness-rationale.md`](witness-rationale.md). Only the principle is stated: the witness's name matches **character by character** with the `.lean` file or the suite that declares it; any deviation is a defect.
 
-### 13.6 Checklist de calidad de código
+### 13.6 Code quality checklist
 
-- [ ] ¿Se usa la librería estándar en lugar de código autohecho (§13.3)?
-- [ ] ¿Cero asserts dentro del módulo de producción (D2)?
-- [ ] ¿La API devuelve datos (`dataclasses`) y no texto impreso (D3)?
-- [ ] ¿El registro es declarativo, sin efectos secundarios de import (D4)?
-- [ ] ¿CLI con `argparse` y log con `logging`, reporte renderizado desde datos (D5)?
-- [ ] ¿Los tests afirman valores, no frases literales de prosa (D6)?
-- [ ] ¿Existe un único helper de tolerancia, igual al ancho de precisión impreso (D7)?
-- [ ] ¿El stdout que el paper cita está congelado en un test golden/snapshot (§13.4)?
-- [ ] ¿Ids `test_<qué_afirma>` en snake_case y testigos que coinciden carácter a carácter (§13.5)?
-- [ ] ¿Pasó code review seria (§13.1)?
+- [ ] Is the standard library used instead of self-baked code (§13.3)?
+- [ ] Zero asserts inside the production module (D2)?
+- [ ] Does the API return data (`dataclasses`) and not printed text (D3)?
+- [ ] Is the logging declarative, with no import side effects (D4)?
+- [ ] CLI with `argparse` and log with `logging`, report rendered from data (D5)?
+- [ ] Do the tests assert values, not literal prose sentences (D6)?
+- [ ] Is there a single tolerance helper, equal to the printed precision width (D7)?
+- [ ] Is the stdout cited by the paper frozen in a golden/snapshot test (§13.4)?
+- [ ] Ids `test_<qué_afirma>` in snake_case and witnesses matching character by character (§13.5)?
+- [ ] Did it pass serious code review (§13.1)?
 
-### 13.7 Doctrina de refactor de succinctness
+### 13.7 Succinctness refactor doctrine
 
-Cuando un conjunto de reglas (de este guide o de una taxonomía nueva) crezca, el refactor buscado es **densidad óptima**:
+When a set of rules (from this guide or a new taxonomy) grows, the sought refactor is **optimal density**:
 
-- Eliminar las **reglas intermedias** que, bajo un contexto más integrativo, serían **obvias para un modelo más grande**.
-- Conservar **sólo la regla que aporta algo no deducible** de las demás.
-- Consecuencia práctica: preferir **principios + criterios verificables** (auditables) frente a **listas de reglas enumeradas fruto de iteraciones pasadas**.
-- Toda regla superviviente se justifica en un frente concreto (cabecera, «Sin justificaciones tontas»); si no aporta nada no deducible ni tiene frente, se elimina.
+- Remove the **intermediate rules** that, under a more integrative context, would be **obvious to a larger model**.
+- Keep **only the rule that contributes something not deducible** from the others.
+- Practical consequence: prefer **principles + verifiable (auditable) criteria** over **enumerated rule lists resulting from past iterations**.
+- Every surviving rule is justified on a concrete front (header, "No silly justifications"); if it contributes nothing non-deductive and has no front, it is removed.
 
 ---
 
-## 14. PIPELINE TEX Y PROOFREADING
+## 14. TEX PIPELINE AND PROOFREADING
 
-Comandos del pipeline de la familia y reglas externas citadas; no duplica §1–§13, sólo lo que exige el tooling y el contraste con las fuentes de §14.5. Los comandos concretos, su verificación y sus artefactos viven en la documentación de cada área — **aquí no se repiten**.
+Commands of the family's pipeline and cited external rules; it does not duplicate §1–§13, only what the tooling requires and the contrast with the sources of §14.5. The concrete commands, their verification, and their artifacts live in each area's documentation — **they are not repeated here**.
 
-### 14.1 Comandos del pipeline de familia
+### 14.1 Family pipeline commands
 
-| Qué | Dónde está documentado |
+| What | Where it is documented |
 |---|---|
-| Compilar el PDF (`pnpm run build`), liberar (`pnpm run release`) y flujo diario | [`docs/usage.md`](usage.md) |
-| Regenerar las figuras (`pnpm run generate:figures`) y garantías de determinismo | [`docs/figures.md`](figures.md) |
-| Pipeline de citas (`citation.csl.json` → `src/bibliography.bib`, `CITATION.cff`, `.zenodo.json`) | [`docs/citations.md`](citations.md) §1–§7 |
-| Requisitos e instalación (Node, pnpm, Docker, uv) | [`docs/installation.md`](installation.md) |
-| Testigos, `\testref` y el censo de los tests citados | [`docs/citations.md`](citations.md) §8 (justificación en [`docs/witness-rationale.md`](witness-rationale.md)) |
+| Compile the PDF (`pnpm run build`), release (`pnpm run release`), and daily workflow | [`docs/usage.md`](usage.md) |
+| Regenerate the figures (`pnpm run generate:figures`) and determinism guarantees | [`docs/figures.md`](figures.md) |
+| Citation pipeline (`citation.csl.json` → `src/bibliography.bib`, `CITATION.cff`, `.zenodo.json`) | [`docs/citations.md`](citations.md) §1–§7 |
+| Requirements and installation (Node, pnpm, Docker, uv) | [`docs/installation.md`](installation.md) |
+| Witnesses, `\testref`, and the census of the cited tests | [`docs/citations.md`](citations.md) §8 (rationale in [`docs/witness-rationale.md`](witness-rationale.md)) |
 
-- **Supresión de avisos chktex**, de menor a mayor alcance: `% chktex N` al final de la línea → `% chktex-file N` en el archivo → `--nowarn N` en `CmdLine` de `.chktexrc`. `lacheck` **no** admite supresión por aviso: no sirve como gate (fuentes en §14.5). El estado del lint de cada repo es suyo y no se afirma aquí.
-- **§13 sigue siendo normativo para todo código nuevo**, con independencia del pipeline que el repo use.
+- **Suppression of chktex warnings**, from narrowest to broadest scope: `% chktex N` at the end of the line → `% chktex-file N` in the file → `--nowarn N` in `CmdLine` of `.chktexrc`. `lacheck` does **not** support per-warning suppression: it does not work as a gate (sources in §14.5). The lint status of each repo is its own and is not asserted here.
+- **§13 remains normative for all new code**, regardless of the pipeline the repo uses.
 
-### 14.2 Reglas tex con fuente externa (sólo no deducibles)
+### 14.2 TeX rules with external sources (only non-deductive ones)
 
-- **Entornos nuevos**: agregarse al bloque `\theoremstyle` del preámbulo compartiendo el contador — criterio verificable: `theorem` se reinicia con `[subsection]` y todo el resto declara `[theorem]`; si un entorno nuevo no comparte contador se rompe la numeración n.x.y (estilos `plain`/`definition`/`remark` documentados en Overleaf *Theorems and proofs*).
-- **Párrafos en teoremas**: la línea en blanco basta; `\par` no añade nada (§5.4).
-- **Conjuntos numéricos**: `\mathbb{…}` (`amsfonts`/`amssymb`); conjunto mínimo I N R Q Z; no crear macros propias `\R`/`\C` (TeX FAQ).
-- **Delimitadores**: display `\[...\]`, o `equation` sólo si la ecuación se cita; inline `$...$`/`\(...\)`; `$$...$$` no está entre los delimitadores LaTeX que lista Overleaf → no usarlo.
-- **Citas**: una sola fuente de metadatos de citas por repo, de la que los derivados se regeneran; en la familia es `citation.csl.json` → `src/bibliography.bib`. Reglas y criterio (toda clave citada existe en la fuente): [`docs/citations.md`](citations.md) §1 y §3, no se repiten aquí.
+- **New environments**: they are added to the preamble's `\theoremstyle` block sharing the counter — verifiable criterion: `theorem` is reset with `[subsection]` and everything else declares `[theorem]`; if a new environment does not share the counter, the n.x.y numbering breaks (styles `plain`/`definition`/`remark` documented in Overleaf *Theorems and proofs*).
+- **Paragraphs in theorems**: a blank line suffices; `\par` adds nothing (§5.4).
+- **Numeric sets**: `\mathbb{…}` (`amsfonts`/`amssymb`); minimal set I N R Q Z; do not create your own `\R`/`\C` macros (TeX FAQ).
+- **Delimiters**: display `\[...\]`, or `equation` only if the equation is cited; inline `$...$`/`\(...\)`; `$$...$$` is not among the LaTeX delimiters listed by Overleaf → do not use it.
+- **Citations**: a single source of citation metadata per repo, from which the derived files are regenerated; in the family it is `citation.csl.json` → `src/bibliography.bib`. Rules and criterion (every cited key exists in the source): [`docs/citations.md`](citations.md) §1 and §3, not repeated here.
 
-### 14.3 Proofreading: método (no duplica §1/§6)
+### 14.3 Proofreading: method (does not duplicate §1/§6)
 
-1. **Orden**: primero contenido y estructura; el proofreading de superficie **al final** (UNC Writing Center).
-2. **Pasadas separadas**: gramática → ortografía → puntuación → estilo/consistencia → claridad → tono; salida con tabla anotada de cambios y distinguiendo error objetivo de sugerencia subjetiva (proofreading SKILL.md).
-3. **Técnicas verificables**: leer en voz alta frase a frase; leer hacia atrás desde la última frase; recuadrar cada pronombre y flechar su referente (GMU, *Editing Checklist*).
-4. **Skills públicos revisados**: `anthropics/skills` **no** incluye un skill de proofreading (su README sólo lista `docx`/`pdf`/`pptx`/`xlsx`); como estándar `SKILL.md`, `easyzoom/proofreader-skill`; índice de skills académicas con categoría de peer review, `awesome-academic-skills`.
+1. **Order**: content and structure first; surface proofreading **last** (UNC Writing Center).
+2. **Separate passes**: grammar → spelling → punctuation → style/consistency → clarity → tone; output with an annotated table of changes, distinguishing objective errors from subjective suggestions (proofreading SKILL.md).
+3. **Verifiable techniques**: read aloud sentence by sentence; read backwards from the last sentence; box every pronoun and arrow its referent (GMU, *Editing Checklist*).
+4. **Reviewed public skills**: `anthropics/skills` does **not** include a proofreading skill (its README only lists `docx`/`pdf`/`pptx`/`xlsx`); as a `SKILL.md` standard, `easyzoom/proofreader-skill`; index of academic skills with a peer-review category, `awesome-academic-skills`.
 
-### 14.4 Checklist tex/proofreading
+### 14.4 TeX/proofreading checklist
 
-- [ ] ¿`pnpm run build` compila sin errores (latexmk + biber) — comandos en [`docs/usage.md`](usage.md)?
-- [ ] ¿`chktex` sin avisos nuevos y cada `% chktex N` justificado en su línea?
-- [ ] ¿Referencias cruzadas con los macros de §2.2, ninguna escrita a mano?
-- [ ] ¿Toda clave citada existe en la fuente de citas del repo (§14.2, [`docs/citations.md`](citations.md) §3)?
-- [ ] ¿Proofreading por pasadas y al final, con tabla de cambios (§14.3)?
+- [ ] Does `pnpm run build` compile without errors (latexmk + biber) — commands in [`docs/usage.md`](usage.md)?
+- [ ] Is `chktex` free of new warnings and is each `% chktex N` justified on its line?
+- [ ] Cross-references using the macros of §2.2, none written by hand?
+- [ ] Does every cited key exist in the repo's citation source (§14.2, [`docs/citations.md`](citations.md) §3)?
+- [ ] Proofreading done in passes and at the end, with a table of changes (§14.3)?
 
-### 14.5 Fuentes (todas recuperadas el 2026-11-16)
+### 14.5 Sources (all retrieved on 2026-11-16)
 
 - Overleaf — *Theorems and proofs*: https://www.overleaf.com/learn/latex/Theorems_and_proofs
 - Overleaf — *Mathematical expressions*: https://www.overleaf.com/learn/latex/Mathematical_expressions
 - The TeX FAQ — *Symbols for the number sets* (Q-numbersets): https://texfaq.org/FAQ-numbersets
 - TeX.SE — *Suppress lacheck error* (2014-01-22): https://tex.stackexchange.com/questions/155424/suppress-lacheck-error
-- TeX.SE — *chktex warning: You ought to not use primitive TeX in LaTeX code* (2019-02-08, respuesta del mantenedor de ChkTeX): https://tex.stackexchange.com/questions/473890/chktex-warning-you-ought-to-not-use-primitive-tex-in-latex-code
+- TeX.SE — *chktex warning: You ought to not use primitive TeX in LaTeX code* (2019-02-08, answer from the ChkTeX maintainer): https://tex.stackexchange.com/questions/473890/chktex-warning-you-ought-to-not-use-primitive-tex-in-latex-code
 - AMS/CTAN — `amsclass.dtx` (`amsart`/`amsthm`): https://mirrors.ctan.org/macros/latex/required/amscls/doc/amsclass.pdf
 - UNC Writing Center — *Editing and Proofreading* (2011-12-28): https://writingcenter.unc.edu/tips-and-tools/editing-and-proofreading/
 - GMU Writing Center — *Editing Checklist*: https://writingcenter.gmu.edu/writing-resources/writing-as-process/editing-checklist
