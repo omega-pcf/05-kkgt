@@ -88,14 +88,14 @@ stdout line; it is not cited either).
 | 14 | `seccion_14` | `test_section_runs_and_prints_its_number[section-14]` | — (0 claims) | — | `kkgt/sections/s09_16.py` | [ ] |
 | 15 | `seccion_15` | `test_section_runs_and_prints_its_number[section-15]` | — (0 claims) | — | `kkgt/sections/s09_16.py` | [ ] |
 | 16 | `seccion_16` | `test_section_runs_and_prints_its_number[section-16]`, `test_printed_values` | — (0 claims) | — | `kkgt/sections/s09_16.py` | [ ] |
-| 17 | `seccion_17` | `test_section_runs_and_prints_its_number[section-17]`, `test_monte_carlo_error` | — (0 claims) | — | `kkgt/sections/s17_24.py` | [ ] |
-| 18 | `seccion_18` | `test_section_runs_and_prints_its_number[section-18]`, `test_lambda_times_s_is_six_pi` | — (0 claims) | — | `kkgt/sections/s17_24.py` | [ ] |
-| 19 | `seccion_19` | `test_section_runs_and_prints_its_number[section-19]` | — (0 claims) | — | `kkgt/sections/s17_24.py` | [ ] |
-| 20 | `seccion_20` | `test_section_runs_and_prints_its_number[section-20]` | — (0 claims) | — | `kkgt/sections/s17_24.py` | [ ] |
-| 21 | `seccion_21` | `test_section_runs_and_prints_its_number[section-21]` | — (0 claims) | — | `kkgt/sections/s17_24.py` | [ ] |
-| 22 | `seccion_22` | `test_section_runs_and_prints_its_number[section-22]` | — (0 claims) | — | `kkgt/sections/s17_24.py` | [ ] |
-| 23 | `seccion_23` | `test_section_runs_and_prints_its_number[section-23]`, `test_the_background_level_is_twelve` | — (0 claims) | — | `kkgt/sections/s17_24.py` | [ ] |
-| 24 | `seccion_24` | `test_section_runs_and_prints_its_number[section-24]` | — (0 claims) | — | `kkgt/sections/s17_24.py` | [ ] |
+| 17 | `seccion_17` | `test_section_runs_and_prints_its_number[section-17]`, `test_monte_carlo_error` | — (0 claims) | — | `kkgt/sections/s17_24.py` | [x] |
+| 18 | `seccion_18` | `test_section_runs_and_prints_its_number[section-18]`, `test_lambda_times_s_is_six_pi` | — (0 claims) | — | `kkgt/sections/s17_24.py` | [x] |
+| 19 | `seccion_19` | `test_section_runs_and_prints_its_number[section-19]` | — (0 claims) | — | `kkgt/sections/s17_24.py` | [x] |
+| 20 | `seccion_20` | `test_section_runs_and_prints_its_number[section-20]` | — (0 claims) | — | `kkgt/sections/s17_24.py` | [x] |
+| 21 | `seccion_21` | `test_section_runs_and_prints_its_number[section-21]` | — (0 claims) | — | `kkgt/sections/s17_24.py` | [x] |
+| 22 | `seccion_22` | `test_section_runs_and_prints_its_number[section-22]` | — (0 claims) | — | `kkgt/sections/s17_24.py` | [x] |
+| 23 | `seccion_23` | `test_section_runs_and_prints_its_number[section-23]`, `test_the_background_level_is_twelve` | — (0 claims) | — | `kkgt/sections/s17_24.py` | [x] |
+| 24 | `seccion_24` | `test_section_runs_and_prints_its_number[section-24]` | — (0 claims) | — | `kkgt/sections/s17_24.py` | [x] |
 | 25 | `seccion_25` | `test_section_runs_and_prints_its_number[section-25]` | — (0 claims) | — | `kkgt/sections/s25_32.py` | [ ] |
 | 26 | `seccion_26` | `test_section_runs_and_prints_its_number[section-26]` | — (0 claims) | — | `kkgt/sections/s25_32.py` | [ ] |
 | 27 | `seccion_27` | `test_section_runs_and_prints_its_number[section-27]` | — (0 claims) | — | `kkgt/sections/s25_32.py` | [ ] |
