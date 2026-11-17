@@ -3262,6 +3262,59 @@
     "DOI": "10.1007/JHEP06(2015)149"
   },
   {
+    "id": "ADH15",
+    "type": "article-journal",
+    "title": "Bulk locality and quantum error correction in AdS/CFT",
+    "author": [
+      {
+        "given": "Ahmed",
+        "family": "Almheiri"
+      },
+      {
+        "given": "Xi",
+        "family": "Dong"
+      },
+      {
+        "given": "Daniel",
+        "family": "Harlow"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2015
+        ]
+      ]
+    },
+    "container-title": "Journal of High Energy Physics",
+    "volume": "2015",
+    "issue": "4",
+    "page": "163",
+    "DOI": "10.1007/JHEP04(2015)163"
+  },
+  {
+    "id": "Mar18",
+    "type": "posted-content",
+    "title": "Holographic codes on Bruhat--Tits buildings and Drinfeld symmetric spaces",
+    "author": [
+      {
+        "given": "Matilde",
+        "family": "Marcolli"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2018
+        ]
+      ]
+    },
+    "container-title": "arXiv",
+    "note": "arXiv:1801.09623; published version: Pure and Applied Mathematics Quarterly 16 (2020) no. 1, 1--33, doi:10.4310/PAMQ.2020.v16.n1.a1",
+    "DOI": "10.48550/arXiv.1801.09623",
+    "URL": "https://arxiv.org/abs/1801.09623"
+  },
+  {
     "id": "JE21",
     "type": "article-journal",
     "title": "Holographic tensor network models and quantum error correction: a topical review",

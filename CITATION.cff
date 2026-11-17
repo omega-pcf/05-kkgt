@@ -2275,6 +2275,42 @@ references:
     type: article
     volume: "2015"
   - authors:
+      - family-names: Almheiri
+        given-names: Ahmed
+      - family-names: Dong
+        given-names: Xi
+      - family-names: Harlow
+        given-names: Daniel
+    doi: 10.1007/JHEP04(2015)163
+    identifiers:
+      - type: doi
+        value: 10.1007/JHEP04(2015)163
+    title: Bulk locality and quantum error correction in AdS/CFT
+    date-published: 2015-01-01
+    year: 2015
+    issue: "4"
+    journal: Journal of High Energy Physics
+    start: "163"
+    type: article
+    volume: "2015"
+  - authors:
+      - family-names: Marcolli
+        given-names: Matilde
+    doi: 10.48550/arXiv.1801.09623
+    identifiers:
+      - type: doi
+        value: 10.48550/arXiv.1801.09623
+      - type: url
+        value: https://arxiv.org/abs/1801.09623
+    title: Holographic codes on Bruhat--Tits buildings and Drinfeld symmetric spaces
+    url: https://arxiv.org/abs/1801.09623
+    date-published: 2018-01-01
+    year: 2018
+    journal: arXiv
+    notes: "arXiv:1801.09623; published version: Pure and Applied Mathematics
+      Quarterly 16 (2020) no. 1, 1--33, doi:10.4310/PAMQ.2020.v16.n1.a1"
+    type: historical-work
+  - authors:
       - family-names: Jahn
         given-names: Alexander
       - family-names: Eisert
