@@ -21,8 +21,22 @@ import time
 from dataclasses import dataclass
 from pathlib import Path
 
+from .constants import C_LIGHT, G_NEWTON, HBAR, MPC_M
+
 # tests/src/kkgt/harness.py -> repo root = Path(...).parents[3]
 REPO_ROOT = Path(__file__).resolve().parents[3]
+
+
+def lam_planck(h0: float, omega_l: float) -> float:
+    """``Lambda l_P^2`` from H0 (km/s/Mpc) and Omega_L -- sections 22/23.
+
+    The same formula existed twice, as ``kkgt.sections._LamP`` and as the
+    local ``lam_planck`` of the section 17-28 tests; this is its single
+    origin (SEC-001, layer 1).  ``kkgt.sections`` aliases it as ``_LamP``.
+    """
+    h = h0 * 1e3 / MPC_M
+    l_p2 = HBAR * G_NEWTON / C_LIGHT ** 3
+    return 3 * h * h * omega_l / C_LIGHT ** 2 * l_p2
 
 
 def load_sections():

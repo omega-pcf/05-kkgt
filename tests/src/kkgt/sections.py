@@ -13,7 +13,17 @@ also needs mpmath.
 """
 import sys
 
-from .constants import M_GEV, M_KOIDE_MEV, M_PLANCK_GEV, M_TAU_MEV
+from .constants import (
+    C_LIGHT,
+    G_NEWTON,
+    HBAR,
+    MPC_M,
+    M_GEV,
+    M_KOIDE_MEV,
+    M_PLANCK_GEV,
+    M_TAU_MEV,
+)
+from .harness import lam_planck
 
 SECCIONES = []
 
@@ -969,10 +979,8 @@ SECCIONES.append((21, 'The two-brane rival fitted to the same two candidates', s
 # ======================================================================
 # 22. The unit of the curvature and the observer level
 # ======================================================================
-_C = dict(hbar=1.054571817e-34, c=299792458.0, G=6.67430e-11, Mpc=3.0856775814913673e22)
-def _LamP(H0, OL):
-    H = H0 * 1e3 / _C['Mpc']; lP2 = _C['hbar'] * _C['G'] / _C['c'] ** 3
-    return 3 * H * H * OL / _C['c'] ** 2 * lP2
+_C = dict(hbar=HBAR, c=C_LIGHT, G=G_NEWTON, Mpc=MPC_M)   # single origin: kkgt.constants
+_LamP = lam_planck   # single origin: kkgt.harness.lam_planck (same signature)
 def seccion_22():
     import math
     phi = (1 + 5 ** 0.5) / 2; L = math.log(phi); GN = 0.5

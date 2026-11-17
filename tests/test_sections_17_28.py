@@ -12,24 +12,29 @@ import math
 import numpy as np
 import pytest
 
-from kkgt.constants import LN_PHI, M_GEV, M_KOIDE_MEV, M_PLANCK_GEV, M_PCF, PHI, M_TAU_MEV
+from kkgt.constants import (
+    C_LIGHT,
+    G_NEWTON,
+    HBAR,
+    LN_PHI,
+    M_GEV,
+    M_KOIDE_MEV,
+    M_PLANCK_GEV,
+    M_PCF,
+    M_TAU_MEV,
+    MPC_M,
+    PHI,
+    PHI_BAR,
+)
+from kkgt.harness import lam_planck
 
-# physical constants, exactly as the script uses them (CODATA 2018)
-HBAR = 1.054571817e-34          # J s
+# HBAR/C_LIGHT/G_NEWTON/MPC_M and lam_planck are single-sourced in
+# kkgt.constants / kkgt.harness (SEC-001, layer 1).  The three below also
+# appear inside section bodies, which layer 1 does not touch.
 HBAR_EVS = 6.582119569e-16      # eV s
-C_LIGHT = 299792458.0           # m/s
-G_NEWTON = 6.67430e-11          # m^3 kg^-1 s^-2
-MPC_M = 3.0856775814913673e22   # m
 MPC_KM = 3.0856775814913673e19  # km
 LP_M = 1.616255e-35             # m
 U_EV = M_KOIDE_MEV * 1e6 / M_PCF   # the unit of (F1), eV
-
-
-def lam_planck(h0: float, omega_l: float) -> float:
-    """Lambda l_P^2 from H0 (km/s/Mpc) and Omega_L -- section 22/_LamP."""
-    h = h0 * 1e3 / MPC_M
-    l_p2 = HBAR * G_NEWTON / C_LIGHT**3
-    return 3 * h * h * omega_l / C_LIGHT**2 * l_p2
 
 
 # ══════════════════════════════════════════════════════════ section 17 ══
@@ -303,8 +308,6 @@ class TestSection24ScaleAndTop:
 class TestSection25AutodualWindow:
     """section 25 -- 'The cut and projection with the self-dual Gaussian, in both spaces'"""
 
-    PHI_BAR = (1 - 5 ** 0.5) / 2
-
     @classmethod
     def best(cls, x, rad=0.6):
         out = []
@@ -313,7 +316,7 @@ class TestSection25AutodualWindow:
             for a in (a0 - 1, a0, a0 + 1):
                 v = a + b * PHI
                 if abs(v - x) < rad:
-                    c = a + b * cls.PHI_BAR
+                    c = a + b * PHI_BAR
                     out.append((math.exp(-math.pi * c * c), a, b, v))
         return sorted(out, reverse=True)[:2]
 

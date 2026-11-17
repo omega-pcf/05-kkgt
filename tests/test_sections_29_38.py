@@ -14,12 +14,18 @@ import numpy as np
 import pytest
 from scipy.special import jn_zeros
 
-from kkgt.constants import LN_PHI, M_GEV, M_PLANCK_GEV, M_PCF, PHI
+from kkgt.constants import (
+    C_LIGHT,
+    G_NEWTON,
+    HBAR,
+    LN_PHI,
+    M_GEV,
+    M_PLANCK_GEV,
+    M_PCF,
+    MPC_M,
+    PHI,
+)
 
-HBAR = 1.054571817e-34
-C_LIGHT = 299792458.0
-G_NEWTON = 6.67430e-11
-MPC_M = 3.0856775814913673e22
 LP2 = HBAR * G_NEWTON / C_LIGHT**3          # Planck length squared, m^2
 H100 = 100e3 / MPC_M                        # h = 100 km/s/Mpc in s^-1
 

@@ -1,10 +1,12 @@
 """Constants shared by the tests of the manuscript.
 
-Every value here is either a closed form (golden ratio, M_PCF, ...) or a
-number ``kkgt.sections`` prints and ``main.tex`` cites; the comment on each
-line records the section that produces it, so the section->test mapping of
-the suite stays auditable.  The tau mass had two live definitions; it is now
-single-sourced below (SEC-001, layer 1).
+Every value here is either a closed form (golden ratio, M_PCF, ...), a
+number ``kkgt.sections`` prints and ``main.tex`` cites, or a physical
+constant the package and the tests both need; the comment on each line
+records the section that produces it, so the section->test mapping of the
+suite stays auditable.  Constants with two live definitions used to be
+re-typed per file -- the tau mass and the CODATA values below are now
+single-sourced here (SEC-001, layer 1).
 """
 
 from __future__ import annotations
@@ -32,10 +34,15 @@ M_PLANCK_GEV = 1.22089e19                 # section 24 prints 1.22089e+19 (from 
 
 # ── Sections 1, 16, 24: the tau mass that goes into M (F1) ───────────────
 # One origin: only 1776.86 reproduces the printed M = 313.84 MeV (the
-# former tau mass gave 313.851), matching sections 1, 16 and 24 and both
-# reproduction scripts (AUD-001 section 9).  Every user of m_tau imports
-# it from here.
+# former tau mass gave 313.851), matching sections 1, 16 and 24 and both reproduction
+# scripts (AUD-001 section 9).  Every user of m_tau imports it from here.
 M_TAU_MEV = 1776.86                       # MeV
+
+# ── Physical constants (CODATA 2018 / SI), as the sections use them ──────
+HBAR = 1.054571817e-34                    # J s
+C_LIGHT = 299792458.0                     # m/s
+G_NEWTON = 6.67430e-11                    # m^3 kg^-1 s^-2
+MPC_M = 3.0856775814913673e22             # m
 
 # ── Sections 10, 44, 13, 39, 41: the five figures of the manuscript ───────
 # main.tex includes exactly these five files and attributes each to a section.
