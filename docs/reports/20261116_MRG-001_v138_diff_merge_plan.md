@@ -252,3 +252,221 @@ Nothing below is executed; each wave lists what to port, its gate, and its risk.
 * Whether the author's `figuras_v136.py`→`v138` layout numbers interact with our determinism patches was not executed (no figure regeneration was run).
 * Section-47 tests do not exist yet (Wave 4); `tests/` is owned by other agents during this analysis and was left untouched.
 * The author's per-section prose was counted, not line-by-line proofread; the report trusts the diff for what changed, not for what it means.
+
+---
+
+# Wave W1 — applied
+
+| Field | Value |
+|---|---|
+| **wave** | W1 of §4 — *freeze the grammar* (preamble, classes, anchors) |
+| **date** | 2026-11-17 |
+| **scope** | `main.tex` + this report only; `tests/`, `scripts/`, `citation.csl.json`, `lean/`, `images/` untouched |
+| **commits** | one conventional commit for this section; **no push** |
+| **outcome** | every gate green; `main.tex` needed **zero byte changes** — measured below, not assumed |
+
+## W1.0 The measured state, and why `main.tex` did not move
+
+The R/L/P\*/`\Lean{}` marks of this wave live in **the author's file**, not in ours. Whole-file
+counts (`grep -o -F … | wc -l`, so occurrences and not lines):
+
+| token | `kk_golden_throat_v138.tex` | `main.tex` (HEAD `e77b015`) |
+|---|---|---|
+| `\tier{R}` | 20 | **0** |
+| `\tier{L}` | 8 | **0** |
+| `\tier{P*}` | 22 | **0** (only the colour hook `main.tex:53`) |
+| `\Lean{` | 185 | **0** |
+| `\LeanCW{` | 6 | **0** |
+| classes printed by the body | N 80, P\* 22, R 20, P 12, L 8 | **P 172, N 58** (the other 3 hits are the preamble comment `main.tex:28,60,64`) |
+
+So "migrating" them means deciding, claim by claim, what each becomes in our grammar and
+applying it **only where our text still disagrees**. It does not mean a blind `sed` over
+`main.tex`: the classes were already removed once (`923358d`) and the names already migrated
+once (`bcee5eb`, DEC-001 §6). The three tables below are that decision record; the
+`main.tex` column is the evidence that each row is already in its target form.
+
+The author's prose was **not** ported in this wave. Three of the sites are new author content
+(R4, R13, R14 below) and one new Lean name (`pentagon_side_golden`); porting them now would
+introduce `\cite{ADH15}`, `\cite{Mar18}` (Wave 2 keys) and a name absent from `v34`, i.e. it
+would break the very gates this wave freezes. They are queued, not guessed.
+
+## W1.1 The 28 `R`/`L` sites, claim by claim
+
+`R` → prose (no mark) and `L` → the citation stays, is what `docs/citations.md` §8.3 already
+rules ("Why there is no `R`", "Why there is no `L`"); where the claim *is* witnessed, the
+target is `P` with an external source or `N` with a test, per the W1 rule. `status` is
+`resolved` (our text already holds the target), `new` (the claim is not in our text → Wave 3),
+`bring-up` (ambiguous or blocked — not guessed).
+
+### `R` — 20 sites (1 legend + 19 body)
+
+| # | theirs | claim | ours | status |
+|---|---|---|---|---|
+| R1 | L81 | the legend line itself (`R` a reading …) | our gloss `main.tex:253-258` declares `P`,`N` only | not ported — **our gloss stands** (the taxonomy decision) |
+| R2 | L165 | "its relation to the $AdS_2$ throat is a comparison of form" | `main.tex:288` same sentence, no mark | resolved → prose |
+| R3 | L538 | caption (d): "the turn to the face is a reading" | `main.tex:661` "the turn is a reading, and the passage the paper proves is (c)" | resolved → prose (§8.2 rule 8: no tags in captions) |
+| R4 | L878 | "…one microstate, and no ensemble" — a QEC reading citing `ADH15,PYHP15` | absent: no `ADH15`, no "code subspace" in `main.tex` | **new** → Wave 2 (`ADH15`) + Wave 3; target = prose, no mark |
+| R5 | L915 | "each level reaches a distinguishable state in exactly its own time, and only with the weight $\tfrac12$" | `main.tex:1050`, no mark (the sentence's Lean names carry `P[…]`) | resolved → prose |
+| R6 | L1533 | "a translation … that loses nothing of what is counted" | `main.tex:1665` | resolved → prose |
+| R7 | L1758 | "that they are one twelve is a reading" | `main.tex:1901` "…and that they are one twelve is a reading." | resolved → prose |
+| R8 | L1786 | "so the three columns are a comparison of form" | `main.tex:1931` | resolved → prose |
+| R9 | L1854 | "$\varepsilon\tau=\pi$ … alternates as the half-turn does from level to level" | `main.tex:2000`, no mark (`P[closure_each_level]` sits earlier in the sentence) | resolved → prose |
+| R10 | L1854 | "in five, the throat, whose step $\log\golden$ is the regulator of $\mathbb Z[\golden]$" | `main.tex:2000` "(read through `\S\ssec:math`)" | resolved → prose |
+| R11 | L1887 | "Both are comparisons of form" | `main.tex:2033` | resolved → prose |
+| R12 | L1893 | "both read the golden lattice through rational ratios" | `main.tex:2040` | resolved → prose |
+| R13 | L1893 | "a holographic code is built from perfect tensors of several legs `\cite{PYHP15}` (section 47 of `\code{reproduce_v138.py}`)" | absent (`perfect tensors`, section 47 → 0 hits) | **new** → Wave 3 (section 47) |
+| R14 | L1893 | "exists only for $p=2$ `\cite{Mar18}`" | absent (`Mar18` → 0 hits) | **new** → Wave 2 (`Mar18`) + Wave 3; target = prose |
+| R15 | L1936 | "the particles of a level observe it" | `main.tex:2084` "…observe it---a reading of the records, not a result about them." | resolved → prose |
+| R16 | L1959 | `\tier{R}` standing **after** a full stop, marking "…which the note does not compute." | `main.tex:2107` the sentence is kept, no mark | resolved → prose |
+| R17 | L2007 | "…with weight $e^{-\pi}$, not at the edge of the window" | `main.tex:2160` | resolved → prose |
+| R18 | L2019 | "the comparison is of form, not an identification" | `main.tex:2172` | resolved → prose |
+| R19 | L2038 | "of the gravitational response of about a thousand bits at the scale of the leptons" | `main.tex:2191`, no mark; the next sentence carries `\tier{P} in~\cite{CW6} for the weld` | resolved → prose |
+| R20 | L2260 | "Read with (F10), three more of these accounts change place" | `main.tex:2412` | resolved → prose |
+
+**16 of the 19 body `R` claims are already prose in our text; 3 are author-new (R4, R13, R14).**
+
+### `L` — 8 sites (1 legend + 7 body)
+
+| # | theirs | claim | ours | status | target under the W1 rule |
+|---|---|---|---|---|---|
+| L1 | L81 | the legend line itself (`L` cited) | our gloss `main.tex:253-258` | not ported — **our gloss stands** | — |
+| L2 | L834 | "the Euler characteristic is classical `\cite{Ser71}`" — preceded by $\chi(\mathrm{SL}_2(\mathbb Z))=\tfrac14+\tfrac16-\tfrac12=\zeta(-1)$, tagged `\tier{N}\tier{L}` | `main.tex:966` citation only, **no mark** | **bring-up (blocked)** | `N[\testref{test_the_chain_of_twelves}]` — that test asserts `-1/zeta(-1) == 12` — but the id is **not** in the census's pinned set and `tests/` belongs to another worker, so the `\testref` and its census line must land together in one pass that owns both files |
+| L3 | L989 | "the lemniscatic value `\cite{WW27}`" | `main.tex:1126-1127` `N[\testref{test_theta3_at_tau_i}]` | resolved | **N** ✓ |
+| L4 | L1178 | "`\tier{L}` for the continuum statement `\cite{RS99,DHR00}`" | `main.tex:1314` "For the continuum statement *see* `\cite{RS99,DHR00}`" | resolved — a cross-reference, not a claim (§8.3) | no mark |
+| L5 | L1273 | "$\Gamma\propto x^{3}$ `\cite{DHR00}`" | `main.tex:1408` citation only, no mark | **bring-up (ambiguous)** | literal W1 rule → `[P] in~\cite{DHR00}` *or* `[N]~\cite{DHR00}`; §8.3 would keep the bare citation. Not guessed |
+| L6 | L1349 | "the two-brane masses on a deep throat are $m_k=j_{1,k}\,k\,e^{-k\pi r}$ `\cite{RS99,DHR00}`" | `main.tex:1482-1484` citation kept; the proof closes `\tier{P}.` | resolved | **P** ✓ |
+| L7 | L1399 | "`partition_T_invariant` `\cite{Apo90}` for the transformation law of $\eta$" | `main.tex:1578` `N[\testref{test_the_lambda_transformation_laws_hold_to_1e_16}]` | resolved | **N** ✓ |
+| L8 | L1980 | "below the bound of trans-Planckian censorship `\tier{N}~\tier{L}`" | `main.tex:2131-2132` `\cite{BV20}` + `N[\testref{test_distance_to_the_measured_lambda}]` | resolved | **N** ✓, `L` dropped |
+
+**5 of the 7 body `L` claims are resolved (3 → `N`, 1 → `P`, 1 → citation only); 2 are
+bring-up (L2 blocked on the census, L5 ambiguous).**
+
+## W1.2 The 22 `P*` sites — reconciled
+
+Our `P*` is internal (`docs/citations.md` §8.2 rule 7, §8.3): it renders `[P*]` in ochre for a
+draft between builds, is **not** in the gloss and is never printed by the released text — the
+body marks those claims `P`. Every author site below is therefore either an internal mark we
+already carry as `P[…]`, or a line of his prose we already hold without the mark.
+
+| # | theirs | content | ours | status |
+|---|---|---|---|---|
+| P\*1 | L80 | the legend line `\tier{P*} written in Lean, not yet compiled` | our gloss `main.tex:253-258` | **not ported** — internal class, never in the gloss |
+| P\*2 | L752 | "those marked `\tier{P*}` are proved again in this note's Lean module" | `main.tex:877-878` "…collected here so that the note can be read on its own, and this note's Lean module proves several of them again." | resolved → prose |
+| P\*3 | L773 | `sq_add_inv_sq` | `main.tex:901` `\tier[sq\_add\_inv\_sq]{P}` | resolved |
+| P\*4 | L784 | `certainty_principle, log_from_scale` | `main.tex:913` `\witness{P}{…}` | resolved |
+| P\*5 | L800 | `lattice_radius_conjugate` | `main.tex:931` `\tier[…]{P}` | resolved |
+| P\*6 | L806 | `additive_law_forces_golden` | `main.tex:938` `\tier[…]{P}` | resolved |
+| P\*7 | L812 | "the level of $\golden$ are one quantity, in the unit $\lambda$" | `main.tex:944-945` `\witness{P}{golden\_valuation\_on\_tower, two\_adic\_is\_level}` | resolved |
+| P\*8 | L822 | `golden_eq_two_cos_pi_div_five, golden_self_reference` | `main.tex:955-956` `\witness{P}{…}` | resolved |
+| P\*9 | L840 | `exponent_angle_radius, angle_has_modulus_one` | `main.tex:974` `\witness{P}{…}` | resolved |
+| P\*10 | L844 | `spectral_angle_ratio` | `main.tex:978` `\tier[…]{P}` | resolved |
+| P\*11 | L1094 | `eta_symmetrizes, eta_eq_exp_fourA, D_sq_eq_eta, D_conjugated_hops_equal` | `main.tex:1231` `\witness{P}{…}` | resolved |
+| P\*12 | L1132 | `bloch_complexified, bloch_factor_is_hop, …, ring_constant_mode, ring_mode_below_BF` | `main.tex:1269-1270` `\witness{P}{…}` | resolved |
+| P\*13 | L1207 | "$d=n+1$, axiom (F2), the arity $n=3$, $\nu=1$ and the phase is $\tfrac14$" | `main.tex:1344` `\witness{P}{phase\_of\_dimension, phase\_quarter\_iff, phase\_from\_arity}` | resolved |
+| P\*14 | L1247 | `D_conjugated_hop_is_one` (beside a `\tier{N}`) | `main.tex:1383` `\tier[D\_conjugated\_hop\_is\_one]{P}` | resolved |
+| P\*15 | L1326 | `rs_warp_is_golden, rs_depth_is_levels, rs_scale_is_H_at_bottom, rs_kpir_from_uv` | `main.tex:1461-1462` `\witness{P}{…}` | resolved |
+| P\*16 | L1344 | `scale_operator_at_bottom` | `main.tex:1478` `\tier[…]{P}` | resolved |
+| P\*17 | L1350 | the proof of the two-brane masses closes `\tier{P*}.` | `main.tex:1484` `\tier{P}.` | resolved → `P` |
+| P\*18 | L1692 | "the torus $\eta=\pi/4$ is fixed by the mirror, and the levels $\eta_n$ are placed by $\golden$ (section 46)" — `\tier{P*}~\tier{N}` | `main.tex:1832` `\witness{P}{tan\_eta, level\_zero\_is\_clifford, clifford\_square}` + `main.tex:1833` `\witness{N}{\testref{test\_a\_torus…}, \testref{test\_the\_flat\_tori…}}` | resolved → `P` + `N` |
+| P\*19 | L1961 | `window_crosses_half, hubble_below_bulk_crossing` | `main.tex:2110` `\witness{P}{…}` | resolved |
+| P\*20 | L2038 | "`\tier{P*}` for the weld" | `main.tex:2191` `\tier{P} in~\cite{CW6} for the weld` | resolved → `P` with the external source |
+| P\*21 | L2076 | "`\tier{P*}` for the identities; the reading is axioms (F6) and (F7)" | `main.tex:2229` `\tier[area\_law\_4d\_meets\_weld\_iff, phase\_equals\_inverse\_dimension\_iff]{P} for the identities` | resolved |
+| P\*22 | L2150 | `old_symmetrizer_fails` | `main.tex:2302` `\tier[…]{P}` | resolved |
+
+**21 of 21 body `P*` sites resolved; 0 new; 1 legend line not ported by decision.**
+
+## W1.3 The 185 `\Lean{}` and 6 `\LeanCW{}` sites
+
+| measure | value |
+|---|---|
+| `\Lean{` occurrences in theirs | **185** (169 unique internal names) |
+| occurrences whose **every** name already sits in one of our `\tier[names]{P}` / `\witness{P}{…}` marks | **184 / 185** |
+| occurrences not yet carried | **1** — theirs L1893, `pentagon_side_golden` (the new pentagon passage) |
+| `\LeanCW{` occurrences | **6** (11 unique names, all external CW6 declarations) — all resolved: ours keeps `\tier{P} in~\cite{CW6}` (`main.tex:987`, `1027`, `1032`) and the bracket of external names is gone, per §8.2 rule 8 (an external source is the citation, never a bracket with a name) |
+| names our text carries that the author does **not** cite | **0** |
+| names the author cites that our text does not carry | **1** — `pentagon_side_golden` |
+
+Reconciled as sets: `ours ⊂ theirs` exactly, with the single difference
+`theirs − ours = {pentagon_side_golden}`.
+
+The 184 carried occurrences are not listed one by one here: each is already visible at the
+`main.tex` line shown in §W1.2 (the same marks carry them), and the invariant that matters is
+the set identity above plus the enunciado guard of §W1.4.
+
+**Action taken:** nothing mechanical to apply — the migration `bcee5eb`/DEC-001 performed is
+complete for every name our text holds; `grep -c 'Lean{' main.tex` is `0` before and after.
+
+## W1.4 Enunciado guard (every cited name must exist in the Lean file)
+
+| guard | result |
+|---|---|
+| every name in our `\tier[names]{P}` and `\witness{P}{…}` in `main.tex` exists in `lean/TorreKK_LYR_v34.lean` | **168 / 168 ✓** (the only extraction artefact is the literal `ids` token of the preamble comment `main.tex:28`) |
+| every internal name of the author's 185 `\Lean{}` occurrences exists in `v34` | **168 / 169** — `pentagon_side_golden` **absent** |
+| the same name in `kk_golden_throat_v138` `v35` (`scratch/v138/TorreKK_LYR_v35.lean`) | **present** — it is one of the two decls `v34 → v35` adds (§2.6) |
+| spellings | no divergence found: `rs_kpir_from_uv` is lowercase in theirs, in ours and in `v34`/`v35` |
+
+Consequence: `pentagon_side_golden` **cannot** be migrated in this wave — it would raise the
+guard. It lands with Wave 3 (the sentence) after Wave 6 (the Lean file), in that order.
+
+## W1.5 The date block
+
+Ours is intact and theirs was not ported:
+
+```
+main.tex:142  \renewcommand{\datename}{Received}
+main.tex:155  \date{261116; last modified \today; v0.1.0}   (selfcite:begin id="version")
+```
+
+`kk_golden_throat_v138.tex` still carries the plain `\date{November 6, 2026}`; conflict D1 of
+§3 stays resolved in our favour, and the line keeps being rewritten by the build
+(`selfcitations`), not by hand.
+
+## W1.6 Gates at the close of W1
+
+| gate | command | result |
+|---|---|---|
+| type-check | `pnpm run type-check` | **exit 0**, no output ✓ |
+| tests | `uv run pytest tests/ -q` | **533 passed** in 62 s ✓ |
+| census | `uv run pytest tests/test_section_census.py -q` | **18 passed** ✓ |
+| build | `pnpm run build` | exit 0, **63 pages**, `grep -c '^!' build/main.log` = **0**, `grep -ci undefined build/main.log` = **0** ✓ |
+| `\Lean{` | `grep -c 'Lean{' main.tex` | **0** ✓ |
+| anchors | `grep -o -F '\testref{' main.tex \| wc -l` | **99** ✓ (the MRG-001 §2.1 invariant) |
+| anchors (literal brief form) | `grep -c 'testref' main.tex` | **80 lines** — the brief's `≥99` is an *occurrence* count: `grep -o 'testref' \| wc -l` = **104**, of which **99** are the anchors `\testref{`. The line count can never reach 99 while several anchors share a line; reported as measured, not silently passed |
+| labels | `grep -o -F '\wtag{' main.tex \| wc -l` | **12** ✓ |
+| ids grammar | `grep -o -F '\tier[' main.tex \| wc -l` | **216** ✓ (arity `\providecommand{\tier}[2][]` at `main.tex:80` untouched) |
+| legend + keywords | `main.tex:253-258`, `main.tex:193` | both present ✓ |
+| tree | `git status` at commit time | only this report staged |
+
+## W1.7 Bring-up for the principal author
+
+Nothing here was decided in his place.
+
+1. **L2 — the Euler characteristic.** Theirs tags $\chi=\zeta(-1)$ `\tier{N}\tier{L}`; ours
+   carries only `\cite{Ser71}`. The `N` is available and honest:
+   `N[\testref{test_the_chain_of_twelves}]` (it asserts `-1/zeta(-1) == 12`), **but** that id
+   is not in the census's pinned set, so the tag and its census line must land in one pass
+   that owns `main.tex` *and* `tests/`. Tick to queue it; leave bare otherwise.
+2. **L5 — $\Gamma\propto x^{3}$ `\cite{DHR00}`.** Read off an external source, so the literal
+   W1 rule gives `[P] in~\cite{DHR00}` or `[N]~\cite{DHR00}`; §8.3 would keep the bare
+   citation. Which of the three is his call.
+3. **R4, R13, R14 — three `R` claims that do not exist in our text yet.** They ride on author
+   content that is *not* in the manuscript: the QEC reading of R4 (`ADH15`), the section-47
+   perfect-tensor sentence of R13 (`PYHP15`, §47), the $p=2$ Mumford sentence of R14
+   (`Mar18`). Both new bib keys are Wave 2. When they land the target is **prose, no mark**.
+4. **`pentagon_side_golden`.** Blocked on Wave 6 (present in `v35`, absent from `v34`) —
+   flagged so no later pass migrates it early and trips the guard.
+5. **Two readings of the `testref` gate.** See §W1.6: the `≥99` figure holds for occurrences
+   of the anchor `\testref{` (99) and for the substring (104), and fails for lines (80). The
+   brief's literal `grep -c` reads lines; the intent is the anchor count. Recorded rather than
+   reinterpreted.
+
+## W1.8 Left to the later waves (nothing done here)
+
+* **Wave 2** — `ADH15`, `Mar18` into `src/bibliography.bib`.
+* **Wave 3** — the author's prose, including R4/R13/R14 and the pentagon passage; all 67
+  conflicts of §3, of which W1 has now settled the *grammar* side (arity, classes, anchors,
+  date, gloss).
+* **Wave 4** — section-47 tests and the `11.97`/`11.98` divergence.
+* **Wave 6** — `TorreKK_LYR_v35.lean`, after which `pentagon_side_golden` becomes migratable.
+* **Not ported, by decision** — the author's legend (P, P\*, N, L, R), his one-argument
+  `\tier`, his removal of the 99 anchors and 12 labels, his `\date{November 6, 2026}`.
