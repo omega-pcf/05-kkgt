@@ -566,7 +566,7 @@ theorem exp_pi_transcendental : Transcendental ℚ (Real.exp Real.pi) := by
   simpa using exp_pi_mul_algebraic_transcendental 1 isAlgebraic_one one_ne_zero
 
 /-- `φ` is algebraic: a root of `X² − X − 1`. -/
-theorem golden_isAlgebraic : IsAlgebraic ℚ ((1 + Real.sqrt 5) / 2) := by
+theorem golden_is_algebraic : IsAlgebraic ℚ ((1 + Real.sqrt 5) / 2) := by
   refine ⟨Polynomial.X ^ 2 - Polynomial.X - 1, ?_, ?_⟩
   · intro h
     have := congrArg (Polynomial.coeff · 2) h
@@ -595,7 +595,7 @@ theorem log_golden_div_pi_irrational :
     · exact h0
   have hpow : b ^ q = Real.exp Real.pi ^ p := by
     rw [← Real.exp_log (by linarith : (0 : ℝ) < b), ← Real.exp_nat_mul, ← Real.exp_nat_mul, h]
-  have halg : IsAlgebraic ℚ (Real.exp Real.pi ^ p) := hpow ▸ golden_isAlgebraic.pow q
+  have halg : IsAlgebraic ℚ (Real.exp Real.pi ^ p) := hpow ▸ golden_is_algebraic.pow q
   exact exp_pi_transcendental (IsAlgebraic.of_pow hp halg)
 
 /-- The stereographic image of the Clifford torus is the surface of revolution with `R = √2`, `r = 1`:
@@ -848,7 +848,7 @@ theorem bulk_boundary_isometry :
 /-- Binary entropy at `½`: one bit. -/
 noncomputable def binEntropy (p : ℝ) : ℝ := -(p * Real.logb 2 p + (1 - p) * Real.logb 2 (1 - p))
 
-theorem binEntropy_half : binEntropy (1 / 2) = 1 := by
+theorem bin_entropy_half : binEntropy (1 / 2) = 1 := by
   have h : Real.logb 2 (1 / 2) = -1 := by
     rw [one_div, Real.logb_inv, Real.logb_self_eq_one (by norm_num)]
   unfold binEntropy; norm_num [h]
@@ -1325,7 +1325,7 @@ theorem level_growth_not_power (σ n χ : ℕ) (hn : 0 < n) :
   have ha0 : a ≠ 0 := by rw [ha]; exact div_ne_zero (pow_ne_zero _ hbpos.ne') hn0
   have halg : IsAlgebraic ℚ a := by
     rw [ha, div_eq_mul_inv]
-    exact (golden_isAlgebraic.pow σ).mul (IsAlgebraic.inv (isAlgebraic_natCast n))
+    exact (golden_is_algebraic.pow σ).mul (IsAlgebraic.inv (isAlgebraic_natCast n))
   have hT := exp_pi_mul_algebraic_transcendental a halg ha0
   have hpow : Real.exp (Real.pi * a) ^ n = (χ : ℝ) ^ n := by
     rw [← Real.exp_nat_mul, h]; congr 1; rw [ha]; field_simp
