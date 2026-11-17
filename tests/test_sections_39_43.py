@@ -123,8 +123,9 @@ class TestSection40DictionaryAgainstTheCusp:
     @pytest.mark.parametrize("s,area", [(1.483259, 2 * math.pi / PHI**3)])
     def test_two_prototiles_keep_their_areas(self, s, area):
         """The long prototile has area 2pi/phi^3, the short one is that / phi."""
-        assert s == pytest.approx(area, rel=1e-6)
-        assert area / PHI == pytest.approx(0.916704, rel=1e-6)
+        # both literals carry six decimals, so each has a half unit of 5e-7
+        assert abs(s - area) <= 5e-7
+        assert abs(area / PHI - 0.916704) <= 5e-7
 
     def test_distinct_arc_weights_of_73(self, run_section):
         """{7,3} needs 115 distinct arc weights over sigma = 0..9, the throat 2."""
@@ -272,7 +273,7 @@ class TestSection41FiveRegularTilings:
     def test_qubit_bond_dimension_of_54(self, run_section):
         """One qubit per bond on {5,4} gives 1.4907 S (main.tex quotes it)."""
         run_section(41).value(
-            r"\{5,4\} with qubits: ([\d.]+) S", want=1.4907, tol=5e-4,
+            r"\{5,4\} with qubits: ([\d.]+) S", want=1.4907, tol=5e-5,
             label="{5,4} qubits",
         )
 

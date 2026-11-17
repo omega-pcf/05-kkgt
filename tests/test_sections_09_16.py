@@ -394,7 +394,7 @@ class TestSection15StateCount:
             s_ent = math.pi * math.sqrt(2 * l0)
             vals.append(s_ent - math.log(p[l0]) - 1.5 * math.log(l0))
         printed = [2.7337, 2.6203, 2.5463, 2.5004, 2.4722, 2.4546, 2.4437]
-        assert vals == pytest.approx(printed, abs=5e-4)
+        assert vals == pytest.approx(printed, abs=5e-5)
         assert vals[-1] < vals[0]
 
 

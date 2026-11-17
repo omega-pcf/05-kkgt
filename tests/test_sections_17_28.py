@@ -47,7 +47,7 @@ class TestSection17ObserverLevelFromLambda:
         return math.log(6 * U_EV**2 / lam) / LN_PHI
 
     def test_unit_of_f1(self):
-        assert U_EV / 1e6 == pytest.approx(4.6258, abs=5e-4)
+        assert U_EV / 1e6 == pytest.approx(4.6258, abs=5e-5)
 
     def test_planck_central_value(self):
         assert self.sigma_obs(67.36, 0.6847) == pytest.approx(380.315, abs=5e-4)
@@ -278,12 +278,12 @@ class TestSection24ScaleAndTop:
         m = (math.sqrt(me) + math.sqrt(mmu) + math.sqrt(mtau)) ** 2 / 9 / 1e3
         assert m * 1e3 == pytest.approx(313.841, abs=5e-4)
         u = m / M_PCF
-        assert u * 1e3 == pytest.approx(4.6258, abs=5e-4)
+        assert u * 1e3 == pytest.approx(4.6258, abs=5e-5)
 
     def test_planck_mass_in_gev(self):
         g_j = 1.602176634e-10
         m_pl = math.sqrt(HBAR * C_LIGHT**5 / G_NEWTON) / g_j
-        assert m_pl == pytest.approx(M_PLANCK_GEV, rel=1e-5)
+        assert m_pl == pytest.approx(M_PLANCK_GEV, rel=1e-6)
 
     def test_the_grid_does_not_fix_the_top(self):
         """2 log_phi(l_u/l) = 203.562, 0.44 away from the nearest integer."""
@@ -328,7 +328,10 @@ class TestSection25AutodualWindow:
         got = self.best(x)[0]
         assert (got[1], got[2]) == (a, b), (x, got)
         assert got[3] == pytest.approx(v, abs=5e-3), (x, got)
-        assert got[0] == pytest.approx(weight, rel=0.02), (x, got)
+        # half the last digit of the printed weight: 0.074 -> 5e-4,
+        # 0.74 -> 5e-3 (decision (ii)), tighter than the former rel=0.02
+        half = 0.5 * 10 ** -len(str(weight).split(".")[1])
+        assert abs(got[0] - weight) <= half, (x, got[0], weight)
 
     def test_second_entry_near_the_observer(self):
         got = self.best(583.88)[1]

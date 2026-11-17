@@ -65,8 +65,8 @@ class TestSection45ObserverLevel:
         """Planck: 583.88 asymptotic, 583.09 today, the latter below."""
         s_inf = _level(_H0 * math.sqrt(_OL))
         s_hoy = _level(_H0)
-        assert s_inf == pytest.approx(583.877, abs=5e-3)
-        assert s_hoy == pytest.approx(583.090, abs=5e-3)
+        assert s_inf == pytest.approx(583.877, abs=5e-4)
+        assert s_hoy == pytest.approx(583.090, abs=5e-4)
         assert s_hoy < s_inf
 
     def test_three_h_squared_is_the_entropy_of_the_horizon(self):
