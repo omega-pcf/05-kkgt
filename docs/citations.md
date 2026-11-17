@@ -246,16 +246,17 @@ citation, `in~\cite{CW6}`.
    Proved in an external source is not "here": that is `[P] in~\cite{key}`,
    one bracket for the tag and one for the citation, each printed by its own
    macro.
-6. **The legend** (the unmarked first-page footnote) defines the classes and
-   nothing else — one sentence each. It is exempt from rule 3 — it defines,
-   it does not claim — and it never mentions `P*`.
+6. **The gloss** (the *Evidence tags* paragraph, before the first mark of
+   the body) defines the classes and nothing else — one sentence each. It
+   is exempt from rule 3 — it defines, it does not claim — and it never
+   mentions `P*`.
 7. **`P*` is available; the released text uses `P`.** The class is fully
    functional in the preamble — the dispatch `\@namedef{tiercol@P*}` and the
    ochre `tierPs` colour — so `\tier{P*}` renders `[P*]` exactly like any
    other class, and it is there for intermediate commits between builds (an
    agent without Lean, in draft) that need to tag a claim as written but not
    yet named. The printed text never invokes it: the body marks those claims
-   `P`, the legend does not mention it and the prose no longer speaks of it.
+   `P`, the gloss does not mention it and the prose no longer speaks of it.
 8. **No status tags in captions.** A caption already names the test that
    generates the figure (`\testref{test_section_writes_its_figure[...]}` and
    the test of the claim itself), which carries the status; a `\tier{…}`
@@ -293,9 +294,10 @@ sentence does not.
   against a named test or an external source. That is a
   decision of this project and not an AMS or Chicago one; the real precedents
   are blueprints with a status per statement (`leanblueprint`), status tables
-  and artefact seals (argued in `docs/witness-rationale.md`). The
-  first-page legend therefore states the classes and nothing else: the notes
-  that explain the device belong to this standard, not to page 1.
+  and artefact seals (argued in `docs/witness-rationale.md`). The gloss at
+  the first mark therefore states the classes and nothing else: the notes
+  that explain the device belong to this standard, not to the page that
+  carries the claim.
 - **Colour is redundant with the letter** (WCAG 1.4.1): a tag reads the same
   in greyscale, so the letter alone always carries the meaning.
 

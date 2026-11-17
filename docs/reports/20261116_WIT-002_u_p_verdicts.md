@@ -4,8 +4,8 @@
 |---|---|
 | **id** | `WIT-002` |
 | **title** | u/p verdicts — the two heuristics applied to `main.tex` |
-| **status** | proposed — awaiting application (not yet applied to `main.tex`) |
-| **date** | 2026-11-16 |
+| **status** | applied — `main.tex` carries the verdict since `8e101f5` |
+| **date** | 2026-11-16 (written and applied 2026-11-16, in `8e101f5`) |
 | **version** | 1.0 |
 
 **Scope.** This report holds the *concrete* material of the two heuristics
@@ -16,8 +16,9 @@ heuristics and the decision order — lives in `docs/citations.md` §8.5; the
 applied inventory of the 2026-11-15 pass lives in
 `docs/reports/20261115_WIT-001_criterion_sites.md`. This file is a
 **snapshot** — the convention is stated once, in `docs/reports/README.md`
-— and its line numbers are those of `main.tex` at commit `7fa8994` (the
-last commit that touched it; verified unchanged at HEAD `542b94b`).
+— and its line numbers are those of `main.tex` at commit `7fa8994`, the
+state the table was read in; the application in `8e101f5` and later edits
+to `main.tex` have shifted them.
 
 **Repository:** `05-kk-golden-throat`.
 
@@ -76,8 +77,11 @@ inline. `u` is never reached for a single-id mark: gate 1 keeps it inline.
 | inline marks with two ids or more | **26** — 24 `P`, 2 `N` | **25** — 23 `P`, 2 `N` |
 | inline marks, total | **231** | **230** |
 
-Exactly one verdict changes (`main.tex:940`, `P`). Its promoted block sits
-in its own blank-line paragraph (no block in range), so gate 4's `d`-clause
+Both columns predate the *Evidence tags* gloss of `main.tex` gaining the
+class `W` — one bare mark — so a `grep` at HEAD reads **231** inline marks
+against the **230** of the "after" column; the delta of this report is
+unchanged. Exactly one verdict changes (`main.tex:940`, `P`). Its
+promoted block sits in its own blank-line paragraph (no block in range), so gate 4's `d`-clause
 holds vacuously; the ids are Lean names, not `\testref`s, so
 `tests/test_section_census.py` is unaffected. The sentence it closes is
 unchanged — only its shape.

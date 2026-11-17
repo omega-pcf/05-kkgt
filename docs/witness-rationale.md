@@ -17,10 +17,10 @@ changes the contract of `docs/citations.md`: if the two documents ever
 disagree, `docs/citations.md` governs, because it is the one the build and
 the text review use.
 
-**Status:** in force with the manuscript at HEAD `7ce658c`. The figures of
-§4.4 and §4.5 correspond to the state of the manuscript when this document
-was written, and are identified by the tail of the sentence, not only by
-the line number, because the manuscript is edited concurrently.
+**Status:** in force with the manuscript. The figures of §4.4 and §4.5 are
+the values measured with `grep` on `main.tex` in its present state, and the
+sites are identified by the tail of the sentence, not only by the line
+number, because the manuscript is edited concurrently.
 
 ---
 
@@ -28,11 +28,14 @@ the line number, because the manuscript is edited concurrently.
 
 The manuscript marks, beside each claim, how it was established: `P` when
 the statement is proved and machine-checked in Lean, `N` when it is
-verified numerically with the name of the test that checks it. The mark is
-a small, immutable bracket in its own colour (`\tier{P}`, `\tier{N}`,
+verified numerically with the name of the test that checks it. A third
+class, `W`, labels a premise of the witness list: it says what the item
+is, neither a proof nor a numerical check. The mark is a small, immutable
+bracket in its own colour (`\tier{P}`, `\tier{N}`, `\tier{W}`,
 `\tier[ids]{X}`), or a right-aligned line of its own when the claim carries
-several witnesses (`\witness{X}{ids}`). The first page carries a legend
-that defines the classes and nothing else.
+several witnesses (`\witness{X}{ids}`). The three classes are introduced
+by an in-text gloss — *Evidence tags* — that sits before the first mark of
+the body and defines the classes and nothing else.
 
 That device is not a typographic fashion nor an ornament: it is the answer
 to a real problem of reading and of attribution, and its shape — inline or
@@ -259,12 +262,15 @@ is the *why*: the four conditions answer four usability demands —
 
 The criterion is reproducible by anyone who opens `main.tex`, and it
 reproduces the applied state without a single exception: the manuscript's
-eighteen blocks meet the five conditions. Of the inline marks with two
-identifiers or more — thirty-four, thirty-one `P` and three `N` — thirteen
-close their sentence; the criterion flags nine of them to become a block
-and leaves four inline with a numerical reason (the shortest list of all,
-two list items, a neighbouring block at seventy words). The complete
-table, with the tail of the sentence each mark closes, is in
+twenty-seven blocks meet the five conditions — twenty-six outright, and
+one (`pisano_orders, modular_orders`, 29 characters) because `p` lifts
+gate 2 at the paragraph close. Of the inline marks with two identifiers or
+more — twenty-five today, twenty-three `P` and two `N`, from the
+thirty-four counted at the pass — thirteen closed their sentence; the
+criterion flagged nine of them to become a block, all nine have since been
+applied, and four remain inline with a numerical reason (the shortest list
+of all, two list items, a neighbouring block at seventy words). The
+complete table, with the tail of the sentence each mark closes, is in
 `docs/reports/20261115_WIT-001_criterion_sites.md`.
 
 **Review.** The review method — the reading pass over the table in
@@ -275,16 +281,16 @@ restate it.
 
 ### 4.5 Compactness: the measured cost of the device
 
-*Compactness* is not an intuition here: it can be counted. With the
-manuscript in the state of this document, the whole apparatus occupies:
+*Compactness* is not an intuition here: it can be counted. Measured with
+`grep` on `main.tex`, the whole apparatus occupies:
 
-- **240 inline marks** — 18 without argument (one of them the first-page
-  legend) and 222 with identifiers (167 `P` and 55 `N`) — all set in
-  `\footnotesize` inside the sentence they mark: they cost the characters
-  of the bracket, not a line;
-- **18 blocks** — 9 `P` and 9 `N` — each with a line of its own and two
+- **231 inline marks** — 17 without argument (three of them the
+  *Evidence tags* gloss) and 214 with identifiers (159 `P` and 55 `N`) —
+  all set in `\footnotesize` inside the sentence they mark: they cost the
+  characters of the bracket, not a line;
+- **27 blocks** — 17 `P` and 10 `N` — each with a line of its own and two
   paragraph breaks (`\par` before and after `\witness`);
-- **12** `\wtag` **labels** of the witness list and **98 occurrences** of
+- **12** `\wtag` **labels** of the witness list and **99 occurrences** of
   `\testref`.
 
 From that follow two consequences that justify the thresholds argued in
@@ -292,11 +298,13 @@ From that follow two consequences that justify the thresholds argued in
 
 1. **The block is expensive, so it is asked to pay in return.** It costs a
    line and breaks the paragraph; it is only asked of a list of 35
-   characters or more, which is exactly the shortest list the manuscript
-   already prints as a block. Without that threshold, the list
+   characters or more, which was exactly the shortest list the manuscript
+   already printed as a block. Without that threshold, the list
    `pisano_orders, modular_orders` — 29 characters — would earn a whole
    line for twenty-nine characters, and the cost would have no
-   counterpart.
+   counterpart; the manuscript prints it on a line of its own today only
+   because `p`, the paragraph-close heuristic, lifts gate 2 for that site
+   (`docs/citations.md` §8.5).
 2. **The inline bracket is cheap but not free.** The optional argument of
    `\tier` prints names, never numbers: the cost of the bracket does not
    grow with the numbering of references, and the identifiers break in
@@ -304,11 +312,11 @@ From that follow two consequences that justify the thresholds argued in
    not the width, it is the sentence: hence `r` rules, not `L`.
 
 With that, the budget of the device is predictable: in a manuscript of
-this size, some twenty lines of its own and a bracket per claim. It is a
-price that the information it buys — how each statement was established —
-justifies, and it is also the reason the shape rule exists: without it,
-the budget would grow with the prose and the apparatus would begin to read
-as noise.
+this size, one line of its own per block — twenty-seven here — and a
+bracket per claim. It is a price that the information it buys — how each
+statement was established — justifies, and it is also the reason the
+shape rule exists: without it, the budget would grow with the prose and
+the apparatus would begin to read as noise.
 
 ---
 
@@ -320,9 +328,9 @@ number is recomputed in the suite and checked against a declared
 tolerance. Neither says that a third party has read the paper, nor that
 the proof has been reviewed by a human, nor that the result is published.
 Confusing machine verification with peer review would be the gravest error
-this device could induce, and that is why the first-page legend defines
-the classes and nothing else: the explanation of the apparatus lives in
-this documentation, not on page 1.
+this device could induce, and that is why the gloss at the first mark
+defines the classes and nothing else: the explanation of the apparatus
+lives in this documentation, not in that gloss.
 
 **It does not replace the citation.** The external source is and remains
 the `\cite`, in its own form beside the claim: `[N]~\cite{key}` and
@@ -335,13 +343,13 @@ there.
 
 **One claim, one mark.** There are no two adjacent marks, nor a mark and a
 `\cite` saying the same thing, nor marks in figure captions (rule 8 of
-`docs/citations.md` §8.2). The legend is exempt from the mandatory-witness
+`docs/citations.md` §8.2). The gloss is exempt from the mandatory-witness
 rule because it defines, it does not assert.
 
 **`P*` is internal.** The class exists and works in the preamble (dispatch
 `\@namedef{tiercol@P*}`, ochre colour) to mark between compilations a
 statement written but not yet named; the printed text never invokes it,
-the legend does not mention it and the prose does not speak of it. It is a
+the gloss does not mention it and the prose does not speak of it. It is a
 work tool, not a class of the published alphabet.
 
 **`L` and `R` were eliminated, and why.** Both carried information the
@@ -362,7 +370,8 @@ paper already gave:
   the "proved here" section they were in.
 
 Both eliminations are documented in `docs/citations.md` §8.3 and applied
-in the manuscript: the published alphabet is `P` and `N`.
+in the manuscript: the published alphabet of evidence is `P` and `N`, and
+`W` labels the premises of the witness list.
 
 ---
 
@@ -408,7 +417,7 @@ family's work environment; no external URL is invoked.
 | `docs/citations.md` §5, §6, §7 | data hygiene, documentation convention and settled style decisions (AMS alphabetical bibliography, initials) |
 | `docs/reports/20261115_DEC-001_witness_decisions.md` | per-site decisions, counters of the harmonisation pass and the author's pending-work list |
 | `README.md` | link to the witness section of `docs/citations.md`; `docs/README.md` is the directory index |
-| `main.tex` — preamble (witness system, `\tier` dispatch, definition of `\witness` and `\wtag`) and the first-page legend | the implementation and what the reader sees on page 1 |
+| `main.tex` — preamble (witness system, `\tier` dispatch, definition of `\witness` and `\wtag`) and the *Evidence tags* gloss | the implementation and what the reader sees at the first mark of the body |
 | `lean/TorreKK_LYR_v34.lean` | the `P` identifiers the mark can print |
 | `tests/` and `tests/test_section_census.py` | the numerical suite and the census that fixes the test identifiers the manuscript cites |
 | `tests/REPORT.md` | historical census of the witness apparatus, explicitly marked as prior to standardisation; kept as history, not as state |
@@ -421,21 +430,26 @@ family's work environment; no external URL is invoked.
 ## 8. Limits and pending work
 
 1. **Application of the flagged rows.** `docs/citations.md` §8.5 flagged
-   nine inline sites that the quantified criterion takes to a block; their
-   application corresponds to an editing pass that is not this document
-   and that records its counters in `docs/reports/`.
-2. **Legend and coverage.** The legend promises `N` = "verified
-   numerically, with the name of the test that checks it"; the pending work
-   of `docs/reports/20261115_DEC-001_witness_decisions.md` §3.1 and §4
-   consists of each body claim `N` carrying that name. While there are `N`
-   without a named witness, the legend describes the intention of the
-   system and not all its sites.
+   nine inline sites that the quantified criterion takes to a block; all
+   nine have been applied — the last of them by
+   `docs/reports/20261116_WIT-002_u_p_verdicts.md` — and the counters of
+   the pass live in `docs/reports/`.
+2. **Gloss and coverage.** The gloss promises `N` = "checked numerically,
+   with the test that checks it named where the check is ours"; the pending
+   work of `docs/reports/20261115_DEC-001_witness_decisions.md` §3.1 and §4
+   consists of each body claim `N` carrying that name. Two body claims `N`
+   print with no test in the tag: `main.tex:1869` (`…for the full list of
+   distances`) names its test in the prose of the same sentence, as rule 4
+   of `docs/citations.md` §8.2 allows, while `main.tex:1368` (`…The two
+   are degrees of one property.`) names none at all; the gloss itself
+   is exempt by rule 6. While there are `N` without a named witness, the
+   gloss describes the intention of the system and not all its sites.
 3. **Preamble comments.** The header comment of `main.tex` describes the
-   shape of the apparatus in one sentence ("a bare mark stays inline; a
-   witness with names earns a line of its own") which is coarser than the
-   criterion of `docs/citations.md` §8.5: there are marks with names that
-   stay inline by the four thresholds. The sentence should be read as a
-   summary, not as a rule; the rule lives in `docs/citations.md`.
+   shape of the apparatus as "a mark with ids stays inline `\tier[ids]{X}`
+   and moves to a line of its own in list form … when the gates of
+   `docs/citations.md` section 8.5 hold", and follows it with the four
+   thresholds and the two heuristics. It is a summary of the criterion,
+   not the criterion; the rule lives in `docs/citations.md` §8.5.
 4. **Propagation to the family.** Only `05-kk-golden-throat` and
    `03-crystalline-worldsheet` render marks; the adoption of the criterion
    in the remaining repositories is an editorial decision, never a
