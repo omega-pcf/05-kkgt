@@ -4,7 +4,7 @@
 |---|---|
 | **id** | `SEC-001` |
 | **title** | Migration ledger for the forty-six `seccion_N` functions of `tests/src/kkgt/sections.py` |
-| **status** | layer 0 (this ledger) and layer 1 (shared primitives) applied; layer 2 (moving the section bodies) started: lot 0 (the package shell) applied, lots 1–7 pending |
+| **status** | layer 0 (this ledger) and layer 1 (shared primitives) applied; layer 2 (moving the section bodies) started: lot 0 (the package shell), lot 1 (17–24) and lot 2 (9–16) applied — 16 of 46 rows ticked; lots 3–7 pending |
 | **date** | 2026-11-16 |
 | **version** | 1.0 |
 | **repository** | `05-kk-golden-throat` (public as `omega-pcf/05-kkgt`), written from HEAD `ce7ff48` |
@@ -80,14 +80,14 @@ stdout line; it is not cited either).
 | 6 | `seccion_6` | `test_section_runs_and_prints_its_number[section-06]`, `test_rms_against_the_lyr_table`, `test_deep_chain_yields_the_j1_zeros`, `test_without_the_weight_the_chain_degrades` | 17 claims · L1289, L1290, L1292, L1294, L1295, L1296 | — | `kkgt/sections/s01_08.py` | [ ] |
 | 7 | `seccion_7` | `test_section_runs_and_prints_its_number[section-07]`, `test_error_on_the_ratios`, `test_gluon_scale_needs_three_levels` | 17 claims · L1289, L1290, L1292, L1294, L1295, L1296 | — | `kkgt/sections/s01_08.py` | [ ] |
 | 8 | `seccion_8` | `test_section_runs_and_prints_its_number[section-08]`, `test_rs_fit_beats_the_golden_fit`, `test_discrete_kk_operator_matches_its_closed_form` | — (0 claims) | — | `kkgt/sections/s01_08.py` | [ ] |
-| 9 | `seccion_9` | `test_section_runs_and_prints_its_number[section-09]` | — (0 claims) | — | `kkgt/sections/s09_16.py` | [ ] |
-| 10 | `seccion_10` | `test_section_writes_its_figure[section-10]`, `test_section_runs_and_prints_its_number[section-10]` | — (0 claims) | — | `kkgt/sections/s09_16.py` | [ ] |
-| 11 | `seccion_11` | `test_section_runs_and_prints_its_number[section-11]` | — (0 claims) | — | `kkgt/sections/s09_16.py` | [ ] |
-| 12 | `seccion_12` | `test_section_runs_and_prints_its_number[section-12]`, `test_section12_runs_all_of_its_checks` | — (0 claims) | — | `kkgt/sections/s09_16.py` | [ ] |
-| 13 | `seccion_13` | `test_section_writes_its_figure[section-13]`, `test_section_runs_and_prints_its_number[section-13]`, `test_section13_draws_figure_two` | — (0 claims) | — | `kkgt/sections/s09_16.py` | [ ] |
-| 14 | `seccion_14` | `test_section_runs_and_prints_its_number[section-14]` | — (0 claims) | — | `kkgt/sections/s09_16.py` | [ ] |
-| 15 | `seccion_15` | `test_section_runs_and_prints_its_number[section-15]` | — (0 claims) | — | `kkgt/sections/s09_16.py` | [ ] |
-| 16 | `seccion_16` | `test_section_runs_and_prints_its_number[section-16]`, `test_printed_values` | — (0 claims) | — | `kkgt/sections/s09_16.py` | [ ] |
+| 9 | `seccion_9` | `test_section_runs_and_prints_its_number[section-09]` | — (0 claims) | — | `kkgt/sections/s09_16.py` | [x] |
+| 10 | `seccion_10` | `test_section_writes_its_figure[section-10]`, `test_section_runs_and_prints_its_number[section-10]` | — (0 claims) | — | `kkgt/sections/s09_16.py` | [x] |
+| 11 | `seccion_11` | `test_section_runs_and_prints_its_number[section-11]` | — (0 claims) | — | `kkgt/sections/s09_16.py` | [x] |
+| 12 | `seccion_12` | `test_section_runs_and_prints_its_number[section-12]`, `test_section12_runs_all_of_its_checks` | — (0 claims) | — | `kkgt/sections/s09_16.py` | [x] |
+| 13 | `seccion_13` | `test_section_writes_its_figure[section-13]`, `test_section_runs_and_prints_its_number[section-13]`, `test_section13_draws_figure_two` | — (0 claims) | — | `kkgt/sections/s09_16.py` | [x] |
+| 14 | `seccion_14` | `test_section_runs_and_prints_its_number[section-14]` | — (0 claims) | — | `kkgt/sections/s09_16.py` | [x] |
+| 15 | `seccion_15` | `test_section_runs_and_prints_its_number[section-15]` | — (0 claims) | — | `kkgt/sections/s09_16.py` | [x] |
+| 16 | `seccion_16` | `test_section_runs_and_prints_its_number[section-16]`, `test_printed_values` | — (0 claims) | — | `kkgt/sections/s09_16.py` | [x] |
 | 17 | `seccion_17` | `test_section_runs_and_prints_its_number[section-17]`, `test_monte_carlo_error` | — (0 claims) | — | `kkgt/sections/s17_24.py` | [x] |
 | 18 | `seccion_18` | `test_section_runs_and_prints_its_number[section-18]`, `test_lambda_times_s_is_six_pi` | — (0 claims) | — | `kkgt/sections/s17_24.py` | [x] |
 | 19 | `seccion_19` | `test_section_runs_and_prints_its_number[section-19]` | — (0 claims) | — | `kkgt/sections/s17_24.py` | [x] |
@@ -174,7 +174,7 @@ inline `phi = (1 + 5**0.5) / 2` recomputed inside 38 section bodies, and the
 `HBAR_EVS` / `MPC_KM` / `LP_M` literals that the tests still hold locally
 because the same literals sit inside section bodies.
 
-## 5. Layer 2 — plan by lots (lot 0 applied; lots 1–7 pending)
+## 5. Layer 2 — plan by lots (lots 0–2 applied; lots 3–7 pending)
 
 `kkgt/sections.py` and a `kkgt/sections/` package cannot coexist, so the
 first lot is structural and the last lot deletes the façade.
@@ -254,7 +254,8 @@ Commit plan: one conventional commit per lot, in English, no push —
   manuscript's environment note (current `main.tex` L2480: "Python 3.13 …
   SciPy 1.18.1"), pinned to `seccion_1`'s docstring because that is where the
   literals sit; they are not computed values.
-* **Lot 0 is applied**: `tests/src/kkgt/sections.py` is gone, its content
-  lives verbatim in `kkgt/sections/_rest.py` and `kkgt/sections/__init__.py`
-  assembles `SECCIONES`; no section body has moved yet, so all 46 functions
-  are still in `_rest.py` (2 176 lines after layer 1).
+* **Lots 0–2 are applied**: `tests/src/kkgt/sections.py` is gone, its content
+  lives verbatim in `kkgt/sections/`; sections 9–16 are in `s09_16.py` and
+  sections 17–24 in `s17_24.py`, and `kkgt/sections/__init__.py` assembles
+  `SECCIONES` in numeric order. The other 30 functions are still in
+  `_rest.py` (1 738 lines at lot 2).

@@ -17,10 +17,12 @@ the registry from the parts -- the sections not yet moved live in
 (``s17_24`` ...) -- and ``SECCIONES`` is always the whole registry, in
 numeric order.
 """
+from . import s09_16
 from . import s17_24
 from ._rest import SECCIONES as _REST_SECCIONES
 from ._rest import _C, _LamP  # the module-level names of the original sections file
 
 SECCIONES = sorted(
-    (*_REST_SECCIONES, *s17_24.SECCIONES), key=lambda entry: entry[0]
+    (*_REST_SECCIONES, *s09_16.SECCIONES, *s17_24.SECCIONES),
+    key=lambda entry: entry[0],
 )
