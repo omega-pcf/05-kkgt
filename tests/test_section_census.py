@@ -139,7 +139,7 @@ class TestSectionRegistry:
         module = load_sections()
         assert module.__name__ == "kkgt.sections"
         assert Path(module.__file__).as_posix().endswith(
-            "tests/src/kkgt/sections.py"
+            "tests/src/kkgt/sections/__init__.py"
         )
 
 

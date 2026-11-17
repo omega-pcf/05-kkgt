@@ -13,7 +13,7 @@ also needs mpmath.
 """
 import sys
 
-from .constants import (
+from ..constants import (
     C_LIGHT,
     G_NEWTON,
     HBAR,
@@ -23,7 +23,7 @@ from .constants import (
     M_PLANCK_GEV,
     M_TAU_MEV,
 )
-from .harness import lam_planck
+from ..harness import lam_planck
 
 SECCIONES = []
 

@@ -4,7 +4,7 @@
 |---|---|
 | **id** | `SEC-001` |
 | **title** | Migration ledger for the forty-six `seccion_N` functions of `tests/src/kkgt/sections.py` |
-| **status** | layer 0 (this ledger) and layer 1 (shared primitives) applied; layer 2 (moving the section bodies) planned, not started |
+| **status** | layer 0 (this ledger) and layer 1 (shared primitives) applied; layer 2 (moving the section bodies) started: lot 0 (the package shell) applied, lots 1–7 pending |
 | **date** | 2026-11-16 |
 | **version** | 1.0 |
 | **repository** | `05-kk-golden-throat` (public as `omega-pcf/05-kkgt`), written from HEAD `ce7ff48` |
@@ -174,7 +174,7 @@ inline `phi = (1 + 5**0.5) / 2` recomputed inside 38 section bodies, and the
 `HBAR_EVS` / `MPC_KM` / `LP_M` literals that the tests still hold locally
 because the same literals sit inside section bodies.
 
-## 5. Layer 2 — plan by lots (not started)
+## 5. Layer 2 — plan by lots (lot 0 applied; lots 1–7 pending)
 
 `kkgt/sections.py` and a `kkgt/sections/` package cannot coexist, so the
 first lot is structural and the last lot deletes the façade.
@@ -254,6 +254,7 @@ Commit plan: one conventional commit per lot, in English, no push —
   manuscript's environment note (current `main.tex` L2480: "Python 3.13 …
   SciPy 1.18.1"), pinned to `seccion_1`'s docstring because that is where the
   literals sit; they are not computed values.
-* **No layer-2 work has been performed**, and no section body was moved in
-  this pass; `sections.py` still holds all 46 functions (2 176 lines after
-  layer 1).
+* **Lot 0 is applied**: `tests/src/kkgt/sections.py` is gone, its content
+  lives verbatim in `kkgt/sections/_rest.py` and `kkgt/sections/__init__.py`
+  assembles `SECCIONES`; no section body has moved yet, so all 46 functions
+  are still in `_rest.py` (2 176 lines after layer 1).

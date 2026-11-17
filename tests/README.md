@@ -29,7 +29,10 @@ the same 533 tests as `uv run pytest tests/ -q`.
 tests/
 ├── conftest.py                # Agg backend, `sections_module`, `sections`, `run_section`
 ├── src/kkgt/
-│   ├── sections.py            # the computation: 46 numbered sections (SECCIONES)
+│   ├── sections/              # the computation: 46 numbered sections (SECCIONES)
+│   │   ├── __init__.py        #   assembles SECCIONES in numeric order
+│   │   ├── __main__.py        #   `python -m kkgt.sections [N ...]`
+│   │   └── _rest.py           #   the sections SEC-001 layer 2 has not moved yet
 │   ├── constants.py           # PHI, M_PCF, OBS_G, FIGURES, SLOW_SECTIONS
 │   └── harness.py             # SectionRun: run a section, read its stdout
 ├── test_section_census.py     # \testref{...} <-> main.tex contract (numbers, figures)
