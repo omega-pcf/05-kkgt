@@ -11,8 +11,8 @@ citation is left, and that each of the five figures names the test that
 writes it.
 
 ```bash
-uv run pytest tests/ -q                 # whole suite   (533 tests, ~60 s)
-uv run pytest tests/ -q -m 'not slow'   # without >10 s (529 tests, ~62 s)
+uv run pytest tests/ -q                 # whole suite   (549 tests, ~60 s)
+uv run pytest tests/ -q -m 'not slow'   # without >10 s (545 tests, ~60 s)
 pnpm run test                           # same, through package.json
 
 PYTHONPATH=tests/src uv run python -m kkgt.sections        # the 46 sections
@@ -21,7 +21,7 @@ PYTHONPATH=tests/src uv run python -m kkgt.sections 38     # only section 38
 
 The pytest configuration lives in `pyproject.toml` under `[tool.pytest.ini_options]`
 (`testpaths`, `pythonpath`, `markers`, `addopts`), so a bare `uv run pytest` collects
-the same 533 tests as `uv run pytest tests/ -q`.
+the same 549 tests as `uv run pytest tests/ -q`.
 
 ## Layout (mirrors `03-crystalline-worldsheet/tests/`)
 
@@ -44,16 +44,17 @@ tests/
 ├── test_sections_39_43.py     # tilings (figures 4-5), dictionary, three columns
 ├── test_sections_44.py        # figure 1 (fig_background): the background figure
 ├── test_sections_45_46.py     # (F10) observer level, Hopf foliation and J
+└── test_sections_47.py        # v138 section 47 (not yet in SECCIONES): independent checks
 ```
 
 ## Section -> test map
 
 | section | run test | deep tests |
 |---|---|---|
-| 1  | `test_section_runs.py::test_section_runs_and_prints_its_number[section-01]` | `TestSection1Numbers` (34) |
+| 1  | `test_section_runs.py::test_section_runs_and_prints_its_number[section-01]` | `TestSection1Numbers` (41) |
 | 2  | `...[section-02]` | `TestSection2Casimir` (3) |
 | 3  | `...[section-03]` | `TestSection3TwoBraneSpectra` (7) |
-| 4  | `...[section-04]` | `TestSection4MetricPositivity` (4) |
+| 4  | `...[section-04]` | `TestSection4MetricPositivity` (5) |
 | 5  | `...[section-05]` | `TestSection5QuarterPhase` (2) |
 | 6  | `...[section-06]` | `TestSection6BesselChain` (5) |
 | 7  | `...[section-07]` | `TestSection7Prediction` (4) |
@@ -78,10 +79,10 @@ tests/
 | 26 | `...[section-26]` | `TestSection26WindowEdge` (6) |
 | 27 | `...[section-27]` | `TestSection27WindowAsNome` (6) |
 | 28 | `...[section-28]` | `TestSection28PoissonTheta` (4) |
-| 29 | `...[section-29]` | `TestSection29LatticePointFromOmegaLambda` (9) |
-| 30 | `...[section-30]` | `TestSection30SymmetricThroat` (4) |
+| 29 | `...[section-29]` | `TestSection29LatticePointFromOmegaLambda` (8) |
+| 30 | `...[section-30]` | `TestSection30SymmetricThroat` (5) |
 | 31 | `...[section-31]` | `TestSection31ModuliMetric` (11) |
-| 32 | `...[section-32]` | `TestSection32LevelVersusGridShape` (6) |
+| 32 | `...[section-32]` | `TestSection32LevelVersusGridShape` (7) |
 | 33 | `...[section-33]` | `TestSection33ColourHole` (8) |
 | 34 | `...[section-34]` | `TestSection34Quintessence` (4) |
 | 35 | `...[section-35]` | `TestSection35HalfThreshold` (8) |
@@ -90,15 +91,20 @@ tests/
 | 38 | `...[section-38]` | `TestSection38AreaLawHalf` (4) |
 | 39 | `...[section-39]` | `TestSection39FibonacciTiling` (28) |
 | 40 | `...[section-40]` | `TestSection40DictionaryAgainstTheCusp` (27) |
-| 41 | `...[section-41]` | `TestSection41FiveRegularTilings` (17) |
+| 41 | `...[section-41]` | `TestSection41FiveRegularTilings` (18) |
 | 42 | `...[section-42]` | `TestSection42TwoCoordinatesAndTheStep` (33) |
 | 43 | `...[section-43]` | `TestSection43ThreeColumns` (12) |
 | 44 | `...[section-44]` | `TestSection44BackgroundFigure` (31) |
 | 45 | `...[section-45]` | `TestSection45ObserverLevel` (15) |
 | 46 | `...[section-46]` | `TestSection46HopfFoliation` (13) |
 
-Every section therefore has at least two tests: one that *runs* it (so the
-author's own `assert`s execute) and one or more that recompute its numbers.
+The number in parentheses is the count of collected items of that class
+(`uv run pytest tests/ --collect-only -q | grep -c <ClassName>`), so it
+moves whenever a test is added.  Every section therefore has at least two
+tests: one that *runs* it (so the author's own `assert`s execute) and one or
+more that recompute its numbers.  Section 47 of the v138 round is not in
+`SECCIONES` yet: `test_sections_47.py` (`TestSection47ThePentagonalCode`, 5)
+checks its figures from the closed forms and waits for the port.
 
 ## Two kinds of check
 
