@@ -2,16 +2,14 @@
 
 «La tríada como código, la cuerda como corte, y el código pentagonal» is
 the section the author added with the v138 round (``reproduce_v138.py``,
-47/47).  It is not in ``kkgt.sections`` yet — the registry still holds
-1..46 and the census pins that — so every check here is the *independent*
-kind: the quantity is recomputed from its closed form and compared with the
-figure the original prints, at the width of that print (decision (ii) of
-AUD-001).  The stdout quoted in each docstring was captured from
-``reproduce_v138.py 47`` on 2026-11-17.
-
-Reading the section's own stdout needs ``seccion_47`` in the package; that
-port is a bring-up item for the principal author, not something this file
-assumes.
+47/47).  Since the W4 port it lives in ``kkgt.sections`` as
+``seccion_47`` (the registry holds 1..47 and the census pins that), and
+``test_section_runs.py`` runs it; every check here stays the
+*independent* kind — the quantity is recomputed from its closed form and
+compared with the figure the original prints, at the width of that print
+(decision (ii) of AUD-001).  The stdout quoted in each docstring was
+captured from ``reproduce_v138.py 47`` on 2026-11-17 and matches what the
+ported section prints.
 """
 
 from __future__ import annotations

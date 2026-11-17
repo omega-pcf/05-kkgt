@@ -1,7 +1,7 @@
 # Tests for the note (package `kkgt`)
 
 The computation of the note lives in the importable package
-`tests/src/kkgt`, in the module `kkgt.sections`: forty-six numbered
+`tests/src/kkgt`, in the module `kkgt.sections`: forty-seven numbered
 sections registered in `SECCIONES`.  Nothing is a script any more: the
 tests import the package, and `main.tex` cites the tests that check its
 numbers with `\testref{...}` (a test name of the suite), which
@@ -11,17 +11,17 @@ citation is left, and that each of the five figures names the test that
 writes it.
 
 ```bash
-uv run pytest tests/ -q                 # whole suite   (549 tests, ~60 s)
-uv run pytest tests/ -q -m 'not slow'   # without >10 s (545 tests, ~60 s)
+uv run pytest tests/ -q                 # whole suite   (550 tests, ~60 s)
+uv run pytest tests/ -q -m 'not slow'   # without >10 s (546 tests, ~60 s)
 pnpm run test                           # same, through package.json
 
-PYTHONPATH=tests/src uv run python -m kkgt.sections        # the 46 sections
+PYTHONPATH=tests/src uv run python -m kkgt.sections        # the 47 sections
 PYTHONPATH=tests/src uv run python -m kkgt.sections 38     # only section 38
 ```
 
 The pytest configuration lives in `pyproject.toml` under `[tool.pytest.ini_options]`
 (`testpaths`, `pythonpath`, `markers`, `addopts`), so a bare `uv run pytest` collects
-the same 549 tests as `uv run pytest tests/ -q`.
+the same 550 tests as `uv run pytest tests/ -q`.
 
 ## Layout (mirrors `03-crystalline-worldsheet/tests/`)
 
@@ -29,14 +29,14 @@ the same 549 tests as `uv run pytest tests/ -q`.
 tests/
 ├── conftest.py                # Agg backend, `sections_module`, `sections`, `run_section`
 ├── src/kkgt/
-│   ├── sections/              # the computation: 46 numbered sections (SECCIONES)
+│   ├── sections/              # the computation: 47 numbered sections (SECCIONES)
 │   │   ├── __init__.py        #   assembles SECCIONES in numeric order
 │   │   ├── __main__.py        #   `python -m kkgt.sections [N ...]`
 │   │   └── _rest.py           #   the sections SEC-001 layer 2 has not moved yet
 │   ├── constants.py           # PHI, M_PCF, OBS_G, FIGURES, SLOW_SECTIONS
 │   └── harness.py             # SectionRun: run a section, read its stdout
 ├── test_section_census.py     # \testref{...} <-> main.tex contract (numbers, figures)
-├── test_section_runs.py       # all 46 sections run clean and print their number
+├── test_section_runs.py       # all 47 sections run clean and print their number
 ├── test_sections_01_08.py     # tower, spectra, phase, Bessel chain, look-elsewhere
 ├── test_sections_09_16.py     # granularity, contact, figures 1-2, gaps, Koide
 ├── test_sections_17_28.py     # observer level, units, window, nome, Poisson
@@ -44,7 +44,7 @@ tests/
 ├── test_sections_39_43.py     # tilings (figures 4-5), dictionary, three columns
 ├── test_sections_44.py        # figure 1 (fig_background): the background figure
 ├── test_sections_45_46.py     # (F10) observer level, Hopf foliation and J
-└── test_sections_47.py        # v138 section 47 (not yet in SECCIONES): independent checks
+└── test_sections_47.py        # v138 section 47: independent checks of its figures
 ```
 
 ## Section -> test map
@@ -97,14 +97,16 @@ tests/
 | 44 | `...[section-44]` | `TestSection44BackgroundFigure` (31) |
 | 45 | `...[section-45]` | `TestSection45ObserverLevel` (15) |
 | 46 | `...[section-46]` | `TestSection46HopfFoliation` (13) |
+| 47 | `...[section-47]` | `TestSection47ThePentagonalCode` (5) |
 
 The number in parentheses is the count of collected items of that class
 (`uv run pytest tests/ --collect-only -q | grep -c <ClassName>`), so it
 moves whenever a test is added.  Every section therefore has at least two
 tests: one that *runs* it (so the author's own `assert`s execute) and one or
-more that recompute its numbers.  Section 47 of the v138 round is not in
-`SECCIONES` yet: `test_sections_47.py` (`TestSection47ThePentagonalCode`, 5)
-checks its figures from the closed forms and waits for the port.
+more that recompute its numbers.  Section 47 of the v138 round (the triad
+and the pentagonal code) is in `SECCIONES` since the W4 port:
+`test_sections_47.py` (`TestSection47ThePentagonalCode`, 5) checks its
+figures from the closed forms, independently of the section's own run.
 
 ## Two kinds of check
 

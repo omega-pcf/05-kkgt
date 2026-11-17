@@ -1726,6 +1726,76 @@ def seccion_46():
 
 SECCIONES.append((46, 'The Hopf foliation and J', seccion_46))
 
+# ======================================================================
+# 47. La tríada como código, la cuerda como corte, y el código pentagonal
+# ======================================================================
+def seccion_47():
+    """imp:adscft (el código), «The dictionary without a choice» (la cuerda, el código pentagonal)."""
+    import numpy as np, itertools
+    from collections import deque
+    phi=(1+5**.5)/2; w=np.exp(2j*np.pi/3)
+    # la tríada
+    v=0.5*w**np.arange(3); V=(v/np.linalg.norm(v)).reshape(3,1); P=V@V.conj().T
+    assert np.allclose(V.conj().T@V,1) and np.linalg.matrix_rank(P)==1 and np.allclose(P@P,P)
+    F3=np.array([[w**(j*k) for k in range(3)] for j in range(3)])/np.sqrt(3)
+    assert np.allclose(V[:,0],F3[:,1]) and np.allclose(F3.conj().T@F3,np.eye(3)) and abs(v.sum())<1e-12
+    print("la tríada V: una codificación con subespacio de código de dimensión 1; columna k=1 de la transformada de Fourier de Z/3")
+    # la cuerda como corte
+    for s in [0,3,6,12]: assert np.isclose(2*np.pi*phi**s/2,np.pi*phi**s)
+    print("la cuerda como corte: longitud del anillo 2 pi phi^sigma por 1/2 = S en cada nivel")
+    # el tensor perfecto de seis patas del código de cinco qubits
+    I=np.eye(2); X=np.array([[0,1],[1,0]]); Z=np.diag([1,-1])
+    def kron(*a):
+        r=np.array([[1.0]])
+        for m in a: r=np.kron(r,m)
+        return r
+    Pc=np.eye(32)
+    for g in [kron(X,Z,Z,X,I),kron(I,X,Z,Z,X),kron(X,I,X,Z,Z),kron(Z,X,I,X,Z)]: Pc=Pc@(np.eye(32)+g)/2
+    assert np.linalg.matrix_rank(Pc)==2
+    ev,vec=np.linalg.eigh(Pc@kron(Z,Z,Z,Z,Z)@Pc); T6=np.stack([vec[:,np.argmax(ev)],vec[:,np.argmin(ev)]]).reshape([2]*6)
+    for A in itertools.combinations(range(6),3):
+        B=[i for i in range(6) if i not in A]; M=np.transpose(T6,list(A)+B).reshape(8,8)
+        assert np.allclose(M@M.conj().T,np.eye(8)*np.trace(M@M.conj().T)/8)
+    print("el tensor de seis patas del código [[5,1,3]] es perfecto: las 20 biparticiones 3|3 son isometrías")
+    # el lado del pentágono de {5,4}
+    a=2*np.arccosh(np.cos(np.pi/5)/np.sin(np.pi/4))
+    assert np.isclose(np.cosh(a),phi) and np.isclose(np.sinh(a),phi**0.5) and np.isclose(a,np.arcsinh(phi**0.5))
+    print(f"lado del pentágono: cosh a = phi, sinh a = phi^(1/2), a = {a:.6f} = arsinh(phi^(1/2)), el radio del disco del nivel 1/2")
+    # los conteos, con capas por arista
+    J=np.diag([-1.,1.,1.]); mink=lambda u,x:u@J@x
+    R0=np.arccosh(1/(np.tan(np.pi/5)*np.tan(np.pi/4)))
+    t0=[np.array([np.cosh(R0),np.sinh(R0)*np.cos(2*np.pi*k/5),np.sinh(R0)*np.sin(2*np.pi*k/5)]) for k in range(5)]
+    assert np.isclose(np.arccosh(-mink(t0[0],t0[1])),a)
+    def refl(p,q):
+        n=J@np.cross(p,q); n=n/np.sqrt(mink(n,n)); return np.eye(3)-2*np.outer(n,J@n)
+    key=lambda p:(round(p[1]/(1+p[0]),6)+0.0,round(p[2]/(1+p[0]),6)+0.0)
+    tk=lambda vs: tuple(sorted(key(x) for x in vs))
+    def counts(tiles):
+        e={}
+        for vs in tiles.values():
+            for k in range(5):
+                ed=tuple(sorted((key(vs[k]),key(vs[(k+1)%5])))); e[ed]=e.get(ed,0)+1
+        return len(tiles),sum(1 for c in e.values() if c==1)
+    tiles={tk(t0):t0}; last=[t0]; res=[counts(tiles)]
+    for _ in range(6):
+        nuevo=[]
+        for vs in last:
+            for k in range(5):
+                nv=[refl(vs[k],vs[(k+1)%5])@x for x in vs]
+                if tk(nv) not in tiles: tiles[tk(nv)]=nv; nuevo.append(nv)
+        last=nuevo; res.append(counts(tiles))
+    Fb=[0,1]; Lc=[2,1]
+    for _ in range(20): Fb.append(Fb[-1]+Fb[-2]); Lc.append(Lc[-1]+Lc[-2])
+    assert [r[0] for r in res]==[5*Fb[2*n+1]-4 for n in range(7)] and [r[1] for r in res]==[5*Lc[2*n+1] for n in range(7)]
+    print("capas por arista: pentágonos", [r[0] for r in res], "= 5F(2n+1)-4; patas de frontera", [r[1] for r in res], "= 5L(2n+1)")
+    print(f"tasa en la capa 6: {res[6][0]/res[6][1]:.4f}; límite F/L = 1/sqrt5 = {5**-.5:.4f}; cada capa multiplica por phi^2 = {phi**2:.4f}")
+    assert abs(res[6][0]/res[6][1]-5**-.5)<2e-3
+    # el corte
+    cro=10*a/np.pi**2; assert np.isclose(cro,2/np.pi*(5*a/2)/(np.pi/2))
+    print(f"Crofton: {cro:.4f} cruces por unidad de longitud; con chi=2, {cro*np.log(2):.3f} frente a 1/2: {cro*np.log(2)/0.5:.2f} S en promedio; chi que daría S: {np.exp(0.5/cro):.3f}")
+
+SECCIONES.append((47, 'La tríada como código, la cuerda como corte, y el código pentagonal', seccion_47))
+
 if __name__ == "__main__":
     requested = {int(a) for a in sys.argv[1:]}
     for n, title, f in SECCIONES:

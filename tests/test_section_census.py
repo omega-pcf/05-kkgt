@@ -101,15 +101,16 @@ def caption_of(figure_file: str) -> str:
 
 @pytest.mark.section
 class TestSectionRegistry:
-    def test_forty_six_sections_in_order(self, sections):
-        """Sections 1..46, contiguous, in file order.
+    def test_forty_seven_sections_in_order(self, sections):
+        """Sections 1..47, contiguous, in file order.
 
         The manuscript still numbers its blocks (1)..(44): sections 45 and
         46 came with the v136 provenance (the (F10) item and the Hopf
-        foliation) and get their ``(45)``/``(46)`` labels with it.
+        foliation) and get their ``(45)``/``(46)`` labels with it; section
+        47 is the triad/pentagonal-code section the v138 round added.
         """
         numbers = [n for n, _t, _f in sections]
-        assert numbers == list(range(1, 47)), numbers
+        assert numbers == list(range(1, 48)), numbers
 
     def test_every_section_is_callable(self, sections):
         for n, title, fn in sections:
