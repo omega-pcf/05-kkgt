@@ -19,6 +19,10 @@ PYTHONPATH=tests/src uv run python -m kkgt.sections        # the 46 sections
 PYTHONPATH=tests/src uv run python -m kkgt.sections 38     # only section 38
 ```
 
+The pytest configuration lives in `pyproject.toml` under `[tool.pytest.ini_options]`
+(`testpaths`, `pythonpath`, `markers`, `addopts`), so a bare `uv run pytest` collects
+the same 533 tests as `uv run pytest tests/ -q`.
+
 ## Layout (mirrors `03-crystalline-worldsheet/tests/`)
 
 ```
