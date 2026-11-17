@@ -1,5 +1,8 @@
 # One object instead of a choice of vacuum to put the observer in de Sitter space: From wormholes, black holes and baby universes to the criteria for an observer in de Sitter, contrasted with the Kaluza–Klein graviton candidates and with the cosmological constant
 
+<!-- selfcite:begin id="badge" -->
+<!-- selfcite:end id="badge" -->
+
 [![Project Page](https://img.shields.io/badge/Project%20Page-omega--pcf.com-blue)](https://omega-pcf.com/kkgt)
 
 ## Authors
@@ -17,6 +20,7 @@ In de Sitter space an observer must be inside the universe it observes, and in s
 
 **Keywords:** de Sitter space, wormholes, Kaluza–Klein gravitons, golden ratio, Randall–Sundrum model, cosmological constant, formal verification, Lean 4.
 
+<!-- selfcite:begin id="citation" -->
 ## Citation
 
 González García, J. A., González García, V. M., Dressler Pérez, I. M., & García Ordóñez, L. M. (2026). *One object instead of a choice of vacuum to put the observer in de Sitter space: From wormholes, black holes and baby universes to the criteria for an observer in de Sitter, contrasted with the Kaluza–Klein graviton candidates and with the cosmological constant*. Preprint. Repository: [omega-pcf/05-kkgt](https://github.com/omega-pcf/05-kkgt).
@@ -30,6 +34,7 @@ González García, J. A., González García, V. M., Dressler Pérez, I. M., & Ga
   url     = {https://github.com/omega-pcf/05-kkgt}
 }
 ```
+<!-- selfcite:end id="citation" -->
 
 ## Repository Structure
 

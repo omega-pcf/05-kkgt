@@ -1,5 +1,6 @@
 #!/usr/bin/env tsx
 import { syncCitationMetadata } from './tasks/citation.js';
+import { syncSelfCitations } from './tasks/selfcitations.js';
 import { cleanupOldVersions } from './tasks/cleanup.js';
 import { compilePDF } from './tasks/compile.js';
 import { generateChecksums } from './tasks/checksums.js';
@@ -37,6 +38,7 @@ async function main(): Promise<void> {
 
     cleanupOldVersions(config.buildDir);
     syncCitationMetadata(config.version);
+    syncSelfCitations();
     compilePDF(config);
     generateChecksums(config);
 
@@ -45,7 +47,8 @@ async function main(): Promise<void> {
     console.log(`  - ${config.outputPdf}`);
     console.log(`  - ${config.checksumsFile}`);
     console.log(`  - CITATION.cff (updated)`);
-    console.log(`  - .zenodo.json (generated from CITATION.cff)\n`);
+    console.log(`  - .zenodo.json (generated from CITATION.cff)`);
+    console.log(`  - README.md (self-citation regions regenerated)\n`);
   } catch (error) {
     console.error(`\n❌ Build failed:`, error);
     process.exit(1);
