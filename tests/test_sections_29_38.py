@@ -46,7 +46,8 @@ class TestSection29LatticePointFromOmegaLambda:
         return (1 - om) * h * h, math.sqrt(a * a + b * b + 2 * a * b * r)
 
     def test_required_omega_at_level_584(self):
-        assert 3 * PHI**-584 == pytest.approx(2.68126e-122, rel=1e-4)
+        # half the last digit of the six-significant-figure print
+        assert 3 * PHI**-584 == pytest.approx(2.68126e-122, abs=5e-128)
         assert round(omega_l_required(584), 4) == 0.2928
 
     @pytest.mark.parametrize("r,dp,tension", [(0.0, 0.0060, -3.0),
@@ -114,7 +115,9 @@ class TestSection30SymmetricThroat:
         m = M_GEV
         got = m * PHI**level
         if printed > 1e5:
-            assert got == pytest.approx(printed, rel=5e-4)
+            # 1.048e+07 is printed to four significant figures: half a unit
+            # of its last digit is 5e3
+            assert got == pytest.approx(printed, abs=5e3)
         else:
             assert got == pytest.approx(printed, abs=5e-3)
 
@@ -137,6 +140,15 @@ class TestSection30SymmetricThroat:
         )
         assert low <= symmetric <= high, symmetric
         assert low <= planck_top <= high, planck_top
+
+    def test_the_top_of_the_clock_is_the_printed_39_33(self, run_section):
+        """main.tex L2108: the depth-24 clock tops out at 39.33 (AUD-001).
+
+        Class b, cited to test_depth_of_the_clock, test_scales and
+        test_vector_ratio_depends_only_on_the_depth; the figure lives in
+        the label section 30 prints (section 1 computes the same 39.33).
+        """
+        run_section(30).has("(top at Planck: 39.33)")
 
 
 # ══════════════════════════════════════════════════════════ section 31 ══
@@ -199,6 +211,22 @@ class TestSection32LevelVersusGridShape:
             "criterion: a level read 3 sigma or more from every integer rules out the lattice shape"
         )
 
+    def test_the_worst_case_level_is_583_789_plus_or_minus_0_028(self, run_section):
+        """main.tex L2028/L2330: 583.789 +- 0.028 at 7.6 sigma from 584.
+
+        AUD-001 L2028: the two figures lived in the tests' code without an
+        assertion; section 32 prints them on the DESI worst-case row, with
+        the ``.3f`` width (half a unit, 5e-4) each.
+        """
+        run = run_section(32)
+        m = run.match(
+            r"DESI DR2 \+ CMB, LCDM, r = -1 \(worst case\)[^\n]*"
+            r"level ([-\d.]+) \+- ([\d.]+); integer 584 at 7\.6 sigma"
+        )
+        level, err = float(m.group(1)), float(m.group(2))
+        assert level == pytest.approx(583.789, abs=5e-4), level
+        assert err == pytest.approx(0.028, abs=5e-4), err
+
 
 # ══════════════════════════════════════════════════════════ section 33 ══
 class TestSection33ColourHole:
@@ -229,9 +257,11 @@ class TestSection33ColourHole:
         m = M_GEV
         u = m / M_PCF
         m_pl = M_PLANCK_GEV
-        assert u / math.sqrt(M_PCF) == pytest.approx(5.616e-4, rel=1e-3)
+        assert u / math.sqrt(M_PCF) == pytest.approx(5.616e-4, rel=5e-5)
+        # 1.048e+18 to four significant figures: half a unit of the last
+        # digit is 5e14
         assert (m_pl / math.sqrt(2)) / math.sqrt(M_PCF) == pytest.approx(
-            1.048e18, rel=1e-3
+            1.048e18, abs=5e14
         )
         conv = 2 * math.log(m_pl / u) / LN_PHI - math.log(2) / LN_PHI
         assert round(conv, 2) == 203.56
@@ -391,7 +421,7 @@ class TestSection37Consistency:
         run.has("sigma=3,4,5 -> 1654, 3436182, 820599769985")
         assert run.value(
             r"fit lnD = a S \+ b ln L \+ c \(sigma=3\.\.9\): a = ([\d.]+)",
-            want=0.9972, tol=5e-4, label="W2 slope",
+            want=0.9972, tol=5e-5, label="W2 slope",
         )
 
     def test_cardy_slope_of_the_count(self, run_section):
@@ -399,7 +429,7 @@ class TestSection37Consistency:
         run = run_section(37)
         run.value(
             r"ln W \+ \(3/2\) ln L0 = a S \+ b: a = ([\d.]+)",
-            want=1.0010, tol=5e-4, label="Cardy slope",
+            want=1.0010, tol=5e-5, label="Cardy slope",
         )
 
     def test_e_to_the_s_is_never_an_integer(self, run_section):
@@ -416,7 +446,7 @@ class TestSection37Consistency:
         run = run_section(37)
         pattern = "measure " + re.escape(measure) + r": \[([^\]]+)\]"
         got = [float(v) for v in run.match(pattern).group(1).split()]
-        assert got == pytest.approx(printed, abs=5e-4), measure
+        assert got == pytest.approx(printed, abs=5e-5), measure
 
 
 # ══════════════════════════════════════════════════════════ section 38 ══

@@ -23,7 +23,12 @@ from scipy.special import jn_zeros
 
 from kkgt.constants import LN_PHI, M_GEV, OBS_G, PHI
 
-R2 = 5e-4   # rounding tolerance for a value printed with .2f
+# Half the last digit of the figure each constant guards (decision (ii) of
+# AUD-001): .3f -> 5e-4, .4f -> 5e-5.  R2 guards two-decimal figures, whose
+# width would be 5e-3, but every one of them is read from the section's
+# stdout, where the figure is already exact, so it keeps the .3f width:
+# tighter than the rule asks, never looser.
+R2 = 5e-4
 R3 = 5e-4   # .3f
 R4 = 5e-5   # .4f
 
@@ -62,8 +67,13 @@ class TestSection1Numbers:
         assert 0 < 0.25 - off[-1] < 5e-3
 
     def test_ring_constant_mode_equals_the_bf_bound_scale(self):
-        """m^2 = -1/(log phi)^2 = -4.3184 for the constant mode of the ring."""
-        assert -1 / LN_PHI**2 == pytest.approx(-4.3184, abs=1e-3)
+        """m^2 = -1/(log phi)^2 = -4.3184 for the constant mode of the ring.
+
+        main.tex quotes the same figure at three decimals, -4.318 (AUD-001
+        L877); section 1 prints both, ``(-4.318)`` and ``round(..., 4)``.
+        """
+        assert -1 / LN_PHI**2 == pytest.approx(-4.3184, abs=5e-5)
+        assert round(-1 / LN_PHI**2, 3) == -4.318
 
     def test_masses_at_the_bottom_of_the_throat(self):
         """m_k = j_{1,k} M phi^12 with M = 0.31384 GeV -> 387, 709, 1028, 1346."""
@@ -116,10 +126,13 @@ class TestSection1Numbers:
             assert got == pytest.approx(printed, abs=5e-3), (label, got)
 
     def test_mpcf_framework_unit(self, run_section):
-        """M_PCF log phi = 6 sqrt(3) pi -> 67.846 (same value as section 12)."""
+        """M_PCF log phi = 6 sqrt(3) pi -> 67.846 (same value as section 12).
+
+        The stdout value carries the printed .3f width (half a unit, 5e-4).
+        """
         got = run_section(1).value(r"framework units\): M_PCF\s+([-\d.]+)",
                                    label="M_PCF")
-        assert got == pytest.approx(6 * math.sqrt(3) * math.pi / LN_PHI, abs=1e-3)
+        assert got == pytest.approx(6 * math.sqrt(3) * math.pi / LN_PHI, abs=5e-4)
 
     def test_dirichlet_lowest_eigenvalue_is_positive(self, run_section):
         """Boundary conditions: Neumann has the zero mode, Dirichlet starts at 26.4.
@@ -144,7 +157,12 @@ class TestSection1Numbers:
             r"(\[[^\]]+\])"
         )
         errs = [float(v) for v in re.findall(r"'([\d.e+-]+)'", m.group(1))]
-        assert errs == pytest.approx([1.2e-4, 2.9e-5, 7.3e-6, 1.8e-6], rel=0.05), errs
+        # every entry is printed as ``.1e``, so each carries its own half
+        # unit: 5e-6 on 1.2e-4 and 5e-7 on the three smaller ones
+        for got_, want_, half in zip(
+            errs, [1.2e-4, 2.9e-5, 7.3e-6, 1.8e-6], [5e-6, 5e-7, 5e-7, 5e-7]
+        ):
+            assert abs(got_ - want_) <= half, (got_, want_)
         # second order: every refinement divides the error by ~4
         for a, b in zip(errs, errs[1:]):
             assert a / b == pytest.approx(4.0, rel=0.3), (a, b)
@@ -264,6 +282,140 @@ class TestSection1Numbers:
             assert k < 10000, n
         assert k == printed, (n, k)
 
+    # ── AUD-001 policy (i): the figures section 1 prints that no test
+    # asserted.  Each docstring names the manuscript line and the test the
+    # manuscript cites for it; the tolerance is half the last digit of the
+    # value the section prints (decision (ii)).
+
+    def test_the_printed_koide_scale_is_313_84(self, run_section):
+        """main.tex L805 and L1464: M = 313.84 MeV (AUD-001, class b).
+
+        Cited to test_reconstruction_is_below_one_part_in_ten_thousand and
+        test_alternatives_for_the_bottom_level; section 1 prints the figure
+        with ``round(M_lep, 2)``.
+        """
+        run_section(1).value(
+            r"M \(Koide\) MeV \(313\.84\)\s+([-\d.]+)",
+            want=313.84, tol=5e-3, label="Koide M (.2f)",
+        )
+
+    def test_the_ir_level_in_phi_units_is_the_printed_3_8319(self, run_section):
+        """main.tex L1454: m1/phi^sigma_IR = 3.8319 (AUD-001, class b).
+
+        Cited to test_second_order_convergence_on_the_golden_grid; the value
+        is printed with ``round(..., 4)``.
+        """
+        run_section(1).value(
+            r"\[0,12\] m1/phi\^sigma_IR \(3\.8319\); ratios\s+"
+            r"\((?:np\.float64\()?([-\d.]+)",
+            want=3.8319, tol=5e-5, label="m1/phi^sigma_IR (.4f)",
+        )
+
+    def test_the_scale_in_powers_of_two_is_the_printed_8_30(self, run_section):
+        """main.tex L1475: the same scale in powers of 2 = 8.30.
+
+        Section 1 prints 8.3 (``round(..., 2)``); 8.30 is the manuscript's
+        two-decimal reading of it (AUD-001, class b, cited to
+        test_alternatives_for_the_bottom_level).
+        """
+        got = run_section(1).value(
+            r"same number in powers of 2 \(8\.30\)\s+([-\d.]+)",
+            want=8.30, tol=5e-3, label="scale in powers of 2 (.2f)",
+        )
+        assert round(got, 2) == 8.30, got
+
+    def test_the_log_pi_of_the_scale_is_the_printed_5_03(self, run_section):
+        """main.tex L1557: log_pi(scale/M) = 5.03 (AUD-001, class b).
+
+        Section 1 prints the value with ``round(..., 3)`` as 5.028 and the
+        label carries the manuscript's two-decimal 5.03.
+        """
+        got = run_section(1).value(
+            r"log_pi\(scale/M\) \(5\.03\); pi\^5 deviation \(-1\.9 sd\)\s+"
+            r"\((?:np\.float64\()?([-\d.]+)",
+            want=5.028, tol=5e-4, label="log_pi(scale/M) (.3f)",
+        )
+        assert round(got, 2) == 5.03, got
+
+    def test_the_j0_limit_is_the_printed_2_295(self, run_section):
+        """main.tex L1594 and L1601: m2/m1 -> 2.295 at the J0 limit.
+
+        AUD-001, class b, cited to test_vector_ratio_range; the value is
+        printed with ``round(..., 3)``.
+        """
+        run_section(1).value(
+            r"J0 limit \(2\.295\)\s+([-\d.]+)",
+            want=2.295, tol=5e-4, label="J0 limit (.3f)",
+        )
+
+    def test_the_two_uv_tops_in_levels_are_the_printed_two(self, run_section):
+        """main.tex L1610: the UV top at the two Planck masses.
+
+        k pi r = 39.33 at M_Pl and 37.72 at the reduced M_Pl, with
+        sigma_UV = 93.74 and 90.39 (AUD-001, class b, cited to
+        test_vector_ratio_range); both pairs are printed with
+        ``round(..., 2)``.
+        """
+        run = run_section(1)
+        m_pl = run.match(
+            r"^M_Pl: k pi r \(39\.33/37\.72\); sigma_UV \(93\.74/90\.39\)\s+"
+            r"\((?:np\.float64\()?([-\d.]+)\),\s*(?:np\.float64\()?([-\d.]+)\)"
+        )
+        reduced = run.match(
+            r"^reduced M_Pl: k pi r \(39\.33/37\.72\); sigma_UV \(93\.74/90\.39\)\s+"
+            r"\((?:np\.float64\()?([-\d.]+)\),\s*(?:np\.float64\()?([-\d.]+)\)"
+        )
+        for m, want, tol, label in (
+            (m_pl, (39.33, 93.74), 5e-3, "M_Pl"),
+            (reduced, (37.72, 90.39), 5e-3, "reduced M_Pl"),
+        ):
+            got = (float(m.group(1)), float(m.group(2)))
+            assert got == pytest.approx(want, abs=tol), (label, got)
+
+    def test_the_four_graviton_zeros_are_the_printed_four(self, run_section):
+        """main.tex L1612 and L1613: 3.8317, 7.0156, 10.1735, 13.3237.
+
+        AUD-001, class b, cited to test_vector_ratio_range; section 1
+        prints them with ``np.round(g_, 4)`` at both Planck masses.
+        """
+        run = run_section(1)
+        m = run.match(
+            r"graviton zeros \(3\.8317, 7\.0156, 10\.1735, 13\.3237\)\s+"
+            r"\[([^\]]+)\]"
+        )
+        got = [float(v) for v in m.group(1).split()]
+        assert got == pytest.approx(
+            [3.8317, 7.0156, 10.1735, 13.3237], abs=5e-5
+        ), got
+
+    def test_the_lyr_vector_table_is_the_printed_four(self, run_section):
+        """main.tex L1617 and L1618: the LYR vector zeros 2.45, 5.57, 8.7, 11.84.
+
+        AUD-001, class b, cited to test_vector_ratio_range: the four LYR
+        figures live in the label section 1 prints, and the section's own
+        four-decimal zeros are asserted beside them.
+        """
+        run = run_section(1)
+        run.has("vs LYR 2.45 5.57 8.7 11.84")
+        m = run.match(
+            r"vector zeros \(2\.4448, 5\.5615, 8\.6958, 11\.835\) vs LYR"
+            r"[^\[]*\[([^\]]+)\]"
+        )
+        got = [float(v) for v in m.group(1).split()]
+        assert got == pytest.approx([2.4448, 5.5615, 8.6958, 11.834], abs=5e-5), got
+
+    def test_the_rounding_tolerance_of_a_four_decimal_figure_is_5e_5(self):
+        """main.tex L2506: 5e-5 is the rounding width of a .4f figure.
+
+        AUD-001 L2472: the figure lived only in the tests' code (``R4``);
+        this pins the rule the manuscript states and the property that
+        makes half a unit the right width.
+        """
+        assert R4 == 5e-5 == 0.5 * 10 ** -4
+        figure = 3.8317     # a four-decimal figure section 1 prints
+        assert round(figure + 4.9e-5, 4) == 3.8317   # still the same print
+        assert round(figure + 6e-5, 4) == 3.8318     # and beyond it is not
+
 
 # ═══════════════════════════════════════════════════════════ section 2 ══
 class TestSection2Casimir:
@@ -274,7 +426,7 @@ class TestSection2Casimir:
         run = run_section(2)
         a20 = run.value(r"K=20: A=([\d.]+)", label="A K=20")
         a60 = run.value(r"K=60: A=([\d.]+)", label="A K=60")
-        assert a20 == pytest.approx(0.22327442, abs=1e-7), a20
+        assert a20 == pytest.approx(0.22327442, abs=5e-9), a20
         assert abs(a60 - a20) < 5e-5, (a20, a60)
 
     def test_b_is_positive(self, run_section):
@@ -291,8 +443,8 @@ class TestSection2Casimir:
         depth = float(re.search(
             r"depth log_phi\(1/s\*\) = ([\d.]+)", line.group(0)
         ).group(1))
-        assert -ls / LN_PHI == pytest.approx(depth, abs=1e-6)
-        assert depth == pytest.approx(1.0694864, abs=1e-6)
+        assert -ls / LN_PHI == pytest.approx(depth, abs=5e-8)
+        assert depth == pytest.approx(1.0694864, abs=5e-8)
 
 
 # ═══════════════════════════════════════════════════════════ section 3 ══
@@ -312,14 +464,14 @@ class TestSection3TwoBraneSpectra:
         run = run_section(3)
         m = run.match(r"graviton x_n = \[\s*([\d.]+)\s+([\d.]+)\s+([\d.]+)\]")
         got = [float(g) for g in m.groups()]
-        assert got == pytest.approx(list(jn_zeros(1, 3)), abs=5e-4)
+        assert got == pytest.approx(list(jn_zeros(1, 3)), abs=5e-5)
 
     def test_vector_zeros_against_the_lyr_table(self, run_section):
         """x_1^vec/x_1^grav = 0.6381; the vector zeros track LYR 2.45, 5.57, 8.7."""
         run = run_section(3)
         m = run.match(r"vector   x_n = \[([\d.]+)\s+([\d.]+)\s+([\d.]+)\]")
         vec = [float(g) for g in m.groups()]
-        assert vec == pytest.approx([2.4448, 5.5615, 8.6958], abs=5e-4)
+        assert vec == pytest.approx([2.4448, 5.5615, 8.6958], abs=5e-5)
         # both factors are printed at 4 decimals, so the quotient of the
         # printed values carries up to 1e-4 of rounding propagation
         assert vec[0] / jn_zeros(1, 1)[0] == pytest.approx(0.6381, abs=1e-4)
@@ -333,9 +485,9 @@ class TestSection3TwoBraneSpectra:
         run = run_section(3)
         m = run.match(r"k pi r = ([\d.]+) = ([\d.]+) levels; sigma_UV = ([\d.]+)")
         kpr, levels, sigma_uv = (float(g) for g in m.groups())
-        assert levels * LN_PHI == pytest.approx(kpr, abs=0.01)
-        assert 12 + levels == pytest.approx(sigma_uv, abs=0.01)
-        assert sigma_uv == pytest.approx(93.74, abs=0.01)
+        assert levels * LN_PHI == pytest.approx(kpr, abs=5e-3)
+        assert 12 + levels == pytest.approx(sigma_uv, abs=5e-3)
+        assert sigma_uv == pytest.approx(93.74, abs=5e-3)
 
     def test_lyr_gluon_over_graviton(self):
         assert round(3600 / 380, 2) == 9.47
@@ -362,7 +514,7 @@ class TestSection4MetricPositivity:
             r"min eigenvalue of sym\(T\)=([-\d.e+]+)", run.stdout
         )]
         assert len(vals) == 3, vals
-        assert vals == pytest.approx([0.35, -0.06, -2.83], abs=0.01), vals
+        assert vals == pytest.approx([0.35, -0.06, -2.83], abs=5e-3), vals
 
     def test_eta_weighted_product_is_positive(self, run_section):
         """<f,Tf>_eta > 0 for a = 0.05, 0.2, 1.0: the metric restores positivity."""
