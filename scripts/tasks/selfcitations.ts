@@ -10,6 +10,11 @@
  *   id="citation"  - the whole `## Citation` section: heading, APA paragraph,
  *                    blank line, bibtex fence.
  *
+ * It also owns the version printed by the paper: the marked line of main.tex
+ * (id="version") must carry `v` + package.json's `version`, so that a version
+ * bump cannot leave the PDF behind.  --check fails on a mismatch; the default
+ * mode rewrites the token in place.
+ *
  * Determinism: no Date, no Math.random, no locale-dependent formatting, no
  * network, fixed bibtex field order, LF, exactly one trailing newline per
  * region. Output satisfies f(f(x)) = f(x).
@@ -26,6 +31,7 @@ const PATHS = {
   README: 'README.md',
   CFF: 'CITATION.cff',
   PACKAGE: 'package.json',
+  TEX: 'main.tex',
 } as const;
 
 const REGION_IDS = ['badge', 'citation'] as const;
@@ -33,6 +39,18 @@ type RegionId = (typeof REGION_IDS)[number];
 
 const BEGIN = (id: string): string => `<!-- selfcite:begin id="${id}" -->`;
 const END = (id: string): string => `<!-- selfcite:end id="${id}" -->`;
+
+/**
+ * The marked line of main.tex that carries the paper version, in LaTeX
+ * comment form (main.tex has no HTML comments).  package.json is the single
+ * source of the version: the sync writes it here, --check fails when the two
+ * disagree.
+ */
+const TEX_VERSION_ID = 'version';
+const TEX_VERSION_BEGIN = `% selfcite:begin id="${TEX_VERSION_ID}"`;
+const TEX_VERSION_END = `% selfcite:end id="${TEX_VERSION_ID}"`;
+/** The version token as it prints in the paper: `v0.1.0`. */
+const VERSION_TOKEN = /v\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?/;
 
 /** Non-volatile fields of the block (SPEC-001 §3.3/§3.4). */
 interface SelfCitationData {
@@ -210,6 +228,74 @@ function replaceRegions(readme: string, regions: Map<RegionId, Region>, rendered
   return out;
 }
 
+/* ---------------------------------------------------------- paper version */
+
+/** The version of record: package.json owns it, the paper prints it. */
+function packageVersion(): string {
+  const pkg = JSON.parse(readRequired(PATHS.PACKAGE));
+  const version = pkg?.version;
+  if (typeof version !== 'string' || !/^\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?$/.test(version)) {
+    throw new Error(`${PATHS.PACKAGE}: missing or malformed "version" (expected X.Y.Z)`);
+  }
+  return version;
+}
+
+interface TexRegion {
+  start: number; // offset of the marked line inside main.tex
+  content: string; // the marked line, without the markers
+}
+
+function literalRe(text: string): RegExp {
+  return new RegExp(text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
+}
+
+/** Exactly one marker pair of TEX_VERSION_ID, or a thrown error. */
+function findTexVersionRegion(tex: string): TexRegion {
+  const begins = [...tex.matchAll(literalRe(TEX_VERSION_BEGIN))];
+  const ends = [...tex.matchAll(literalRe(TEX_VERSION_END))];
+  if (begins.length !== 1 || ends.length !== 1 || begins[0].index === undefined || ends[0].index === undefined) {
+    throw new Error(
+      `${PATHS.TEX}: expected exactly one marker pair for id="${TEX_VERSION_ID}", ` +
+        `found ${begins.length} begin / ${ends.length} end marker(s)`
+    );
+  }
+  const beginEnd = begins[0].index + begins[0][0].length;
+  const endStart = ends[0].index;
+  if (endStart < beginEnd) throw new Error(`${PATHS.TEX}: marker pair for id="${TEX_VERSION_ID}" is inverted`);
+  const contentStart = tex.charAt(beginEnd) === '\n' ? beginEnd + 1 : beginEnd;
+  return { start: contentStart, content: tex.slice(contentStart, endStart) };
+}
+
+/**
+ * Keep the printed version of main.tex equal to package.json's version.
+ * (--check compares and fails; the default mode rewrites the token in place,
+ * the same contract as the README regions.)
+ * Returns true when the on-disk text differs from package.json.
+ */
+function syncPaperVersion(check: boolean): boolean {
+  const tex = readRequired(PATHS.TEX);
+  const expected = `v${packageVersion()}`;
+  const region = findTexVersionRegion(tex);
+  const token = VERSION_TOKEN.exec(region.content);
+  if (!token) {
+    throw new Error(`${PATHS.TEX}: no "vX.Y.Z" version token inside the "${TEX_VERSION_ID}" markers`);
+  }
+  if (token[0] === expected) return false;
+
+  if (check) {
+    process.stderr.write(
+      `selfcitations:check failed — ${PATHS.TEX} prints ${token[0]}, ${PATHS.PACKAGE} says ${expected}. ` +
+        `Run \`pnpm run selfcitations\`.\n`
+    );
+    return true;
+  }
+
+  const at = region.start + token.index;
+  writeFileSync(PATHS.TEX, tex.slice(0, at) + expected + tex.slice(at + token[0].length));
+  console.log(`  ✓ ${PATHS.TEX} paper version set to ${expected} (was ${token[0]}).`);
+  return true;
+}
+
 /* -------------------------------------------------------------------- diff */
 
 function unifiedDiff(onDisk: string, rendered: string, header: string): string {
@@ -250,12 +336,14 @@ interface RunResult {
   changed: boolean;
   checked: RegionId[]; // ids compared in --check mode
   stale: RegionId[]; // ids whose on-disk content differed
+  staleTex: boolean; // main.tex's printed version differs from package.json
 }
 
 function run(check: boolean): RunResult {
   const readme = readRequired(PATHS.README);
   const data = loadData();
   const regions = findRegions(readme);
+  const staleTex = syncPaperVersion(check);
 
   const rendered = new Map<RegionId, string>([
     ['badge', renderBadge(data)],
@@ -282,13 +370,13 @@ function run(check: boolean): RunResult {
           `Run \`pnpm run selfcitations\`.\n`
       );
     }
-    return { changed: false, checked: [...REGION_IDS], stale };
+    return { changed: false, checked: [...REGION_IDS], stale, staleTex };
   }
 
-  if (stale.length === 0) return { changed: false, checked: [...REGION_IDS], stale };
+  if (stale.length === 0 && !staleTex) return { changed: false, checked: [...REGION_IDS], stale, staleTex };
 
-  writeFileSync(PATHS.README, replaceRegions(readme, regions, rendered));
-  return { changed: true, checked: [...REGION_IDS], stale };
+  if (stale.length > 0) writeFileSync(PATHS.README, replaceRegions(readme, regions, rendered));
+  return { changed: true, checked: [...REGION_IDS], stale, staleTex };
 }
 
 /** Called by scripts/build.ts right after syncCitationMetadata(). */
@@ -296,9 +384,10 @@ export function syncSelfCitations(): void {
   const result = run(false);
   console.log(
     result.changed
-      ? `  ✓ README.md self-citation regions regenerated (${result.stale.join(', ')}).`
+      ? `  ✓ README.md self-citation regions regenerated (${result.stale.join(', ') || 'paper version'}).`
       : `  ✓ README.md self-citation regions up to date.`
   );
+  if (result.staleTex) console.log(`  ✓ main.tex paper version aligned with package.json.`);
 }
 
 function main(): number {
@@ -306,12 +395,16 @@ function main(): number {
   try {
     const result = run(check);
     if (check) {
-      if (result.stale.length > 0) return 1;
-      console.log('selfcitations:check ✓ README.md regions match the rendered output.');
+      if (result.stale.length > 0 || result.staleTex) return 1;
+      console.log(
+        `selfcitations:check ✓ README.md regions match the rendered output and ` +
+          `${PATHS.TEX} carries package.json's version.`
+      );
       return 0;
     }
     if (result.changed) console.log(`selfcitations ✓ README.md regions updated (${result.stale.join(', ')}).`);
     else console.log('selfcitations ✓ README.md regions already up to date.');
+    if (result.staleTex) console.log(`selfcitations ✓ ${PATHS.TEX} paper version synced.`);
     return 0;
   } catch (error) {
     process.stderr.write(`selfcitations: ${error instanceof Error ? error.message : String(error)}\n`);

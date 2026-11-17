@@ -139,7 +139,21 @@ From wormholes, black holes and baby universes\\to the criteria for an observer 
 \author[]{L.~M.~Garc\'ia Ord\'o\~nez}
 \address{TTAMAYO PUNTO COM, S.A.P.I.\ de C.V.; Research \& Development Division;
   Naucalpan de Juárez, State of Mexico, Mexico}
-\date{November 6, 2026}
+\renewcommand{\datename}{Received}
+% Received date, last-modified date and version.  amsart prints \date as the
+% footnote at the foot of page 1 (\@adminfootnotes -> \@setdate, which
+% prefixes \datename); \datename is the class's own label for that footnote
+% ("Date:" for this class, "Received by the editors" for its siblings), so it
+% is set to the received wording here.  \today is reproducible:
+% scripts/tasks/compile.ts compiles with SOURCE_DATE_EPOCH set to the HEAD
+% commit's timestamp, so it prints the date of the last commit, never the
+% clock's.  The version token is owned by package.json: the "version"
+% markers below are checked by `pnpm run selfcitations:check` (in
+% `pnpm run validate`), which fails when this line and package.json differ,
+% and rewritten by `pnpm run selfcitations` / `pnpm run build`.
+% selfcite:begin id="version"
+\date{261116; last modified \today; v0.1.0}
+% selfcite:end id="version"
 
 \begin{document}
 
