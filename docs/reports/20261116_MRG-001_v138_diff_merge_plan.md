@@ -680,3 +680,169 @@ dropped. No push at any point.
   §W1.1, plus the clause "—a reading of the records, not a result about them" that the
   author replaced with `\tier{R}`) stays as our prose: in our grammar the mark *is* those
   words, so the conversion needs no edit.
+
+---
+
+# Wave W4 — applied
+
+| Field | Value |
+|---|---|
+| **wave** | W4 of §4 — *Code and data, tests, AUD-001 delta* |
+| **date** | 2026-11-17 |
+| **scope** | `tests/**`, `main.tex`, this report; `scripts/`, `citation.csl.json`, `lean/`, `images/` untouched; `tests/README.md` and the root `README.md` counters only |
+| **commits** | one per piece plus this report; **no push** (`1bd9c9f`, `7a0eb17`, then this) |
+| **outcome** | piece 1 done end to end; piece 2 **8 of 61** retargets applied and **53** brought up with their reason; piece 3 = no guard relaxed |
+
+## W4.1 Piece 1 — `seccion_47` inside the package
+
+The section moves verbatim from `reproduce_v138.py` (lines 2328–2396) into
+`tests/src/kkgt/sections/_rest.py`, so `SECCIONES` is 1..47 and
+`python -m kkgt.sections 47` runs the author's own `assert`s. Captured after the
+port (`PYTHONPATH=tests/src uv run python -m kkgt.sections 47`, 1.4 s — not
+`slow`): the eight lines TST-001 §4 quotes, ending in
+`lado del pentágono: … a = 1.061275 …` and `Crofton: 1.0753 … chi que daría S: 1.592`.
+
+| file | change |
+|---|---|
+| `tests/src/kkgt/sections/_rest.py` | `seccion_47` + its `SECCIONES.append((47, …))`, code unchanged |
+| `tests/test_section_runs.py` | docstring 46→47; `MARKERS[47]` = `lado del pentágono: cosh a = phi, sinh a = phi^(1/2), a = 1.061275`; `_params` and `test_all_sections_covered` → `range(1, 48)` |
+| `tests/test_section_census.py` | `test_forty_six_sections_in_order` → `test_forty_seven_sections_in_order`, `range(1, 48)` |
+| `tests/README.md` | forty-six→forty-seven, the `46`→`47` counts, map row `47`, the "not in `SECCIONES` yet" paragraph replaced |
+| `tests/test_sections_47.py` | module docstring only — the five independent tests and their assertions are untouched |
+| `main.tex` | the two *"forty-six sections"* phrases → *forty-seven* (L2496, L2507); counters `$549$/$545$` → `$550$/$546$`, recounted by running the commands |
+| `README.md` | the same two counters and the same phrase, so no file of the repo still claims 46 or 549 |
+
+`__init__.py` needed no edit: it already sorts the three lots, so 47 falls in place.
+
+## W4.2 Piece 2 — the 61 class-`b` retargets
+
+**Method.** The audited snapshot behind `AUD-001`'s `L###` numbers is commit
+`8e101f5`: all 61 figures land on their audited line there and nowhere else in the
+last 40 revisions of `main.tex`. The 99 `\testref{…}` anchors are in the same order
+in `8e101f5` and at HEAD (same multiset, same sequence), so an anchor of the audit
+maps to exactly one line of the current file. Each row's *cited test* (Appendix A,
+column 2) was resolved to its anchor, the rows were grouped by anchor, and each
+group was substituted only when the group agreed on a single destination.
+
+**Result: 61 rows → 23 anchors → 8 applied, 53 brought up.**
+
+### Applied (4 anchors, 8 rows), each destination executed first
+
+| audited row (current line) | `\testref` before → after | run of the destination | how it affirms the figure |
+|---|---|---|---|
+| L810 `4.626` (`821`) | `test_reconstruction_is_below_one_part_in_ten_thousand` → `test_koide_scale_and_unit` | `1 passed` | `u * 1e3 == approx(4.6258, abs=5e-5)`; the line prints `M/M_PCF=4.626`, which is that value at three decimals |
+| L1119 `1.001` (`1153`) | `test_w2_integer_dimension` → `test_cardy_slope_of_the_count` | `1 passed` | `run.value('… a = ([\d.]+)', want=1.0010, tol=5e-5)` — the line's *slope in S is 1.001* |
+| L1577 `±30`, `±40` (`1612`) | `test_the_two_models_differ_by_one_point_four_percent` → `test_error_on_the_ratios` | `3 passed` | the parametrised rows `(1000, 30, …)` and `(1322, 40, …)`: the assertion `round(err,3) == printed` only holds for those two assumed errors, which is what the line says is *assumed in §data* |
+| L1788 `7.30`, `224.41`; L1789 `13.33`, `238.80` (`1827`) | `test_cardy_correction_settles` → `test_count_against_the_entropy` | `5 passed` | params `(3, 9, 7.299, 13.329, …)` and `(9, 2889, 224.406, 238.802, …)` at `abs=5e-4` — the four cells of the table at `1822–1823` |
+
+The census pin moved in the same commit: four names out
+(`test_reconstruction_…`, `test_w2_integer_dimension`,
+`test_the_two_models_differ_…`, `test_cardy_correction_settles` — none of them
+cited anywhere else), two in (`test_koide_scale_and_unit`,
+`test_count_against_the_entropy`; the other two destinations were already cited),
+so `test_testref_set_is_pinned` still asserts exact set equality. The anchor count
+stays **99** — retargets replace arguments, they do not add anchors. No number and
+no sentence moved.
+
+## W4.3 What the four moves de-cite (read before approving)
+
+Each substituted mark also ended a sentence whose *other* numbers its previous test
+does assert. Those numbers now carry no `\testref` at all and fall into AUD-001
+class `d` (*asserted by a test, never cited* — §5: "a listing only: no claim of this
+class is wrong"), not into class `b`:
+
+| number (current line) | still asserted by | class before → after |
+|---|---|---|
+| `~10^{-4}` reconstruction (`821`) | `test_reconstruction_is_below_one_part_in_ten_thousand` | a → d |
+| W2 slope `0.997` (`1153`) | `test_w2_integer_dimension` | a → d |
+| `1.4 %` and *about* `15` GeV (`1612`) | `test_the_two_models_differ_by_one_point_four_percent` | a → d |
+| Cardy settling `2.73`, `2.50`, `2.44` (`1827`) | `test_cardy_correction_settles` | a → d |
+
+Eight class-`b` rows became class `a` at the cost of four claims moving to class `d`.
+AUD-001 §6 lists three of these four anchors as *false ties* whose full fix is to
+split the citations (action 7) — splitting adds anchors and is therefore outside
+this wave's gate (99). Recorded here as a bring-up, not hidden.
+
+## W4.4 Bring-ups from W4 (53 rows, three reasons)
+
+**(a) One anchor, several claims, several destinations — 45 rows at 12 anchors.**
+A single `\testref{…}` cannot name two tests, and splitting the ties is action 7
+of AUD-001 §12 (it changes the anchor count the census pins). Rows listed by the
+line of the anchor they all share:
+
+| anchor line | rows (audited) | destinations named for them |
+|---|---|---|
+| `865` | L818 `0.05`, `11.97`, `±0.05` | `test_bottom_level_is_twelve`, `test_probability_of_a_phi_coincidence` |
+| `1331` | L1290 `1.8309`, `2.6551`, `3.4772` | `test_j1_ratios`, `test_ratio_700_over_380_is_the_bessel_ratio` |
+| `1511` | L1469 `0.05`, `99.6`, `±0.05`, L1471 `0.6`, L1472 `0.03`, `±0.03`, L1475 `1.4404` | `test_free_phase_fit_is_not_better`, `test_free_scale_versus_the_throat_scale`, `test_probability_of_a_phi_coincidence`, `test_the_compression_limit_is_half_a_cell` |
+| `1636` | L1582 `81.74`, L1589 `2.093`, L1590 `2.171`, L1592 `2.241`, L1593 `81.74`, `93.74`, L1610 `81.74`, `93.74` | `test_first_gluon_at_the_background`, `test_section12_runs_all_of_its_checks`, `test_uv_level` |
+| `1653` | L1617 `2.45`, L1618 `2.45`, `81.74` | `test_cardy_correction_settles`, `test_first_gluon_at_the_background` |
+| `1745` | L1711 `1.49`, `1.6` | `test_layer_growth`, `test_section41_prints_its_conclusions` |
+| `2040` | L2005 `2.23`, `2.41`, L2006 `2.10`, `3.32` | `test_crofton_constant`, `test_equivalent_bond_dimensions`, `test_icosaedral_contact_spheres_do_not_touch`, `test_vector_ratio_depends_only_on_the_depth` |
+| `2048` | L2012 `3.3×10^{122}`, L2013 `0.04`, `±0.04`, L2014 `380.31` | `test_equivalent_bond_dimensions`, `test_scale_weights`, `test_w4_equals_w8_in_the_gravitational_unit` |
+| `2051` | L2015 `203.56`, L2016 `585.3` | `test_cw6_equation_is_w4_plus_log_phi_two`, `test_regge_masses_in_both_units` |
+| `2068` | L2026 `0.1809`, `0.2928`, `0.4737`, L2029 `10.5` | `test_lyr_gluon_over_graviton`, `test_required_omega_at_level_584`, `test_required_omega_per_level` |
+| `2118` | L2079 `0.707`, L2080 `0.816` | `test_fisher_time_and_binary_entropy`, `test_tcc_bound_is_not_met` |
+| `2138` | L2104 `0.92`, `2.8`, `4.2` | `test_cpl_projection`, `test_section38_stdout`, `test_sensitivity_and_arithmetic` |
+
+**(b) The anchor is a figure caption the census requires — 2 rows.**
+L647 `±1` (`661`) and L1702 `0.9757` (`1736`) sit on the `\caption{…}` of a figure
+and their cited test is `test_section_writes_its_figure[section-44]` /
+`[section-39]`; `test_every_figure_caption_cites_the_test_that_writes_it` requires
+that string inside the caption, so the substitution would turn a green gate red.
+(L647's destination, `test_offset_of_j1_zeros_tends_to_one_quarter`, does not assert
+the caption's `x x̄=±1` either; L1702's destination does assert `0.9757` — the split
+of this citation is the fix.)
+
+**(c) The destination does not assert the line's figure — 6 rows.** Executed or
+read at the definition; what the destination does assert is named so the decision
+is reviewable:
+
+| row | figure on the line | destination | what the destination actually asserts |
+|---|---|---|---|
+| L1006 `4.3` | the subsection number `\S4.3` of the `CW6` citation — a bibliography pointer, not a claim | `test_ring_constant_mode_equals_the_bf_bound_scale` | `m² = −1/(log φ)² = −4.3184` |
+| L1064 `±1` | the hyperbola `xy=±1` | `test_offset_of_j1_zeros_tends_to_one_quarter` | the J1-zero offsets `0.2197 … 0.2454` |
+| L1068 `±1` | *the norm of a unit is ±1* | idem | idem |
+| L1557 `1.9` | *π^5.03 is 1.9 standard deviations from π^5* | `test_trace_three_and_the_shortest_geodesic` | `2 arccosh(3/2) = 4 log φ = 1.924847` — a different quantity that only rounds to `1.9` |
+| L1857 `±1` | the icosahedron vertices `(0, ±1, ±φ)` | `test_offset_of_j1_zeros_tends_to_one_quarter` | the J1-zero offsets |
+| L2095 `3.5` | *the data exclude λ=0 at about 3.5 standard deviations* | `test_the_measure_that_gives_the_spectrum` | the `e^{4A}`/`e^{6A}` measure rows `1.0, 1.8308, …` |
+
+**Closed by this wave from TST-001 §6:** item 1 (port `seccion_47`) and item 3
+(the `533/529` counters outside `tests/`, now `550/546` in `main.tex:2507` and
+`README.md:60`, both recounted by running the commands). Still open there: the
+`2000 spacings` figure (no source anywhere), the ten §3 rows that need assertions
+or external-data marks, class `c`, and the citation pins of the new tests.
+
+## W4.5 Guards — none relaxed
+
+The census guards are untouched and green: `section~N` = 0 occurrences, the word
+`repro`+`duce` = 0 occurrences of `main.tex`, and `test_testref_set_is_pinned`
+still asserts exact set equality (it moved only because the citations moved). No
+tolerance was edited, no test assertion was edited (`test_sections_47.py` lost no
+assertion), no figure and no number was rewritten, and `lake` was not run.
+
+## W4.6 Gates at the close of W4
+
+| gate | value |
+|---|---|
+| `uv run pytest tests/ -q` | **550 passed** (549 before + `section-47`; TST-001 quoted 549/545) |
+| `uv run pytest tests/ -q -m 'not slow'` | **546 passed, 4 deselected** |
+| `uv run pytest tests/test_section_census.py -q` | **18 passed** |
+| `pnpm run type-check` | exit 0, no output |
+| `pnpm run build` | exit 0, **63 pages**, `grep -c '^!' build/main.log` 0, `grep -ci undefined` 0 |
+| `grep -c 'Lean{' main.tex` | **0** |
+| `grep -o '\testref{' \| wc -l` | **99** (four arguments replaced, no anchor added) |
+| `grep -c 'forty-six' main.tex` | 0 (both phrases now read *forty-seven*) |
+
+## W4.7 Commits and gaps
+
+* `1bd9c9f` piece 1 (package, registry pins, README map, the two manuscript
+  phrases, the counters) · `7a0eb17` piece 2 (four retargets + the pin) · this
+  report. **No push.** Content commits carry the render, per repo convention.
+* **Gaps:** the `L###` numbers are those of the audited snapshot `8e101f5`, so a
+  row was located by figure + cited test + anchor order, not by line arithmetic
+  against HEAD; 45 rows need the principal author's decision on splitting the ties
+  (AUD-001 action 7) because the wave's gate keeps the anchor count at 99; the four
+  moves of §W4.2 de-cite four numbers (§W4.3) and that trade should be confirmed,
+  not assumed; `README.md` still points at the pre-package path
+  `tests/src/kkgt/sections.py` (stale wording, outside this wave's file list).
