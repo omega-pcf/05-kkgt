@@ -13,15 +13,26 @@ Uso:  python3 figuras_v134.py          las cinco
 Cada sección comprueba numéricamente lo que dibuja (assert) antes de guardar el PDF.
 Python 3.13, NumPy, SciPy, Matplotlib.
 """
+# ── Module-level imports (SPEC-002 §1.4: no in-function imports) ──────────
+import itertools
+import math
 import sys
+from decimal import Decimal, getcontext
+
+import matplotlib
+import numpy as np
+
+matplotlib.use("Agg")  # headless pipeline: never open a window
+import matplotlib.pyplot as plt  # noqa: E402  (after the Agg pin)
+from matplotlib.lines import Line2D
+from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 
 
 # ======================================================================
 # Figura 3 (sección 10): granularidad
 # ======================================================================
-def seccion_10():
+def generate_fig_granularity() -> None:
     """Granularidad: niveles enteros, diádicos y áureos; fase de la línea de mundo."""
-    import numpy as np
     phi=(1+5**.5)/2; lp=np.log(phi)
     def gaps(x):
         x=np.sort(np.r_[0,np.mod(x,1),1]); g=np.diff(x); g=g[g>1e-12]; return g
@@ -40,7 +51,6 @@ def seccion_10():
     print("N <= 5000 con razon distinta de phi^2:", exc, "(N+1, las marcas con el origen, es de Fibonacci: dos longitudes, razon phi)")
 
     # ---------- figura: granularidad, sin color ----------
-    import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
     fig, ax = plt.subplots(1, 3, figsize=(10, 3.3), gridspec_kw=dict(width_ratios=[1.3, 1.3, 1]))
     for i, k in enumerate([1, 2, 3, 4, 5]):
         y = -i
@@ -68,15 +78,13 @@ def seccion_10():
 # ======================================================================
 # Figura 2 (sección 13): las dos familias recíprocas
 # ======================================================================
-def seccion_13():
+def generate_fig_mobius_throat() -> None:
     """Figura 2 exacta: en cada nivel sigma = 12..18,
      izquierda: el anillo de la garganta, radio proporcional a z(sigma) = phi^sigma (normalizado phi^(sigma-18));
      derecha: la fibra de Möbius sobre su propio lazo, el periodo de media vuelta tau(sigma) = M phi^-sigma
      (radio normalizado phi^-(sigma-12)), con media vuelta por vuelta (epsilon(sigma) tau(sigma) = pi,
      closure_each_level) y semiancho 1/2 del radio de su lazo (|Omega| = 1/2, convención de dibujo de B1).
      El producto de los dos radios es constante, phi^-6: z tau = M."""
-    import numpy as np, matplotlib
-    matplotlib.use("Agg"); import matplotlib.pyplot as plt
     phi=(1+5**.5)/2; lev=np.arange(12,19); tt=np.linspace(0,2*np.pi,400)
     rz=lambda s: phi**(s-18); rt=lambda s: phi**(-(s-12))
     for s in lev: assert abs(rz(s)*rt(s)-phi**-6)<1e-12          # z*tau constante
@@ -109,13 +117,11 @@ def seccion_13():
 # ======================================================================
 # Figura 4 (sección 39): el throat con el teselado de Fibonacci
 # ======================================================================
-def seccion_39():
+def generate_fig_throat_tiling() -> None:
     """La seccion del throat es la cuspide; cada anillo se cubre con tejas largas (A) y cortas (B) por la
     sustitucion A->AB, B->A, con semilla AAB en sigma=0. Antes de dibujar se comprueba: las fronteras de
     un anillo continuan en el siguiente, y S = pi(A/phi^2 + B/phi^3) en cada nivel. La inclinacion de la
     vista, el reparto de los puntos y la escala de los lazos son convenciones del dibujo."""
-    import numpy as np, math
-    import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
     phi=(1+5**.5)/2; L=math.log(phi); LEV=list(range(7))
     # ---- teselado: palabra de cada anillo (A larga, B corta), semilla AAB en sigma=0
     words=["AAB"]
@@ -179,11 +185,10 @@ def seccion_39():
 # ======================================================================
 # Figura 5 (sección 41): cinco teselados regulares frente a los niveles
 # ======================================================================
-def seccion_41():
+def generate_fig_tilings_strip() -> None:
     """Cinco teselados {p,q} de discos de radio arcsinh phi^sigma, centros exactos (reflejados con los
     vertices): teselas dentro de cada disco, tangencias del borde de un nivel con aristas, y por que una
     cuenta no sigue a phi: las razones de Fibonacci se acercan a phi como 1/(sqrt5 q^2) y no mas."""
-    import math, numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
     phi=(1+5**.5)/2
     def circ(a,b):
         A=np.array([[2*a.real,2*a.imag],[2*b.real,2*b.imag]]); c=complex(*np.linalg.solve(A,[abs(a)**2+1,abs(b)**2+1]))
@@ -293,7 +298,7 @@ def seccion_41():
         seen|=nxt; lay.append(nxt)
     nl=[len(x) for x in lay]; assert nl==[1,15,45,120,315,825,2160], nl
     print("  {3,7} por vertices compartidos:",nl,"-> phi^2; por aristas ~1.6")
-    from decimal import Decimal, getcontext; getcontext().prec=80
+    getcontext().prec=80
     def hconst(X,N=60):
         h0,h1,k0,k1=0,1,1,0; y=X; out=[]
         for i_ in range(N):
@@ -315,12 +320,9 @@ def seccion_41():
     print("  crecimiento por capa (aristas):",{k:round(v,3) for k,v in gr.items()},"; {5,4}: cosh e = phi; {6,10}: sinh r = phi; {5,4} con qubits:",round(c54*math.log(2),4),"S")
 
 
-def seccion_44():
+def generate_fig_background() -> None:
     """Figura del Background (fig:background): el toro y la tercera dirección; de la diagonal a la cara;
     cada dimensión desde la siguiente; los anillos del throat teselados. Cada enunciado dibujado se comprueba."""
-    import numpy as np, math, itertools, matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
-    from matplotlib.lines import Line2D
-    from mpl_toolkits.mplot3d.art3d import Poly3DCollection
     plt.rcParams.update({"font.family":"serif","mathtext.fontset":"cm","font.size":12})
     phi=(1+5**.5)/2; pb=(1-5**.5)/2; L=math.log(phi); M=6*3**.5*math.pi/L
     INK="#333333"; RED="#c0392b"; BLU="#2f6db3"; GOLD="#c99a2e"; GRN="#2e8b57"; TEAL="#5aa6a6"; VIO="#7b4fa0"
@@ -527,11 +529,11 @@ def seccion_44():
 
 
 # número de figura del artículo -> (sección de reproduce_v134.py, función, nombre)
-FIGURAS = {1: (44, seccion_44, "fig_background.pdf"),
-           2: (13, seccion_13, "fig_mobius_throat.pdf"),
-           3: (10, seccion_10, "fig_granularity.pdf"),
-           4: (39, seccion_39, "fig_throat_tiling.pdf"),
-           5: (41, seccion_41, "fig_tilings_strip.pdf")}
+FIGURAS = {1: (44, generate_fig_background, "fig_background.pdf"),
+           2: (13, generate_fig_mobius_throat, "fig_mobius_throat.pdf"),
+           3: (10, generate_fig_granularity, "fig_granularity.pdf"),
+           4: (39, generate_fig_throat_tiling, "fig_throat_tiling.pdf"),
+           5: (41, generate_fig_tilings_strip, "fig_tilings_strip.pdf")}
 
 if __name__ == "__main__":
     pedir = {int(a) for a in sys.argv[1:]} or set(FIGURAS)

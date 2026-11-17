@@ -45,7 +45,7 @@ os.environ.setdefault("SOURCE_DATE_EPOCH", "1794274263")
 import matplotlib  # noqa: E402  (after the env pin, on purpose)
 
 # rcParams that decide what the PDF bytes look like.  They are re-applied
-# before every figure because ``seccion_44`` ends with
+# before every figure because ``generate_fig_background`` ends with
 # ``plt.rcParams.update(matplotlib.rcParamsDefault)``.
 DETERMINISTIC_RCP = {
     # fonts: explicit so a machine-local matplotlibrc cannot leak in

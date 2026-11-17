@@ -5,16 +5,24 @@ Entry point for figure generation for the golden-throat paper.
 This module coordinates the execution of all figure generators.
 It can be run individually or as part of the build pipeline.
 
+Entry point (SPEC-002 §1.1): ``pnpm run figures`` (alias of
+``pnpm run generate:figures``), both running this file.  The five
+figure-writing computations live ONLY here; no test produces a figure
+(tests verify the committed artifacts in ``images/``).
+
 The generators are the author's own code (``figuras_v134.py``, five
 figures: ``fig_background``, ``fig_mobius_throat``, ``fig_granularity``,
 ``fig_throat_tiling``, ``fig_tilings_strip``); each one checks what it
-draws numerically (assert) before saving.  This entry point only
+draws numerically (assert) before saving.  Their entry points are the
+English ``generate_fig_*`` functions with annotated signatures and
+module-level imports (SPEC-002 §1.4).  This entry point only
 registers them and redirects their ``savefig`` (relative to the CWD)
 into ``images/``.
 
 Usage:
-    python scripts/figures/main.py                 # generate all
-    python scripts/figures/main.py --list          # list generators
+    pnpm run figures                        # generate all (canonical)
+    python scripts/figures/main.py          # same, directly
+    python scripts/figures/main.py --list   # list generators
     python scripts/figures/main.py --figure fig_background
     python scripts/figures/main.py --figure 1      # by article number
     python scripts/figures/main.py --output-dir ../images

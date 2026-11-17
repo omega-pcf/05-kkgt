@@ -30,7 +30,7 @@ def _run_redirected(fn, output_dir: Path) -> None:
 
     Los generadores del autor escriben con ``savefig("fig_X.pdf", …)``
     (CWD); el chdir es toda la adaptación de rutas.  Antes de cada figura
-    se reaplican los rcParams deterministas: ``seccion_44`` termina con
+    se reaplican los rcParams deterministas: ``generate_fig_background`` termina con
     ``plt.rcParams.update(matplotlib.rcParamsDefault)`` y los dejaría en
     los valores por defecto (Type 3 sin /ToUnicode).
     """
