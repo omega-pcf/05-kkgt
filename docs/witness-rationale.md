@@ -28,14 +28,14 @@ number, because the manuscript is edited concurrently.
 
 The manuscript marks, beside each claim, how it was established: `P` when
 the statement is proved and machine-checked in Lean, `N` when it is
-verified numerically with the name of the test that checks it. A third
-class, `W`, labels a premise of the witness list: it says what the item
-is, neither a proof nor a numerical check. The mark is a small, immutable
-bracket in its own colour (`\tier{P}`, `\tier{N}`, `\tier{W}`,
+verified numerically with the name of the test that checks it. The mark is a small, immutable
+bracket in its own colour (`\tier{P}`, `\tier{N}`,
 `\tier[ids]{X}`), or a right-aligned line of its own when the claim carries
-several witnesses (`\witness{X}{ids}`). The three classes are introduced
+several witnesses (`\witness{X}{ids}`). The two classes are introduced
 by an in-text gloss — *Evidence tags* — that sits before the first mark of
-the body and defines the classes and nothing else.
+the body and defines the classes and nothing else. The label of a premise
+of the numbered list, `W1` to `W12`, is not a class of evidence: it is
+defined in a sentence at the list itself.
 
 That device is not a typographic fashion nor an ornament: it is the answer
 to a real problem of reading and of attribution, and its shape — inline or
@@ -170,7 +170,7 @@ practice consolidated in software engineering and interface design:
 - **Colour as a *UX* marker, redundant with the label:** in serious
   interfaces colour speeds up reading, but the label still carries the
   meaning; colour is never the only path. Applied to the manuscript: blue
-  `P`, green `N`, ochre `P*`, turquoise `W` — and the letter, not the
+  `P`, green `N`, ochre `P*` — and the letter, not the
   shade, is what the reader in black and white, with low vision or with
   colour deficiency perceives.
 - **Status mark beside the object, not in a separate list:** like a green
@@ -284,7 +284,7 @@ restate it.
 *Compactness* is not an intuition here: it can be counted. Measured with
 `grep` on `main.tex`, the whole apparatus occupies:
 
-- **231 inline marks** — 17 without argument (three of them the
+- **230 inline marks** — 16 without argument (two of them the
   *Evidence tags* gloss) and 214 with identifiers (159 `P` and 55 `N`) —
   all set in `\footnotesize` inside the sentence they mark: they cost the
   characters of the bracket, not a line;
@@ -370,8 +370,9 @@ paper already gave:
   the "proved here" section they were in.
 
 Both eliminations are documented in `docs/citations.md` §8.3 and applied
-in the manuscript: the published alphabet of evidence is `P` and `N`, and
-`W` labels the premises of the witness list.
+in the manuscript: the published alphabet of evidence is `P` and `N`;
+`W` is not a class of evidence but the label of the list's twelve
+premises, defined at the list itself.
 
 ---
 

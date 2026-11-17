@@ -77,9 +77,10 @@ inline. `u` is never reached for a single-id mark: gate 1 keeps it inline.
 | inline marks with two ids or more | **26** — 24 `P`, 2 `N` | **25** — 23 `P`, 2 `N` |
 | inline marks, total | **231** | **230** |
 
-Both columns predate the *Evidence tags* gloss of `main.tex` gaining the
-class `W` — one bare mark — so a `grep` at HEAD reads **231** inline marks
-against the **230** of the "after" column; the delta of this report is
+Both columns predate a brief addition of the class `W` to the *Evidence
+tags* gloss, since removed: the gloss declares the two classes only and
+the label `W1`–`W12` is defined at its list, so a `grep` at HEAD reads
+**230** inline marks — the "after" column; the delta of this report is
 unchanged. Exactly one verdict changes (`main.tex:940`, `P`). Its
 promoted block sits in its own blank-line paragraph (no block in range), so gate 4's `d`-clause
 holds vacuously; the ids are Lean names, not `\testref`s, so
