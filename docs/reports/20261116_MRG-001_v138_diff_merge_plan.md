@@ -470,3 +470,213 @@ Nothing here was decided in his place.
 * **Wave 6** — `TorreKK_LYR_v35.lean`, after which `pentagon_side_golden` becomes migratable.
 * **Not ported, by decision** — the author's legend (P, P\*, N, L, R), his one-argument
   `\tier`, his removal of the 99 anchors and 12 labels, his `\date{November 6, 2026}`.
+
+---
+
+# Wave W3 — applied
+
+| Field | Value |
+|---|---|
+| **wave** | W3 of §4 — the manuscript prose (the author's +441 −290 side) re-expressed in our grammar |
+| **date** | 2026-11-17 |
+| **scope** | `main.tex` + this report only; `tests/`, `scripts/`, `citation.csl.json`, `lean/`, `images/` untouched |
+| **commits** | 3 content commits + this report; **no push** |
+| **base** | `ea73175` (tree clean at start); content commits `8504309`, `b5d5b01`, `653fc10` |
+| **outcome** | all 80 author hunks dispositioned; **4 blocks ported**; every gate green at the close of every tanda |
+
+## W3.1 Method
+
+The author side (`base_theirs.diff`, +441 −290, 80 hunks, 23 counted sections) was parsed
+hunk by hunk and each hunk split at word level into *grammar* changes and *prose* changes.
+Grammar changes were then answered with the W1-frozen form (brief decisions 5–7): our
+`\tier[ids]{cls}` arity, our 99 `\testref` anchors (never the author's
+`section~NN of \code{reproduce\_v138.py}`), our 12 `\wtag` labels, our `\witness` blocks, no
+`\Lean{`/`\LeanCW{`, no R/L/P\* class marks (an `R`/`L` mark in theirs is *prose* or *the
+citation* in ours), no tags in captions, no id renames, an external source only as
+`in~\cite{…}` outside the bracket. Prose changes were ported only after the **numeral gate**
+of the triage §3.3: before/after numeric tokens compared per block, `simple` (rounding /
+tolerance / anchor artifact) resolved in our favour and noted, `real` not ported but queued
+as bring-up.
+
+Two census tests turned out to be additional, hard guards on this wave (both green before
+and after; neither was modified):
+
+* `test_the_manuscript_cites_no_numbered_section` — `main.tex` may contain no `section~N`
+  at all, so *every* one of the author's `(section~NN of \code{reproduce\_v138.py})` anchors
+  (25 of the 80 hunks) is excluded by construction, not only by the class-C decision.
+* `test_the_manuscript_does_not_name_the_old_entry_point` — the substring `reproduce` may
+  never appear in `main.tex` ("the word is out of the text of the paper for good"). This
+  blocks the author's terminology shift at seven sites (§W3.4).
+
+## W3.2 Disposition of the 80 hunks, by section
+
+Primary disposition per hunk (a partially ported hunk is counted where it landed):
+
+| n | disposition | hunks |
+|---|---|---|
+| 57 | grammar — frozen by W1 / brief 5–7 (anchors, `\Lean`, `\witness`, `\wtag`, class and citation moves) | incl. h3, h5–h9, h11–h30 (except h16), h32, h34, h36, h37, h40–h42, h47–h57, h59–h72 |
+| 5 | census word ban (`reproduce`) | h10, h33, h74, h75, h76 |
+| 4 | numeral gate — real change, not ported | h31 (2000), h35 (11.98), h38 (1.07), h43 (T0 rewrite) |
+| 4 | figure captions / layout (FIG-001, §5) | h4, h44, h45, h46 |
+| 3 | front matter (preamble, title/byline, keywords/legend — W1 + brief 3) | h0, h1, h2 |
+| 3 | Code and data / bibliography (§5, Waves 4–6, W2 already landed) | h77, h78, h79 |
+| **4** | **partially ported** | h16, h39, h58, h73 |
+
+Per section (hunks → ported blocks):
+
+| hunks | section | ported |
+|---|---|---|
+| 14 | The physical retroduction | **1** (h58) |
+| 13 | The mathematical retroduction | 0 |
+| 12 | Physical axioms | **1** (h16) |
+| 6 | Conclusions and summary | **1** (h73) |
+| 4 | Fourth condition | 0 |
+| 3 | (preamble / front matter) | 0 |
+| 3 | First condition | 0 |
+| 3 | Second condition | 0 |
+| 3 | Third condition | 0 |
+| 2 | The criteria a single object must meet | 0 |
+| 2 | The two-brane model is the golden throat | 0 |
+| 2 | Contrast with the data | **1 word** (h39) |
+| 2 | The ultraviolet end | 0 |
+| 2 | What is not claimed | 0 |
+| 2 | Code and data | 0 |
+| 1 each | Introduction · Delimitation · This article · The data · Axioms that are mathematical and physical at once · The factor π · The factor φ: the scale | 0 |
+| **80** | **total** | **4 blocks, in 4 sections** |
+
+## W3.3 The four ported blocks
+
+1. **Physical retroduction, dictionary paragraph** (h58, two new sentences after
+   "gives $S$ at every level."): the cut counted in bonds vs the closed string of the
+   throat, and the triad $V$ as the tensor of the throat with the perfect tensors of
+   ~\cite{PYHP15}. Dropped from the author's text: the `(section~47 of …)` anchor (banned
+   by the numbered-section census) and the trailing `\tier{R}` (left as prose, W1 gloss
+   rule). Commit `8504309`.
+2. **Physical axioms, after Imported statement `imp:adscft`** (h16): the new
+   quantum-error-correction sentence (`\cite{ADH15,PYHP15}`, both keys landed in W2),
+   no R mark, no anchor. Resolves W1 bring-up item **R4**; the perfect-tensor half of
+   **R13** lands with it (minus its section-47 anchor). Commit `b5d5b01`.
+3. **Contrast with the data** (h39): "for *its* next two modes" → "for *the* next two
+   modes". Commit `b5d5b01`.
+4. **Conclusions, summary table** (h73): the new row *The dictionary and the networks*
+   (`\S\ref{ssec:phys}`), no new numeral. Its "rate" clause rides on the pentagon block
+   still queued (§W3.6 item 4). Commit `653fc10`.
+
+## W3.4 The numeral gate — every differing numeric token
+
+| site (hunk) | ours | theirs | class | disposition |
+|---|---|---|---|---|
+| ported block h16 | "one state" | "dimension one" | **simple** — same value, a restatement of claim (a) | ported |
+| ported block h58 | $2\pi\golden^{\sigma}$, $\tfrac12$, $1/(4G_N)$ already in the text | identical values | **simple** — no differing token | ported |
+| ported block h39 | 1014, 1328, 1664, 1982, 1.4 %, 15, ±30, ±40 | identical | **simple** — no differing token | ported |
+| ported block h73 | $\tfrac12$ (existing), "one", $\golden$, $\chi$ | same | **simple** — no differing token | ported |
+| Fourth condition (h35) | $11.97$ (`\eqref{eq:sigmaIR}`) | $11.98$ (no eqref) | **simple** — rounding of two scale faces (triage §1); correct figure for this sentence is 11.97 = `log_φ(99.6/0.31384)` | **ours kept**; ask the author (bring-up 1) |
+| Mathematical retroduction, T0 (h43) | $1.00000/(\sqrt5 q^2)$ | $0.99990/(\sqrt5 q^2)$ | **simple** — float64 cancellation, documented in `test_sections_39_43.py:169-217` | **ours kept** (triage row 3) |
+| The factor π (h31) | "the spacings checked" | "the **2000** spacings checked" | **real** — `reproduce_v138.py` has no 2000-spacings count; DEC-001 D16 removed it earlier | **not ported** → bring-up 3 |
+| Fourth condition (h38) | — | "the extremum … lies **1.07** levels down for renormalisation scale $1/\ell$" | **real** — 0 test hits (`1.07` in `tests/` is an unrelated plot radius) | **not ported** → bring-up 5 |
+| Physical retroduction, pentagon block (h58) | — | $\chi=2$, $\cosh a=\golden$, $\sinh a=\golden^{1/2}$, $5F_{2n+1}-4$, $5L_{2n+1}$, rate $1/\sqrt5$, signature $(2,4,5)$, $p=2$, $10a\log2/\pi^2=0.745$ | **real** — 0 hits in the suite for `0.745`, `1.061275`, `Lucas`, `Mumford`, `χ=2` (triage §3.5: sequence behind Wave 4) | **not ported** → bring-up 4 (also blocked by the `v34` guard on `pentagon_side_golden`, W1.4) |
+| Code and data (h77, h78) | 46 sections, `\code{kkgt}`, 520/516/533/529 tests, `v34`/163/compiled | 47 sections, `\code{reproduce\_v138.py}`, item (47), `v35`/164/not yet compiled, new Mathlib row | **real** — maintenance; the counts move with Waves 4 and 6 | **not ported** → bring-up 6 (and §5 keeps `\code{kkgt}` as primary) |
+| 27 class-C hunks | `\tier[\testref{…}]{N}` | `section~NN of …` | **simple** — anchor choice (triage §3 item 6) | **ours kept** (brief 6) |
+| Delimitation caption (h4) | ours, FIG-001 de-embed, width 0.85 | shortened caption, width 0.93, prose re-embedded | layout, audited caption numbers $19,61,127$, $987=610+377$ | **ours kept** (§5) |
+
+## W3.5 The census word ban — the author's *reproduce* terminology (new finding)
+
+`tests/test_section_census.py::test_the_manuscript_does_not_name_the_old_entry_point`
+asserts `"reproduce" not in main.tex.lower()`, concatenated at run time so no compiled test
+carries the word either. The author's v138 shifts exactly this word in at **seven sites /
+nine edits**: `re-derived → reproduced` (Physical axioms, L873), `match → reproduce`
+(two-brane), `matches → reproduces` (Contrast), `must match → must reproduce` and
+`selects to match → selects to reproduce` (dictionary), `derives → reproduces`
+(postulates prose), `re-derived → reproduced` ×2 (postulates table), `computed → reproduced`
+(Code and data opening). The new *Holographic codes* summary row (h76) is blocked too: its
+predicate is "the pentagon code **reproduces** the golden structure".
+
+Two of these were applied and reverted when the census failed the first tanda gate (the
+revert is why the gate exists). Porting the author's wording therefore needs a Wave-4
+decision on that census rule — `tests/` belongs to the parallel worker, so it was not
+touched here. **Not guessed either way: our wording stands.**
+
+## W3.6 Bring-up for the principal author (W3, new items)
+
+Nothing below was decided in his place; items 1–2 are the brief's own, restated with the
+measured evidence.
+
+1. **`11.98`.** Not ported. Ours (`$11.97$ (\eqref{eq:sigmaIR})` +
+   `\tier[\testref{test_alternatives_for_the_bottom_level}]{N}`) stands: 11.9699 is the
+   value of the cited equation, 11.97066 the fit, 11.97 the author's other seven
+   occurrences, and ≥6 tests assert it at `abs=5e-3`. If he insists on 11.98: drop the
+   `\eqref` (his own edit), reword "the same value", keep the `\testref` only after the
+   cited test is re-pointed, and record `log_φ(99.6/(m_p/3)) = 11.9770` in AUD-001.
+2. **T0, the "Two fixed weights…" paragraph.** Not ported — the author's rewrite
+   (`0.99990`, reproduce-anchors) was left exactly as our audited text carries it
+   (`1.00000`, `\testref`s, AUD-001 numbers `0.9757`, `1,2,3,3,5,7,10,16,27,41`, `115`).
+   His deletion/rewrite needs his confirmation before any of it moves.
+3. **"the 2000 spacings checked"** — no source in `reproduce_v138.py` (grep: only
+   `linspace` sizes); DEC-001 D16 already removed this count once. Needs his source.
+4. **The pentagon-code block** (perfect tensor, $\cosh a=\golden$, $5F_{2n+1}-4$ /
+   $5L_{2n+1}$, rate $1/\sqrt5$, $\chi=2$, the Mumford $(2,4,5)$/$p=2$ sentence with
+   `\cite{Mar18}` — W1's **R14**, and the $0.745$ Crofton sentence) — queued behind
+   **Wave 4** tests *and* **Wave 6**, because `\Lean{pentagon_side_golden}` does not exist
+   in `v34` (W1.4 guard). With it would land the *Holographic codes* row (h76, also
+   word-banned) and the row's "rate" clause (item 9).
+5. **"the extremum of its regularised vacuum energy lies 1.07 levels down…"** — new
+   claim, 0 tests. Wave 4 or his source.
+6. **Code and data** — the 47-section enumeration with item (47), the
+   `\code{reproduce\_v138.py}`-only narrative (§5 keeps `\code{kkgt}` primary), the
+   test-suite paragraph with the 520/516/533/529 counts (to be recounted at merge),
+   `v35`/164/the "not yet compiled" line and the new
+   `Real.cos_pi_div_five & Real.sin_pi_div_four` Mathlib row: Waves 4 and 6.
+7. **The `reproduce` census rule** (§W3.5) — either the rule is relaxed for the verb (a
+   Wave-4 `tests/` decision) or the author's terminology stays out of the paper. Seven
+   sites are queued behind this call.
+8. **QEC sentence (ported):** the rank-1 projector / dimension-one statement is in the
+   Wave-4 test list (§4 of this plan); the test should land with section 47's.
+9. **Summary row (ported):** its "pentagon code … its rate" clause refers to the queued
+   block of item 4; it carries no numeral of its own.
+10. **W1 carry-overs still open:** L2 (Euler characteristic, census-pinned id), L5
+    ($\Gamma\propto x^{3}$ mark choice), `pentagon_side_golden` (Wave 6).
+
+## W3.7 Gates at the close of every tanda
+
+Baseline before W3: type-check 0 · 533 passed · census 18 · build 63 pages, `^!` 0,
+undefined 0 · `\testref{` 99 · `\tier[` 216 · `\wtag{` 12 · `Lean{` 0.
+
+| gate | tanda 1 (`8504309`) | tanda 2 (`b5d5b01`) | tanda 3 (`653fc10`) |
+|---|---|---|---|
+| `pnpm run type-check` | 0 ✓ | 0 ✓ | 0 ✓ |
+| `uv run pytest tests/ -q` | **533 passed** ✓ | 533 ✓ | 533 ✓ |
+| census (`test_section_census.py`) | **18** ✓ | 18 ✓ | 18 ✓ |
+| `pnpm run build` | exit 0, **63 pages** | 63 ✓ | 63 ✓ |
+| `grep -c '^!' build/main.log` | 0 ✓ | 0 ✓ | 0 ✓ |
+| `grep -ci undefined build/main.log` | 0 ✓ | 0 ✓ | 0 ✓ |
+| `\testref{` occurrences | 99 ✓ | 99 ✓ | 99 ✓ |
+| `\tier[` occurrences | 216 ✓ | 216 ✓ | 216 ✓ |
+| `grep -c 'Lean{'` | 0 ✓ | 0 ✓ | 0 ✓ |
+| `grep -ci reproduce` (census) | 0 ✓ | 0 ✓ | 0 ✓ |
+| `grep -cE 'sections?~[0-9]'` (census) | 0 ✓ | 0 ✓ | 0 ✓ |
+| tree at commit | only `main.tex` + rendered `build/document-v0.1.0.pdf` + `checksums.txt` (repo convention: content commits carry the render) | same | same |
+
+The first tanda-1 attempt failed the census (`reproduce` in two dictionary edits); those
+two edits were reverted before the green run above — recorded here rather than silently
+dropped. No push at any point.
+
+## W3.8 Stop point and gaps
+
+* **Stop point: W3 is complete as scoped.** All 80 hunks are dispositioned, the four
+  ported blocks are committed, the report is updated, the tree is clean, nothing pushed.
+  Content commits: `8504309` → `b5d5b01` → `653fc10` (+ this report) on top of `ea73175`.
+* Not ported and why, in one line each: 57 hunks of grammar frozen by W1/brief 5–7;
+  5 hunks of the author's *reproduce* wording (census ban, item 7); 4 hunks of real
+  numerals (2000, 11.98 kept ours, 1.07, T0 kept ours); 4 caption/layout hunks (FIG-001);
+  3 front-matter hunks (date, keywords, legend); Code and data and the bibliography
+  block (Waves 4–6, §5, W2).
+* **Gaps:** the `reproduce`-terminology decision and the pentagon block are the two
+  things this wave could not close without stepping on `tests/` or on Wave 4/6 content;
+  the 533/529 counts inside Code and data were not recounted (they are quoted, not
+  asserted, and belong to Wave 4); an untracked `fig_tilings_strip.pdf` appeared in the
+  repository root during this wave from the parallel worker's figure run — it was **not**
+  staged, committed or deleted here.
+* An `R`/`L` mark of theirs that our prose already realises (16 of 19 body `R` sites per
+  §W1.1, plus the clause "—a reading of the records, not a result about them" that the
+  author replaced with `\tier{R}`) stays as our prose: in our grammar the mark *is* those
+  words, so the conversion needs no edit.
