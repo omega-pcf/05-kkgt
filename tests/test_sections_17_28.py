@@ -12,7 +12,7 @@ import math
 import numpy as np
 import pytest
 
-from kkgt.constants import LN_PHI, M_GEV, M_KOIDE_MEV, M_PLANCK_GEV, M_PCF, PHI
+from kkgt.constants import LN_PHI, M_GEV, M_KOIDE_MEV, M_PLANCK_GEV, M_PCF, PHI, M_TAU_MEV
 
 # physical constants, exactly as the script uses them (CODATA 2018)
 HBAR = 1.054571817e-34          # J s
@@ -267,11 +267,13 @@ class TestSection24ScaleAndTop:
     """section 24 -- 'The two dimensionful data and the top'"""
 
     def test_koide_scale_and_unit(self):
-        me, mmu, mtau = 0.51099895, 105.6583755, 1776.93
+        # m_tau from kkgt.constants: 1776.86 reproduces the printed 313.84
+        # (the former tau mass gave 313.8509 -> 313.851, 19.6x this tolerance).
+        me, mmu, mtau = 0.51099895, 105.6583755, M_TAU_MEV
         m = (math.sqrt(me) + math.sqrt(mmu) + math.sqrt(mtau)) ** 2 / 9 / 1e3
-        assert m * 1e3 == pytest.approx(313.851, abs=5e-4)
+        assert m * 1e3 == pytest.approx(313.841, abs=5e-4)
         u = m / M_PCF
-        assert u * 1e3 == pytest.approx(4.6259, abs=5e-4)
+        assert u * 1e3 == pytest.approx(4.6258, abs=5e-4)
 
     def test_planck_mass_in_gev(self):
         g_j = 1.602176634e-10
@@ -280,7 +282,7 @@ class TestSection24ScaleAndTop:
 
     def test_the_grid_does_not_fix_the_top(self):
         """2 log_phi(l_u/l) = 203.562, 0.44 away from the nearest integer."""
-        me, mmu, mtau = 0.51099895, 105.6583755, 1776.93
+        me, mmu, mtau = 0.51099895, 105.6583755, M_TAU_MEV
         m = (math.sqrt(me) + math.sqrt(mmu) + math.sqrt(mtau)) ** 2 / 9 / 1e3
         u = m / M_PCF
         g_j = 1.602176634e-10
@@ -290,7 +292,7 @@ class TestSection24ScaleAndTop:
         assert abs(r - round(r)) == pytest.approx(0.44, abs=5e-3)
 
     def test_uv_level(self):
-        me, mmu, mtau = 0.51099895, 105.6583755, 1776.93
+        me, mmu, mtau = 0.51099895, 105.6583755, M_TAU_MEV
         m = (math.sqrt(me) + math.sqrt(mmu) + math.sqrt(mtau)) ** 2 / 9 / 1e3
         g_j = 1.602176634e-10
         m_pl = math.sqrt(HBAR * C_LIGHT**5 / G_NEWTON) / g_j

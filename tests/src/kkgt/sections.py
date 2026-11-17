@@ -13,7 +13,7 @@ also needs mpmath.
 """
 import sys
 
-from .constants import M_GEV, M_KOIDE_MEV, M_PLANCK_GEV
+from .constants import M_GEV, M_KOIDE_MEV, M_PLANCK_GEV, M_TAU_MEV
 
 SECCIONES = []
 
@@ -115,7 +115,7 @@ def seccion_1():
     for a in (0, 2, 4):
         w = sl_r(a, a + 12, 32); m = np.sqrt(w[1:5])
         P(f"[{a},{a+12}] m1/phi^sigma_IR (3.8319); ratios", (round(m[0]/phi**a, 4), np.round(m/m[0], 4)))
-    M_lep = ((np.sqrt(0.51099895)+np.sqrt(105.6583755)+np.sqrt(1776.86))/3)**2
+    M_lep = ((np.sqrt(0.51099895)+np.sqrt(105.6583755)+np.sqrt(M_TAU_MEV))/3)**2
     P("M (Koide) MeV (313.84)", round(M_lep, 2))
     err = np.array([20, 20, 30, 40.]); wgt = 1/err**2
     sc = np.sum(wgt*obs*j1)/np.sum(wgt*j1*j1); dsc = 1/np.sqrt(np.sum(wgt*j1*j1))
@@ -857,7 +857,7 @@ def seccion_16():
     import math
     M = M_KOIDE_MEV   # MeV, (F1)
     d = 2 / 9    # delta = 2/n^2, n = 3
-    obs = {"e": 0.51099895, "mu": 105.6583755, "tau": 1776.86}
+    obs = {"e": 0.51099895, "mu": 105.6583755, "tau": M_TAU_MEV}
     m = sorted(M * (1 + math.sqrt(2) * math.cos(d + 2 * math.pi * k / 3)) ** 2 for k in range(3))
     for (name, o), x in zip(obs.items(), m):
         print(f"{name:4s} Koide from M: {x:10.4f} MeV   observed: {o:10.4f}   rel. {abs(x-o)/o:.1e}")
@@ -1020,7 +1020,7 @@ def seccion_24():
     phi = (1 + 5 ** 0.5) / 2; L = math.log(phi)
     GeVJ = 1.602176634e-10
     MPl = math.sqrt(_C['hbar'] * _C['c'] ** 5 / _C['G']) / GeVJ
-    me, mmu, mtau = 0.51099895, 105.6583755, 1776.93
+    me, mmu, mtau = 0.51099895, 105.6583755, M_TAU_MEV
     M = (math.sqrt(me) + math.sqrt(mmu) + math.sqrt(mtau)) ** 2 / 9 / 1e3
     Mpcf = 6 * math.sqrt(3) * math.pi / L; u = M / Mpcf
     r = 2 * math.log(MPl * math.sqrt(0.5) / u) / L

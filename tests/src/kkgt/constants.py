@@ -3,7 +3,8 @@
 Every value here is either a closed form (golden ratio, M_PCF, ...) or a
 number ``kkgt.sections`` prints and ``main.tex`` cites; the comment on each
 line records the section that produces it, so the section->test mapping of
-the suite stays auditable.
+the suite stays auditable.  The tau mass had two live definitions; it is now
+single-sourced below (SEC-001, layer 1).
 """
 
 from __future__ import annotations
@@ -28,6 +29,13 @@ M_KOIDE_MEV = 313.84                      # MeV, (F1), used by sections 16-18
 M_GEV = M_KOIDE_MEV / 1000                # GeV: the same scale in the unit of the paper
 U_MEV = M_KOIDE_MEV / M_PCF               # 4.6258 MeV, the unit of (F1)
 M_PLANCK_GEV = 1.22089e19                 # section 24 prints 1.22089e+19 (from hbar, c, G)
+
+# ── Sections 1, 16, 24: the tau mass that goes into M (F1) ───────────────
+# One origin: only 1776.86 reproduces the printed M = 313.84 MeV (the
+# former tau mass gave 313.851), matching sections 1, 16 and 24 and both
+# reproduction scripts (AUD-001 section 9).  Every user of m_tau imports
+# it from here.
+M_TAU_MEV = 1776.86                       # MeV
 
 # ── Sections 10, 44, 13, 39, 41: the five figures of the manuscript ───────
 # main.tex includes exactly these five files and attributes each to a section.

@@ -13,7 +13,7 @@ import math
 import numpy as np
 import pytest
 
-from kkgt.constants import LN_PHI, M_KOIDE_MEV, PHI
+from kkgt.constants import LN_PHI, M_KOIDE_MEV, M_TAU_MEV, PHI
 
 
 # ═══════════════════════════════════════════════════════════ section 9 ══
@@ -402,7 +402,7 @@ class TestSection15StateCount:
 class TestSection16KoideFromM:
     """section 16 -- 'The scale M of (F1): Koide-type reconstruction of the lepton masses'"""
 
-    OBS = {"e": 0.51099895, "mu": 105.6583755, "tau": 1776.86}
+    OBS = {"e": 0.51099895, "mu": 105.6583755, "tau": M_TAU_MEV}
 
     @staticmethod
     def _koide(m_scale=M_KOIDE_MEV, delta=2 / 9):
