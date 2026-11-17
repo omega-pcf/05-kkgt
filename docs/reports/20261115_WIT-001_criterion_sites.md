@@ -14,7 +14,7 @@
 after the 2026-11-15 application pass. The generic rule — quantities,
 thresholds, gates, heuristics and the review method — lives in
 `docs/citations.md` §8.5; the justification of the device lives in
-`docs/witness-rationale.md`. This file is a **snapshot** — the convention
+`docs/witness-contract.md`. This file is a **snapshot** — the convention
 is stated once, in `docs/reports/README.md` — and its line numbers are
 those of the manuscript when the table was written.
 
@@ -103,7 +103,7 @@ them.
 - `docs/reports/20261116_WIT-002_u_p_verdicts.md` — the verdict table of
   the two heuristics (`u`, `p`) for the current manuscript, pending
   application.
-- `docs/witness-rationale.md` — why the device exists and why the
+- `docs/witness-contract.md` — why the device exists and why the
   criterion is quantitative.
 - `docs/reports/20261115_DEC-001_witness_decisions.md` — the decision log
   behind the witness tiers.

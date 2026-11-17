@@ -6,7 +6,7 @@
 | **status** | active |
 | **version** | 2.0 |
 | **date** | 2026-11-16 |
-| **scope** | The citation pipeline and the witness contract shared by the family (01-hilbert-polya, 02-odd-zeta, 03-crystalline-worldsheet, 04-mersenne-cr, 05-kk-golden-throat); the pipeline scripts are byte-identical across them. |
+| **scope** | The citation pipeline and the witness contract shared by the omega-pcf paper repositories; the pipeline scripts are byte-identical across them. |
 
 This document describes how citations flow from a single source of truth to
 the PDF, CITATION.cff, and .zenodo.json, and the conventions for adding new
@@ -14,7 +14,7 @@ references.
 
 Two companion documents hold what this one deliberately does not: the
 **justification** of the witness device is argued in
-[`docs/witness-rationale.md`](witness-rationale.md), and the **concrete
+[`docs/witness-contract.md`](witness-contract.md), and the **concrete
 per-site material** — inventories, sentence tails, applied states, verdict
 tables — lives in [`docs/reports/`](reports/README.md). This file states
 only the generic, portable rule.
@@ -104,10 +104,11 @@ fails the build otherwise.
 ## 5. Data hygiene rules (lessons encoded)
 
 - **Root title carries full Unicode**: `package.json.description` holds the
-  paper title verbatim (special math characters such as 𝔽₁, μ₆, φ); every
+  paper title verbatim (special math characters — subscripts, Greek
+  letters, fraktur); every
   build copies it into `CITATION.cff` and the Zenodo title unmodified.
-  Never ASCII-fold it (`F1`, `mu6`) — that degradation propagates to the
-  deposition on every rebuild. The sanitizer applies only to Unicode
+  Never ASCII-fold it — that degradation propagates to the deposition
+  on every rebuild. The sanitizer applies only to Unicode
   superscripts (→ `<sup>`), never to math alphabetics or subscripts.
 - **Author lists are structured.** Each author is one `given`/`family`
   object. A comma-joined blob ("A. X, B. Y, C. Z") makes biber abort with
@@ -159,7 +160,7 @@ tag set in footnotesize and in its own colour. This section is the contract
 of that device, written down here for whoever writes or edits the text.
 The justification of the device — why a mark of this kind belongs in a
 paper of pure mathematics, and what it does not claim — is argued in
-`docs/witness-rationale.md`; this section states only the contract. The
+`docs/witness-contract.md`; this section states only the contract. The
 concrete instances of the rules below — site inventories, sentence tails,
 applied states and verdict tables — live in `docs/reports/`.
 
@@ -181,12 +182,13 @@ applied states and verdict tables — live in `docs/reports/`.
                              [P] in~\cite{key}), so a tag never prints a
                              number in its bracket
 \witness{X}{a,b}    -> a block of its own, flush right, with the names
-\wtag{W1}{CLPW}     -> the label of the W list (unchanged)
+\wtag{L}{text}      -> the label of a witness list, where the
+                             manuscript has one
 ```
 
-The optional argument means **internal ids and nothing else**.  An id is a
-`\testref{...}` or the raw name of a declaration of
-`lean/TorreKK_LYR_v34.lean` — the two are told apart in the preamble by the
+The optional argument means **internal ids and nothing else**.  An id is
+a `\testref` or the raw name of a declaration of the
+repository's Lean file — the two are told apart in the preamble by the
 token they contain (`\testref`, or an `\_` / a `,`, which only a name list
 has).  Whatever else is written there — a `\cite` key, a plain alnum token
 — is an error, not a fallback: the preamble raises `\PackageError` instead
@@ -204,14 +206,14 @@ groups in a row (`[P] in [12]`) are then the tag's own bracket plus the
 citation's, each printed by its own macro — and a tag alone never carries a
 number.
 
-**There is no `\Lean{}` and no `\LeanCW{}` any more.**  They were the
-artefact of the previous convention: a name printed in tt brackets of its
+**There is no `\Lean{}` (nor any per-repository variant of it) any
+more.**  They were the artefact of the previous convention: a name printed in tt brackets of its
 own, standing next to the tag of the same claim (`P[…]` beside
 `N[test_x]`), which is the duplication this standard replaced.  Every
 internal name now lives **inside** the tag — `\tier[name1, name2]{P}` — or
-inside a `\witness{}` block, and an external name (a theorem of
-03-crystalline-worldsheet) is never printed at all: the claim keeps its
-citation, `in~\cite{CW6}`.
+inside a `\witness{}` block, and an external name (a theorem of a sibling
+repository) is never printed at all: the claim keeps its citation,
+`in~\cite{key}`.
 
 ### 8.2 Rules for whoever writes or edits the text
 
@@ -236,8 +238,8 @@ citation, `in~\cite{CW6}`.
    either folded into the tag, `\tier[\testref{test\_x}]{N}`, or, when the
    sentence already carries other witnesses, as `\testref{}` in the prose of
    that same sentence, after the tag. The set of cited tests is pinned by
-   `tests/test_section_census.py`, so a new witness is added there too, after
-   checking the test really recomputes the number next to it.
+   the census test of the repository, so a new witness is added there too,
+   after checking the test really recomputes the number next to it.
 5. **`\tier{P}` without a bracket** means proved here, with no theorem name
    quoted at that point; the name, when it is quoted, goes into the tag
    itself (`\tier[name]{P}`) or, when the claim carries two ids or more and
@@ -258,8 +260,8 @@ citation, `in~\cite{CW6}`.
    yet named. The printed text never invokes it: the body marks those claims
    `P`, the gloss does not mention it and the prose no longer speaks of it.
 8. **No status tags in captions.** A caption already names the test that
-   generates the figure (`\testref{test_section_writes_its_figure[...]}` and
-   the test of the claim itself), which carries the status; a `\tier{…}`
+   generates the figure (`\testref{…}` of that test, and the test of the
+   claim itself), which carries the status; a `\tier{…}`
    inside `\caption{…}` is removed, not kept. Tags belong to the body.
 
 ### 8.3 Alphabet
@@ -274,7 +276,7 @@ citation, `in~\cite{CW6}`.
 | `[P] in~\cite{key}` | a `P` proved in an external source: one bracket for the tag, one for the citation |
 | `\tier{P*}` | internal: renders `[P*]` in ochre, available between builds; the released text never uses it (rule 7) |
 | `\witness{X}{ids}` | the ids of the claim, on a line of its own, flush right — `P[name1, name2]` or `N[test_a, test_b]` |
-| `\wtag{W1}{CLPW}` | the label of a witness of the W list |
+| `\wtag{L}{text}` | the label of a witness list, where the manuscript has one |
 
 **Why there is no `L`.** A witness stresses that there *is* a reference, and
 `P` and `N` earn their compactness by referencing by identifier — a theorem
@@ -282,8 +284,8 @@ name, a test name — while `L` only encodes "is cited", which the citation
 itself already expresses and which costs a bracket more than it saves.
 
 **Why there is no `R`.** `R` marked the direction of a reading rather than
-how a claim is established; eleven of its sites repeated what the prose
-already said, and a reading is now written as prose (`a reading of the
+how a claim is established; its sites repeated what the prose already
+said, and a reading is now written as prose (`a reading of the
 records, not a result about them`), so the class carried no information the
 sentence does not.
 
@@ -294,7 +296,7 @@ sentence does not.
   against a named test or an external source. That is a
   decision of this project and not an AMS or Chicago one; the real precedents
   are blueprints with a status per statement (`leanblueprint`), status tables
-  and artefact seals (argued in `docs/witness-rationale.md`). The gloss at
+  status tables and artefact seals (argued in `docs/witness-contract.md`). The gloss at
   the first mark therefore states the classes and nothing else: the notes
   that explain the device belong to this standard, not to the page that
   carries the claim.
@@ -338,35 +340,34 @@ own at a paragraph close — both stated below.  Gates 1 and 3 (`k ≥ 2`,
 A claim with `k ≥ 2` is set as a block **iff all four hold**, unless one of
 the heuristics below decides otherwise:
 
-1. **`k ≥ 2`.**  One id never earns a line of its own: the seven
-   single-id blocks of the 2026-11 pass moved inline for exactly this
-   reason (calibration: `docs/reports/20261115_WIT-001_criterion_sites.md`
-   §4).
-2. **`L ≥ 35`.**  35 characters is the shortest id list the manuscript
-   already prints as a block (calibration: same report, §4).  Below that
-   the flush-right line costs a paragraph break and buys no room: the
-   bracket fits in the sentence.
+1. **`k ≥ 2`.**  One id never earns a line of its own: a single
+   identifier fits in the bracket of the sentence it marks (calibration:
+   the criterion-sites report in `docs/reports/`).
+2. **`L ≥ 35`.**  Below 35 characters the flush-right line costs a
+   paragraph break and buys no room: the bracket fits in the sentence
+   (calibration: the criterion-sites report in `docs/reports/`).
 3. **`r = 0`.**  `\witness` issues `\par … \par` (preamble), so it always
    ends the paragraph where it sits and the text after it opens a new one.
    Any residual — a trailing clause (`; …`, `, so …`, `which …`), a
    parenthetical (`(Figure~\ref{fig:background}(a))`), a closing
    `\testref` — would be stranded at the head of a new paragraph, and the
    sentence it belongs to would be torn in two.  **`r ≥ 1` ⇒ inline, no
-   exception.**  The residual is counted, not estimated: in the current
-   inventory no site has `1 ≤ r ≤ 5` whose residual could read as a
-   sentence of its own — the small residuals are reference parentheticals
-   and final `\testref`s, which are parts of the sentence they follow.
+   exception.**  The residual is counted, not estimated: a residual of a
+   few words is a reference parenthetical or a closing `\testref` — a part
+   of the sentence it follows, not a sentence of its own.
 4. **`i = 0` and `d ≥ 75`.**  A block inside an enumeration would close
    the item's paragraph and set the mark off from the rest of the list;
    no block of the manuscript sits inside one.  And a second block a few
    lines below the first is monotone prose: 75 words is the tightest
    block-to-block distance the manuscript already accepts (calibration:
-   same report, §4), so `d < 75` keeps the claim inline.
+   the criterion-sites report in `docs/reports/`), so `d < 75` keeps the
+   claim inline.
 
 The four gates read as a paragraph, but they are each a number: the
 criterion is reproducible by anyone who opens `main.tex`, and the applied
 inventory it reproduces — every block, every flagged site, every counter —
-is recorded in `docs/reports/20261115_WIT-001_criterion_sites.md`.
+is recorded in `docs/reports/` (the criterion-sites report of this
+repository).
 
 #### The two heuristics — `u` and `p`
 
@@ -393,9 +394,7 @@ marks of the run (inline `\tier` vs `\witness` block), then
 
 Measurable: the run is delimited by `\begin{…}`/`\end{…}`; the census
 counts `\tier` and `\witness` occurrences inside it, excluding the mark
-under review.  Today every list of the manuscript is homogeneous inline
-(no `\witness` block sits inside a list), and the imported-statement
-sequence is the mixed case that motivated the rule.
+under review.
 
 Best practice: visual rhythm — a list whose marks change shape from item
 to item forces the eye to re-acquire the pattern, while a consistent form
@@ -427,31 +426,27 @@ absolute; 3. `u`, when it gives a verdict; 4. `p`; 5. gates 2 and 4
 (`L ≥ 35`, `i = 0`, `d ≥ 75`).  A mark goes on a line of its own only when
 one of steps 3–5 sets it there; otherwise it stays inline.  The verdicts
 for the current manuscript — every candidate site by the tail of its
-sentence, with its `u`/`p` values and the counter delta — are in
-`docs/reports/20261116_WIT-002_u_p_verdicts.md`.
+sentence, with its `u`/`p` values and the counter delta — are recorded in
+`docs/reports/` (the `u`/`p` verdicts report of this repository).
 
 #### How the criterion is reviewed
 
-One reading pass over the site table in
-`docs/reports/20261115_WIT-001_criterion_sites.md` — it prints, for every
+One reading pass over the site table of the criterion-sites report in
+`docs/reports/` — it prints, for every
 flagged site, the tail of the sentence the mark closes, so the whole check
 is one question per row: *does any word of that sentence follow the mark?*
 The same pass is what confirms gates 4 (`i`, `d`) and the census of `u` for
 a new site, since all three are read from the lines around it.  No style
 test is written for this: a CI check that re-derives what this section
 already guarantees would test the document against itself; the census
-(`tests/test_section_census.py`) guards what the build depends on — the
+test guards what the build depends on — the
 test references the manuscript cites — and nothing here does.
 
 #### Concrete material of this rule
 
 The site table with the sentence tails, the calibration facts behind the
-thresholds, the applied state of the 2026-11-15 pass, and the pending
-`u`/`p` verdict table all live in `docs/reports/`:
-
-- `docs/reports/20261115_WIT-001_criterion_sites.md` — applied inventory
-  (site table, counters, threshold calibrations).
-- `docs/reports/20261116_WIT-002_u_p_verdicts.md` — verdicts of the two
-  heuristics for the current manuscript (pending application).
-- `docs/reports/20261115_DEC-001_witness_decisions.md` — the decision log
-  behind the tiers.
+thresholds, the applied state of the last harmonising pass, and the
+pending `u`/`p` verdict table all live in `docs/reports/` of the
+repository that applies the rule — indexed by its
+[`README.md`](reports/README.md). A report is a snapshot of one
+repository state; the rule itself is this section.

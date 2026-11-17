@@ -15,15 +15,20 @@ docs/
 ├── style/             # Portable extracts of the style guide
 │   └── grammar.md     # Grammar and usage rules of human language (ES/EN/FR/IT examples)
 ├── usage.md           # Build and release commands
-├── witness-rationale.md  # Why the marks exist (convention rationale, EN)
+├── witness-contract.md   # Why the marks exist (portable rationale of the witness device, EN)
 ├── specs/            # Design specifications (dated, id'd, ISO header)
 │   └── 20261116_SPEC-001_deterministic_self_citations.md
 └── reports/           # Specific, repository-tied reports (dated, id'd)
-    ├── README.md      # Index of the reports (id · title · status · date)
+    ├── README.md      # Reports convention (template) + index of this repository's reports
     ├── 20261115_DEC-001_witness_decisions.md
     ├── 20261115_WIT-001_criterion_sites.md
+    ├── 20261116_AUD-001_claim_test_matrix.md
+    ├── 20261116_CIT-001_citation_verification.md
+    ├── 20261116_FIG-001_figure_1_deembed.md
+    ├── 20261116_MRG-001_v138_diff_merge_plan.md
+    ├── 20261116_SEC-001_sections_migration.md
     ├── 20261116_WIT-002_u_p_verdicts.md
-    └── 20261116_FIG-001_figure_1_deembed.md
+    └── 20261117_WIT-003_rationale_applied_state.md
 ```
 
 `docs/` itself stays generic (rules and rationale, portable across the
@@ -36,16 +41,23 @@ inventories, decision logs, verdict tables — goes to `docs/reports/`.
 - **citations.md**: How `citation.csl.json` drives the bibliography, CITATION.cff and .zenodo.json; §8 is the witness (tier) contract, §8.5 the quantified inline / line-of-its-own criterion.
 - **figures.md**: What `pnpm run generate:figures` guarantees and why (byte-stable, text-extractable PDFs); the concrete figure-1 incident is [FIG-001](reports/20261116_FIG-001_figure_1_deembed.md).
 - **installation.md**: Prerequisites and setup instructions.
-- **style-guide.md**: The family style guide (v2.2): editorial rules (§1–§12), including the rigorous IMRAD structure of §7 (section roles, antecedent before use, discourse thread, and the principal author's exclusive decision on moving content between sections), the software-quality doctrine D1–D7 (§13) and the tex/proofreading pipeline with its cited sources (§14). Generic across the family: this repository's own conventions are linked, never copied — witness contract in `citations.md` §8, rationale in `witness-rationale.md`, grammar rules in `style/grammar.md`.
+- **style-guide.md**: The family style guide (v2.2): editorial rules (§1–§12), including the rigorous IMRAD structure of §7 (section roles, antecedent before use, discourse thread, and the principal author's exclusive decision on moving content between sections), the software-quality doctrine D1–D7 (§13) and the tex/proofreading pipeline with its cited sources (§14). Generic across the family: this repository's own conventions are linked, never copied — witness contract in `citations.md` §8, rationale in `witness-contract.md`, grammar rules in `style/grammar.md`.
 - **style/grammar.md**: The grammar and usage rules extracted from `style-guide.md` §1.5 — language-neutral (complete structure, agreement, clear reference, voice, punctuation, economy), worked in Spanish, English, French and Italian, with the RAE-checked Spanish `se` verbs and their sources.
 - **usage.md**: Daily workflow, conventional commits, build and release commands.
-- **witness-rationale.md**: The rationale of the witness marks: evidence classes, usability, succinctness.
+- **witness-contract.md**: The rationale of the witness marks — why they exist and what they do not
+  assert (evidence classes, usability, compactness, the declared novelty); portable across the family.
+  The applied state of *this* repository — counters, verdicts and the author's pending rows — is
+  [WIT-003](reports/20261117_WIT-003_rationale_applied_state.md).
 - **specs/**: Design specifications — proposals that change the pipeline or a
   shared artifact, with purpose, evidence, acceptance criteria and open
   questions; first entry
   [SPEC-001](specs/20261116_SPEC-001_deterministic_self_citations.md)
   (deterministic self-citation blocks in the READMEs).
-- **reports/**: Specific reports — the witness decision log (DEC-001), the criterion site inventory (WIT-001), the `u`/`p` verdict table (WIT-002) and the figure-1 prose de-embed (FIG-001); index in `reports/README.md`.
+- **reports/**: Specific reports — the witness decision log (DEC-001), the criterion site inventory
+  (WIT-001), the `u`/`p` verdict table (WIT-002), the rationale applied state and pending work
+  (WIT-003), the claim/test audit (AUD-001), the citation content verification (CIT-001), the
+  figure-1 prose de-embed (FIG-001), the v138 merge plan (MRG-001) and the sections migration
+  ledger (SEC-001); convention and index in `reports/README.md`.
 
 ## Conventions
 

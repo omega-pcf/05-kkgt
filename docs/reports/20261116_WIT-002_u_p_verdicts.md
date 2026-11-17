@@ -115,7 +115,7 @@ unchanged — only its shape.
   two heuristics, decision order, review method).
 - `docs/reports/20261115_WIT-001_criterion_sites.md` — the applied
   inventory of the 2026-11-15 pass (site table, sentence tails, counters).
-- `docs/witness-rationale.md` — why the device exists and why the criterion
+- `docs/witness-contract.md` — why the device exists and why the criterion
   is quantitative.
 - `docs/reports/20261115_DEC-001_witness_decisions.md` — the decision log
   behind the witness tiers.
