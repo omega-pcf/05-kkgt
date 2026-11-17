@@ -818,7 +818,7 @@ evolving dark energy that the present data prefer.
 \item[(F1) The unit.] The pure number $M_{\mathrm{PCF}}=6\sqrt3\pi/\log\golden=67.846$ is read as the
 charged-lepton scale $M=313.84$~MeV, the scale from which
 $\sqrt{m_k}=\sqrt M\,\bigl(1+\sqrt2\cos(\tfrac29+\tfrac{2\pi k}{3})\bigr)$ reconstructs the electron,
-muon and tau masses to ${\sim}10^{-4}$~\cite{CW6} \tier[\testref{test\_reconstruction\_is\_below\_one\_part\_in\_ten\_thousand}]{N}; this is Koide's
+muon and tau masses to ${\sim}10^{-4}$~\cite{CW6} \tier[\testref{test\_koide\_scale\_and\_unit}]{N}; this is Koide's
 relation~\cite{Koi82,Koi83} in Brannen's parametrisation~\cite{RG05}, to which the framework adds the
 phase $\delta=2/n^2=\tfrac29$ from the arity and the identification of its scale with
 $M_{\mathrm{PCF}}$, which fixes the unit $M/M_{\mathrm{PCF}}=4.626$~MeV; and the scale of the
@@ -1150,7 +1150,7 @@ theory's own map, and nothing is left outside the two. The observer so placed is
 Fisher information per eigenvalue is $4\mu^2$, one bit if and only if $\mu=\tfrac12$
 \tier[fisher\_unit\_iff]{P}, and $\tfrac12$ is the threshold at which redundant records make a level
 objective~\cite{Kie26,CW6}. Physics: axiom~(F8).
-\item[\wtag{W2}{W01}.] The Hilbert space of a level is finite. Its dimension is the number of states of the boundary theory of Imported statement~\ref{imp:adscft}, of central charge $c=3$, at or below the level $L_0=N/2$; it is an integer because the levels $L_0$ of that theory are integers while $N/2=\golden^{2\sigma}/2$ is real, and it is $1654$, $3.4\times10^{6}$ and $8.2\times10^{11}$ at $\sigma=3,4,5$. Its logarithm is $S(\sigma)$ to leading order, by Cardy's formula~\cite{Car86}, with a correction of order $\ln N$: fitted over $\sigma=3,\dots,9$, the slope in $S$ is $0.997$ \tier[\testref{test\_w2\_integer\_dimension}]{N}. The count at the level itself, used for the weld (Imported statement~\ref{imp:weld}, item (c) of its proof), grows in the same way, with slope $1.001$. So $e^{S}$, which is not an integer, is the growth of an integer dimension, as the area of a disk is the growth of the integer count of the lattice points inside it~\cite{Hux03}. The level also carries the integer number $\lfloor S(\sigma)\rfloor\ge0$ of modes \tier[witten\_finite\_rank]{P}; \cite{CW6} writes that count as $\dim\mathcal H(\sigma)$, and it is read here as the number of modes.
+\item[\wtag{W2}{W01}.] The Hilbert space of a level is finite. Its dimension is the number of states of the boundary theory of Imported statement~\ref{imp:adscft}, of central charge $c=3$, at or below the level $L_0=N/2$; it is an integer because the levels $L_0$ of that theory are integers while $N/2=\golden^{2\sigma}/2$ is real, and it is $1654$, $3.4\times10^{6}$ and $8.2\times10^{11}$ at $\sigma=3,4,5$. Its logarithm is $S(\sigma)$ to leading order, by Cardy's formula~\cite{Car86}, with a correction of order $\ln N$: fitted over $\sigma=3,\dots,9$, the slope in $S$ is $0.997$ \tier[\testref{test\_cardy\_slope\_of\_the\_count}]{N}. The count at the level itself, used for the weld (Imported statement~\ref{imp:weld}, item (c) of its proof), grows in the same way, with slope $1.001$. So $e^{S}$, which is not an integer, is the growth of an integer dimension, as the area of a disk is the growth of the integer count of the lattice points inside it~\cite{Hux03}. The level also carries the integer number $\lfloor S(\sigma)\rfloor\ge0$ of modes \tier[witten\_finite\_rank]{P}; \cite{CW6} writes that count as $\dim\mathcal H(\sigma)$, and it is read here as the number of modes.
 \item[\wtag{W3}{W01}.] The pairing is positive: the modulus exceeds the collapse threshold of~\cite{CW6},
 $\tfrac12>\tfrac14$ \tier[half\_gt\_quarter]{P}; its Osterwalder--Schrader form is the reflection
 positivity of the tower.
@@ -1609,7 +1609,7 @@ $j_{1,6}M\golden^{12}=1982$~GeV, with no free parameter
 candidates with its scale free, the two-brane model gives $1014$ and $1328$~GeV for the next two
 modes; the golden throat differs from it by $1.4\%$, so those modes separate the two only at a mass
 resolution better than about $15$~GeV, against the $\pm30$ and $\pm40$~GeV assumed in
-\S\ref{sec:data} \tier[\testref{test\_the\_two\_models\_differ\_by\_one\_point\_four\_percent}]{N}.
+\S\ref{sec:data} \tier[\testref{test\_error\_on\_the\_ratios}]{N}.
 
 The graviton ratios are insensitive to the depth of the throat. The vector ratios are not:
 from the exact two-brane conditions, which~\eqref{eq:vector} discretised with $24$ nodes per level
@@ -1824,7 +1824,7 @@ S=\pi\sqrt N & 13.33 & 56.37 & 238.80
 \end{array}
 \]
 with ratio tending to $1$, and $S-\log W-\tfrac32\log L_0$ settling to a constant ($2.73$, $2.50$,
-$2.44$), the logarithmic correction $(c+3)/4$ of Cardy's formula at $c=3$ \tier[\testref{test\_cardy\_correction\_settles}]{N}. None of this
+$2.44$), the logarithmic correction $(c+3)/4$ of Cardy's formula at $c=3$ \tier[\testref{test\_count\_against\_the\_entropy}]{N}. None of this
 changes $S$, the masses or the lattice counts of the angular direction above.
 
 This is why the bottom is a half-turn and the phase a quarter-turn: for the modular matrix $S$,
