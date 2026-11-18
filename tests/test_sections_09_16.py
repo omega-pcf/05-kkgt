@@ -14,6 +14,7 @@ import numpy as np
 import pytest
 
 from kkgt.constants import LN_PHI, M_KOIDE_MEV, M_TAU_MEV, PHI
+from kkgt.harness import verify_figure_artifact
 
 
 # ═══════════════════════════════════════════════════════════ section 9 ══
@@ -306,7 +307,8 @@ class TestSection13FigureTwoReciprocity:
     def test_section13_draws_figure_two(self, run_section):
         run = run_section(13)
         assert run.stdout.strip() == "ok", run.stdout
-        assert "fig_mobius_throat.pdf" in run.figures
+        # section 13 checks figure 2 but no longer draws it (SPEC-002 §1.1)
+        verify_figure_artifact("fig_mobius_throat.pdf")
 
 
 # ══════════════════════════════════════════════════════════ section 14 ══

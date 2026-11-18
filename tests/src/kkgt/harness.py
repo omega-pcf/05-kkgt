@@ -14,6 +14,7 @@ number, the label, expected, got and the diff instead of a bare ``False``.
 from __future__ import annotations
 
 import contextlib
+import hashlib
 import io
 import os
 import re
@@ -21,10 +22,47 @@ import time
 from dataclasses import dataclass
 from pathlib import Path
 
-from .constants import C_LIGHT, G_NEWTON, HBAR, MPC_M
+from .constants import C_LIGHT, FIGURE_MD5, G_NEWTON, HBAR, MPC_M
 
 # tests/src/kkgt/harness.py -> repo root = Path(...).parents[3]
 REPO_ROOT = Path(__file__).resolve().parents[3]
+
+# Committed figure artifacts; only ``pnpm run figures`` writes them.
+FIGURES_DIR = REPO_ROOT / "images"
+
+
+def figure_artifact(name: str) -> Path:
+    """Path of the committed figure ``name``; asserts that it exists."""
+    path = FIGURES_DIR / name
+    assert path.is_file(), (
+        f"missing figure artifact {path}\n"
+        "regenerate it with `pnpm run figures` and commit the result"
+    )
+    return path
+
+
+def md5_of(path: Path) -> str:
+    """Hex md5 of a file's bytes (artifact stability pin)."""
+    return hashlib.md5(path.read_bytes()).hexdigest()  # noqa: S324
+
+
+def verify_figure_artifact(name: str) -> str:
+    """The committed figure exists and still carries its pinned bytes.
+
+    Returns the md5.  Generation is not a test concern (SPEC-002 §1.1):
+    only ``pnpm run figures`` writes ``images/``, and this check fails if
+    the artifact is missing or its bytes drifted from ``FIGURE_MD5``.
+    """
+    got = md5_of(figure_artifact(name))
+    want = FIGURE_MD5[name]
+    assert got == want, (
+        f"{name}: artifact bytes changed\n"
+        f"  got  {got}\n"
+        f"  want {want}\n"
+        "regenerate with `pnpm run figures`, review the diff of images/, "
+        "and move the pin in the same commit"
+    )
+    return got
 
 
 def lam_planck(h0: float, omega_l: float) -> float:
@@ -119,13 +157,8 @@ def run_section(module, n: int, cwd: Path | str) -> SectionRun:
             fn()
     finally:
         os.chdir(prev)
-        # sections 10/12/13/39/41 leave figures open; keep the session light
-        try:
-            import matplotlib.pyplot as plt  # noqa: PLC0415
-
-            plt.close("all")
-        except Exception:  # matplotlib not imported at all
-            pass
+        # No section draws any more (SPEC-002 §1.1: the figures belong to
+        # scripts/figures), so there is no figure state to clean up here.
 
     figures = tuple(sorted(p.name for p in cwd.glob("*.pdf")))
     return SectionRun(

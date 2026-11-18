@@ -53,30 +53,10 @@ def seccion_10():
     exc=[N for N in range(3,5001) if abs(gaps(np.arange(1,N+1)*phi).max()/gaps(np.arange(1,N+1)*phi).min()-phi**2)>1e-6]
     print("N <= 5000 with ratio different from phi^2:", exc, "(N+1, marks including the origin, is Fibonacci: two lengths, ratio phi)")
 
-    # ---------- figure: granularity, no color ----------
-    import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
-    fig, ax = plt.subplots(1, 3, figsize=(10, 3.3), gridspec_kw=dict(width_ratios=[1.3, 1.3, 1]))
-    for i, k in enumerate([1, 2, 3, 4, 5]):
-        y = -i
-        ax[0].plot([0, 1], [y, y], "k", lw=0.5)
-        for j in range(2**k + 1): ax[0].plot([j/2**k]*2, [y-.15, y+.15], "k", lw=0.8)
-        ax[0].text(1.04, y, rf"$k={k}$", va="center", fontsize=8)
-    ax[0].set_title("integer and binary levels:\none new digit per halving", fontsize=9)
-    for i, N in enumerate([5, 8, 13, 21, 34]):
-        y = -i; x = np.mod(np.arange(1, N+1)*phi, 1)
-        ax[1].plot([0, 1], [y, y], "k", lw=0.5)
-        for v in np.r_[0, x, 1]: ax[1].plot([v]*2, [y-.15, y+.15], "k", lw=0.8)
-        ax[1].text(1.04, y, rf"$N={N}$", va="center", fontsize=8)
-    ax[1].set_title(r"golden levels $\{n\varphi\}$: same rule," "\n" r"three gaps, ratio $\varphi^{2}$", fontsize=9)
-    t = np.linspace(0, 2*np.pi, 400); ax[2].plot(np.cos(t), np.sin(t), "k", lw=0.5)
-    n = np.arange(0, 200); th = n*lp
-    ax[2].plot(np.cos(th), np.sin(th), "k.", ms=3)
-    for m in (0, 1, 2): ax[2].text(1.08*np.cos(m*lp), 1.08*np.sin(m*lp), rf"${m}$", fontsize=7, ha="center", va="center")
-    ax[2].set_title(r"phase $e^{i\sigma\log\varphi}$, $\sigma=0,\dots,199$:" "\n" "never closes", fontsize=9)
-    ax[2].set_aspect("equal")
-    for a_ in ax: a_.axis("off")
-    fig.savefig("fig_granularity.pdf", bbox_inches="tight")
-    print("figure: ok")
+    # The drawing of figure 3 lives in the generator
+    # scripts/figures/figuras_v134.py (generate_fig_granularity); this
+    # section keeps the numbers the manuscript cites from it and writes
+    # no file (SPEC-002 §1.1: a test never produces a figure).
 
 SECCIONES.append((10, 'Figure 3: granularity, with its numbers', seccion_10))
 
@@ -200,35 +180,15 @@ def seccion_13():
      closure_each_level) and half-width 1/2 of the radius of its loop (|Omega| = 1/2, the B1 drawing
      convention).
      The product of the two radii is constant, phi^-6: z tau = M."""
-    import numpy as np, matplotlib
-    matplotlib.use("Agg"); import matplotlib.pyplot as plt
-    phi=(1+5**.5)/2; lev=np.arange(12,19); tt=np.linspace(0,2*np.pi,400)
+    import numpy as np
+    phi=(1+5**.5)/2; lev=np.arange(12,19)
     rz=lambda s: phi**(s-18); rt=lambda s: phi**(-(s-12))
     for s in lev: assert abs(rz(s)*rt(s)-phi**-6)<1e-12          # z*tau constante
-    K=dict(color="k", lw=0.4)
-    fig=plt.figure(figsize=(8.6,5.0))
-    def clean(ax,lim):
-        ax.set_xlim(-lim,lim); ax.set_ylim(-lim,lim); ax.set_zlim(11.5,18.5)
-        ax.set_box_aspect((1,1,1.25)); ax.set_axis_off(); ax.view_init(elev=16,azim=-58)
-    ax=fig.add_subplot(1,2,1,projection="3d")
-    for s in lev:
-        r=rz(s); ax.plot(r*np.cos(tt),r*np.sin(tt),s+0*tt,"k",lw=1.0)
-        ax.text(r+0.05,0,s,rf"$\sigma={s}$",fontsize=7)
-    for t0 in np.linspace(0,2*np.pi,16,endpoint=False):
-        ss=np.linspace(12,18,100); ax.plot(rz(ss)*np.cos(t0),rz(ss)*np.sin(t0),ss,**K)
-    ax.set_title(r"rings of the throat, radius $\propto z(\sigma)=\varphi^{\sigma}$",fontsize=8)
-    clean(ax,1.05)
-    ax=fig.add_subplot(1,2,2,projection="3d")
-    U=np.linspace(0,2*np.pi,300)
-    for s in lev:
-        R=rt(s)*0.6; h=0.5*R            # half-width 1/2 of the radius of the loop
-        for wv in (-1,1):
-            ax.plot((R+wv*h*np.cos(U/2))*np.cos(U),(R+wv*h*np.cos(U/2))*np.sin(U),s+wv*h*np.sin(U/2),"k",lw=0.9)
-        for u0 in np.linspace(0,2*np.pi,26,endpoint=False):
-            w=np.array([-1,1]); ax.plot((R+w*h*np.cos(u0/2))*np.cos(u0),(R+w*h*np.cos(u0/2))*np.sin(u0),s+w*h*np.sin(u0/2),**K)
-    ax.set_title(r"Möbius fibre on its loop, radius $\propto\tau(\sigma)=M\varphi^{-\sigma}$",fontsize=8)
-    clean(ax,1.05)
-    fig.savefig("fig_mobius_throat.pdf",bbox_inches="tight"); print("ok")
+    # The drawing of figure 2 lives in the generator
+    # scripts/figures/figuras_v134.py (generate_fig_mobius_throat); this
+    # section only checks the statement behind it and writes no file
+    # (SPEC-002 §1.1: a test never produces a figure).
+    print("ok")
 
 SECCIONES.append((13, 'Figure 2: the two reciprocal families', seccion_13))
 

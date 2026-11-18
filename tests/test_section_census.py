@@ -26,8 +26,8 @@ from pathlib import Path
 
 import pytest
 
-from kkgt.constants import FIGURES, SLOW_SECTIONS
-from kkgt.harness import REPO_ROOT
+from kkgt.constants import FIGURE_MD5, FIGURES, SLOW_SECTIONS
+from kkgt.harness import REPO_ROOT, verify_figure_artifact
 
 TEX = (REPO_ROOT / "main.tex").read_text(encoding="utf-8")
 
@@ -38,8 +38,9 @@ CITED_IN_TEX = [
     for arg in re.findall(r"\\testref\{([^}]*)\}", TEX)
 ]
 
-# The test that writes each figure: it runs the numbered section and
-# requires the figure file to be in the directory it ran in.
+# The test each figure is attributed to.  It no longer runs anything:
+# it verifies the committed artifact (present, byte-stable, cited by the
+# caption) -- the writing itself lives in scripts/figures (SPEC-002 §1.1).
 FIGURE_TESTS = {
     n: f"test_section_writes_its_figure[section-{n:02d}]" for n in FIGURES
 }
@@ -300,10 +301,20 @@ class TestFigureSections:
             for n in sorted(FIGURES)
         ],
     )
-    def test_section_writes_its_figure(self, run_section, n):
-        run = run_section(n)
-        assert FIGURES[n] in run.figures, (
-            f"section {n} wrote {run.figures}, expected {FIGURES[n]}"
+    def test_section_writes_its_figure(self, n):
+        """Artifact verification only: this test generates nothing.
+
+        The five cited ids are frozen.  ``pnpm run figures`` writes the
+        PDF; here the file must exist under ``images/``, still carry the
+        bytes pinned in ``FIGURE_MD5``, and be attributed to this test by
+        the caption that quotes it (SPEC-002 §1.1, §4.1).
+        """
+        name = FIGURES[n]
+        verify_figure_artifact(name)
+        assert set(FIGURE_MD5) == set(FIGURES.values()), FIGURE_MD5
+        caption = caption_of(name).replace(r"\_", "_")
+        assert FIGURE_TESTS[n] in caption, (
+            f"the caption of {name} must cite {FIGURE_TESTS[n]!r}"
         )
 
     def test_every_figure_caption_cites_the_test_that_writes_it(self):

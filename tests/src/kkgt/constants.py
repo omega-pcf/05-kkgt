@@ -54,7 +54,22 @@ FIGURES = {
     41: "fig_tilings_strip.pdf",
 }
 
+# ── Byte-stability pin of those five figures (SPEC-002 §1.1) ──────────────
+# md5 of ``images/<file>`` as committed.  ``pnpm run figures`` regenerates
+# them byte for byte (SOURCE_DATE_EPOCH + pinned rcParams, see
+# scripts/figures/generators/rc.py), so a different digest here means the
+# pipeline changed: regenerate, review the diff of images/, and move the pin
+# in the same commit.  Generation never happens inside a test.
+FIGURE_MD5 = {
+    "fig_background.pdf": "fb1c7f8f2872f6ee1293b951ac6f0bc3",
+    "fig_granularity.pdf": "ab37500a351a265611d672769673b3b5",
+    "fig_mobius_throat.pdf": "d63b8545ace9b1cf39d8ff4c3305b7e5",
+    "fig_throat_tiling.pdf": "7acf424e21cf86ae2307fa00c07cb52d",
+    "fig_tilings_strip.pdf": "b6b961d2bc9cdc76f6f047be4944888c",
+}
+
 # ── Sections measured slower than 10 s on this machine ───────────────────
-# section 41: 33.1 s (figure 5). Everything else runs in < 10 s: section 40
-# (9.2 s), section 44 (2.2 s, figure 1), section 12 (0.8 s, checks only).
+# section 41: 12.7 s for its checks (33.1 s while it still drew figure 5;
+# the drawing moved to scripts/figures, SPEC-002 §1.1). Everything else
+# runs in < 10 s: section 40 (9.1 s), section 44 (2.2 s), section 12 (0.8 s).
 SLOW_SECTIONS = frozenset({41})

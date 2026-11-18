@@ -4,9 +4,11 @@ Mirrors 03-crystalline-worldsheet/tests/conftest.py: shared fixtures live
 here, the importable support code lives in tests/src/kkgt, and the
 computation itself is ``kkgt.sections`` -- no test imports a script.
 
-The suite is headless: the backend is forced to Agg before any section can
-import pyplot, and every section runs inside a temporary directory so the
-five figures and the ``kk_vs_cw6_out.txt`` dump never touch the repo.
+The suite is headless and generates nothing: the five figures belong to
+the generators of ``scripts/figures`` (the tests only verify the
+committed artifacts of ``images/``), ``MPLBACKEND`` is forced to Agg
+before any module can import pyplot, and every section still runs
+inside a temporary directory so its stdout dump never touches the repo.
 """
 
 from __future__ import annotations

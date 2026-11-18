@@ -8,10 +8,13 @@
 | **date** | 2026-11-16 |
 | **scope** | The family figure pipeline: what `pnpm run generate:figures` guarantees and why. Repository-tied incidents live in `docs/reports/` — the prose de-embed of figure 1 is [FIG-001](reports/20261116_FIG-001_figure_1_deembed.md). |
 
-`pnpm run generate:figures` runs `scripts/figures/main.py`, which registers the
+`pnpm run figures` (alias of `pnpm run generate:figures`) runs
+`scripts/figures/main.py`, which registers the
 author's five generators (`scripts/figures/figuras_v134.py`, shipped with the
-v134 round) and redirects their `savefig` into `images/`. The author's file is
-left alone except for `seccion_44` (figure 1), which was adapted in place —
+v134 round; entry points `generate_fig_*`, SPEC-002 §1.4) and redirects their
+`savefig` into `images/`. The author's drawing code is
+left alone except for `generate_fig_background` (figure 1, then named
+`seccion_44`), which was adapted in place —
 that adaptation is a repository-tied incident and is recorded in
 [FIG-001](reports/20261116_FIG-001_figure_1_deembed.md), not here; every other
 setting below lives in our layer (`scripts/figures/generators/rc.py`).
@@ -39,9 +42,15 @@ setting below lives in our layer (`scripts/figures/generators/rc.py`).
 | `SOURCE_DATE_EPOCH` | `1794274263` | The author's round timestamp (2026-11-09 19:31:03 -06:00). The pdf, ps and svg backends all honour it; without it every run rewrote four bytes of `/CreationDate` and dirtied the tree. |
 
 `apply_rc()` is called before **every** generator, not once at start-up:
-`seccion_44` (figure 1) ends with
+`generate_fig_background` (figure 1) ends with
 `plt.rcParams.update(matplotlib.rcParamsDefault)`, which would otherwise reset
 `pdf.fonttype` back to `3` for the remaining four figures.
+
+## Where the figures come from
+
+Only this pipeline writes `images/` (SPEC-002 §1.1): no test and no section
+generates a figure, and `tests/src/kkgt/constants.py` pins the md5 of the five
+PDFs so `pnpm run figures` must reproduce them byte for byte.
 
 ## Prerequisites
 

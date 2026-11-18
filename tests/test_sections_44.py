@@ -19,6 +19,7 @@ import numpy as np
 import pytest
 
 from kkgt.constants import EPS0, M_PCF, PHI, PHI_BAR
+from kkgt.harness import verify_figure_artifact
 
 # words of the substitution A -> AB, B -> A with seed AAB (section 44
 # asserts over the thirteen words it draws)
@@ -151,5 +152,6 @@ class TestSection44BackgroundFigure:
     @pytest.mark.figure
     def test_section44_draws_the_background_figure(self, run_section):
         run = run_section(44)
-        run.has("background figure: ok")
-        assert "fig_background.pdf" in run.figures, run.figures
+        run.has("background statements: all checks ok")
+        # section 44 checks figure 1 but no longer draws it (SPEC-002 §1.1)
+        verify_figure_artifact("fig_background.pdf")

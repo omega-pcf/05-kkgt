@@ -937,8 +937,7 @@ def seccion_39():
     every level. The tilt of the view, the distribution of the points and the scale of the loops
     are drawing conventions."""
     import numpy as np, math
-    import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
-    phi=(1+5**.5)/2; L=math.log(phi); LEV=list(range(7))
+    phi=(1+5**.5)/2; LEV=list(range(7))
     # ---- tiling: word of each ring (A long, B short), seed AAB at sigma=0
     words=["AAB"]
     for _ in range(6): words.append("".join({"A":"AB","B":"A"}[c] for c in words[-1]))
@@ -952,50 +951,10 @@ def seccion_39():
         Sw=math.pi*(A/phi**2+B/phi**3); assert abs(Sw-S)<1e-9*S
         rows.append(dict(s=s,S=S,modes=int(S),N=phi**(2*s),A=A,B=B,w=words[s]))
     print("rings:",[(r['A'],r['B']) for r in rows],"; S = pi(A/phi^2+B/phi^3) exact; boundaries nested")
-    # ---- throat (pseudosphere), as in Figure 4
-    ys=np.linspace((LEV[0]-6.6)*L,0,2000); r=np.exp(ys)
-    h=np.concatenate([[0],np.cumsum(np.sqrt(np.clip(1-r[1:]**2,0,None))*np.diff(ys))]); h=h-h[-1]
-    H=lambda y: np.interp(y,ys,h); k=0.16
-    def P3(rad,hh,th): return rad*np.cos(th), hh+k*rad*np.sin(th)
-    fig=plt.figure(figsize=(11.0,11.69)); ax=fig.add_axes([0.02,0.02,0.96,0.96]); ax.set_aspect('equal'); ax.axis('off')
-    ax.plot(np.exp(ys),h,'k',lw=1.2); ax.plot(-np.exp(ys),h,'k',lw=1.2)
-    hb=H((LEV[0]-6)*L); ht=H(0.0); dl=(ht-hb)/6
-    LAB={s:hb+(ht-hb)*s/6 for s in LEV}
-    XL=1.33; XD=2.05; WD=0.95; HD=0.42*dl
-    for row in rows:
-        s=row['s']; y=(s-6)*L; rad=math.exp(y); hh=H(y)
-        th=np.linspace(0,2*math.pi,400); x,yy=P3(rad,hh,th)
-        ax.plot(np.where(np.sin(th)<0,x,np.nan),yy,'k',lw=1.0); ax.plot(np.where(np.sin(th)>=0,x,np.nan),yy,'k',lw=0.6,alpha=0.6)
-        for j in range(row['modes']):                  # modes
-            a=2*math.pi*j/row['modes']; x0,y0=P3(rad*1.07,hh,a); ax.plot(x0,y0,'ko',ms=1.5)
-        # boundaries of the tiles: meridians of ring s to ring s+1 over the surface
-        if s<6:
-            yseg=np.linspace(y,y+L,30)
-            for bnd in bounds(row['w'])[:-1]:
-                a=2*math.pi*bnd-math.pi/2; xs,hs=np.exp(yseg)*np.cos(a),H(yseg)+k*np.exp(yseg)*np.sin(a)
-                ax.plot(xs,hs,'k',lw=0.45 if math.sin(a)<0 else 0.3,ls='-' if math.sin(a)<0 else ':')
-        ly=LAB[s]
-        ax.text(-2.05,ly,f"σ = {s}\nS = {row['S']:.2f},  ⌊S⌋ = {row['modes']}\nN = {row['N']:.1f}\ntiles = {row['A']+row['B']} ({row['A']} long, {row['B']} short)",fontsize=6.2,va='center',family='serif')
-        ax.plot([-1.32,-rad*1.08],[ly,hh],'k:',lw=0.4)
-        # the ring unrolled at the same width: long tiles shaded, short ones white
-        b=bounds(row['w'])
-        for i,c in enumerate(row['w']):
-            x0=XD+WD*b[i]; x1=XD+WD*b[i+1]
-            ax.add_patch(plt.Rectangle((x0,ly-HD/2),x1-x0,HD,facecolor='0.75' if c=='A' else 'white',edgecolor='k',lw=0.3))
-    # the string and the loops, as in Figure 4
-    sg=np.linspace(LEV[0],LEV[-1],600); yy=(sg-6)*L; thh=-math.pi/2+sg*L
-    xs=np.exp(yy)*np.cos(thh); hs=H(yy)+k*np.exp(yy)*np.sin(thh); front=np.sin(thh)<0
-    ax.plot(np.where(front,xs,np.nan),hs,'k',lw=1.1); ax.plot(np.where(~front,xs,np.nan),hs,'k--',lw=0.8)
-    for row in rows:
-        s=row['s']; y=(s-6)*L; t=-math.pi/2+s*L; px=math.exp(y)*math.cos(t); py=H(y)+k*math.exp(y)*math.sin(t)
-        rho=0.40*dl*phi**(-s); ly=LAB[s]; a=np.linspace(0,2*math.pi,100)
-        ax.plot(XL+rho*np.cos(a),ly+rho*np.sin(a),'k',lw=0.6); ax.plot([px,XL-rho],[py,ly],'k:',lw=0.4); ax.plot([XL+rho,XD-0.03],[ly,ly],'k:',lw=0.3)
-    xc=(-2.05+XD+WD)/2
-    ax.text(xc,H(0)+0.38,"The throat with the tiling of its rings",ha='center',fontsize=11,family='serif')
-    ax.text(XL,ht+0.62*dl,"half-turn loop",ha='center',fontsize=6.3,family='serif',style='italic')
-    ax.text(XD+WD/2,ht+0.62*dl,"the ring, unrolled at equal width",ha='center',fontsize=6.3,family='serif',style='italic')
-    ax.set_xlim(-2.1,XD+WD+0.05); ax.set_ylim(H((LEV[0]-6.6)*L)-0.05,H(0)+0.5)
-    fig.savefig("fig_throat_tiling.pdf",bbox_inches="tight",pad_inches=0.05)
+    # The drawing of figure 4 lives in the generator
+    # scripts/figures/figuras_v134.py (generate_fig_throat_tiling); the
+    # checks above are what this section keeps, and it writes no file
+    # (SPEC-002 §1.1: a test never produces a figure).
 
 
 SECCIONES.append((39, 'The throat with the Fibonacci tiling of its rings (Figure 4)', seccion_39))
@@ -1156,7 +1115,7 @@ def seccion_41():
     """Five {p,q} tilings of discs of radius arcsinh phi^sigma, exact centres (reflected with the
     vertices): tiles inside each disc, tangencies of one level's boundary with edges, and why a
     count does not follow phi: the Fibonacci ratios approach phi as 1/(sqrt5 q^2) and no further."""
-    import math, numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
+    import math, numpy as np
     phi=(1+5**.5)/2
     def circ(a,b):
         A=np.array([[2*a.real,2*a.imag],[2*b.real,2*b.imag]]); c=complex(*np.linalg.solve(A,[abs(a)**2+1,abs(b)**2+1]))
@@ -1211,24 +1170,17 @@ def seccion_41():
         return L
 
     REC={}
-    def geod(a,b,n=30):
-        m=lambda z,w:(z-w)/(1-np.conj(w)*z); mi=lambda z,w:(z+w)/(1+np.conj(w)*z)
-        bb=m(b,a); t=np.linspace(0,1,n); return mi(t*bb,a)
     C=[(7,3,'{7,3}: heptagons'),(3,7,'{3,7}: triangles'),(5,4,'{5,4}: pentagons'),(12,5,'{12,5}: dodecagons'),(6,10,'{6,10}: hexagons')]
-    fig,axs=plt.subplots(5,7,figsize=(14,10.5))
-    for i,(p,q,nm) in enumerate(C):
+    # The drawing of figure 5 lives in the generator
+    # scripts/figures/figuras_v134.py (generate_fig_tilings_strip); only
+    # the counts the assertions below need are computed here, and no file
+    # is written (SPEC-002 §1.1: a test never produces a figure).
+    for p,q,nm in C:
         T,Cc=tiles_within(p,q,math.asinh(phi**6)+0.5,'tile',True); d=[hd(x) for x in Cc]
         for s in range(7):
-            ax=axs[i,s]; Rh=math.asinh(phi**s); sc=1/math.tanh(Rh/2); n=0
+            Rh=math.asinh(phi**s); n=0
             for P,dd in zip(T,d):
                 if dd<=Rh: n+=1
-                if dd>Rh+2.5: continue
-                for j in range(p):
-                    g=geod(P[j],P[(j+1)%p])*sc; g=np.where(abs(g)<=1,g,np.nan); ax.plot(g.real,g.imag,'k',lw=0.35)
-            t=np.linspace(0,2*math.pi,300); ax.plot(np.cos(t),np.sin(t),'k',lw=1)
-            S=math.pi*phi**s
-            for j in range(int(S)): a=2*math.pi*j/int(S); ax.plot(1.12*math.cos(a),1.12*math.sin(a),'ko',ms=1.5)
-            ax.set_aspect('equal'); ax.axis('off'); ax.set_xlim(-1.2,1.2); ax.set_ylim(-1.2,1.2)
             tg=0
             for P in T:
                 for j in range(p):
@@ -1237,9 +1189,6 @@ def seccion_41():
                     c_,rc_=circ(a_,b_); ft=c_/abs(c_)*(abs(c_)-rc_); an=lambda z: np.angle((z-c_)/(-c_)); lo,hi=sorted([an(a_),an(b_)])
                     if lo-1e-12<=0<=hi+1e-12 and abs(hd(ft)-Rh)<1e-9: tg+=1
             REC[(p,q,s)]=(n,tg//2)
-            ax.set_title(f"σ={s}, tiles={n}"+(f"\nboundary tangent to {tg//2} edges" if tg else ""),fontsize=7,family='serif',color='k')
-        axs[i,0].text(-1.5,0,nm,rotation=90,va='center',ha='right',fontsize=9,family='serif')
-    fig.tight_layout(); fig.savefig('fig_tilings_strip.pdf',bbox_inches='tight',pad_inches=0.05)
 
     assert [REC[(7,3,s)][0] for s in range(7)]==[1,8,8,29,29,57,99]
     assert [REC[(12,5,s)][0] for s in range(7)]==[1]*7
@@ -1408,156 +1357,62 @@ SECCIONES.append((43, 'The three columns and why they did not fit', seccion_43))
 def seccion_44():
     """Background figure (fig:background): the torus and the third direction; from the diagonal to
     the face; each dimension from the next one up; the rings of the throat tiled. Every statement
-    drawn is checked."""
-    import numpy as np, math, itertools, matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
-    from matplotlib.lines import Line2D
-    from mpl_toolkits.mplot3d.art3d import Poly3DCollection
-    plt.rcParams.update({"font.family":"serif","mathtext.fontset":"cm","font.size":9})
+    the figure draws is checked here; the drawing itself lives in the generator
+    scripts/figures/figuras_v134.py (generate_fig_background), so this
+    section writes no file (SPEC-002 \u00a71.1: a test never produces a figure)."""
+    import numpy as np, math, itertools
     phi=(1+5**.5)/2; pb=(1-5**.5)/2; L=math.log(phi); M=6*3**.5*math.pi/L
-    INK="#333333"; RED="#c0392b"; BLU="#2f6db3"; GOLD="#c99a2e"; GRN="#2e8b57"; TEAL="#5aa6a6"; VIO="#7b4fa0"
-    t=np.linspace(0,2*np.pi,300); w=np.exp(2j*np.pi/3)
-    fig=plt.figure(figsize=(17,21))
-    def head(x,y,txt,sub,col=INK):
-        fig.text(x,y,txt,ha="center",va="top",fontsize=12,color=col); fig.text(x,y-0.0105,sub,ha="center",va="top",fontsize=9,color="0.4")
-    def band(y,txt): fig.text(0.5,y,txt,ha="center",va="top",fontsize=12.5,color=INK,style="italic")
-    def sep(y): fig.add_artist(Line2D([0.04,0.96],[y,y],color="0.85",lw=.8))
-    X3=(0.17,0.50,0.83)
-    fig.suptitle("One structure, seen at once",fontsize=15,y=0.995)
+    w=np.exp(2j*np.pi/3)
 
-    # ======== row 1: the third direction, on |z| = 1/2
-    band(0.975,"The torus and the third direction")
-    TRI=[("P",RED,0),("C",GRN,1),("F",BLU,2)]; R=0.5; V3=[R*w**k for k in range(3)]
+    # ======== row 1: the third direction, on |z| = 1/2 ========
+    R=0.5; V3=[R*w**k for k in range(3)]
     assert np.allclose([abs(v) for v in V3],0.5)
-    def clean3d(ax,lim,zl):
-        ax.set_xlim(-lim,lim); ax.set_ylim(-lim,lim); ax.set_zlim(-zl,zl); ax.set_axis_off(); ax.view_init(20,-120)
-    axT=fig.add_axes([0.01,0.795,0.32,0.155],projection="3d")
     def cliff(a,b):
         Xc=np.stack([np.cos(a),np.sin(a),np.cos(b),np.sin(b)])/np.sqrt(2); return Xc[:3]/(1-Xc[3])
     aa,bb=np.meshgrid(np.linspace(0,2*np.pi,40),np.linspace(0,2*np.pi,40)); Pc=cliff(aa,bb)
     assert np.allclose((np.hypot(Pc[0],Pc[1])-np.sqrt(2))**2+Pc[2]**2,1,atol=1e-9)
-    wv=np.linspace(0,2*np.pi,400); KK=dict(color="k",lw=0.35)
-    for c_ in np.linspace(0,2*np.pi,24,endpoint=False):
-        axT.plot(*cliff(wv,0*wv+c_),**KK); axT.plot(*cliff(0*wv+c_,wv),**KK)
-    axT.plot(*cliff(wv,0*wv+np.pi),color="k",lw=1.6); axT.plot(*cliff(0*wv,wv),color="k",lw=1.6,ls="--")
-    axT.set_xlim(-2.1,2.1); axT.set_ylim(-2.1,2.1); axT.set_zlim(-1.1,1.1); axT.set_box_aspect((1,1,2.2/4.2)); axT.set_axis_off(); axT.view_init(elev=28,azim=-58)
-    head(X3[0],0.955,"(a)  the torus","$T^2=\\mathbb{C}/M_{\\rm PCF}\\mathbb{Z}[i]$, $\\tau=i$: two cycles of equal length, $M$ (solid) and $Mi$ (dashed) (§11.1)")
-    ax=fig.add_axes([0.36,0.785,0.28,0.145],projection="3d")
-    for a_ in np.linspace(0,2*np.pi,24,endpoint=False): ax.plot([R*np.cos(a_)]*2,[R*np.sin(a_)]*2,[-1.2,1.2],color="k",lw=.35)
-    for g_ in np.linspace(-0.75,0.75,7):
-        ax.plot([g_,g_],[-0.75,0.75],[-phi*.75,phi*.75],color="k",lw=.3,alpha=.7); ax.plot([-0.75,0.75],[g_,g_],[phi*g_]*2,color="k",lw=.3,alpha=.7)
-    ax.plot(R*np.cos(t),R*np.sin(t),-1.2+0*t,"k",lw=1.0); ax.plot(R*np.cos(t),R*np.sin(t),phi*R*np.sin(t),"k",lw=1.6)
-    for nm,col,k in TRI:
-        v=V3[k]; ax.scatter([v.real],[v.imag],[-1.2],c=col,s=14,depthshade=False); ax.scatter([v.real],[v.imag],[phi*v.imag],c=col,s=40,depthshade=False)
-        ax.plot([v.real]*2,[v.imag]*2,[-1.2,phi*v.imag],color=col,lw=.7,ls=":"); ax.text(v.real*1.5,v.imag*1.5,phi*v.imag,nm,color=col,fontsize=11,weight="bold")
-    ax.view_init(elev=18,azim=-125); ax.set_box_aspect((1,1,1.4)); ax.set_axis_off()
-    head(X3[1],0.955,"(b)  the third direction","the ring $|z|=\\frac{1}{2}$ (I12) and the plane $z=\\varphi y$:\nthe triad lifts without a kernel (I15, §11.1)")
-    ax=fig.add_axes([0.70,0.80,0.26,0.15]); ax.set_aspect("equal"); ax.axis("off")
-    sq=R/2**.5
-    for i in range(-3,4): ax.plot([i*sq]*2,[-3*sq,3*sq],color="#9fd6d6",lw=.5); ax.plot([-3*sq,3*sq],[i*sq]*2,color="#9fd6d6",lw=.5)
-    ax.plot(R*np.cos(t),R*np.sin(t),"--",color="0.5",lw=.9)
-    ax.fill([v.real for v in V3],[v.imag for v in V3],color="#c9a0d6",alpha=.5); ax.plot([v.real for v in V3+[V3[0]]],[v.imag for v in V3+[V3[0]]],"k",lw=1.2)
-    ax.add_patch(plt.Rectangle((0,0),sq,sq,fill=False,ec="#1a8f8f",lw=2))
-    for nm,col,k in TRI:
-        v=V3[k]; ax.plot(v.real,v.imag,"o",color=col,ms=9)
-        ax.text(v.real+(.06 if k==0 else 0),v.imag+(.08 if k==1 else -.1 if k==2 else 0),f"{nm} ({120*k}°)",color=col,fontsize=9.5,weight="bold",ha="left" if k==0 else "center",va="center")
-    ax.set_xlim(-3.1*sq,3.1*sq); ax.set_ylim(-3.1*sq,3.1*sq)
-    head(X3[2],0.955,"(c)  from $120^\\circ$ to $90^\\circ$","the triangle of $\\mathbb{Z}[\\omega]$ and the square cell of $\\mathbb{Z}[i]$, $\\tau=i$ (I15, §11.1)")
-    sep(0.78)
 
-    # ======== row 2: from the diagonal to the face
-    band(0.7720,"From the diagonal to the face")
-    E=[(a,b) for a,b in itertools.combinations(list(itertools.product([0,1],repeat=3)),2) if sum(x!=y for x,y in zip(a,b))==1]
+    # ======== row 2: from the diagonal to the face ========
     def prj(d,up):
         d=np.array(d,float); d/=np.linalg.norm(d); up=np.array(up,float); a1=np.cross(up,d); a1/=np.linalg.norm(a1); a2=np.cross(d,a1)
         return lambda p: np.array([np.array(p,float)@a1,np.array(p,float)@a2])
-    def slerp(a,b,u):
-        a=np.array(a,float)/np.linalg.norm(a); b=np.array(b,float)/np.linalg.norm(b); o=math.acos(np.clip(a@b,-1,1)); return (math.sin((1-u)*o)*a+math.sin(u*o)*b)/math.sin(o)
-    AX=[RED,GRN,BLU]
-    def cubeview(ax,d,up,face=False):
-        f=prj(d,up); c=f((.5,.5,.5))
-        for a,b in E: A,Bq=f(a)-c,f(b)-c; ax.plot([A[0],Bq[0]],[A[1],Bq[1]],color="0.55",lw=1)
-        for e,col in zip(np.eye(3),AX): ax.annotate("",xy=f(e)-c,xytext=f((0,0,0))-c,arrowprops=dict(arrowstyle="-|>",color=col,lw=1.8))
-        if face:
-            q=[f(p)-c for p in [(0,0,1),(1,0,1),(1,1,1),(0,1,1)]]; ax.fill([p[0] for p in q],[p[1] for p in q],color="#1a8f8f",alpha=.18)
-        ax.set_xlim(-1.1,1.1); ax.set_ylim(-1.1,1.1)
-    d0=(1,1,1); d1=(1e-3,1e-3,1); up=(0,1,0); f=prj(d0,(0,0,1)); Pr=[f(e)-f((0,0,0)) for e in np.eye(3)]
+    d0=(1,1,1); f=prj(d0,(0,0,1)); Pr=[f(e)-f((0,0,0)) for e in np.eye(3)]
     assert np.allclose([math.degrees(math.acos(Pr[i]@Pr[j]/np.linalg.norm(Pr[i])/np.linalg.norm(Pr[j]))) for i,j in [(0,1),(1,2),(0,2)]],120)
     assert np.allclose([np.linalg.norm(p)**2 for p in Pr],2/3)
-    TT=["along $(1,1,1)$: axes at $120^\\circ$, $|\\cdot|^2=\\frac{2}{3}$","turning, $\\frac{1}{3}$","turning, $\\frac{2}{3}$","an axis faces us: the square face [R]","the cells from one corner, sides $M\\varphi^{\\sigma}$"]
-    W5=0.16; xs5=[0.035+i*0.19 for i in range(5)]
-    sides=[M*phi**s for s in range(6)]
-    for i in range(5):
-        ax=fig.add_axes([xs5[i],0.635,W5,0.11]); ax.set_aspect("equal"); ax.axis("off")
-        if i==0:
-            for p in itertools.product(range(-2,3),repeat=3):
-                q=f(p); ax.plot(*q,"o",color="0.3" if sum(p)%3 else RED,ms=2.4)
-            for e,col in zip(np.eye(3),AX): ax.annotate("",xy=f(e)*1.8,xytext=(0,0),arrowprops=dict(arrowstyle="-|>",color=col,lw=1.8))
-            ax.set_xlim(-2.4,2.4); ax.set_ylim(-2.4,2.4)
-        elif i<4: cubeview(ax,slerp(d0,d1,i/3) if i<3 else d1,up,face=(i==3))
-        else:
-            for s in range(6):
-                d=phi**s; ax.add_patch(plt.Rectangle((0,0),d,d,fill=False,ec="#1a8f8f",lw=1.1,alpha=0.35+0.11*s)); ax.text(d+.1,d,f"{sides[s]:.0f}",fontsize=7,color="0.35")
-                assert abs((L/(6*3**.5))*phi**s*M*phi**-s-math.pi)<1e-12
-            ax.set_xlim(-.4,12.5); ax.set_ylim(-.4,12.5)
-        fig.text(xs5[i]+W5/2,0.6270,TT[i],ha="center",va="top",fontsize=8.8,color="0.35")
-        if i<4: fig.text(xs5[i]+W5+0.015,0.6900,"→",fontsize=18,ha="center",va="center",color="0.45")
-    fig.text(0.5,0.6090,"(d)  the turn from the diagonal to the face is a reading [R]; the passage the paper proves is (c). The cell of level $\\sigma$ has side $M\\varphi^{\\sigma}$ and carries the phase $\\varepsilon_0M\\varphi^{2\\sigma}$ (phase_on_cell, §11.1)",ha="center",va="top",fontsize=9,color="0.4")
-    sep(0.5900)
+    # the cell of level sigma carries eps0 * phi^sigma times M phi^-sigma = pi
+    for s in range(6):
+        assert abs((L/(6*3**.5))*phi**s*M*phi**-s-math.pi)<1e-12
 
-    # ======== row 3: the cube that turns
-    band(0.5820,"Each dimension from the next one up: one cut and projection per step")
-    ax=fig.add_axes([0.05,0.3950,0.26,0.135])
+    # ======== row 3: the cube that turns ========
     pts=[(a,b) for a in range(-12,13) for b in range(-9,10)]
     X1=np.array([a+b*phi for a,b in pts]); X2=np.array([a+b*pb for a,b in pts])
-    k=(abs(X1)<12)&(abs(X2)<4); ax.plot(X1[k],X2[k],".",color="0.65",ms=3)
-    xs=np.linspace(-12,12,2000)
-    for s_ in (1,-1):
-        with np.errstate(divide="ignore"): yv=s_/xs
-        yv[abs(yv)>4]=np.nan; ax.plot(xs,yv,color=RED,lw=.9,ls="-" if s_==1 else "--")
+    k=(abs(X1)<12)&(abs(X2)<4)
     for n in range(-4,6):
         x,y=phi**n,(pb)**n; assert abs(x*y-(-1)**n)<1e-9
-        if abs(x)<12 and abs(y)<4: ax.plot(x,y,"o",mfc="none",mec=RED,ms=6); ax.text(x+.2,y+.15,f"$\\varphi^{{{n}}}$",fontsize=7,color=RED)
-    ax.axhspan(-1,phi-1,color=BLU,alpha=.12); win=k&(X2>=-1)&(X2<phi-1); ax.plot(X1[win],X2[win],"o",color=BLU,ms=3)
-    ch=np.sort(X1[win]); ax.plot(ch,0*ch-3.6,"|",color=BLU,ms=9); ax.axhline(-3.6,color=BLU,lw=.6)
+    win=k&(X2>=-1)&(X2<phi-1)
+    ch=np.sort(X1[win])
     gaps=set(np.round(np.diff(ch),6)); assert gaps<= {round(1.0,6),round(phi,6)} and len(gaps)==2
-    ax.set_xlim(-12,12); ax.set_ylim(-4,4); ax.set_xlabel("$x=a+b\\varphi$",fontsize=8,color="0.35"); ax.set_ylabel("$\\bar x=a+b\\bar\\varphi$",fontsize=8,color="0.35")
-    ax.tick_params(labelsize=7,colors="0.5")
-    for s_ in ax.spines.values(): s_.set_color("0.75")
-    head(X3[0],0.5580,"(e)  1D from 2D","$a+b\\varphi\\mapsto(x,\\bar x)$, units on $x\\bar x=\\pm1$;\nthe window $[-1,\\varphi-1)$ gives the Fibonacci chain, gaps $1$ and $\\varphi$ (§11.1)")
-    ax=fig.add_axes([0.35,0.3800,0.30,0.17],projection="3d"); n3=np.ones(3)/3**.5
-    LAY=[VIO,TEAL,GOLD]
+    # 2D from 3D: Z^3 along its diagonal projects to Z[omega]
+    n3=np.ones(3)/3**.5
+    e1=np.array([1,-1,0])/2**.5; e2=np.cross(n3,e1)
     P3=np.array(list(itertools.product(range(3),repeat=3)),float); c0=np.array([-1.3]*3)
-    e1=np.array([1,-1,0])/2**.5; e2=np.cross(n3,e1); uu,vv=np.meshgrid([-2.4,2.4],[-2.4,2.4])
-    ax.plot_surface(*(c0[:,None,None]+uu*e1[:,None,None]+vv*e2[:,None,None]),color=TEAL,alpha=.12,lw=0)
     proj=P3-((P3-c0)@n3)[:,None]*n3; sh={}
     for p,q in zip(P3,proj):
-        col=LAY[int(p.sum())%3]; ax.scatter(*p,c=col,s=14,depthshade=False); ax.plot(*np.c_[p,q],color=col,lw=.3,alpha=.4); sh.setdefault(tuple(np.round(q,9)),[]).append(p)
-    for q,ps in sh.items(): ax.scatter(*q,c=LAY[int(ps[0].sum())%3],s=8+12*len(ps),edgecolor="k" if len(ps)>1 else "none",depthshade=False)
+        sh.setdefault(tuple(np.round(q,9)),[]).append(p)
     assert len(sh)==19 and all(len({int(p.sum())%3 for p in ps})==1 for ps in sh.values())
     for Lc in (3,5,7):
         pp=np.array(list(itertools.product(range(Lc),repeat=3)),float); assert len({tuple(np.round([p@e1,p@e2],9)) for p in pp})==3*Lc*Lc-3*Lc+1
-    ax.plot([-1.3,2.8],[-1.3,2.8],[-1.3,2.8],"k",lw=1.3); ax.text(2.9,2.9,2.9,"$(1,1,1)$",fontsize=8)
-    ax.view_init(14,-20); ax.set_axis_off(); ax.set_box_aspect((1,1,1))
-    head(X3[1],0.5580,"(f)  2D from 3D","$\\mathbb{Z}^3$ along its diagonal gives $\\mathbb{Z}[\\omega]$; layers $i+j+k$ mod 3;\noutlined: the kernel $\\mathbb{Z}(1,1,1)$")
-    fig.text(X3[1],0.3770,"$\\{0,\\dots,L-1\\}^3$ casts $3L^2-3L+1$ shadows: $19, 61, 127$ for $L=3,5,7$ (cube_diagonal_kernel, §11.1)",ha="center",va="top",fontsize=9,color="0.4")
-    ax=fig.add_axes([0.69,0.3800,0.28,0.17],projection="3d")
+    # the icosahedron (0, +-1, +-phi) and its edges
     V=[]
     for s1 in (1,-1):
         for s2 in (1,-1): p=(0,s1,s2*phi); V+=[p,(p[1],p[2],p[0]),(p[2],p[0],p[1])]
     V=np.array(V,float); assert np.allclose((V**2).sum(1),phi+2) and phi+2<4
     Ed=[(i,j) for i,j in itertools.combinations(range(12),2) if abs(((V[i]-V[j])**2).sum()-4)<1e-9]; assert len(Ed)==30
-    for i,j in Ed: ax.plot(*np.c_[V[i],V[j]],color="#7a5c2e",lw=.8)
-    ax.scatter(*V.T,c="#6a3d9a",s=28,depthshade=False)
     for ii in range(3):
         Rr=np.array([[0,1,phi],[0,-1,phi],[0,-1,-phi],[0,1,-phi]],float)[:,[(0-ii)%3,(1-ii)%3,(2-ii)%3]]
         s1_,s2_=np.linalg.norm(Rr[0]-Rr[1]),np.linalg.norm(Rr[1]-Rr[2]); assert abs(max(s1_,s2_)/min(s1_,s2_)-phi)<1e-12
-        ax.add_collection3d(Poly3DCollection([Rr],facecolor=LAY[ii],alpha=.2,edgecolor=LAY[ii]))
-    ax.view_init(18,30); ax.set_axis_off(); ax.set_box_aspect((1,1,1))
-    head(X3[2],0.5580,"(g)  3D","the icosahedron $(0,\\pm1,\\pm\\varphi)$ and its cyclic permutations;\n$|v|^2=\\varphi+2<4$: kissing $12$ (§11.1)")
-    sep(0.3550)
 
-    # ======== row 4: the tiles and the throat from the side
-    band(0.347,"The rings of the throat: each level one ring, tiled at its boundary")
+    # ======== row 4: the tiles and the throat from the side ========
     words=["AAB"]
     for _ in range(12): words.append("".join({"A":"AB","B":"A"}[c] for c in words[-1]))
     def bd(wd):
@@ -1570,61 +1425,10 @@ def seccion_44():
         assert abs(math.pi*(A_/phi**2+B_/phi**3)-math.pi*phi**s_)<1e-9
         if s_<12: assert all(np.min(abs(bd(words[s_+1])-x))<1e-12 for x in bd(words[s_]))
     NL=7; LEV=list(range(NL))
-    # (h) the tiles, sigma=6 at the top ... sigma=0 at the bottom
-    axH=fig.add_axes([0.04,0.085,0.27,0.205]); axH.axis("off")
-    yrow=lambda s_: s_*1.0
-    for s_ in LEV:
-        b_=bd(words[s_])
-        for i,c in enumerate(words[s_]): axH.add_patch(plt.Rectangle((b_[i],yrow(s_)),b_[i+1]-b_[i],.55,fc="0.78" if c=="A" else "white",ec="k",lw=.45))
-        if s_<NL-1:
-            b1=bd(words[s_+1])
-            for i in range(len(words[s_])):
-                for j in range(len(words[s_+1])):
-                    if b_[i]-1e-12<=b1[j] and b1[j+1]<=b_[i+1]+1e-12: axH.plot([(b_[i]+b_[i+1])/2,(b1[j]+b1[j+1])/2],[yrow(s_)+.55,yrow(s_+1)],color="0.6",lw=.35)
-        A_,B_=words[s_].count("A"),words[s_].count("B")
-        axH.text(-0.03,yrow(s_)+.27,f"$\\sigma={s_}$",ha="right",va="center",fontsize=9,color="0.25")
-        axH.text(1.03,yrow(s_)+.27,f"{A_+B_} = {A_}+{B_}",ha="left",va="center",fontsize=8.5,color="0.3")
-    axH.set_xlim(-0.16,1.3); axH.set_ylim(-0.2,NL-0.3)
-    head(0.17,0.322,"(h)  the ring of each level, unrolled","$AAB$, then $A\\to AB$, $B\\to A$; tiles $=$ long $+$ short; lines join a tile to its daughters;\ndotted: each strip to its ring in (i)")
-    # (i) the throat, levels 0..6, with the long tiles shaded on the front face
-    axG=fig.add_axes([0.40,0.085,0.57,0.21]); axG.set_axis_off()
-    def hgt(r): return np.arccosh(1/r)-np.sqrt(1-r*r)
     top=NL-1; rad=lambda s_: phi**(s_-top)
-    Lh=hgt(rad(0)); xpos=lambda s_: Lh-hgt(rad(s_))
-    r=np.geomspace(rad(0)*0.8,1,600); Xg=Lh-hgt(r)
-    ee=0.16
-    for s_ in LEV[:-1]:
-        b_=bd(words[s_]); ss=np.linspace(s_,s_+1,25); rr=rad(ss); xx=np.array([xpos(q) for q in ss])
-        for i,c in enumerate(words[s_]):
-            th=np.linspace(2*np.pi*b_[i],2*np.pi*b_[i+1],30)
-            if c=="A":
-                fr=np.sin(th)>0
-                if fr.sum()>1:
-                    tf=th[fr]
-                    X0=xpos(s_)+ee*rad(s_)*np.sin(tf); Y0=rad(s_)*np.cos(tf); X1=xpos(s_+1)+ee*rad(s_+1)*np.sin(tf[::-1]); Y1=rad(s_+1)*np.cos(tf[::-1])
-                    axG.fill(np.r_[X0,X1],np.r_[Y0,Y1],color="0.82",lw=0,zorder=1)
-            a0=2*np.pi*b_[i]
-            if math.sin(a0)>0: axG.plot(xx+ee*rr*math.sin(a0),rr*math.cos(a0),color="k",lw=.4,zorder=2)
-    axG.plot(Xg,r,"k",lw=1.0); axG.plot(Xg,-r,"k",lw=1.0)
-    tb=np.linspace(0,np.pi,100)
     for s_ in LEV:
-        rr=rad(s_); xs_=xpos(s_); assert s_==0 or abs(rr/rad(s_-1)-phi)<1e-12
-        axG.plot(xs_+ee*rr*np.sin(tb),rr*np.cos(tb),c="k",lw=1.3,zorder=3); axG.plot(xs_-ee*rr*np.sin(tb),rr*np.cos(tb),c="k",lw=.6,ls="--",zorder=3)
-        axG.text(xs_,-1.16,f"{s_}",ha="center",fontsize=10,color="0.25")
-    axG.text(Lh/2,-1.36,"level $\\sigma$",ha="center",fontsize=10,color="0.4")
-    axG.set_xlim(-0.05,Lh+0.3); axG.set_ylim(-1.42,1.12)
-    head(0.685,0.322,"(i)  the throat, assembled","$e^{A}=\\varphi^{\\sigma}$, rings in the ratio $\\varphi$; each ring carries the tiles of (h), $S=\\pi(A/\\varphi^{2}+B/\\varphi^{3})=\\pi\\varphi^{\\sigma}$ exactly")
-    fig.canvas.draw()
-    FH=lambda xy: fig.transFigure.inverted().transform(axH.transData.transform(xy))
-    FG=lambda xy: fig.transFigure.inverted().transform(axG.transData.transform(xy))
-    for s_ in LEV:
-        p=FH((1.27,yrow(s_)+.27)); q=FG((xpos(s_),rad(s_)))
-        fig.add_artist(Line2D([p[0],q[0]],[p[1],q[1]],color="0.7",lw=.6,ls=":"))
-    fig.text(0.5,0.072,"Drawn $\\sigma=0,\\dots,6$: $3,5,8,13,21,34,55$ tiles. The same substitution continues to the bottom $\\sigma_{\\rm IR}=12$, where the ring has $987=610+377$ tiles (§11.1).",ha="center",fontsize=9.5,color="0.35")
-    fig.text(0.5,0.05,"Colours are conventions of the drawing: P, C, F and the axes $e_1,e_2,e_3$ in red, green, blue; the layers of (f) and the rectangles of (g) in violet, teal, gold.",ha="center",fontsize=9,color="0.4")
-    fig.savefig("fig_background.pdf",bbox_inches="tight"); plt.close(fig)
-    plt.rcParams.update(matplotlib.rcParamsDefault)
-    print("background figure: ok")
+        rr=rad(s_); assert s_==0 or abs(rr/rad(s_-1)-phi)<1e-12
+    print("background statements: all checks ok")
 
 SECCIONES.append((44, 'The Background figure: one structure seen at once (Figure 1)', seccion_44))
 

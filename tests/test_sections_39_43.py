@@ -14,6 +14,7 @@ import numpy as np
 import pytest
 
 from kkgt.constants import LN_PHI, M_PCF, PHI
+from kkgt.harness import verify_figure_artifact
 
 
 # ══════════════════════════════════════════════════════════ section 39 ══
@@ -66,7 +67,8 @@ class TestSection39FibonacciTiling:
     @pytest.mark.figure
     def test_section39_draws_figure_four(self, run_section):
         run = run_section(39)
-        assert "fig_throat_tiling.pdf" in run.figures
+        # section 39 checks figure 4 but no longer draws it (SPEC-002 §1.1)
+        verify_figure_artifact("fig_throat_tiling.pdf")
         run.has("S = pi(A/phi^2+B/phi^3) exact; boundaries nested")
 
 
@@ -262,7 +264,8 @@ class TestSection41FiveRegularTilings:
     def test_section41_prints_its_conclusions(self, run_section):
         """Full stdout contract of the slow section 41 (figure 5)."""
         run = run_section(41)
-        assert "fig_tilings_strip.pdf" in run.figures
+        # section 41 checks figure 5 but no longer draws it (SPEC-002 §1.1)
+        verify_figure_artifact("fig_tilings_strip.pdf")
         run.has("{3,7} by shared vertices: [1, 15, 45, 120, 315, 825, 2160]")
         run.has("0.999902 (Hurwitz: phi is the worst approximant)")
         run.has("boundary of a level tangent to edges: only {6,10}, "

@@ -14,6 +14,7 @@ from __future__ import annotations
 import pytest
 
 from kkgt.constants import FIGURES, SLOW_SECTIONS
+from kkgt.harness import verify_figure_artifact
 
 # section -> the stdout line that pins its headline number.
 # Sources: the captured stdout of each section, cross-checked against the
@@ -62,7 +63,7 @@ MARKERS = {
     41: "{5,4} with qubits: 1.4907 S",
     42: "tau(12) = 0.2107",
     43: "14042 collisions",
-    44: "background figure: ok",
+    44: "background statements: all checks ok",
     45: "N bound: 3pi/(Lambda G_N) with G_N=1/2 = 6pi/Lambda = S_obs = pi phi^583.877",
     46: "the window weight is e^(-pi tan eta_n); it crosses 1/2 at n = 1.5702",
     47: "lado del pentágono: cosh a = phi, sinh a = phi^(1/2), a = 1.061275",
@@ -86,7 +87,9 @@ def test_section_runs_and_prints_its_number(run_section, n):
     run = run_section(n)
     run.has(MARKERS[n])
     if n in FIGURES:
-        assert FIGURES[n] in run.figures, (n, run.figures)
+        # The section writes nothing any more (SPEC-002 §1.1): the figure
+        # is an artifact of `pnpm run figures`, pinned by its bytes.
+        verify_figure_artifact(FIGURES[n])
 
 
 def test_all_sections_covered():
