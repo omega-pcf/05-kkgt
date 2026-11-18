@@ -1,4 +1,4 @@
-"""Deep numeric tests for sections 45 and 46 of kkgt.sections.
+"""Deep numeric tests for sections 45 and 46.
 
 Section 45 is the (F10) block: the observer level along LCDM with the
 Planck values, the compression limit where 4 pi z^2/(4 G_N) meets pi z,
@@ -9,8 +9,10 @@ the antipodal map J of the base, the SU(2) transitivity of the fibres and
 the window weight that crosses 1/2 at n = 1.5702.
 
 Everything the sections assert, these tests recompute from the closed
-form; the numbers that only exist inside a section are read from its
-stdout with the width of the printed precision as tolerance.
+form, and ``observer_level_statements`` / ``hopf_foliation_statements``
+carry the two sections' own bodies into this module (SPEC-002 §1): every
+number a section printed is asserted on its value, at the width of that
+print, and no test here reads a section's stdout.
 """
 
 from __future__ import annotations
@@ -20,14 +22,13 @@ import math
 import numpy as np
 import pytest
 
-from kkgt.constants import LN_PHI, PHI
+from kkgt.constants import LN_PHI, MPC_M, PHI
 
 # Planck 2018 values section 45 uses: t_P = 5.391247e-44 s, the observer
-# length l = sqrt2 t_P, 1 Mpc = 3.0856775814913673e22 m, H0 = 67.36 km/s/Mpc,
+# length l = sqrt2 t_P, 1 Mpc = kkgt.constants.MPC_M, H0 = 67.36 km/s/Mpc,
 # Omega_m = 0.3153, Omega_r = 9.0e-5 (the section prints the levels they give).
 _T_PLANCK_S = 5.391247e-44
-_MPC_M = 3.0856775814913673e22
-_H0 = 67.36e3 / _MPC_M
+_H0 = 67.36e3 / MPC_M
 _OM, _OR = 0.3153, 9.0e-5
 _OL = 1 - _OM - _OR
 _L = math.sqrt(2) * _T_PLANCK_S          # the observer length
@@ -36,6 +37,130 @@ _L = math.sqrt(2) * _T_PLANCK_S          # the observer length
 def _level(hubble: float) -> float:
     """sigma = log_phi(6 / (3 (H l)^2)), the level of section 45."""
     return math.log(6 / (3 * (hubble * _L) ** 2)) / LN_PHI
+
+
+# ═══════════════════════════ section 45's own statements (migrated) ════
+def observer_level_statements() -> None:
+    """Every statement section 45 checked for the (F10) block.
+
+    Migrated from the section itself (SPEC-002 §1): the body used to run
+    behind the section-run fixture, and this module read ``asymptotic
+    level 583.88`` and nine more lines back from its stdout.  Each of
+    those numbers now fails here, on its value, at the width of the print
+    the section gave it; every assertion the section already made keeps
+    its own tolerance, unchanged.  The Planck values are the module's,
+    the golden ratio, its logarithm and the megaparsec come from
+    ``kkgt.constants``.
+    """
+    def cell(level: float) -> float:
+        """z = phi^sigma, the cell of level sigma."""
+        return PHI ** level
+
+    def entropy(level: float) -> float:
+        """S = pi phi^sigma, the entropy of that cell."""
+        return math.pi * PHI ** level
+
+    def cosmological(level: float | np.ndarray) -> float | np.ndarray:
+        """Lambda = 6 phi^-sigma: constant along the tower (w = -1)."""
+        return 6 * PHI ** -level
+
+    def horizon_ratio(level: float) -> float:
+        """H l = sqrt(Lambda/3), the horizon in Planck units."""
+        return math.sqrt(cosmological(level) / 3)
+
+    # ── the horizon level in LCDM, with the Planck values ─────────────
+    grid = np.logspace(-34, 4, 4000)
+    hubble = _H0 * np.sqrt(_OR * grid ** -4 + _OM * grid ** -3 + _OL)
+    levels = np.array([_level(h) for h in hubble])
+    asymptotic = _level(_H0 * math.sqrt(_OL))
+    today = _level(_H0)
+    assert np.all(np.diff(levels) > -1e-9) and abs(levels[-1] - asymptotic) < 1e-2
+    assert abs(asymptotic - 583.877) < 5e-3 and abs(today - 583.090) < 5e-3
+    # printed: "asymptotic level {asymptotic:.2f}; horizon of today {today:.2f}"
+    assert asymptotic == pytest.approx(583.88, abs=5e-3)
+    assert today == pytest.approx(583.09, abs=5e-3)
+    assert np.allclose(3 * (hubble * _L) ** 2 * np.pi * PHI ** levels, 6 * np.pi)
+    # printed: "N bound: 3pi/(Lambda G_N) ... = S_obs = pi phi^{asymptotic:.3f}"
+    assert asymptotic == pytest.approx(583.877, abs=5e-4)
+
+    # ── the compression limit: 4 pi z^2/(4 G_N) meets pi z ────────────
+    compression = math.log(2) / LN_PHI       # sigma where the two meet
+    zz = np.linspace(0.01, 3, 30000)
+    crossing = zz[np.argmin(np.abs(2 * np.pi * zz ** 2 - np.pi * zz))]
+    assert abs(crossing - 0.5) < 1e-3
+    assert np.isclose(cell(-compression), 0.5)
+    assert np.isclose(entropy(-compression), np.pi / 2)
+    assert np.all(2 * np.pi * zz[zz < 0.5] ** 2 < np.pi * zz[zz < 0.5])
+    # printed: "compression limit: ... sigma = {-compression:.4f}, S = pi/2"
+    assert -compression == pytest.approx(-1.4404, abs=5e-5)
+    # the first expansion doubles the radius: half a cell becomes a cell
+    assert np.isclose(cell(0) / cell(-compression), 2)
+    assert np.isclose(entropy(0), 2 * entropy(-compression))
+    # printed: "a doubling is not a bit: Delta S = {bits:.3f} bits"
+    bits = (entropy(0) - entropy(-compression)) / math.log(2)
+    assert bits == pytest.approx(2.266, abs=5e-4)
+
+    # ── the constant of the first patch and that of the throat ────────
+    g_n = 0.5
+    assert np.isclose(3 * np.pi / (g_n * entropy(0)), 6)
+    assert np.isclose(4 * 3 / 2, 6)
+
+    def sphere_area(dimension: float) -> float:
+        """Omega_k = 2 pi^((k+1)/2) / Gamma((k+1)/2), the k-sphere area."""
+        return 2 * math.pi ** ((dimension + 1) / 2) / math.gamma((dimension + 1) / 2)
+
+    shared = [
+        d for d in range(3, 30)
+        if np.isclose(
+            (d - 1) * (d - 2) / 2
+            * (sphere_area(d - 2) / (4 * g_n * math.pi)) ** (2 / (d - 2)),
+            d * (d - 1) / 2,
+        )
+    ]
+    # printed: "with patch and throat at the same d, only d = 4"
+    assert shared == [4]
+
+    # ── where the two constants meet, and the weight of the window ────
+    level_grid = np.linspace(-5, 600, 200001)
+    equal_level = level_grid[np.argmin(np.abs(cosmological(level_grid) - 6))]
+    assert abs(equal_level) < 1e-2          # printed: "... is sigma = 0"
+    # printed: "H(0) l = {horizon_ratio(0):.4f}, throat radius 1"
+    assert horizon_ratio(0) == pytest.approx(math.sqrt(2), abs=5e-5)
+
+    def window_weight(n: float) -> float:
+        """w = e^{-pi phi^-2n}, the weight of the window at level n."""
+        return np.exp(-np.pi * PHI ** (-2.0 * n))
+
+    assert window_weight(1) < 0.5 < window_weight(2)
+    assert horizon_ratio(1) > 1 > horizon_ratio(2)
+
+    # printed: "3H^2(0)/Lambda_obs = phi^583.79 = 10^{pi_cells:.2f} pi cells"
+    pi_cells = 583.79 * math.log10(PHI)
+    assert abs(pi_cells - 122.0) < 0.01
+    assert pi_cells == pytest.approx(122.00, abs=5e-3)
+    assert np.isclose(cosmological(583.79) * entropy(583.79), 6 * entropy(0))
+
+    # ── the half: the causal chart and its static patch ───────────────
+    rng = np.random.default_rng(45)
+    sample = 200000
+    time = rng.uniform(-math.pi / 2, math.pi / 2, sample) * 0.999
+    chi = rng.uniform(0, math.pi, sample)
+    tau = np.arcsinh(np.tan(time))
+    x0, x4 = np.sinh(tau), np.cosh(tau) * np.cos(chi)
+    future = chi < time + math.pi / 2
+    past = chi < math.pi / 2 - time
+    assert np.array_equal(x0 + x4 > 0, future)
+    assert np.array_equal(x4 - x0 > 0, past)
+    assert np.array_equal(future & past, chi < math.pi / 2 - np.abs(time))
+    for length, instant, radius in [(1, 0.3, 2), (2.5, -1, 0.7), (0.4, 3, 5)]:
+        plane = (
+            length * np.sinh(instant / length)
+            + radius ** 2 / (2 * length) * np.exp(instant / length)
+        ) + (
+            length * np.cosh(instant / length)
+            - radius ** 2 / (2 * length) * np.exp(instant / length)
+        )
+        assert np.isclose(plane, length * np.exp(instant / length))
 
 
 # ══════════════════════════════════════════════════════════ section 45 ══
@@ -143,26 +268,120 @@ class TestSection45ObserverLevel:
         assert left == pytest.approx(l_ * math.exp(t_ / l_), abs=1e-9)
         assert left > 0
 
-    def test_section45_prints_the_planck_levels(self, run_section):
-        """Contract: the stdout carries the numbers the (F10) item quotes."""
-        run = run_section(45)
-        run.value(r"asymptotic level ([\d.]+);", want=583.88, tol=5e-3,
-                  label="s_inf")
-        run.value(r"horizon of today ([\d.]+),", want=583.09, tol=5e-3,
-                  label="s_hoy")
-        run.value(r"= pi phi\^([\d.]+)", want=583.877, tol=5e-4,
-                  label="N bound")
-        run.value(r"sigma = (-?[\d.]+), S = pi/2", want=-1.4404, tol=5e-5,
-                  label="compression limit")
-        run.value(r"Delta S = ([\d.]+) bits", want=2.266, tol=5e-4,
-                  label="doubling in bits")
-        run.value(r"H\(0\) l = ([\d.]+),", want=math.sqrt(2), tol=5e-5,
-                  label="H(0) l")
-        run.has("the level where they are equal is sigma = 0")   # flip_level
-        run.value(r"= 10\^([\d.]+) pi cells", want=122.00, tol=5e-3,
-                  label="pi cells")
-        run.has("only d = 4")
-        run.has("(planar_patch_positive): ok")
+    def test_section45s_planck_levels_hold(self):
+        """The numbers the (F10) item quotes, asserted on their values.
+
+        This test used to run the section through the section-run fixture
+        and read ``asymptotic level 583.88`` and nine more lines back
+        from its stdout; the whole body of the section now lives in
+        ``observer_level_statements`` and fails here, on a value, with
+        pytest's assertion rewriting (SPEC-002 §1).
+        """
+        observer_level_statements()
+
+
+# ═══════════════════════════ section 46's own statements (migrated) ════
+def hopf_foliation_statements() -> None:
+    """Every statement section 46 checked for the window tori.
+
+    Migrated from the section itself (SPEC-002 §1): the body used to run
+    behind the section-run fixture, and this module read the four lines
+    of the P7 block back from its stdout.  Those lines carried one
+    number, the crossing of the window weight at 1/2, now asserted on its
+    value at the width of the print; every assertion the section already
+    made keeps its own tolerance, unchanged.
+    """
+    rng = np.random.default_rng(46)
+
+    def torus(eta: float, alpha: float, beta: float) -> np.ndarray:
+        """A point of the torus of modulus i tan eta."""
+        return np.array([np.cos(eta) * np.exp(1j * alpha),
+                         np.sin(eta) * np.exp(1j * beta)])
+
+    levels = np.arange(-12, 13)
+    eta = np.arctan(PHI ** (-2.0 * levels))
+    assert np.allclose(np.tan(eta), PHI ** (-2.0 * levels))
+
+    e, alpha, beta, step = 0.4, 1.1, 2.3, 1e-6
+
+    def inner(u: np.ndarray, v: np.ndarray) -> float:
+        """The real inner product of the two directions of the torus."""
+        return float(np.real(np.vdot(u, v)))
+
+    d_alpha = (torus(e, alpha + step, beta) - torus(e, alpha - step, beta)) / 2 / step
+    d_beta = (torus(e, alpha, beta + step) - torus(e, alpha, beta - step)) / 2 / step
+    assert np.allclose(
+        [inner(d_alpha, d_alpha), inner(d_beta, d_beta), inner(d_alpha, d_beta)],
+        [np.cos(e) ** 2, np.sin(e) ** 2, 0], atol=1e-8,
+    )
+    assert np.allclose(np.pi / 2 - eta, eta[::-1])
+    assert np.isclose(eta[levels == 0][0], np.pi / 4)
+    # the Clifford circle of every torus, and the ratio R/r from z1 = 0
+    for n, angle in zip(levels, eta):
+        circle = np.linspace(0, 2 * np.pi, 50)
+        sine = np.sin(angle)
+        rho = np.cos(angle) / (1 - sine * np.sin(circle))
+        height = sine * np.cos(circle) / (1 - sine * np.sin(circle))
+        assert np.allclose((rho - 1 / np.cos(angle)) ** 2 + height ** 2,
+                           np.tan(angle) ** 2, rtol=1e-9)
+        assert np.isclose(1 / np.sin(angle), np.sqrt(1 + PHI ** (4.0 * n)))
+
+    # ── J: the antipode of the base, the mirror of the tori ───────────
+    z = rng.normal(size=2) + 1j * rng.normal(size=2)
+    z /= np.linalg.norm(z)
+
+    def hopf(map_: np.ndarray) -> np.ndarray:
+        """The base point w0/w1 of the Hopf fibre of ``map_``."""
+        return map_[..., 0] / map_[..., 1]
+
+    def antipode(map_: np.ndarray) -> np.ndarray:
+        """J = (-conj w1, conj w0): J^2 = -1, J^4 = 1."""
+        return np.array([-np.conj(map_[1]), np.conj(map_[0])])
+
+    assert np.allclose(-z, np.exp(1j * np.pi) * z)
+    assert np.isclose(hopf(-z), hopf(z))          # the half turn is invisible
+    assert np.isclose(hopf(antipode(z)), -1 / np.conj(hopf(z)))
+    assert np.allclose(antipode(antipode(z)), -z)
+    assert np.allclose(antipode(antipode(antipode(antipode(z)))), z)
+    assert np.isclose(abs(antipode(torus(e, alpha, beta))[0]), np.sin(e))
+
+    # ── homogeneity, the tori and the axis ────────────────────────────
+    for _ in range(100):
+        p = rng.normal(size=2) + 1j * rng.normal(size=2)
+        p /= np.linalg.norm(p)
+        q = rng.normal(size=2) + 1j * rng.normal(size=2)
+        q /= np.linalg.norm(q)
+        a_mat = np.array([[p[0], -p[1].conj()], [p[1], p[0].conj()]])
+        b_mat = np.array([[q[0], -q[1].conj()], [q[1], q[0].conj()]])
+        u = b_mat @ np.linalg.inv(a_mat)
+        assert np.allclose(u @ p, q)
+        assert np.allclose(u.conj().T @ u, np.eye(2))
+
+    e0 = 0.5
+    aa = rng.uniform(0, 2 * np.pi, 500)
+    bb = rng.uniform(0, 2 * np.pi, 500)
+    parallel = np.stack([np.cos(e0) * np.exp(1j * aa),
+                         np.sin(e0) * np.exp(1j * bb)], -1)
+    assert np.allclose(abs(hopf(parallel)), 1 / np.tan(e0))
+    rotation = np.array([[np.cos(.7), -np.sin(.7) * np.exp(-.3j)],
+                         [np.sin(.7) * np.exp(.3j), np.cos(.7)]])
+    rotated = parallel @ rotation.T
+    assert np.std(abs(rotated[:, 0])) > 1e-2
+    assert np.allclose(abs(hopf(rotated @ np.linalg.inv(rotation).T)), 1 / np.tan(e0))
+    diagonal = np.diag([np.exp(.4j), np.exp(-1.1j)])
+    assert np.allclose(abs((parallel @ diagonal.T)[:, 0]), np.cos(e0))
+
+    # ── the weight of the window ──────────────────────────────────────
+    def window_weight(n: float | np.ndarray) -> float | np.ndarray:
+        """w = e^{-pi phi^-2n}, the weight of the window at level n."""
+        return np.exp(-np.pi * PHI ** (-2.0 * n))
+
+    crossing = 0.5 * math.log(math.pi / math.log(2)) / math.log(PHI)
+    assert np.allclose(window_weight(levels), np.exp(-np.pi * np.tan(eta)))
+    assert abs(crossing - 1.5702) < 1e-4
+    # printed: "it crosses 1/2 at n = {crossing:.4f}"
+    assert crossing == pytest.approx(1.5702, abs=5e-5)
+    assert np.exp(-np.pi * PHI ** (-2.0 * crossing)) == pytest.approx(0.5, abs=1e-12)
 
 
 # ══════════════════════════════════════════════════════════ section 46 ══
@@ -261,11 +480,12 @@ class TestSection46HopfFoliation:
         assert abs(n12 - 1.5702) < 1e-4
         assert np.exp(-np.pi * PHI ** (-2.0 * n12)) == pytest.approx(0.5, abs=1e-12)
 
-    def test_section46_prints_the_window_tori(self, run_section):
-        """Contract: the stdout carries the four lines of the P7 block."""
-        run = run_section(46)
-        run.has("flat tori of modulus i tan eta, tan eta_n = phi^-2n")
-        run.has("J^2 = -1, J^4 = 1; on the base, the antipode of W10")
-        run.has("SU(2) takes any fibre to any other")
-        run.value(r"it crosses 1/2 at n = ([\d.]+)", want=1.5702, tol=5e-5,
-                  label="window weight")
+    def test_section46s_window_tori_hold(self):
+        """The four lines of the P7 block, asserted on their values.
+
+        This test used to run the section through the section-run fixture
+        and read those four lines back from its stdout; the whole body of
+        the section now lives in ``hopf_foliation_statements`` and fails
+        here, on a value, with pytest's assertion rewriting (SPEC-002 §1).
+        """
+        hopf_foliation_statements()
