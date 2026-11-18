@@ -1,10 +1,10 @@
 """Constants shared by the tests of the manuscript.
 
 Every value here is either a closed form (golden ratio, M_PCF, ...), a
-number ``kkgt.sections`` prints and ``main.tex`` cites, or a physical
-constant the package and the tests both need; the comment on each line
-records the section that produces it, so the section->test mapping of the
-suite stays auditable.  Constants with two live definitions used to be
+number the manuscript prints and ``main.tex`` cites, or a physical
+constant the tests need; the comment on each line records the section
+that produces it, so the section->test mapping of the suite stays
+auditable.  Constants with two live definitions used to be
 re-typed per file -- the tau mass and the CODATA values below are now
 single-sourced here (SEC-001, layer 1).
 """

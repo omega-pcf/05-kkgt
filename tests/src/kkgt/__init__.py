@@ -1,13 +1,15 @@
 """Test-support package for the manuscript's suite (kkgt = KK golden throat).
 
 Lives in ``tests/src/kkgt`` (same layout as ``tests/src/cw6`` in
-03-crystalline-worldsheet).  Three modules:
+03-crystalline-worldsheet).  Two modules:
 
-* ``kkgt.sections`` -- the computation of the note: forty-three numbered
-  sections registered in ``SECCIONES``, run one at a time by the suite;
-* ``kkgt.constants`` -- closed forms and the numbers the sections print;
-* ``kkgt.harness`` -- runs one section in a temporary directory, captures
-  its stdout and reports expected/got/diff instead of a bare ``False``.
+* ``kkgt.constants`` -- closed forms and the numbers the tests assert;
+* ``kkgt.harness`` -- generic utilities: the repository root, the
+  committed figure artifacts and their byte pin, and the single origin
+  of the Planck-Lambda formula.
+
+There is no computation module: each claim test owns the code that
+produces its numbers (SPEC-002).
 """
 
 from kkgt.constants import (  # noqa: F401
@@ -21,12 +23,7 @@ from kkgt.constants import (  # noqa: F401
     PHI_BAR,
     SLOW_SECTIONS,
 )
-from kkgt.harness import (  # noqa: F401
-    REPO_ROOT,
-    SectionRun,
-    load_sections,
-    run_section,
-)
+from kkgt.harness import REPO_ROOT  # noqa: F401
 
 __all__ = [
     "EPS0",
@@ -39,7 +36,4 @@ __all__ = [
     "PHI_BAR",
     "REPO_ROOT",
     "SLOW_SECTIONS",
-    "SectionRun",
-    "load_sections",
-    "run_section",
 ]

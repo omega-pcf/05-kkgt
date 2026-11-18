@@ -15,10 +15,15 @@ Three things are pinned here:
 * the test each of the five figures is attributed to;
 * the absence of the older contract (a numbered ``section~N`` citation),
   which is what ``\\testref{...}`` replaced.
+
+A fourth guard is the no-import contract: an AST sweep of ``tests/`` and
+``scripts/`` proving that no module imports the deleted computation
+package (SPEC-002 §3).
 """
 
 from __future__ import annotations
 
+import ast
 import re
 import subprocess
 import sys
@@ -101,48 +106,77 @@ def caption_of(figure_file: str) -> str:
 
 
 @pytest.mark.section
-class TestSectionRegistry:
-    def test_forty_seven_sections_in_order(self, sections):
-        """Sections 1..47, contiguous, in file order.
+class TestNoImportContract:
+    """No module may import the deleted computation package (SPEC-002 §3).
 
-        The manuscript still numbers its blocks (1)..(44): sections 45 and
-        46 came with the v136 provenance (the (F10) item and the Hopf
-        foliation) and get their ``(45)``/``(46)`` labels with it; section
-        47 is the triad/pentagonal-code section the v138 round added.
-        """
-        numbers = [n for n, _t, _f in sections]
-        assert numbers == list(range(1, 48)), numbers
+    The artifact this replaces -- the registry, the marker driver and the
+    stdout fixture -- was deleted in this same commit; this AST scan is
+    what stops it from coming back.  It walks every ``.py`` file of
+    ``tests/`` and ``scripts/`` and fails on any ``import``/``from`` that
+    would resolve to ``kkgt.sections`` (any file of the package) or to a
+    ``seccion_*`` function, whatever alias it hides behind.
+    """
 
-    def test_every_section_is_callable(self, sections):
-        for n, title, fn in sections:
-            assert callable(fn), n
-            assert title.strip(), n
-            assert fn.__name__ == f"seccion_{n}", (n, fn.__name__)
+    ROOTS = (REPO_ROOT / "tests", REPO_ROOT / "scripts")
+    FORBIDDEN_ROOT = "kkgt.sections"
+    FORBIDDEN_NAME = "seccion_"
 
-    def test_titles_are_unique(self, sections):
-        titles = [t for _n, t, _f in sections]
-        assert len(set(titles)) == len(titles)
+    @classmethod
+    def _package_of(cls, path: Path) -> list[str]:
+        """Dotted package of ``path`` (tests/src is the import root)."""
+        try:
+            rel = path.relative_to(REPO_ROOT / "tests" / "src")
+        except ValueError:
+            return []
+        parts = list(rel.parts[:-1])
+        return [] if parts == ["."] else parts
 
-    def test_section_function_body_has_an_identity(self, sections_module, sections):
-        """Each function carries the section banner in its docstring or
-        source header, so a reader can map code -> number without the tex."""
-        for n, _title, fn in sections:
-            doc = (fn.__doc__ or "").strip()
-            src = Path(fn.__code__.co_filename).read_text(encoding="utf-8")
-            banner = re.search(
-                rf"^# {n}\. .*$", src, re.M
-            )
-            assert doc or banner, f"section {n} has no docstring nor banner"
+    @classmethod
+    def _violations_of(cls, path: Path) -> list[str]:
+        """Every import statement of ``path`` that resolves to the package."""
+        tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+        package = cls._package_of(path)
+        bad: list[str] = []
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                for alias in node.names:
+                    if alias.name.split(".", 1)[0] == "kkgt" and (
+                        alias.name == cls.FORBIDDEN_ROOT
+                        or alias.name.startswith(cls.FORBIDDEN_ROOT + ".")
+                    ):
+                        bad.append(f"import {alias.name}")
+            elif isinstance(node, ast.ImportFrom):
+                # Resolve the module the way the interpreter would,
+                # including relative imports inside the kkgt package.
+                if node.level:
+                    base = package[: len(package) - (node.level - 1)]
+                    head = ".".join(base + ([node.module] if node.module else []))
+                else:
+                    head = node.module or ""
+                forbidden_module = (
+                    head == cls.FORBIDDEN_ROOT
+                    or head.startswith(cls.FORBIDDEN_ROOT + ".")
+                    or (head == "kkgt"
+                        and "sections" in [a.name for a in node.names])
+                )
+                for alias in node.names:
+                    if forbidden_module or alias.name.startswith(cls.FORBIDDEN_NAME):
+                        bad.append(
+                            f"{'.' * node.level}from {head or ''} import {alias.name}"
+                        )
+        return bad
 
-    def test_the_sections_live_in_the_package(self):
-        """The computation is one importable module of the kkgt package."""
-        from kkgt.harness import load_sections
-
-        module = load_sections()
-        assert module.__name__ == "kkgt.sections"
-        assert Path(module.__file__).as_posix().endswith(
-            "tests/src/kkgt/sections/__init__.py"
-        )
+    def test_no_import_resolves_to_the_sections_package(self):
+        """AST sweep of tests/ and scripts/: zero imports of the package."""
+        violations: dict[str, list[str]] = {}
+        for root in self.ROOTS:
+            for path in sorted(root.rglob("*.py")):
+                if "__pycache__" in path.parts:
+                    continue
+                found = self._violations_of(path)
+                if found:
+                    violations[str(path.relative_to(REPO_ROOT))] = found
+        assert not violations, violations
 
 
 @pytest.mark.section
