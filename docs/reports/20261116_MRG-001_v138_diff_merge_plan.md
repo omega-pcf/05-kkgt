@@ -846,3 +846,124 @@ assertion), no figure and no number was rewritten, and `lake` was not run.
   moves of §W4.2 de-cite four numbers (§W4.3) and that trade should be confirmed,
   not assumed; `README.md` still points at the pre-package path
   `tests/src/kkgt/sections.py` (stale wording, outside this wave's file list).
+
+# Wave W6 — applied
+
+| Field | Value |
+|---|---|
+| **wave** | W6 of §4 — *Lean v35* |
+| **date** | 2026-11-17 |
+| **scope** | `lean/**` (the port + `lakefile.toml`), `main.tex` (file name, theorem count, one dangling id), `package.json`, `README.md`, `build/` + `checksums.txt` (the render), this report; `tests/`, `scripts/`, `citation.csl.json`, `images/` untouched |
+| **commits** | one for the port, one for this report; **pushed** |
+| **outcome** | `lean/TorreKK_LYR_v35.lean` builds green on `leanprover/lean4:v4.33.1`: **0 errors, 0 file warnings**, 164 theorems, the same 6 axioms, no `sorry`/`admit`/`native_decide` |
+
+## W6.1 What was ported
+
+The file is the author's v35 wholesale, as §4 asks: Spanish docstrings, `etaMetric → eta`
+(8 occurrences → 0), `pentagon_side_golden` added (the one decl v34 → v35 adds), the two
+snake renames already carried by the prepared copy (`golden_is_algebraic`,
+`bin_entropy_half`), and every statement kept — only the norm notation was re-spelled
+(`Complex.abs e` → `‖e‖`, equivalent definitionally) and Mathlib lemma names were moved to
+the ones our pinned `mathlib v4.33.1` actually exports.
+
+Two of §4's five instructions had to be corrected against the build, both recorded here
+rather than silently:
+
+* **`set_option maxRecDepth 100000 in` restored** before `pisano_orders`. §4 says *drop the
+  two `set_option`s*; the author dropped it, and `decide` on the four Pisano blocks then
+  fails with `maximum recursion depth has been reached` (error 1 of the 54). Restored at
+  the same place v34 had it.
+* **`set_option linter.style.longLine false` kept** at file scope (repo convention since
+  `ecc0a80`); the author's v35 drops it, and the file then emits 17 *line exceeds the 100
+  character limit* warnings. Keeping it costs nothing and keeps the file warning-free.
+
+## W6.2 The previous attempt, and how each of its 54 errors was closed
+
+The predecessor's attempt copied the author's file in and stopped at a red build:
+**54 error lines over 43 source lines** (`/tmp/lake_w6b.log`). Every one of them sits in a
+declaration that also exists in our compiled v34, so each fix is our toolchain's own
+working script for that same statement — no statement was weakened, no proof was
+replaced by `sorry`-grade material. The full correction list is the diff of the prepared
+copy against the committed file; by class:
+
+| error class (before) | n | how it was closed |
+|---|---|---|
+| `Unknown constant Complex.abs` (+ `Complex.abs_conj`) | 13 | the notation of our Mathlib: `‖·‖`, and `Complex.abs_exp_ofReal_mul_I → Complex.norm_exp_ofReal_mul_I`, `map_mul/map_pow → Complex.norm_mul/norm_pow`, `Complex.abs_exp → Complex.norm_exp`, `Complex.abs_conj → Complex.norm_conj` (7 theorems) |
+| `unsolved goals` | 7 | the site's v34 script restored (`golden_irrational`, `ring_resolution_irrational`, `energy_per_bit_constant`, `area_coefficient_every_level`, `two_tile_entropy`, `weld_time_is_conjugate`, `stereo_ratio`) |
+| `No goals to be solved` | 7 | the trailing `; ring` / `nlinarith` the author appended where `field_simp` already closes the goal, dropped (`golden_is_algebraic`, `lambda_times_entropy`, `fourier_width_iff`, `no_unit_below_golden` ×2, `S_acts_as_mirror`, `level_growth_not_power`) |
+| `Unknown identifier lt_div_iff` | 4 | `lt_div_iff₀` (`no_unit_below_golden` ×2, `window_crosses_half`, `hubble_below_bulk_crossing`) |
+| `Unknown identifier div_lt_iff` | 4 | `div_lt_iff₀` (same three theorems) |
+| `linarith failed` | 3 | `rcases h with h\|h\|h <;> linarith` (`log_golden_div_pi_irrational`), `field_simp; nlinarith [h2, hsc]` (`clifford_stereographic_torus`), the `calc` + `mul_lt_mul_of_pos_left` of v34 (`capacity_exceeded`) |
+| `Unknown constant golden_irrational.int_mul` | 2 | `Irrational.intCast_mul` (`golden_rotation_aperiodic`, `ring_resolution_irrational`) |
+| `rewrite failed` | 2 | v34's `rw [pow_succ, pow_succ, mul_assoc, ← sq, h]; ring` (`two_tile_entropy`) and `rw [show (M * b ^ (-σ)) / M = … mul_div_cancel_right₀ …]` (`ring_resolution_is_square`) |
+| `Unknown constant Nat.mul_eq_one.mp` | 2 | the `Nat.dvd_one` construction of v34 (`fibonacci_substitution_unique`, both branches) |
+| `rcases failed` | 2 | the same two lines (cascade of `Nat.mul_eq_one.mp`) |
+| `Invalid field rat_add` / `div_rat` / `div` | 3 | `Irrational.ratCast_add` / `Irrational.div_ratCast` (`golden_irrational`); `(golden_is_algebraic.pow σ).mul (IsAlgebraic.inv (isAlgebraic_natCast n))` (`level_growth_not_power`) |
+| `maximum recursion depth` | 1 | `set_option maxRecDepth 100000 in` restored before `pisano_orders` |
+| `Application type mismatch` | 1 | `IsAlgebraic.of_pow hp halg` — the author's `Nat.pos_iff_ne_zero.mp hp` proves `p ≠ 0` where `of_pow` wants `0 < p` |
+| `Unknown identifier pow_left_injective₀` | 1 | v34's `Real.rpow_left_inj` block (`level_growth_not_power`) |
+| `Lean exited with code 1`, `build failed` | 2 | the above |
+
+**After: 0 error lines.** The same build also reported **28 linter warnings** against a
+v34 baseline of 0 (`/tmp/lake_snake.log`: `Built TorreKK_LYR_v34 (603s)`, 0 errors, 0
+warnings), all of them the author's unverified experiment `field_simp <;> ring` in places
+where `field_simp` already closes: 10 → `field_simp` (the linter states `ring` is never
+executed), 2 → `field_simp; ring_nf` (v34's line), the `first | (field_simp; done) |
+(field_simp; ring)` block → `field_simp`, and `simp at h` → v34's `simp only […]`. Those
+fourteen edits are exactly the lines v34 already compiled with. **After: 0 file warnings**
+(9 remaining warnings are the pre-existing `has local changes` notices of the nine
+`.lake/packages/*` checkouts).
+
+## W6.3 The lakefile trap (the previous attempt's second finding)
+
+The rename `TorreKK_LYR_v34.lean → _v35.lean` (commit `8b0342b`) left `lean/lakefile.toml`
+pointing at v34 — `defaultTargets = ["TorreKK_LYR_v34"]` and `[[lean_lib]] name =
+"TorreKK_LYR_v34"` — so `lake build` never reached the module and failed with
+`TorreKK_LYR_v34: some modules have bad imports` / `unknown target`. Both entries now say
+`TorreKK_LYR_v35`, as does `package.json` `verify:lean`, and the gate was run as
+`pnpm run verify:lean`.
+
+## W6.4 Name, count and coverage
+
+| item | before | after |
+|---|---|---|
+| `lean/lakefile.toml` | `TorreKK_LYR_v34` (×2) | `TorreKK_LYR_v35` (×2) |
+| `package.json` `verify:lean` | `lake build TorreKK_LYR_v34` | `lake build TorreKK_LYR_v35` |
+| `main.tex:2509` | `TorreKK_LYR_v34.lean`, *one hundred and sixty-three* theorems | `TorreKK_LYR_v35.lean`, *one hundred and sixty-four* — counted with `grep -c '^theorem\|^lemma' lean/TorreKK_LYR_v35.lean` = **164** (v34 was 163; v35 adds `pentagon_side_golden`) |
+| `README.md:53`, `README.md:70` | v34 name, 163 theorems, v34 command | v35, 164, v35 |
+| `main.tex` id coverage | 168 cited ids, **1 dangling** — `\witness{P}{… golden\_isAlgebraic …}` stopped resolving when `fb477a2` renamed the decl | **168 / 168 present** in the file (the only unmatched token is the literal `ids` of the preamble comment at `main.tex:28`, the artefact W1 already recorded); the id now reads `golden\_is\_algebraic` |
+| `grep -rn 'TorreKK_LYR_v34'` | 13 hits | 0 outside `docs/reports/` (DEC-001, PRF-001, WIT-003, this plan's own prose — historical) and `tests/REPORT.md` (historical, untouched); `tests/` has no other reference |
+
+## W6.5 Gates at the close of W6
+
+| gate | value |
+|---|---|
+| `pnpm run verify:lean` (= `cd lean && lake build TorreKK_LYR_v35`) | **exit 0**, `Built TorreKK_LYR_v35 (736 s)`, `Build completed successfully (8707 jobs)`; **0 error lines, 0 warnings from the module** |
+| `grep -c '^axiom' lean/TorreKK_LYR_v35.lean` | **6**, the same names as v34 (`bessel_J1_zeros`, `exp_pi_mul_algebraic_transcendental`, `stereographic_meridian_deriv`, `dedekindEta`, `eta_T`, `weyl_equidistribution`) |
+| `sorry` / `admit` / `native_decide` | **0** (the only `sorry` in the file is the header's *Sin sorry*), no new axioms |
+| `grep -c '^theorem\|^lemma'` | **164** |
+| `grep -c etaMetric` (code, `main.tex`, `package.json`, `lakefile`) | **0** — the only remaining occurrences are this plan's own prose at lines 138/146/229/230 |
+| `uv run pytest tests/ -q` | **550 passed** |
+| `uv run pytest tests/test_section_census.py -q` | **18 passed** |
+| `pnpm run type-check` | exit 0, no output |
+| `pnpm run build` | exit 0, **63 pages**, `grep -c '^!' build/main.log` **0**, `grep -ci undefined build/main.log` **0** |
+| `grep -c 'Lean{' main.tex` | **0** |
+| `grep -o -F '\testref{' main.tex \| wc -l` | **99** |
+| `\wtag{` / `\tier[` | **12** / **216** (unchanged) |
+
+## W6.6 Commits and gaps
+
+* The port (`lean/`, `lakefile.toml`, `package.json`, `main.tex`, `README.md`, the render
+  and `checksums.txt`), then this report. Pushed.
+* **Gaps / decisions taken without the principal author:** §4's *drop the two
+  `set_option`s* was half-reverted (`maxRecDepth` is required by the build, `longLine`
+  by the file-scope convention of `ecc0a80`) — the alternative was a red build and 17
+  long-line warnings respectively; the file's docstrings are now Spanish while the rest
+  of the repository's prose is English (§4 asks for the Spanish docstrings, so this is
+  the plan, not an accident); `main.tex` carries one id fix (`golden\_isAlgebraic` →
+  `golden\_is\_algebraic`) beyond the name and count, because the coverage gate would
+  otherwise be red through no change of this wave's; `pentagon_side_golden` now exists in
+  the file but is still not cited by `main.tex` — that mark lands with Wave 3, as W1
+  recorded.
+* The build takes **736 s** for the module (`/tmp/lake_w6f.log`), against 603 s for
+  v34 and 1128 s for the failing attempt; no other gate is anywhere near that cost.
