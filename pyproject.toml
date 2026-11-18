@@ -23,5 +23,5 @@ addopts = "--tb=short -p no:cacheprovider"
 markers = [
     "slow: marks tests that take >10 s (deselect with '-m \"not slow\"')",
     "figure: tests that render one of the five figures cited by main.tex",
-    "section: contract test bound to one numbered section of kkgt.sections",
+    "section: contract test of the suite's structure (references, figures, no-import)",
 ]
