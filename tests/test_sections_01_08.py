@@ -65,9 +65,9 @@ E5_RATIOS = {700: 1.842, 1000: 2.632, 1322: 3.479}  # section 7's E5 line figure
 
 # ═══════════════════════════ migrated bodies of sections 1-8 (SPEC-002 1) ══
 # English identifiers, annotated signatures, module-level imports, numbers
-# single-sourced in kkgt.constants where the package defines them.  The
-# sections themselves stay registered until the package-deletion unit
-# (SPEC-002 4.3): the order pin and the run driver still need all 47.
+# single-sourced in kkgt.constants where they exist there.  The package
+# these bodies came from is deleted (SPEC-002 units 3-4): this module is
+# the only origin of the numbers it asserts.
 
 @lru_cache(maxsize=None)
 def chain_masses(

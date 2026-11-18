@@ -24,10 +24,10 @@ from kkgt.constants import LN_PHI, M_PCF, PHI
 from kkgt.harness import verify_figure_artifact
 
 
-# ═══════════════════════ migrated bodies of sections 39-43 (SPEC-002 §1) ══
-# The sections themselves stay in the package's ``_rest`` module until
-# the package is deleted (SPEC-002 §4.3); what they checked is here,
-# with their own tolerances and their own print precision.
+# ═══════════════════════════ migrated bodies of sections 39-43 (SPEC-002 §1) ══
+# The package these bodies came from is deleted (SPEC-002 units 3-4);
+# what they checked is here, with their own tolerances and their own
+# print precision.
 
 # ── section 39: the throat and the Fibonacci tiling of its rings ────────
 def ring_words(n: int = 7) -> list[str]:

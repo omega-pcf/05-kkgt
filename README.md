@@ -56,8 +56,7 @@ González García, J. A., González García, V. M., Dressler Pérez, I. M., & Ga
 
 ### Numerical checks
 
-- **`tests/src/kkgt/sections/`** (module `kkgt.sections`): every number and every figure of the note, in forty-seven sections that run together or one at a time (`PYTHONPATH=tests/src uv run python -m kkgt.sections`).
-- **`tests/`**: the suite that checks them, `uv run pytest tests/ -q` (550 tests; 546 with `-m 'not slow'`); `main.tex` cites the test behind each number with `\testref{...}`.
+- **`tests/`**: the suite that checks every number and every figure of the note, `uv run pytest tests/ -q` (499 tests; 496 with `-m 'not slow'`); each claim test owns the computation that produces its numbers, `main.tex` cites the test behind each number with `\testref{...}`, and an AST contract test forbids any module from importing the deleted `kkgt.sections` package.
 
 ### Figures (`images/`)
 

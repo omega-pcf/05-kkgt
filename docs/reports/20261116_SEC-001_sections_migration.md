@@ -259,3 +259,46 @@ Commit plan: one conventional commit per lot, in English, no push —
   sections 17–24 in `s17_24.py`, and `kkgt/sections/__init__.py` assembles
   `SECCIONES` in numeric order. The other 30 functions are still in
   `_rest.py` (1 738 lines at lot 2).
+
+---
+
+## 7. Closing block (SPEC-002 units 3–4, applied 2026-11-18)
+
+**This ledger is closed by `docs/specs/20261117_SPEC-002_sections_co_location.md`,
+whose §3 guards and §4 steps 3–4 supersede the lot plan above.**
+
+* **Deleted** in commit `ed3d81e9c32ce2abd7e54054b4d62f176ad6a368`
+  (`test(tests): delete the kkgt.sections package and its driver`):
+  `tests/src/kkgt/sections/` (all five files: `__init__.py`,
+  `__main__.py`, `_rest.py`, `s09_16.py`, `s17_24.py`),
+  `tests/test_section_runs.py` (the `MARKERS` driver and its 48 tests),
+  the `sections_module` / `sections` / `run_section` fixtures of
+  `tests/conftest.py`, and `harness.load_sections()` / `SectionRun` /
+  `section_registry()` / `run_section()`.
+* **Census rewritten in the same commit**: the five registry tests that
+  policed the package (`test_forty_seven_sections_in_order`,
+  `test_every_section_is_callable`, `test_titles_are_unique`,
+  `test_section_function_body_has_an_identity`,
+  `test_the_sections_live_in_the_package`) are gone, replaced by
+  `TestNoImportContract::test_no_import_resolves_to_the_sections_package`,
+  an AST sweep of `tests/` and `scripts/` that fails on any
+  `import`/`from` resolving to `kkgt.sections` or a `seccion_*` function.
+  Census: 18 → 14 tests.
+* **Nothing else moved.** The `	estref` set stays exactly 99, the five
+  cited figure ids (`test_section_writes_its_figure[section-10|13|39|41|44]`)
+  are byte-identical, and the 8 `test_sections_*` files were already
+  migrated (0 `run_section` uses) by the claim-test units.
+* **The 46 rows of §3 stay as written**: they are the record of the
+  migration this commit finishes; lots 0–2 were ticked, and the remaining
+  boxes are superseded — with the package deleted, there is no
+  `seccion_N` left to move, so the per-section targets are historical.
+  The Done criteria of §5 hold: `find tests/src -name 'sections.py'`
+  returns nothing, `grep -rn 'def seccion_' tests/` returns nothing, and
+  `tests/conftest.py` carries no loading branch.
+* **Gates at closing** (declared): `uv run pytest tests/ -q` → **499
+  passed**, `-m 'not slow'` → **496 passed, 3 deselected**; census 14;
+  `pnpm run type-check` → 0; `pnpm run build` → 63 pages, `^!` 0,
+  undefined 0; `grep -c 'Lean{' main.tex` → 0; `grep -o '\testref{' main.tex`
+  → 99; the no-import contract green (and proven to fail on a probe
+  import).
+
