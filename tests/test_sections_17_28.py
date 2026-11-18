@@ -1,13 +1,20 @@
-"""Deep numeric tests for sections 17-28 of kkgt.sections.
+"""Deep numeric tests for sections 17-28 of the note.
 
 Observer level, unit conversions, window and nome: every number here is
-recomputed from the closed form with an explicit tolerance, or read from
-the section's stdout where the computation is a fit.
+recomputed from the closed form with an explicit tolerance, at the
+precision or tolerance of the line that used to carry it.
+
+The bodies of sections 17, 18 and 23 live here now (SPEC-002 §1): the
+seeded propagation, the printed identity and the background line this
+module used to read back from a section's stdout are asserted on their
+values by the migrated functions below.  No test of this file runs a
+section any more.
 """
 
 from __future__ import annotations
 
 import math
+import random
 
 import numpy as np
 import pytest
@@ -52,13 +59,39 @@ class TestSection17ObserverLevelFromLambda:
     def test_planck_central_value(self):
         assert self.sigma_obs(67.36, 0.6847) == pytest.approx(380.315, abs=5e-4)
 
-    def test_monte_carlo_error(self, run_section):
-        """Seeded gaussian propagation of (H0, Omega_L): +-0.040 levels."""
-        run = run_section(17)
-        m = run.match(r"sigma_obs = ([\d.]+) \+- ([\d.]+)")
-        got, sd = float(m.group(1)), float(m.group(2))
-        assert got == pytest.approx(380.315, abs=5e-4)
+    def test_monte_carlo_error(self):
+        """Seeded gaussian propagation of (H0, Omega_L): +-0.040 levels.
+
+        Section 17 printed ``sigma_obs = 380.315 +- 0.040``: the level is
+        the closed form at the Planck central values (the three decimals
+        it printed, half a unit = 5e-4) and the error is the spread of the
+        200000 seeded samples, asserted here on its value inside the
+        0.03..0.05 band the printed number stood in (SPEC-002 §1).
+        """
+        assert self.sigma_obs(67.36, 0.6847) == pytest.approx(380.315, abs=5e-4)
+        sd = monte_carlo_level_error()
         assert 0.03 <= sd <= 0.05, sd
+
+
+# ═══════════════════ section 17's seeded propagation (migrated) ══════
+def monte_carlo_level_error(samples: int = 200_000) -> float:
+    """Spread of the levels section 17 drew from (H0, Omega_L).
+
+    The section seeded ``random`` with 1, drew ``samples`` pairs
+    ``random.gauss(67.36, 0.54)`` / ``random.gauss(0.6847, 0.0073)`` and
+    printed the population standard deviation of the resulting levels as
+    ``+- 0.040``; the seed, the sample count and the standard deviation are
+    its own, unchanged (SPEC-002 §1).
+    """
+    random.seed(1)
+    levels = [
+        TestSection17ObserverLevelFromLambda.sigma_obs(
+            random.gauss(67.36, 0.54), random.gauss(0.6847, 0.0073)
+        )
+        for _ in range(samples)
+    ]
+    mean = sum(levels) / len(levels)
+    return (sum((x - mean) ** 2 for x in levels) / len(levels)) ** 0.5
 
 
 # ══════════════════════════════════════════════════════════ section 18 ══
@@ -86,10 +119,13 @@ class TestSection18TwoReadingsOfTheSameCurvature:
         assert s_entropy - s_curv == pytest.approx(formula, abs=1e-6)
         assert formula == pytest.approx(203.562, abs=5e-4)
 
-    def test_lambda_times_s_is_six_pi(self, run_section):
-        run = run_section(18)
+    def test_lambda_times_s_is_six_pi(self):
+        """``Lambda(sigma) S(sigma) = 6 pi = 3 pi / G_N`` with ``G_N = 1/2``.
+
+        Section 18 printed this identity as ``True``; the truth value of
+        the very inequality is asserted here on its value (SPEC-002 §1).
+        """
         assert abs(6 * PHI**-7.3 * math.pi * PHI**7.3 - 6 * math.pi) < 1e-12
-        assert run.has("= 6 pi = 3 pi / G_N with G_N = 1/2: True")
 
 
 # ══════════════════════════════════════════════════════════ section 19 ══
@@ -263,8 +299,18 @@ class TestSection23LatticeOfUnits:
         assert round((h - 67.36) / 0.54, 1) == -2.5
         assert round((h - 73.04) / 1.04, 1) == -6.8
 
-    def test_the_background_level_is_twelve(self, run_section):
-        run_section(23).has("background: 11.97 +- 0.05 against lattice point 12 (0.6 standard deviations)")
+    def test_the_background_level_is_twelve(self):
+        """The line section 23 printed, on its values.
+
+        The section wrote ``background: 11.97 +- 0.05 against lattice
+        point 12 (0.6 standard deviations)`` as a literal; the three
+        numbers are section 20's fit, recomputed here at the two decimals,
+        two decimals and one decimal that line printed (SPEC-002 §1).
+        """
+        s, ds, _ = TestSection20TwoCandidates.fit([380, 700], [20, 20])
+        assert s == pytest.approx(11.97, abs=5e-3)
+        assert ds == pytest.approx(0.05, abs=5e-3)
+        assert abs(s - 12) / ds == pytest.approx(0.6, abs=0.05)
 
 
 # ══════════════════════════════════════════════════════════ section 24 ══
