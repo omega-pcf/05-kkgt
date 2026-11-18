@@ -1,19 +1,36 @@
-"""Deep numeric tests for sections 9-16 of kkgt.sections.
+"""Deep numeric tests for sections 9-16 of the note.
 
 Sections 9-11 (granularity and contact configurations), 12 (the checks
 behind figure 1, now drawn by section 44) and 13 (figure 2, with its
 exact statements), 14-16 (gaps, state count, Koide).
+
+The bodies of sections 12, 13 and 16 live here now (SPEC-002 §1): the
+check block, the depth table, the figure sentinel and the two printed
+lines this module used to read back from a section's stdout are asserted
+on their values by the migrated code below.  No test of this file runs a
+section any more.
 """
 
 from __future__ import annotations
 
 import itertools
 import math
+from typing import Any
 
 import numpy as np
 import pytest
+from scipy.optimize import brentq
+from scipy.special import j0, y0
 
-from kkgt.constants import LN_PHI, M_KOIDE_MEV, M_TAU_MEV, PHI
+from kkgt.constants import (
+    EPS0,
+    FIGURES,
+    LN_PHI,
+    M_KOIDE_MEV,
+    M_PCF,
+    M_TAU_MEV,
+    PHI,
+)
 from kkgt.harness import verify_figure_artifact
 
 
@@ -199,6 +216,72 @@ class TestSection11ContactConfigurations:
         assert float(-1 / mp.zeta(-1)) == pytest.approx(12.0, abs=1e-9)
 
 
+# ═══════════════════ section 12's own checks (migrated) ═══════════════
+def one_structure_checks() -> None:
+    """Every statement section 12 checked, and the two numbers it printed.
+
+    Migrated from the section (SPEC-002 §1): the check block used to end
+    in ``print("all checks: ok")``, the ratio of the two units printed as
+    ``eps0*M/pi`` and the vector-ratio table as ``m2/m1 against the
+    depth: {6: 2.093, ...} : ok``, and this module read the three back
+    from stdout.  Each statement now fails here, on its value, with
+    pytest's assertion rewriting: every tolerance is the section's own,
+    unchanged, and the two units come from ``kkgt.constants``.
+    """
+
+    def vector_ratio(depth_value: float) -> float:
+        """m2/m1 of the vector tower at ``depth_value`` = ``phi**d``.
+
+        The section solved ``j0(x/D) y0(x) - y0(x/D) j0(x) = 0`` on
+        ``np.linspace(0.3, 12, 3000)`` and divided its second root by
+        its first; this is that computation, unchanged.
+        """
+        epsilon = 1.0 / depth_value
+
+        def equation(x: Any) -> Any:
+            return j0(epsilon * x) * y0(x) - y0(epsilon * x) * j0(x)
+
+        grid = np.linspace(0.3, 12, 3000)
+        values = equation(grid)
+        roots = [
+            brentq(equation, float(grid[i]), float(grid[i + 1]))
+            for i in range(len(grid) - 1)
+            if values[i] * values[i + 1] < 0
+        ]
+        return roots[1] / roots[0]
+
+    # ── the check block, one assert per Lean theorem the section names ──
+    assert abs(EPS0 * M_PCF - np.pi) < 1e-12                   # certainty_principle
+    for s in np.linspace(-3, 20, 47):
+        assert abs((EPS0 * PHI**s) * (M_PCF * PHI**-s) - np.pi) < 1e-9  # closure_each_level
+        assert abs((EPS0 * PHI**s) * (M_PCF * PHI**s)
+                   - np.pi * PHI ** (2 * s)) < 1e-6 * PHI ** (2 * s)     # phase_on_cell
+        assert abs(PHI ** (s + 1) / PHI**s - PHI) < 1e-12                 # ring_ratio
+        z = complex(PHI**s * M_PCF, 0)
+        assert abs((z * 1j) / z - 1j) < 1e-12                             # lattice_tower_tau
+    assert abs(np.exp(1j * np.pi) + 1) < 1e-15                # fibre_half_turn
+    theta = np.linspace(0, 7, 50)
+    assert np.allclose(abs(0.5 * np.exp(1j * theta)), 0.5)    # worldline_modulus
+    y = np.linspace(-8, 0, 400)
+    assert np.allclose(np.exp(y) ** 2 + (1 - np.exp(y) ** 2), 1)  # pseudosphere_unit_speed
+    # Clifford torus: stereographic projection from (0,0,0,1) -> surface
+    # of revolution R = sqrt2, r = 1
+    a, b = np.meshgrid(np.linspace(0, 2 * np.pi, 60), np.linspace(0, 2 * np.pi, 60))
+    X = np.stack([np.cos(a), np.sin(a), np.cos(b), np.sin(b)]) / np.sqrt(2)
+    P = X[:3] / (1 - X[3])
+    rho = np.hypot(P[0], P[1])
+    assert np.allclose((rho - np.sqrt(2)) ** 2 + P[2] ** 2, 1,
+                       atol=1e-9)                             # clifford_square + stereographic
+
+    # ── the value the section printed with its checks ──────────────────
+    assert abs(EPS0 * M_PCF / np.pi - 1.0) <= 1e-12           # "eps0*M/pi = 1.0"
+
+    # ── the five rows of m2/m1 against the depth, at three decimals ───
+    for depth, printed in ((6, 2.093), (12, 2.171), (24, 2.228),
+                           (30, 2.241), (81.74, 2.275)):
+        assert round(vector_ratio(PHI**depth), 3) == printed, depth
+
+
 # ══════════════════════════════════════════════════════════ section 12 ══
 class TestSection12FigureOneStatements:
     """section 12 -- 'One structure seen at once: the checks, the points of Z[i] per level and the vector ratio'
@@ -277,13 +360,19 @@ class TestSection12FigureOneStatements:
         assert len(shadows) == projected
         assert len(shadows) == 3 * side * side - 3 * side + 1
 
-    def test_section12_runs_all_of_its_checks(self, run_section):
-        run = run_section(12)
-        run.has("all checks: ok")
-        run.value(r"eps0\*M/pi = ([\d.]+)", want=1.0, tol=1e-12, label="eps0 M/pi")
-        run.has("m2/m1 against the depth: {6: 2.093, 12: 2.171, 24: 2.228, "
-                "30: 2.241, 81.74: 2.275} : ok")
-        assert run.figures == (), run.figures
+    def test_section12_runs_all_of_its_checks(self):
+        """The section's checks and the two numbers it printed, on values.
+
+        This test used to run section 12 and read ``all checks: ok``, the
+        ``eps0*M/pi`` value (want 1.0, tol 1e-12) and the ``m2/m1 against
+        the depth`` table back from its stdout (SPEC-002 §1); the three
+        now live in ``one_structure_checks``, which fails on its values.
+        The section writes no file, which is what ``run.figures == ()``
+        observed: figure 1 belongs to section 44 and section 12 carries
+        no figure in ``FIGURES``.
+        """
+        one_structure_checks()
+        assert 12 not in FIGURES, FIGURES
 
 
 # ══════════════════════════════════════════════════════════ section 13 ══
@@ -304,9 +393,20 @@ class TestSection13FigureTwoReciprocity:
         assert abs((eps0 * PHI**s) * (M * PHI**-s) - math.pi) < 1e-12
 
     @pytest.mark.figure
-    def test_section13_draws_figure_two(self, run_section):
-        run = run_section(13)
-        assert run.stdout.strip() == "ok", run.stdout
+    def test_section13_draws_figure_two(self):
+        """Figure 2: the section's statement holds and the artifact is pinned.
+
+        Section 13 used to run here through the section-run fixture and
+        this test read its ``ok`` sentinel back from stdout; the sentinel
+        only certified the section's own loop -- z(s) tau(s) = phi^-6 at
+        every level 12..18 -- which is asserted here on its value with
+        the section's own 1e-12 (SPEC-002 §1).  The drawing belongs to
+        ``pnpm run figures`` (SPEC-002 §1.1), so only the committed bytes
+        are verified here.
+        """
+        for s in range(12, 19):
+            z, tau = PHI ** (s - 18), PHI ** -(s - 12)
+            assert abs(z * tau - PHI**-6) < 1e-12, s
         # section 13 checks figure 2 but no longer draws it (SPEC-002 §1.1)
         verify_figure_artifact("fig_mobius_throat.pdf")
 
@@ -422,7 +522,16 @@ class TestSection16KoideFromM:
                 rel = abs(x - obs) / obs
                 assert rel < 1e-4, (name, x, obs, rel)
 
-    def test_printed_values(self, run_section):
-        run = run_section(16)
-        run.has("Koide from M:  1776.8761")
-        assert "rel. 6.1e-05" in run.stdout
+    def test_printed_values(self):
+        """The two lines section 16 printed, on their values.
+
+        ``Koide from M:  1776.8761`` is the tau row, asserted to half a
+        unit of the four decimals it printed; ``rel. 6.1e-05`` is the
+        electron's relative error, printed to two significant figures
+        (half a unit of its last digit).  The section used to print both
+        and this test read them back from stdout (SPEC-002 §1).
+        """
+        got = self._koide()          # sorted: e, mu, tau
+        assert got[2] == pytest.approx(1776.8761, abs=5e-5)
+        rel_e = abs(got[0] - self.OBS["e"]) / self.OBS["e"]
+        assert rel_e == pytest.approx(6.1e-05, abs=5e-7)
