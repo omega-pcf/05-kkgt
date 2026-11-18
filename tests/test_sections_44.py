@@ -1,19 +1,23 @@
-"""Deep numeric tests for section 44 of kkgt.sections.
+"""Deep numeric tests for section 44, the background figure (Figure 1).
 
-Section 44 draws figure 1 (``fig_background.pdf``) and checks every
-statement it draws before drawing it: the torus and the third direction,
-the frame along the diagonal, the turn of each cell, the projections of
-the windows, the contact geometry of the icosahedron and the Fibonacci
-words of the tiling.  What the section asserts, this class recomputes.
+Section 44 checks every statement figure 1 draws before drawing it: the
+torus and the third direction, the frame along the diagonal, the turn of
+each cell, the projections of the windows, the contact geometry of the
+icosahedron and the Fibonacci words of the tiling.  What the section
+asserts, this class recomputes, and ``background_figure_statements``
+carries the section's own statements into this module (SPEC-002 §1): no
+test here reads a section's stdout.
 
-The figure contract itself (the section writes the file, the caption names
-the test) lives in ``test_section_census.py``.
+The figure contract itself (the caption names the test) lives in
+``test_section_census.py``.
 """
 
 from __future__ import annotations
 
 import itertools
 import math
+from collections.abc import Callable, Sequence
+from typing import Any
 
 import numpy as np
 import pytest
@@ -26,6 +30,136 @@ from kkgt.harness import verify_figure_artifact
 _WORDS = ["AAB"]
 for _ in range(12):
     _WORDS.append("".join({"A": "AB", "B": "A"}[c] for c in _WORDS[-1]))
+
+
+def _project(d: Sequence[float], up: Sequence[float]) -> Callable[[Any], np.ndarray]:
+    """The frame section 44 uses: an orthonormal pair spanning the plane."""
+    axis = np.array(d, float)
+    axis /= np.linalg.norm(axis)
+    a1 = np.cross(np.array(up, float), axis)
+    a1 /= np.linalg.norm(a1)
+    a2 = np.cross(axis, a1)
+    return lambda p: np.array([np.array(p, float) @ a1, np.array(p, float) @ a2])
+
+
+# ═══════════════════════════ section 44's own statements (migrated) ════
+def background_figure_statements() -> None:
+    """Every statement section 44 checked before drawing figure 1.
+
+    Migrated from the section itself (SPEC-002 §1): the section used to
+    end in ``print("background statements: all checks ok")`` and this
+    module read that line back from stdout.  Each statement now fails
+    here, on its value, with pytest rewriting the assertion.  The golden
+    ratio, its conjugate and the two units of the ring come from
+    ``kkgt.constants``; every tolerance is the section's own, unchanged.
+    """
+    # ── row 1: the third direction, on |z| = 1/2 ───────────────────────
+    omega = np.exp(2j * np.pi / 3)
+    triad = [0.5 * omega**k for k in range(3)]
+    assert np.allclose([abs(v) for v in triad], 0.5)
+
+    def stereographic(a: np.ndarray, b: np.ndarray) -> np.ndarray:
+        torus = np.stack([np.cos(a), np.sin(a), np.cos(b), np.sin(b)]) / np.sqrt(2)
+        return torus[:3] / (1 - torus[3])
+
+    aa, bb = np.meshgrid(np.linspace(0, 2 * np.pi, 40), np.linspace(0, 2 * np.pi, 40))
+    image = stereographic(aa, bb)
+    assert np.allclose((np.hypot(image[0], image[1]) - np.sqrt(2)) ** 2 + image[2] ** 2,
+                       1, atol=1e-9)
+
+    # ── row 2: from the diagonal to the face ───────────────────────────
+    project = _project((1, 1, 1), (0, 0, 1))
+    rays = [project(e) - project((0, 0, 0)) for e in np.eye(3)]
+    angles = [
+        math.degrees(math.acos(rays[i] @ rays[j]
+                               / np.linalg.norm(rays[i])
+                               / np.linalg.norm(rays[j])))
+        for i, j in [(0, 1), (1, 2), (0, 2)]
+    ]
+    assert np.allclose(angles, 120)
+    assert np.allclose([np.linalg.norm(r) ** 2 for r in rays], 2 / 3)
+    # the cell of level sigma carries eps0 phi^sigma M phi^-sigma = pi
+    for sigma in range(6):
+        assert abs(EPS0 * PHI**sigma * M_PCF * PHI**-sigma - math.pi) < 1e-12
+
+    # ── row 3: the cube that turns ─────────────────────────────────────
+    pts = [(a, b) for a in range(-12, 13) for b in range(-9, 10)]
+    x1 = np.array([a + b * PHI for a, b in pts])
+    x2 = np.array([a + b * PHI_BAR for a, b in pts])
+    cut = (abs(x1) < 12) & (abs(x2) < 4)
+    for n in range(-4, 6):
+        assert abs(PHI**n * PHI_BAR**n - (-1) ** n) < 1e-9
+    window = cut & (x2 >= -1) & (x2 < PHI - 1)
+    chain = np.sort(x1[window])
+    gaps = set(np.round(np.diff(chain), 6))
+    assert gaps <= {round(1.0, 6), round(PHI, 6)} and len(gaps) == 2
+
+    # 2D from 3D: Z^3 along its diagonal projects to Z[omega]
+    normal = np.ones(3) / 3**0.5
+    axis1 = np.array([1, -1, 0]) / 2**0.5
+    axis2 = np.cross(normal, axis1)
+    cube = np.array(list(itertools.product(range(3), repeat=3)), float)
+    origin = np.array([-1.3] * 3)
+    projected = cube - ((cube - origin) @ normal)[:, None] * normal
+    shadows: dict = {}
+    for point, proj in zip(cube, projected):
+        shadows.setdefault(tuple(np.round(proj, 9)), []).append(point)
+    assert len(shadows) == 19 and all(
+        len({int(p.sum()) % 3 for p in group}) == 1 for group in shadows.values()
+    )
+    for side in (3, 5, 7):
+        panel = np.array(list(itertools.product(range(side), repeat=3)), float)
+        assert len({tuple(np.round([p @ axis1, p @ axis2], 9)) for p in panel}) == (
+            3 * side * side - 3 * side + 1
+        )
+
+    # the icosahedron (0, +-1, +-phi) and its edges
+    vertices = []
+    for sign1 in (1, -1):
+        for sign2 in (1, -1):
+            corner = (0, sign1, sign2 * PHI)
+            vertices += [corner, (corner[1], corner[2], corner[0]),
+                         (corner[2], corner[0], corner[1])]
+    vertices = np.array(vertices, float)
+    assert np.allclose((vertices ** 2).sum(1), PHI + 2) and PHI + 2 < 4
+    edges = [(i, j) for i, j in itertools.combinations(range(12), 2)
+             if abs(((vertices[i] - vertices[j]) ** 2).sum() - 4) < 1e-9]
+    assert len(edges) == 30
+    for shift in range(3):
+        rectangle = np.array([[0, 1, PHI], [0, -1, PHI], [0, -1, -PHI],
+                              [0, 1, -PHI]], float)[:, [(0 - shift) % 3,
+                                                        (1 - shift) % 3,
+                                                        (2 - shift) % 3]]
+        side1 = np.linalg.norm(rectangle[0] - rectangle[1])
+        side2 = np.linalg.norm(rectangle[1] - rectangle[2])
+        assert abs(max(side1, side2) / min(side1, side2) - PHI) < 1e-12
+
+    # ── row 4: the tiles and the throat from the side ──────────────────
+    def tile_bounds(word: str) -> np.ndarray:
+        """Cumulative positions of the letters of ``word``, normalised to 1."""
+        widths = [1.0 if c == "A" else 1 / PHI for c in word]
+        cumulative = np.cumsum([0.0, *widths])
+        return cumulative / cumulative[-1]
+
+    fibonacci = [0, 1]
+    for _ in range(20):
+        fibonacci.append(fibonacci[-1] + fibonacci[-2])
+    for level in range(13):
+        word = _WORDS[level]
+        count_a, count_b = word.count("A"), word.count("B")
+        assert len(word) == fibonacci[level + 4]
+        assert count_a == fibonacci[level + 3] and count_b == fibonacci[level + 2]
+        assert abs(math.pi * (count_a / PHI**2 + count_b / PHI**3)
+                   - math.pi * PHI**level) < 1e-9
+        if level < 12:
+            inner, outer = tile_bounds(word), tile_bounds(_WORDS[level + 1])
+            assert all(np.min(np.abs(outer - x)) < 1e-12 for x in inner)
+
+    # seven rings of the throat: radius phi^(level - top), each step phi
+    top = 6
+    radii = [PHI ** (level - top) for level in range(7)]
+    for level in range(1, 7):
+        assert abs(radii[level] / radii[level - 1] - PHI) < 1e-12
 
 
 # ══════════════════════════════════════════════════════════ section 44 ══
@@ -47,20 +181,9 @@ class TestSection44BackgroundFigure:
         rho = np.hypot(p[0], p[1])
         assert np.allclose((rho - np.sqrt(2)) ** 2 + p[2] ** 2, 1, atol=1e-9)
 
-    @staticmethod
-    def _project(d, up):
-        """The frame section 44 uses: an orthonormal pair spanning the plane."""
-        d = np.array(d, float)
-        d /= np.linalg.norm(d)
-        up = np.array(up, float)
-        a1 = np.cross(up, d)
-        a1 /= np.linalg.norm(a1)
-        a2 = np.cross(d, a1)
-        return lambda p: np.array([np.array(p, float) @ a1, np.array(p, float) @ a2])
-
     def test_the_frame_along_the_diagonal_is_at_120_degrees(self):
         """(d) seen along (1,1,1): three axes at 120 degrees, |.|^2 = 2/3."""
-        f = self._project((1, 1, 1), (0, 0, 1))
+        f = _project((1, 1, 1), (0, 0, 1))
         pr = [f(e) - f((0, 0, 0)) for e in np.eye(3)]
         angles = [math.degrees(math.acos(pr[i] @ pr[j]
                                          / np.linalg.norm(pr[i])
@@ -150,8 +273,15 @@ class TestSection44BackgroundFigure:
                    - math.pi * PHI**s) < 1e-9, s
 
     @pytest.mark.figure
-    def test_section44_draws_the_background_figure(self, run_section):
-        run = run_section(44)
-        run.has("background statements: all checks ok")
-        # section 44 checks figure 1 but no longer draws it (SPEC-002 §1.1)
+    def test_section44_draws_the_background_figure(self):
+        """Figure 1: the section's statements hold and the artifact is pinned.
+
+        Section 44 used to run here through the section-run fixture and
+        this test read its ``background statements: all checks ok`` line
+        back from stdout; the statements now live in this module and fail
+        on their values (SPEC-002 §1).  The drawing belongs to
+        ``pnpm run figures`` (SPEC-002 §1.1), so only the committed bytes
+        are verified here.
+        """
+        background_figure_statements()
         verify_figure_artifact("fig_background.pdf")
