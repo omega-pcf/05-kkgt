@@ -317,7 +317,7 @@ $\pi$ and $\golden$ are irrational with respect to each other, and that keeps th
 apart: a step of scale $\golden$ turns a phase by $\log\golden$, and $\log\golden/\pi$ is irrational,
 for $\log\golden=(p/q)\pi$ would make the algebraic number $\golden^{q}$ equal to $e^{p\pi}$, which is
 transcendental by the Gelfond--Schneider theorem~\cite{Sch35}.
-\witness{P}{exp\_pi\_transcendental, golden\_isAlgebraic, log\_golden\_div\_pi\_irrational} Incommensurate frequencies do not lock into a common cycle, and $\golden$, the number least
+\witness{P}{exp\_pi\_transcendental, golden\_is\_algebraic, log\_golden\_div\_pi\_irrational} Incommensurate frequencies do not lock into a common cycle, and $\golden$, the number least
 well approximated by fractions~\cite{Hur91}, is the step least able to lock~\cite{Gre79}. The two
 directions meet only where $\golden$ produces its own fractions: its period modulo $N$, which for
 $N=16$ and $N=9$ is $24$, the same $24$ that the angular side carries in the Dedekind $\eta$ of the
@@ -2506,7 +2506,7 @@ gaps of the marks on the ring; (15) the exact count of states at level $N/2$ aga
 
 The package is exercised by the test suite of the note: \code{uv run pytest tests/ -q} runs all $550$ tests in about a minute, \code{uv run pytest tests/ -q -m 'not slow'} the $546$ that each take under ten seconds, and \code{pnpm run test} the same suite. A test either recomputes a number from its closed form or reads it from what its section prints, always with an explicit tolerance: a rounding tolerance is the width of the printed precision, $5\times10^{-5}$ for a value printed to four decimals, and no tolerance is widened to make a test pass. Every number and every figure of this note therefore names the test that checks it, as \testref{test\_bottom\_of\_the\_throat} names the counts at the bottom of the throat; the map of the forty-seven sections to the tests is in \code{tests/README.md}.
 
-Lean~4: \code{TorreKK\_LYR\_v34.lean}, one hundred and sixty-three theorems and six axioms, no \code{sorry}, compiled with no errors;
+Lean~4: \code{TorreKK\_LYR\_v35.lean}, one hundred and sixty-four theorems and six axioms, no \code{sorry}, compiled with no errors;
 the Mathlib names at risk are listed below.
 \begin{center}\small\ttfamily
 \begin{tabular}{@{}ll@{}}
