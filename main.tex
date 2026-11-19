@@ -759,19 +759,23 @@ with its source, and each is used only where the text says:
 \begin{enumerate}
 \item \emph{The zeros of $J_1$}~\cite{Wat44}: they increase, the first four are $3.8317$, $7.0156$,
 $10.1735$ and $13.3237$, and $j_{1,k}-\pi(k+\tfrac14)\to0$ (McMahon). Used in Theorem~\ref{thm:bessel}
-and for the count of modes. \tier[bessel\_J1\_zeros]{P}
+and for the count of modes.
+\witness{P}{bessel\_J1\_zeros}
 \item \emph{The transcendence of $e^{\pi a}$ for every real algebraic $a\neq0$}, the case $(-1)^{-ia}$ of the Gelfond--Schneider
 theorem~\cite{Sch35}. From it the note proves that $e^{\pi}$ is transcendental and $\log\golden/\pi$ irrational, and that the growth $e^{S}$ of the dimension of a level is not a power of an integer (W2).
-\tier[exp\_pi\_mul\_algebraic\_transcendental, exp\_pi\_transcendental, level\_growth\_not\_power]{P}
+\witness{P}{exp\_pi\_mul\_algebraic\_transcendental, exp\_pi\_transcendental, level\_growth\_not\_power}
 \item \emph{The derivatives of the stereographic meridian}: with $r(b)=\sqrt2-\sin b$,
 $(1/r)'=\cos b/r^2$ and $(\cos b/r)'=(1-\sqrt2\sin b)/r^2$, the quotient rule. From them the note
-proves that the projection of the square torus is conformal. \tier[stereographic\_meridian\_deriv]{P}
+proves that the projection of the square torus is conformal.
+\witness{P}{stereographic\_meridian\_deriv}
 \item \emph{The law of the Dedekind $\eta$ under $T$}~\cite{Apo90}: $\eta(\tau+1)=e^{2\pi i/24}\eta(\tau)$.
 From it the note proves the modular invariance of the string partition function and the phase
-$-1$ of $\eta^{12}$. \tier[dedekindEta, eta\_T]{P}
+$-1$ of $\eta^{12}$.
+\witness{P}{dedekindEta, eta\_T}
 \item \emph{Weyl's equidistribution}~\cite{Wey16}: for $\alpha$ irrational and $f$ continuous of
 period $1$, the averages $\tfrac1N\sum_{n<N}f(n\alpha)$ tend to $\int_0^1f$. From it the note proves factorisation along an
-orbit. \tier[weyl\_equidistribution]{P}
+orbit.
+\witness{P}{weyl\_equidistribution}
 \end{enumerate}
 \end{description}
 
@@ -882,7 +886,7 @@ The levels $\sigma$ carry the throat coordinate $z(\sigma)=\golden^{\sigma}$ and
 operator $H|\sigma\rangle=m_0\golden^{\sigma}$, with $m_0$ left free. The framework supplies two spectra
 from the pair $\pi,\golden$ and keeps them apart: the golden tower is the radial and scale tower, read as the scale of the Kaluza--Klein spectrum on the gravity side; the confining spectrum is the Regge tower
 $\alpha'M_n^2=n$ on the gauge side.
-\par\noindent \tier{P} in~\cite{CW6}
+\witness{P}{in~\cite{CW6}}
 \end{imported}
 
 \begin{imported}[The Kaluza--Klein operator; \cite{CW6}, Appendix~A.1, eqs.~(158)--(159)]\label{imp:A1}
@@ -892,13 +896,13 @@ $m_k^2=4\sin^2\bigl(k\pi/(4(n+1))\bigr)/(\log\golden)^2$, $k=1,\dots,2n+1$, all 
 there). The continuous interior mode has $m^2_{\mathrm{KK}}\approx-4.318$, below the
 Breitenlohner--Freedman bound $m^2_{\mathrm{BF}}=-d^2/4=-4$. \tier{P} in~\cite{CW6}; the comparison
 with the bound.
-\par\noindent \tier[log\_golden\_lt\_half]{P}
+\witness{P}{log\_golden\_lt\_half}
 \end{imported}
 \noindent The golden numbers are the levels of this operator, $z(\sigma)=\golden^{\sigma}$, not its eigenvalues: for $n=6$ the ratios of successive masses are $1.99,1.48,\dots,1.02$. What Imported statement~\ref{imp:tower} reads as golden is the scale at which each level sits \tier[\testref{test\_mass\_ratios\_of\_imp\_a1}]{N}.
 
 \begin{imported}[The arity; \cite{CW6}, \S2.2 and Appendix~A.7]\label{imp:arity}
 The golden central chain $\golden^2+\golden^{-2}=3$ fixes the arity $n=3$, and $d=n+1=4$.
-\par\noindent \tier[sq\_add\_inv\_sq]{P}
+\witness{P}{sq\_add\_inv\_sq}
 \end{imported}
 
 \begin{imported}[The scale; \cite{CW6}, eq.~(31), Theorems~5.33 and~5.35; \cite{F1}; \cite{HP26}, the certainty principle]\label{imp:scale}
@@ -975,7 +979,7 @@ and a positive real.
 On the tower the angle and the radius are one quantity: the spectral angle of the level $\sigma$,
 $\alpha(\sigma)=\arctan(\varepsilon_0\golden^{\sigma})$, has $\tan\alpha(\sigma+1)/\tan\alpha(\sigma)=\golden$
 (\cite{CW6}, Proposition~3.4, eq.~(76)): one step in angle is one step $\golden$ in scale.
-\par\noindent \tier[spectral\_angle\_ratio]{P}
+\witness{P}{spectral\_angle\_ratio}
 \end{imported}
 
 \begin{imported}[One microstate at every level; \cite{CW6}, \S3.4]\label{imp:adscft}
@@ -984,7 +988,7 @@ level the isometric bulk--boundary map $V^{\dagger}V=\mathbf 1$, the area law
 $S_{\mathrm{BH}}=1/(4G_N)=\tfrac12$ and the Brown--Henneaux central charge $c=3$, whence the GKPW
 dictionary and the Ryu--Takayanagi formula: the correspondence holds from one microstate, not from
 an ensemble.
-\par\noindent \tier{P} in~\cite{CW6}
+\witness{P}{in~\cite{CW6}}
 \end{imported}
 \noindent\emph{The mathematical content, proved here.} Write $\Omega(\theta)=\tfrac12e^{i\theta}$ and
 $\omega=e^{2\pi i/3}$. Then:
@@ -1015,7 +1019,7 @@ state and not an ensemble; that is (a), and with (e) the single theory factorise
 A deterministic operator built from $\golden$, without reference to the spectrum it describes,
 determines the envelope of that spectrum. The pair-correlation statistics of an ensemble are a
 statement about the fluctuations around the envelope.
-\par\noindent \tier{P} in~\cite{F1}
+\witness{P}{in~\cite{F1}}
 \end{imported}
 
 \begin{imported}[The weld; \cite{CW6}, \S4.4]\label{imp:weld}
@@ -1024,7 +1028,7 @@ the bits accumulated by the observer, the modes of matter $\lfloor S(\sigma)\rfl
 entropy $S_{\mathrm{BH}}=A/4G_N$ and the entropy of Jacobson's relation $\delta Q=T\delta S$, from
 which the Einstein equation follows. The energy per bit is the same at every level, so that
 $S(\sigma)=M_{\mathrm{PCF}}\,\varepsilon(\sigma)$.
-\par\noindent \tier{P} in~\cite{CW6}
+\witness{P}{in~\cite{CW6}}
  The colour gap of the level is $\Delta_{\mathrm{colour}}=\sqrt{\sigma_{\mathrm{tension}}}>0$, the
 root of a string tension $\sigma_{\mathrm{tension}}=q_m^2V$ obtained by monopole condensation, with
 $V(\sigma)=\varepsilon_0\golden^{-\sigma}$ and Dirac quantisation $q\,q_m=2\pi$ (\cite{CW6},
@@ -1074,14 +1078,14 @@ $\mathbb{Z}[\omega]$; the golden coupling $z=\golden y$, a third direction tied 
 $\golden$, carries it onto the square lattice $\mathbb{Z}[i]$. The passage from $120^{\circ}$ to $90^{\circ}$
 is a change of the group that acts, and $\tau=i$ is the fixed point of the one that survives, the
 quarter-turn $S$.
-\par\noindent \tier{P} in~\cite{CW6}
+\witness{P}{in~\cite{CW6}}
 \end{imported}
 
 \begin{imported}[The tower is the unit group; \cite{F1}, Theorem ``The tower is the unit group, without Dirichlet'']\label{imp:units}
 The ring of integers of $\mathbb{Q}(\sqrt5)$ is $\mathbb{Z}[\golden]$, there is no unit in the interval
 $(1,\golden)$, and consequently every unit $u>0$ is $\golden^{k}$ for some $k\in\mathbb{Z}$.
-\par\noindent \tier{P} in~\cite{F1};
 classically, Dirichlet's unit theorem~\cite{Neu99}.
+\witness{P}{in~\cite{F1}}
 \end{imported}
 \noindent\emph{The proof, and the lattice it describes.} Write $a+b\golden$ as the pair $(a,b)$;
 with $\golden^2=\golden+1$ the product is $(a,b)(c,d)=(ac+bd,\,ad+bc+bd)$ and the norm
@@ -1104,7 +1108,7 @@ For $g_a(x)=e^{-ax^2}$, $a>0$, with $\widehat g(\xi)=\int g(x)e^{-2\pi ix\xi}dx=
 three independent conditions fix $a=\pi$: normalisation $\int g_a=1$, the amplitude of
 $\widehat{g_a}$, and its width. The self-dual Gaussian is $g(x)=e^{-\pi x^2}$, $\widehat g=g$,
 $\int g=1$; and $\Gamma(\tfrac12)=\sqrt\pi$, $\Gamma(\tfrac32)=\mu\sqrt\pi$ with $\mu=\tfrac12$.
-\par\noindent \tier{P} in~\cite{CW6}
+\witness{P}{in~\cite{CW6}}
 \end{imported}
 \noindent\emph{Proved here.} $\int_{\mathbb R}e^{-ax^2}dx=\sqrt{\pi/a}$, and $\sqrt{\pi/a}=1$ if and
 only if $a=\pi$ \tier[gauss\_normalised\_iff, gaussian\_integral\_one\_iff]{P}; this is also the amplitude
@@ -1124,7 +1128,7 @@ tower it is the Galois mirror. By Poisson summation, the law of the theta series
 $\sum_ke^{-\pi k^2N}=N^{-1/2}\sum_me^{-\pi m^2/N}$, so the weight $e^{-\pi/N}$ is the first winding term of
 the heat kernel on the ring whose modes are the left side \tier[theta\_S\_law]{P}. At $\tau=i$, the
 level $0$, $\vartheta_3(e^{-\pi})=\pi^{1/4}/\Gamma(\tfrac34)$, the lemniscatic value~\cite{WW27}
-\tier[\testref{test\_theta3\_at\_tau\_i}]{N}.
+\witness{N}{\testref{test\_theta3\_at\_tau\_i}}
 
 \subsubsection*{The criteria a single object must meet}
 
@@ -1186,7 +1190,7 @@ the modulus \tier[worldline\_modulus]{P} and the product $\Lambda S=6\pi$ \tier[
 that invariant plays the role of the trace, and the tracial weight on the algebra of the patch that
 makes it type~II is constructed in~\cite{CLPW23}, not here.
 \item[\wtag{W12}{CLPW}.] The maximally mixed vacuum: one bit per cell, $H(\tfrac12)=1$
-\tier[bin\_entropy\_half]{P}.
+\witness{P}{bin\_entropy\_half}
 \end{description}
 The three types appear in the tower: type~I in its discrete spectrum, type~II in the observer's
 level, type~III in the spacetime of the throat. Where each criterion is used is said where it is used.
@@ -1253,7 +1257,7 @@ $e^{A}=\golden^{\sigma}$, the reflected operator, with hoppings $b^{-2}$ from be
 from above, is symmetrised by $\eta'_\sigma=b^{4\sigma}=e^{4A}$; the reflection
 $\sigma\mapsto6-\sigma$ carries one operator to the other. Proposition~\ref{prop:metric} therefore
 holds in both orientations, each with its operator, and the spectra coincide.
-\tier[eta\_reflected\_symmetrizes]{P}
+\witness{P}{eta\_reflected\_symmetrizes}
 
 \begin{remark}[The hoppings are a complexified Bloch momentum]\label{rmk:bloch}
 $e^{i(k-i\varepsilon)}=e^{\varepsilon}e^{ik}$, and with $\varepsilon=2\log b$ the factors are
@@ -1315,7 +1319,7 @@ the spectral condition of Wightman's axioms~\cite{SW64} holds for the tower. For
 regular Sturm--Liouville problem, with smooth positive coefficients, and the second-order
 convergence of the three-point scheme to its eigenvalues is classical~\cite{Pry94}; \tier[\testref{test\_second\_order\_convergence\_on\_the\_golden\_grid}]{N} for the
 values on the golden grid. The zeros of $J_1$ enter Lean as an axiom with their source
-\tier[bessel\_J1\_zeros]{P}.
+\witness{P}{bessel\_J1\_zeros}
 \end{theorem}
 
 \noindent On $\sigma\in[-6,6]$ with $32$ nodes per golden level, this discretisation gives
@@ -1372,7 +1376,7 @@ asymptotically, those of a twisted sector with $\theta=\tfrac14$, modes $\pi(k+\
 energy per boson is $\tfrac12\zeta(-1,\theta)=-B_2(\theta)/4$: $-\tfrac1{24}$ for the untwisted string
 and $\tfrac1{192}$ at $\theta=\tfrac14$~\cite{Pol98}. The twist $\theta=\tfrac14$ is a quarter-turn, of
 order $4$. The value $\zeta(-1)$ thus enters the spectrum through its angle
-\tier[\testref{test\_offset\_of\_j1\_zeros\_tends\_to\_one\_quarter}]{N}.
+\witness{N}{\testref{test\_offset\_of\_j1\_zeros\_tends\_to\_one\_quarter}}
 
 The weight is what produces the phase. The operator~\eqref{eq:K} has no weight $e^{2A}$, and its
 spectrum is the one~\cite{CW6} gives (Imported statement~\ref{imp:A1}). Conjugated by $D$ each hopping is $1$, so $DKD^{-1}$ is the symmetric chain with diagonal
