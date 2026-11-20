@@ -4,7 +4,7 @@
 |---|---|
 | **id** | `SPEC-004` |
 | **title** | Scope agreement for the family-wide build refactor: hybrid contract (option C of `BLD-001`) plus a development version identifier that does not compete with the release tag |
-| **status** | proposed — for the operator's approval before execution |
+| **status** | **approved 2026-11-20 — in execution** (P0…P7, family-wide, `02` included) |
 | **date** | 2026-11-20 |
 | **supersedes** | nothing; implements `BLD-001` §4–§5 (option C chosen by the operator 2026-11-20) |
 | **repositories** | `01-hilbert-polya`, `03-crystalline-worldsheet`, `04-mersenne-cr`, `05-kk-golden-throat` — **family-wide in one pass**, `05-granularity` excluded (draft), `02-odd-zeta` read-only until the author's version lands |
@@ -134,6 +134,12 @@ strings unchanged (`03` keeps its `CW6`), DOIs/keys untouched, one commit per re
 
 1. ~~Confirm the printed form~~ — **decided 2026-11-20**: `vX.Y.Z-dev@<shortsha>`
    as written in §2, matching the verified ttamayo precedent (`…-dev@${COMMIT_HASH}`).
-2. `02-odd-zeta`: gets the same treatment read-only note only until the author's
-   version lands — or is it patched now? (It currently prints **no** version at all.)
-3. P6/P7 (figures, verification): separate GO as phased, or folded into this effort?
+2. ~~`02-odd-zeta`~~ — **decided 2026-11-20**: include it in the refactor (the
+   author's content freeze does not cover tooling; it currently prints no version at
+   all, so it gains the markers and the token like the others).
+3. ~~P6/P7~~ — **decided 2026-11-20**: included in this effort, with the figures and
+   verification adapters decoupled so both entrypoints end up generic, well-made and
+   standardised across the family.
+
+**Status update:** all three points decided; the operator gave the go-ahead on
+2026-11-20 — execution starts with P0 (this amendment) and proceeds P1→P7 family-wide.
