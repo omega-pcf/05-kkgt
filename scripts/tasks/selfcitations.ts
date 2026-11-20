@@ -11,9 +11,13 @@
  *                    blank line, bibtex fence.
  *
  * It also owns the version printed by the paper: the marked line of main.tex
- * (id="version") must carry `v` + package.json's `version`, so that a version
- * bump cannot leave the PDF behind.  --check fails on a mismatch; the default
- * mode rewrites the token in place.
+ * (id="version") always carries the clean release form `vX.Y.Z` read from
+ * package.json, so the committed tree is green by construction (SPEC-004 §2
+ * as amended 2026-11-20).  The development form `vX.Y.Z-dev@<shortsha>`
+ * (+`-dirty` while `git status --porcelain` is not empty) never enters the
+ * file: scripts/build.ts injects it with injectDevVersion() right before the
+ * render and restores the original bytes from memory afterwards.  --check
+ * fails on a mismatch; the default mode rewrites the token in place.
  *
  * Determinism: no Date, no Math.random, no locale-dependent formatting, no
  * network, fixed bibtex field order, LF, exactly one trailing newline per
@@ -21,10 +25,15 @@
  *
  * Modes:
  *   (default)  rewrite only the bytes between the markers
- *   --check    compare rendered bytes with the on-disk region; print a unified
- *              diff and exit 1 on mismatch, exit 0 otherwise
+ *   --check    three validations, exit 1 on any mismatch: (i) exactly one
+ *              marker pair per id, not inverted; (ii) the README regions equal
+ *              the rendered output (a unified diff is printed); (iii) the
+ *              committed main.tex token is the clean `vX.Y.Z` of
+ *              package.json — never a `-dev@<sha>` suffix, so a committed tree
+ *              is green at rest.  Exit 0 otherwise.
  */
 import { readFileSync, writeFileSync, existsSync } from 'fs';
+import { execSync } from 'child_process';
 import { parse as parseYaml } from 'yaml';
 
 const PATHS = {
@@ -49,8 +58,17 @@ const END = (id: string): string => `<!-- selfcite:end id="${id}" -->`;
 const TEX_VERSION_ID = 'version';
 const TEX_VERSION_BEGIN = `% selfcite:begin id="${TEX_VERSION_ID}"`;
 const TEX_VERSION_END = `% selfcite:end id="${TEX_VERSION_ID}"`;
-/** The version token as it prints in the paper: `v0.1.0`. */
-const VERSION_TOKEN = /v\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?/;
+/**
+ * The version token as it prints in the paper.  The committed form is always
+ * the clean release `v0.1.0`; the rendered form may be the development shape
+ * `v0.1.0-dev@a1b2c3d` / `v0.1.0-dev@a1b2c3d-dirty` (SPEC-004 §2 as amended
+ * 2026-11-20 — that shape exists only inside the PDF, injected at build time).
+ * Applied only inside the `id="version"` region.
+ */
+export const VERSION_TOKEN = /v\d+\.\d+\.\d+(?:-dev@[0-9a-f]{7,}(?:-dirty)?)?/;
+
+/** Tier 1 is never suffixed: `package.json` and the release argument stay clean. */
+const CLEAN_VERSION = /^\d+\.\d+\.\d+$/;
 
 /** Non-volatile fields of the block (SPEC-001 §3.3/§3.4). */
 interface SelfCitationData {
@@ -234,10 +252,63 @@ function replaceRegions(readme: string, regions: Map<RegionId, Region>, rendered
 function packageVersion(): string {
   const pkg = JSON.parse(readRequired(PATHS.PACKAGE));
   const version = pkg?.version;
-  if (typeof version !== 'string' || !/^\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?$/.test(version)) {
-    throw new Error(`${PATHS.PACKAGE}: missing or malformed "version" (expected X.Y.Z)`);
+  if (typeof version !== 'string' || !CLEAN_VERSION.test(version)) {
+    throw new Error(`${PATHS.PACKAGE}: missing or malformed "version" (expected a clean X.Y.Z)`);
   }
   return version;
+}
+
+function git(args: string): string {
+  return execSync(`git ${args}`, { encoding: 'utf8' }).trim();
+}
+
+/**
+ * The two-tier display version (SPEC-004 §2).
+ *
+ * Tier 1 (release): an explicit clean version — `scripts/build.ts ${version}`
+ * as run by `.release-it.ts`'s `after:bump` — or a release environment
+ * (`RELEASE_IT` set) → `vX.Y.Z`.  Tier 2 (development): everything else →
+ * `vX.Y.Z-dev@<shortsha>`, with `-dirty` while `git status --porcelain` is not
+ * empty.  It is a display string for the PDF only: it never enters
+ * `package.json`, `CITATION.cff`, `.zenodo.json`, a tag — nor `main.tex` on
+ * disk (SPEC-004 §2 as amended 2026-11-20); it reaches the page only through
+ * injectDevVersion(), applied by build.ts around the render and undone right
+ * after it.
+ */
+export function computeDisplayVersion(releaseVersion?: string): string {
+  const release = releaseVersion ?? (process.env.RELEASE_IT ? packageVersion() : undefined);
+  if (release !== undefined) {
+    if (!CLEAN_VERSION.test(release)) {
+      throw new Error(`release version must be a clean X.Y.Z (got "${release}")`);
+    }
+    return `v${release}`;
+  }
+  const sha = git('rev-parse --short HEAD');
+  if (!/^[0-9a-f]{7,}$/.test(sha)) throw new Error(`cannot derive a short git sha (got "${sha}")`);
+  const dirty = git('status --porcelain') !== '';
+  return `v${packageVersion()}-dev@${sha}${dirty ? '-dirty' : ''}`;
+}
+
+/**
+ * Return `tex` with the token of the `id="version"` region replaced by the
+ * display version (SPEC-004 §2): the clean `vX.Y.Z` on the release path, the
+ * development `vX.Y.Z-dev@<sha>[-dirty]` otherwise.
+ *
+ * This is the *only* place the development shape is produced, and it works on
+ * a string: scripts/build.ts writes the result, compiles, and writes the
+ * original bytes back in a `finally`, so the committed main.tex never carries
+ * a suffix.  Throws when the marker pair is missing, duplicated or inverted,
+ * or when the region holds no version token.
+ */
+export function injectDevVersion(tex: string, releaseVersion?: string): string {
+  const display = computeDisplayVersion(releaseVersion);
+  const region = findTexVersionRegion(tex);
+  const token = VERSION_TOKEN.exec(region.content);
+  if (!token) {
+    throw new Error(`${PATHS.TEX}: no version token inside the "${TEX_VERSION_ID}" markers`);
+  }
+  const at = region.start + token.index;
+  return tex.slice(0, at) + display + tex.slice(at + token[0].length);
 }
 
 interface TexRegion {
@@ -267,10 +338,14 @@ function findTexVersionRegion(tex: string): TexRegion {
 }
 
 /**
- * Keep the printed version of main.tex equal to package.json's version.
- * (--check compares and fails; the default mode rewrites the token in place,
- * the same contract as the README regions.)
- * Returns true when the on-disk text differs from package.json.
+ * Keep the printed version of main.tex equal to package.json's clean version.
+ *
+ * The committed token is always the release form `vX.Y.Z` (SPEC-004 §2 as
+ * amended 2026-11-20): the `-dev@<sha>` suffix exists only in the rendered
+ * PDF, injected by build.ts and never written here.  (--check compares and
+ * fails; the default mode rewrites the token in place, the same contract as
+ * the README regions.)  Returns true when the on-disk text differs from
+ * package.json.
  */
 function syncPaperVersion(check: boolean): boolean {
   const tex = readRequired(PATHS.TEX);
@@ -278,13 +353,14 @@ function syncPaperVersion(check: boolean): boolean {
   const region = findTexVersionRegion(tex);
   const token = VERSION_TOKEN.exec(region.content);
   if (!token) {
-    throw new Error(`${PATHS.TEX}: no "vX.Y.Z" version token inside the "${TEX_VERSION_ID}" markers`);
+    throw new Error(`${PATHS.TEX}: no version token inside the "${TEX_VERSION_ID}" markers`);
   }
   if (token[0] === expected) return false;
 
   if (check) {
     process.stderr.write(
-      `selfcitations:check failed — ${PATHS.TEX} prints ${token[0]}, ${PATHS.PACKAGE} says ${expected}. ` +
+      `selfcitations:check failed — ${PATHS.TEX} carries "${token[0]}", expected the clean ${expected} ` +
+        `(the committed token never carries a -dev@ suffix; SPEC-004 §2 as amended). ` +
         `Run \`pnpm run selfcitations\`.\n`
     );
     return true;
@@ -387,7 +463,7 @@ export function syncSelfCitations(): void {
       ? `  ✓ README.md self-citation regions regenerated (${result.stale.join(', ') || 'paper version'}).`
       : `  ✓ README.md self-citation regions up to date.`
   );
-  if (result.staleTex) console.log(`  ✓ main.tex paper version aligned with package.json.`);
+  if (result.staleTex) console.log(`  ✓ main.tex paper version aligned with ${PATHS.PACKAGE}'s clean version.`);
 }
 
 function main(): number {
@@ -398,7 +474,7 @@ function main(): number {
       if (result.stale.length > 0 || result.staleTex) return 1;
       console.log(
         `selfcitations:check ✓ README.md regions match the rendered output and ` +
-          `${PATHS.TEX} carries package.json's version.`
+          `${PATHS.TEX} carries the clean vX.Y.Z token from ${PATHS.PACKAGE}.`
       );
       return 0;
     }

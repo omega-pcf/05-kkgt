@@ -1,6 +1,7 @@
 #!/usr/bin/env tsx
+import { readFileSync, writeFileSync } from 'fs';
 import { syncCitationMetadata } from './tasks/citation.js';
-import { syncSelfCitations } from './tasks/selfcitations.js';
+import { syncSelfCitations, injectDevVersion } from './tasks/selfcitations.js';
 import { cleanupOldVersions } from './tasks/cleanup.js';
 import { compilePDF } from './tasks/compile.js';
 import { generateChecksums } from './tasks/checksums.js';
@@ -39,7 +40,19 @@ async function main(): Promise<void> {
     cleanupOldVersions(config.buildDir);
     syncCitationMetadata(config.version);
     syncSelfCitations();
-    compilePDF(config);
+
+    // SPEC-004 §2 (amended 2026-11-20): the committed main.tex keeps the clean
+    // `vX.Y.Z` token; the development form lives only in the rendered PDF.
+    // Inject -> render -> restore, and the restore comes from the bytes read
+    // here, never from `git checkout`, so a failing compile cannot leave a
+    // suffixed token behind.
+    const originalTex = readFileSync(config.sourceTex, 'utf8');
+    writeFileSync(config.sourceTex, injectDevVersion(originalTex, process.argv[2]));
+    try {
+      compilePDF(config);
+    } finally {
+      writeFileSync(config.sourceTex, originalTex);
+    }
     generateChecksums(config);
 
     console.log(`\n✅ Build completed successfully for v${version}\n`);
