@@ -15,7 +15,7 @@
     "generate:types": "pnpm exec tsx scripts/generate_types.ts",
     "verify:py": "uv run pytest tests/ -q -m 'not slow'",
     "verify:lean": "cd lean && lake build TorreKK_LYR_v35",
-    "verify": "pnpm run verify:py && pnpm run verify:lean",
+    "verify": "pnpm run verify:py && pnpm run verify:lean && pnpm run type-check",
     "selfcitations": "pnpm exec tsx scripts/tasks/selfcitations.ts",
     "selfcitations:check": "pnpm exec tsx scripts/tasks/selfcitations.ts --check",
     "validate": "pnpm run selfcitations:check && pnpm run verify",

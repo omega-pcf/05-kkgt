@@ -65,7 +65,7 @@ González García, J. A., González García, V. M., Dressler Pérez, I. M., & Ga
 ## Verification Execution
 
 ```bash
-pnpm run validate     # = pnpm run verify = verify:py (pytest) + verify:lean (lake)
+pnpm run validate     # = selfcitations:check + verify; verify = verify:py (pytest) + verify:lean (lake) + type-check
 pnpm run verify:lean  # cd lean && lake build TorreKK_LYR_v35
 ```
 
