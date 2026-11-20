@@ -99,6 +99,41 @@ above (script keys exist, version region present and exactly one pair, token
 matches `computeDisplayVersion()`), plus a family manifest in05 listing the
 expected contract — a repo that drifts fails its own `validate`.
 
+### 3.1 Family manifest (P5, landed 2026-11-20)
+
+The expected contract per repository as P1–P5 landed it.  The columns are
+exactly what `scripts/tasks/parity.ts` asserts in `01`–`04`: the five script
+keys, one non-inverted `selfcite id="version"` pair in `main.tex`, the token
+equal to `computeDisplayVersion()`, and `validate` running
+`selfcitations:check`.
+
+| repository | `build` | `verify` | `selfcitations` | `selfcitations:check` | `validate` | `scripts/tasks/parity.ts` | `main.tex` version region |
+|---|---|---|---|---|---|---|---|
+| `01-hilbert-polya` | ✓ | `verify:py && verify:lean` | ✓ | ✓ | `selfcitations:check && parity && verify` | ✓ | exactly one pair |
+| `02-odd-zeta` | ✓ | `verify:py && verify:lean` | ✓ | ✓ | `selfcitations:check && parity && verify` | ✓ | exactly one pair |
+| `03-crystalline-worldsheet` | ✓ | `verify:py && verify:lean` | ✓ | ✓ | `selfcitations:check && parity && verify` | ✓ | exactly one pair |
+| `04-mersenne-cr` | ✓ | `verify:lean` (no Python suite) | ✓ | ✓ | `selfcitations:check && parity && verify` | ✓ | exactly one pair |
+| `05-kk-golden-throat` | ✓ | `verify:py && verify:lean` | ✓ | ✓ | `selfcitations:check && verify` | — (this manifest instead) | exactly one pair |
+
+Notes:
+
+- `selfcitations:check` runs **first** in `validate` in all five; the parity
+  script joins the chain in `01`–`04` (P5).  `05` carries the manifest and
+  keeps `validate = selfcitations:check && verify` — SPEC-004's phasing gives
+  `05` the manifest, not the gate (AC-15's "`01`/`03`/`04`/`05`" predates that
+  split; recorded as an open point).
+- The `figures` row of §3 is asserted from **P6** on; today only `05` exposes
+  the `figures` alias.
+- `verify` compositions stay local: the contract key is `verify`, what it
+  composes is each repository's own (`04` has no `verify:py`, P7).
+- `02-odd-zeta` was ported **on `main`** through a temporary worktree — the
+  local checkout sits on `scratch/lean-release` (the author's pending line)
+  and predates this manifest, so read `02`'s contract from `origin/main`.
+- Every token shown by a development build is
+  `vX.Y.Z-dev@<shortsha>[-dirty]`; after any commit the committed token is
+  stale against the new HEAD by construction, and `pnpm run selfcitations`
+  re-aligns it (the `--check` failure message says so).
+
 ## 4. Phasing (family-wide, one effort)
 
 | phase | content | commits |
