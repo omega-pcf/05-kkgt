@@ -99,21 +99,22 @@ above (script keys exist, version region present and exactly one pair, token
 matches `computeDisplayVersion()`), plus a family manifest in05 listing the
 expected contract — a repo that drifts fails its own `validate`.
 
-### 3.1 Family manifest (P5, landed 2026-11-20)
+### 3.1 Family manifest (P5 landed 2026-11-20; `figures` and `verify` amended by P6/P7, 2026-11-20)
 
-The expected contract per repository as P1–P5 landed it.  The columns are
-exactly what `scripts/tasks/parity.ts` asserts in `01`–`04`: the five script
-keys, one non-inverted `selfcite id="version"` pair in `main.tex`, the token
-equal to `computeDisplayVersion()`, and `validate` running
+The expected contract per repository as P1–P7 landed it.  The columns are
+exactly what `scripts/tasks/parity.ts` asserts in `01`–`04`: the six script
+keys (`build`, `verify`, `figures`, `selfcitations`, `selfcitations:check`,
+`validate`), one non-inverted `selfcite id="version"` pair in `main.tex`, the
+token equal to `computeDisplayVersion()`, and `validate` running
 `selfcitations:check`.
 
-| repository | `build` | `verify` | `selfcitations` | `selfcitations:check` | `validate` | `scripts/tasks/parity.ts` | `main.tex` version region |
-|---|---|---|---|---|---|---|---|
-| `01-hilbert-polya` | ✓ | `verify:py && verify:lean` | ✓ | ✓ | `selfcitations:check && parity && verify` | ✓ | exactly one pair |
-| `02-odd-zeta` | ✓ | `verify:py && verify:lean` | ✓ | ✓ | `selfcitations:check && parity && verify` | ✓ | exactly one pair |
-| `03-crystalline-worldsheet` | ✓ | `verify:py && verify:lean` | ✓ | ✓ | `selfcitations:check && parity && verify` | ✓ | exactly one pair |
-| `04-mersenne-cr` | ✓ | `verify:lean` (no Python suite) | ✓ | ✓ | `selfcitations:check && parity && verify` | ✓ | exactly one pair |
-| `05-kk-golden-throat` | ✓ | `verify:py && verify:lean` | ✓ | ✓ | `selfcitations:check && verify` | — (this manifest instead) | exactly one pair |
+| repository | `build` | `verify` | `figures` | `selfcitations` | `selfcitations:check` | `validate` | `scripts/tasks/parity.ts` | `main.tex` version region |
+|---|---|---|---|---|---|---|---|---|
+| `01-hilbert-polya` | ✓ | `verify:py && verify:lean && type-check` | ✓ → `generate:figures` | ✓ | ✓ | `selfcitations:check && parity && verify` | ✓ | exactly one pair |
+| `02-odd-zeta` | ✓ | `verify:py && verify:lean && type-check` | ✓ → declares no committed figures | ✓ | ✓ | `selfcitations:check && parity && verify` | ✓ | exactly one pair |
+| `03-crystalline-worldsheet` | ✓ | `verify:py && verify:lean && type-check` | ✓ → `generate:figures` | ✓ | ✓ | `selfcitations:check && parity && verify` | ✓ | exactly one pair |
+| `04-mersenne-cr` | ✓ | `verify:lean && type-check` (no Python suite) | ✓ → `generate:figures` | ✓ | ✓ | `selfcitations:check && parity && verify` | ✓ | exactly one pair |
+| `05-kk-golden-throat` | ✓ | `verify:py && verify:lean && type-check` | ✓ → `generate:figures` | ✓ | ✓ | `selfcitations:check && verify` | — (this manifest instead) | exactly one pair |
 
 Notes:
 
@@ -122,10 +123,33 @@ Notes:
   keeps `validate = selfcitations:check && verify` — SPEC-004's phasing gives
   `05` the manifest, not the gate (AC-15's "`01`/`03`/`04`/`05`" predates that
   split; recorded as an open point).
-- The `figures` row of §3 is asserted from **P6** on; today only `05` exposes
-  the `figures` alias.
+- `figures` (**P6**): every repository exposes the key and parity asserts it
+  from P6 on; behind the alias the mechanism stays local — `01`/`03`/`05`
+  `uv run python scripts/figures/main.py`, `04` `bash scripts/figures/build.sh`
+  (Docker pdfTeX), `02` a declaration that the repository commits no figures
+  (`images/` empty) which exits 0 and starts failing the moment a figure is
+  committed.  The gate is AC-14: after `pnpm run figures`,
+  `git diff --exit-code -- <images dir>` must report no content change;
+  measured byte-stable (identical sha256 over `images/*`) in all four
+  repositories that have figures.
 - `verify` compositions stay local: the contract key is `verify`, what it
-  composes is each repository's own (`04` has no `verify:py`, P7).
+  composes is each repository's own.  From **P7** the composition also carries
+  `type-check` wherever TypeScript exists (all five), `verify:lean` wherever
+  `lean/` exists (all five) and `verify:py` only where Python tests exist —
+  `04` has none, so its composition does not include it and no suite was
+  invented for it.
+- `verify:lean` (**P7**): the form is standardised (`cd lean && lake
+  build [target]`) and the scope is declared here, without changing what any
+  repository compiles — `01` every library in `lakefile.toml` (`pcf`,
+  `PCF_Complete_v11_Unified`, `PCF_OperatorConvergence`), `02` all eleven
+  libraries, `03` the named target `CW6_complete_v2`, `04` every library
+  (`mersenne-cr`, `golden_mersenne`), `05` the named target
+  `TorreKK_LYR_v35`.  No `lakefile.toml`, `lake-manifest.json` or mathlib pin
+  was touched in any repository.
+- pytest configuration (**P7**) exists only in `03` and `05`; their `addopts`
+  (`--tb=short -p no:cacheprovider`) and the shared `slow`/`figure` markers are
+  aligned, with test counts and assertions untouched.  `01`, `02` and `04` have
+  no pytest configuration and were left without one.
 - `02-odd-zeta` was ported **on `main`** through a temporary worktree — the
   local checkout sits on `scratch/lean-release` (the author's pending line)
   and predates this manifest, so read `02`'s contract from `origin/main`.
