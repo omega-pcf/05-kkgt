@@ -183,7 +183,7 @@ the manuscript's own "forty-six sections" sentence — see the bring-up list.
    still quote `533`/`529`; they are now `549`/`545`. Both are outside this
    worker's file range (the manuscript is another worker's) → recount at the
    next wave that owns them.
-4. **The other nineteen AUD-001 rows of §3** (the 29 with no assertion) that
+4. **The other ten AUD-001 rows of §3** (of the 29 with no assertion) that
    this pass did not close because `sections.py` carries no literal for them:
    L647 `61,127` (retarget, not add), L804 `67.846` (docstring/comment only),
    L1609 `1.2209×10^{19}`, L1609 `2.435×10^{18}` (numeric `2.435e18` only),
