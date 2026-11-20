@@ -14,7 +14,7 @@ docs/
 ├── style-guide.md     # Family style guide v2.2: editorial (§1–§12), code quality D1–D7 (§13), tex/proofreading (§14)
 ├── style/             # Portable extracts of the style guide
 │   └── grammar.md     # Grammar and usage rules of human language (ES/EN/FR/IT examples)
-├── usage.md           # Build and release commands
+├── usage.md           # Build, release, commit and version conventions (semver + Zenodo)
 ├── witness-contract.md   # Why the marks exist (portable rationale of the witness device, EN)
 ├── specs/            # Design specifications (dated, id'd, ISO header)
 │   └── 20261116_SPEC-001_deterministic_self_citations.md
