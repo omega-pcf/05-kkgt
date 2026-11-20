@@ -139,12 +139,13 @@ From wormholes, black holes and baby universes\\to the criteria for an observer 
 \author[]{L.~M.~Garc\'ia Ord\'o\~nez}
 \address{TTAMAYO PUNTO COM, S.A.P.I.\ de C.V.; Research \& Development Division;
   Naucalpan de Juárez, State of Mexico, Mexico}
-\renewcommand{\datename}{Received}
-% Received date, last-modified date and version.  amsart prints \date as the
-% footnote at the foot of page 1 (\@adminfootnotes -> \@setdate, which
-% prefixes \datename); \datename is the class's own label for that footnote
-% ("Date:" for this class, "Received by the editors" for its siblings), so it
-% is set to the received wording here.  \today is reproducible:
+\renewcommand{\datename}{\textbf{Received:}}
+% Received date, last-modified date and version, with the labels in bold.
+% amsart prints \date as the footnote at the foot of page 1 (\@adminfootnotes
+% -> \@setdate, which prefixes \datename), so the first label lives in
+% \datename and the line carries the other two: without this the class would
+% prefix its own "Date:" and the footnote would read "Date: Received: ...".
+% \today is reproducible:
 % scripts/tasks/compile.ts compiles with SOURCE_DATE_EPOCH set to the HEAD
 % commit's timestamp, so it prints the date of the last commit, never the
 % clock's.  The version token is owned by package.json: the "version"
@@ -152,7 +153,7 @@ From wormholes, black holes and baby universes\\to the criteria for an observer 
 % `pnpm run validate`), which fails when this line and package.json differ,
 % and rewritten by `pnpm run selfcitations` / `pnpm run build`.
 % selfcite:begin id="version"
-\date{November 16, 2026; last modified \today; Version v0.1.0}
+\date{November 16, 2026; \textbf{Last modified:} \today; \textbf{Version:} v0.1.0}
 % selfcite:end id="version"
 
 \begin{document}
