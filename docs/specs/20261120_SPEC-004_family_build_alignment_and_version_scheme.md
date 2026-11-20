@@ -36,35 +36,46 @@
      token inside the `selfcite` region is exactly `vX.Y.Z` — tag, CFF, `.zenodo.json`
      and PDF share one string (the chain `BLD-001` §3 documents).
 
-### Tier 2 — development identifier: `vX.Y.Z@<shortsha>` (+`-dirty`)
+### Tier 2 — development identifier: `vX.Y.Z-dev@<shortsha>` (+`-dirty`)
 
 - **Every build that is not the release path** prints
-  `Version: v0.1.0@a1b2c3d` (and `…-a1b2c3d-dirty` when the worktree has
+  `Version: v0.1.0-dev@a1b2c3d` (and `…-a1b2c3d-dirty` when the worktree has
   uncommitted changes). Derived at build time, never written by hand:
   `git rev-parse --short HEAD` + `git status --porcelain`.
 - **It cannot compete with the release tag** by construction: it is a *display*
   string in the PDF only — it never enters `package.json`, `CITATION.cff`,
   `.zenodo.json`, the changelog, or any tag; `selfcitations --check` validates it
   against the same derivation, so a stale line fails `validate`.
-- **Precedent:** the operator reports the same idea in use at ttamayo (the
-  WordPress-plugins entrypoint project, extracted with bash). The exact script was
-  not located in this pass (`~/Documents/DevelopmentV2/tt-wordpress-automation`
-  exists but no matching extraction was found under `*.sh`); to be consulted at
-  execution — the semantics above stand without it.
+- **Precedent (verified 2026-11-20, in the ttamayo WordPress-plugin project the
+  operator named — path withheld as local environment):** the release path there is
+  **release-it** (`.release-it.json`: `tagName v${version}`, `before:init` build,
+  `after:bump` changelog + version injection), while **staging deploys** inject the
+  development suffix with bash: `TAG=$(git describe --tags --abbrev=0 || 0.0.0)`,
+  `COMMIT_HASH=$(git rev-parse --short HEAD)`, and **only when
+  `git describe --tags --exact-match` fails** — i.e. off-tag builds get
+  `${TAG#v}-dev@${COMMIT_HASH}` into the plugin header, and the file is restored
+  with `git checkout --` afterwards, so **the suffix never enters the repository**.
+  Two facts follow: (i) the `…-dev@<sha>` shape is the established ttamayo form
+  (adopted here, with the family's `v` prefix); (ii) the release path must print the
+  clean version — matching Tier 1. The project's CI (CircleCI) carries the same
+  split: deploy jobs run the suffix logic, releases stay release-it.
 - **Rejected alternatives (recorded so they are not re-litigated):**
-  - `git describe` form `vX.Y.Z-4-gabc1234` — conventional, but `05` has **no tags**
-    yet (release on hold), so it degrades to `gabc1234` with no version base;
-  - strict semver prerelease `vX.Y.Z-dev.<sha>` — semver-pure, but the operator's
-    `@sha` form is the one already recognised across ttamayo; `package.json` remains
-    the only semver-parsed artefact, so the display string needs no semver rank.
+  - bare `vX.Y.Z@<sha>` (the operator's first sketch) — kept as the same idea minus
+    the explicit `dev` marker the precedent carries;
+  - `git describe` form `vX.Y.Z-4-gabc1234` as the *whole* display — conventional,
+    but `05` has **no tags** yet (release on hold), so it degrades to `gabc1234`
+    with no version base; the base here is `package.json`, not the last tag;
+  - strict semver prerelease `vX.Y.Z-dev.<sha>` — semver-pure, but the display
+    string is never semver-parsed (`package.json` is the only semver artefact), so
+    the ttamayo shape wins on familiarity.
 
 ### Where it lives (one mechanism, family-wide)
 
 - `selfcitations.ts` gains `computeDisplayVersion()`:
   release context (explicit version argument from `build.ts ${version}`, or the
-  release-it environment) → `v${version}`; otherwise → `v${pkg.version}@${sha}`.
+  release-it environment) → `v${version}`; otherwise → `v${pkg.version}-dev@${sha}`.
 - `VERSION_TOKEN` widens to
-  `/v\d+\.\d+\.\d+(?:@[0-9a-f]{7,}(?:-dirty)?)?/`, still applied **only inside**
+  `/v\d+\.\d+\.\d+(?:-dev@[0-9a-f]{7,}(?:-dirty)?)?/`, still applied **only inside**
   the `% selfcite:begin/end id="version"` region (exactly-one-marker rule intact).
 - The token is written by the same rewrite pass as today (`pnpm run selfcitations`,
   hooked in `build.ts`), checked by `--check` inside `validate`.
@@ -109,7 +120,7 @@ strings unchanged (`03` keeps its `CW6`), DOIs/keys untouched, one commit per re
 ## 5. Acceptance criteria
 
 - AC-1 … AC-10 of `SPEC-001` remain the base for the selfcitations port.
-- AC-11: `pnpm run build` in any repo prints `Version: vX.Y.Z@<sha>`; the same
+- AC-11: `pnpm run build` in any repo prints `Version: vX.Y.Z-dev@<sha>`; the same
   build invoked as `tsx scripts/build.ts <version>` prints `Version: vX.Y.Z`.
 - AC-12: a deliberately stale token fails `pnpm run selfcitations:check` in every repo.
 - AC-13: the `before:init` guard fails a suffixed `package.json.version` (probe
@@ -121,8 +132,8 @@ strings unchanged (`03` keeps its `CW6`), DOIs/keys untouched, one commit per re
 
 ## 6. Open points for the operator
 
-1. Confirm `vX.Y.Z@<shortsha>` as the printed form (vs `git describe` / semver
-   prerelease — both recorded as rejected in §2).
+1. ~~Confirm the printed form~~ — **decided 2026-11-20**: `vX.Y.Z-dev@<shortsha>`
+   as written in §2, matching the verified ttamayo precedent (`…-dev@${COMMIT_HASH}`).
 2. `02-odd-zeta`: gets the same treatment read-only note only until the author's
    version lands — or is it patched now? (It currently prints **no** version at all.)
 3. P6/P7 (figures, verification): separate GO as phased, or folded into this effort?
