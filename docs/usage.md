@@ -27,9 +27,25 @@ pnpm run counts:check   # fail, with a diff, when either has drifted
 the `selfcitations` precedent (SPEC-001 §5.2): a region is delimited by
 `<!-- counts:begin id="..." -->` … `<!-- counts:end id="..." -->` in prose, and
 by `# counts:begin id="..."` … `# counts:end id="..."` on lines of their own
-inside a code fence, where an HTML comment would print as text. `docs/counts.md`
-is regenerated in full and lists every counter with the command that measures
-it and the regions that quote it.
+inside a code fence, where an HTML comment would print as text. The manuscript
+joins the same mechanism with the third grammar, `% counts:begin id="..."` …
+`% counts:end id="..."` on lines of their own in `main.tex` — a `%` comments
+out the rest of its line, so the markers own whole lines exactly as the
+`selfcite` version markers do. Inside that region the task writes the counts
+as `\newcommand{\Count…}{…}` declarations, and the prose quotes the macros
+instead of a raw number: a value is therefore typed into the tree only by
+`pnpm run counts`, and a hand-typed digit in the prose fails `counts:check`.
+`\newcommand` is chosen over `\def` (which would silently shadow an existing
+name) and over a generated `\input` file (which would add a second source to
+track for six numbers): it refuses to redefine, so a name collision fails the
+compile.
+
+`pnpm run build` calls `syncCounts()` next to `syncSelfCitations()`, before
+the render, so the PDF can never print a stale count. That makes the suite
+counters a per-build cost — three `pytest --collect-only` runs, collection
+only, seconds, never a test run — which is recorded in `docs/counts.md`.
+`docs/counts.md` is regenerated in full and lists every counter with the
+command that measures it and the regions that quote it.
 
 Dated reports (`docs/reports/`) and specs (`docs/specs/`) are snapshots of a
 moment: they are corrected by hand with the reason recorded, never rewritten by
