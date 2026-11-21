@@ -11,6 +11,31 @@
 pnpm run build
 ```
 
+## Counts
+
+The numbers the documentation states about the repository — the pytest suite
+total and its not-slow total, the census size, the `\testref{...}` anchors,
+the Lean source statistics and the figure inventory — are **measured, never
+typed** (follow-up of `docs/reports/20261120_CVR-001_build_standardization_coverage_review.md` §5):
+
+```bash
+pnpm run counts         # rewrite the marked regions and regenerate docs/counts.md
+pnpm run counts:check   # fail, with a diff, when either has drifted
+```
+
+`counts:check` runs inside `validate`, after `parity`. The mechanism follows
+the `selfcitations` precedent (SPEC-001 §5.2): a region is delimited by
+`<!-- counts:begin id="..." -->` … `<!-- counts:end id="..." -->` in prose, and
+by `# counts:begin id="..."` … `# counts:end id="..."` on lines of their own
+inside a code fence, where an HTML comment would print as text. `docs/counts.md`
+is regenerated in full and lists every counter with the command that measures
+it and the regions that quote it.
+
+Dated reports (`docs/reports/`) and specs (`docs/specs/`) are snapshots of a
+moment: they are corrected by hand with the reason recorded, never rewritten by
+the task. Running times quoted in the documentation are machine-dependent
+estimates and stay outside the mechanism.
+
 ## Commits
 
 Every repository of the family follows [Conventional Commits](https://www.conventionalcommits.org/)

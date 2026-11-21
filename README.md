@@ -50,13 +50,13 @@ González García, J. A., González García, V. M., Dressler Pérez, I. M., & Ga
 
 ### Formal Verification (`lean/`)
 
-- **`lean/TorreKK_LYR_v35.lean`**: the entire development in one file (164 theorems, 6 axioms, no `sorry`).
+- **`lean/TorreKK_LYR_v35.lean`**: the entire development in one file (<!-- counts:begin id="lean" -->164 theorems, 6 axioms, 0 `sorry`<!-- counts:end id="lean" -->).
 - **`lean/lakefile.toml`**: lake build configuration with the Mathlib dependency (`v4.33.1`).
 - **`lean/lean-toolchain`**: `leanprover/lean4:v4.33.1`.
 
 ### Numerical checks
 
-- **`tests/`**: the suite that checks every number and every figure of the note, `uv run pytest tests/ -q` (498 tests; 495 with `-m 'not slow'`); each claim test owns the computation that produces its numbers, `main.tex` cites the test behind each number with `\testref{...}`, and an AST contract test forbids any module from importing the deleted `kkgt.sections` package.
+- **`tests/`**: the suite that checks every number and every figure of the note, `uv run pytest tests/ -q` (<!-- counts:begin id="suite" -->498 tests; 495 with `-m 'not slow'`<!-- counts:end id="suite" -->); each claim test owns the computation that produces its numbers, `main.tex` cites the test behind each number with `\testref{...}`, and an AST contract test forbids any module from importing the deleted `kkgt.sections` package.
 
 ### Figures (`images/`)
 
