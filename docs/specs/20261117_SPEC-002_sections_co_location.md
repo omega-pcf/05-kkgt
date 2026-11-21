@@ -25,7 +25,7 @@
 - `\testref` set stays **94**; the exact-equality pin stays (any change to the set requires the author's decision, as before).
 - **No assertion is relaxed, no figure invented.** A computation that cannot yet be located for a test goes to **bring-up** with the reason — never back into a shared file.
 - **Census is rewritten with the structure**: tests that police the package (`…_sections_in_order`, `…_live_in_the_package`, `…_body_has_an_identity`, `…_is_callable`, `titles_are_unique`) are replaced by a **no-import contract test** (AST scan: no `import`/`from` may resolve to `kkgt.sections`) so the artifact cannot return; the figure ids above keep their names. Gate count may change; the change is declared in the same commit.
-- Gates per commit: `uv run pytest tests/ -q` (550+), `pnpm run type-check`0, `build` at wave close; no `lake` inside this work.
+- Gates per commit: `uv run pytest tests/ -q` (498; 495 with `-m 'not slow'`), `pnpm run type-check` 0, `build` at wave close; no `lake` inside this work.
 
 ## 4. Execution order (reconciliation is per test, not per file)
 
