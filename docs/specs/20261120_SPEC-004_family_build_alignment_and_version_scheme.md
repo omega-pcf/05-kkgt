@@ -154,19 +154,32 @@ committed token equal to `package.json`'s clean `vX.Y.Z` — never a
 
 | repository | `build` | `verify` | `figures` | `selfcitations` | `selfcitations:check` | `validate` | `scripts/tasks/parity.ts` | `main.tex` version region |
 |---|---|---|---|---|---|---|---|---|
-| `01-hilbert-polya` | ✓ | `verify:py && verify:lean && type-check` | ✓ → `generate:figures` | ✓ | ✓ | `selfcitations:check && parity && verify` | ✓ | exactly one pair |
-| `02-odd-zeta` | ✓ | `verify:py && verify:lean && type-check` | ✓ → declares no committed figures | ✓ | ✓ | `selfcitations:check && parity && verify` | ✓ | exactly one pair |
-| `03-crystalline-worldsheet` | ✓ | `verify:py && verify:lean && type-check` | ✓ → `generate:figures` | ✓ | ✓ | `selfcitations:check && parity && verify` | ✓ | exactly one pair |
-| `04-mersenne-cr` | ✓ | `verify:lean && type-check` (no Python suite) | ✓ → `generate:figures` | ✓ | ✓ | `selfcitations:check && parity && verify` | ✓ | exactly one pair |
-| `05-kk-golden-throat` | ✓ | `verify:py && verify:lean && type-check` | ✓ → `generate:figures` | ✓ | ✓ | `selfcitations:check && parity && verify` | ✓ (wired by the 2026-11-20 amendment) | exactly one pair |
+| `01-hilbert-polya` | ✓ | `verify:py && verify:lean && type-check` | ✓ → `generate:figures` | ✓ | ✓ | `selfcitations:check && parity && counts:check && verify` | ✓ | exactly one pair |
+| `02-odd-zeta` | ✓ | `verify:py && verify:lean && type-check` | ✓ → declares no committed figures | ✓ | ✓ | `selfcitations:check && parity && counts:check && verify` | ✓ | exactly one pair |
+| `03-crystalline-worldsheet` | ✓ | `verify:py && verify:lean && type-check` | ✓ → `generate:figures` | ✓ | ✓ | `selfcitations:check && parity && counts:check && verify` | ✓ | exactly one pair |
+| `04-mersenne-cr` | ✓ | `verify:lean && type-check` (no Python suite) | ✓ → `generate:figures` | ✓ | ✓ | `selfcitations:check && parity && counts:check && verify` | ✓ | exactly one pair |
+| `05-kk-golden-throat` | ✓ | `verify:py && verify:lean && type-check` | ✓ → `generate:figures` | ✓ | ✓ | `selfcitations:check && parity && counts:check && verify` | ✓ (wired by the 2026-11-20 amendment) | exactly one pair |
 
 Notes:
 
 - `selfcitations:check` runs **first** in `validate` in all five; the parity
   script joins the chain in `01`–`04` (P5) and, since the 2026-11-20
   amendment, in `05` as well — `05` keeps the manifest *and* gains the gate
-  (`validate = selfcitations:check && parity && verify`), which closes AC-15's
-  "…/`05`" open point.
+  (`validate = selfcitations:check && parity && counts:check && verify`), which
+  closes AC-15's "…/`05`" open point.
+- **counts** *(added 2026-11-21, follow-up of `CVR-001` §5)*: every repository
+  also runs `counts:check` inside `validate`, right after `parity` (the table
+  above carries the composed string). `scripts/tasks/counts.ts` measures the
+  counts the living documents state — the suite totals from
+  `pytest --collect-only`, the census size, the `\testref{...}` anchors, the
+  Lean source statistics with comments stripped, the `images/` inventory —
+  rewrites the marked regions (`<!-- counts:begin id="..." -->` in prose,
+  `# counts:begin id="..."` on a line of its own inside a code fence) and
+  regenerates `docs/counts.md`; a stale number then fails `validate` with a
+  diff instead of surviving as a report's footnote. The `counts` and
+  `counts:check` keys are deliberately **outside** the six-key parity
+  contract above (parity's list is unchanged), so the gate travels with the
+  `validate` wiring of each repository.
 - `figures` (**P6**): every repository exposes the key and parity asserts it
   from P6 on; behind the alias the mechanism stays local — `01`/`03`/`05`
   `uv run python scripts/figures/main.py`, `04` `bash scripts/figures/build.sh`
@@ -185,8 +198,11 @@ Notes:
 - `verify:lean` (**P7**): the form is standardised (`cd lean && lake
   build [target]`) and the scope is declared here, without changing what any
   repository compiles — `01` every library in `lakefile.toml` (`pcf`,
-  `PCF_Complete_v11_Unified`, `PCF_OperatorConvergence`), `02` all eleven
-  libraries, `03` the named target `CW6_complete_v2`, `04` every library
+  `PCF_Complete_v11_Unified`, `PCF_OperatorConvergence`), `02` the one
+  library its `lakefile.toml` declares (`odd_zeta_pcf_v1`; *corrected
+  2026-11-21, `CVR-001` F9 — the eleven-library lakefile of the earlier
+  inventories lives on the local `scratch/lean-release` branch, not on
+  `origin/main`*), `03` the named target `CW6_complete_v2`, `04` every library
   (`mersenne-cr`, `golden_mersenne`), `05` the named target
   `TorreKK_LYR_v35`.  No `lakefile.toml`, `lake-manifest.json` or mathlib pin
   was touched in any repository.
