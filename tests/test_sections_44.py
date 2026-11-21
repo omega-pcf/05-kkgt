@@ -8,7 +8,7 @@ asserts, this class recomputes, and ``background_figure_statements``
 carries the section's own statements into this module (SPEC-002 §1): no
 test here reads a section's stdout.
 
-The figure contract itself (the caption names the test) lives in
+The figure contract itself (the artifact and its byte pin) lives in
 ``test_section_census.py``.
 """
 

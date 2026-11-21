@@ -8,15 +8,14 @@ name, with ``[param]`` when the test is parametrised -- which is short
 enough to set inline and unambiguous because the suite may not define the
 same test name twice.
 
-Three things are pinned here:
+Two things are pinned here:
 
 * the exact set of tests main.tex refers to (a new citation needs its line
   here, added together with the citation itself);
-* the test each of the five figures is attributed to;
 * the absence of the older contract (a numbered ``section~N`` citation),
   which is what ``\\testref{...}`` replaced.
 
-A fourth guard is the no-import contract: an AST sweep of ``tests/`` and
+A third guard is the no-import contract: an AST sweep of ``tests/`` and
 ``scripts/`` proving that no module imports the deleted computation
 package (SPEC-002 §3).
 """
@@ -42,13 +41,6 @@ CITED_IN_TEX = [
     arg.replace(r"\_", "_")
     for arg in re.findall(r"\\testref\{([^}]*)\}", TEX)
 ]
-
-# The test each figure is attributed to.  It no longer runs anything:
-# it verifies the committed artifact (present, byte-stable, cited by the
-# caption) -- the writing itself lives in scripts/figures (SPEC-002 §1.1).
-FIGURE_TESTS = {
-    n: f"test_section_writes_its_figure[section-{n:02d}]" for n in FIGURES
-}
 
 _IDS: list[str] | None = None
 
@@ -81,28 +73,6 @@ def resolve(citation: str) -> list[str]:
         i for i in ids
         if i.rsplit("::", 1)[1].split("[", 1)[0] == citation
     ]
-
-
-def caption_of(figure_file: str) -> str:
-    """Text of the \\caption{...} that belongs to ``\\includegraphics{file}``."""
-    m = re.search(
-        r"\\includegraphics(?:\[[^\]]*\])?\{" + re.escape(figure_file) + r"\}",
-        TEX,
-    )
-    assert m, f"main.tex does not include {figure_file}"
-    start = TEX.index(r"\caption{", m.end()) + len(r"\caption{")
-    i, depth = start, 1
-    while depth:
-        char = TEX[i]
-        if char == "\\":            # \{ \} and the backslash of a macro
-            i += 2
-            continue
-        if char == "{":
-            depth += 1
-        elif char == "}":
-            depth -= 1
-        i += 1
-    return TEX[start:i - 1]
 
 
 @pytest.mark.section
@@ -204,12 +174,6 @@ class TestTexTestRefs:
         test really verifies the number next to it before editing this set.
         """
         assert set(CITED_IN_TEX) == {
-            # the five figures, by the test that writes them
-            "test_section_writes_its_figure[section-10]",
-            "test_section_writes_its_figure[section-44]",
-            "test_section_writes_its_figure[section-13]",
-            "test_section_writes_its_figure[section-39]",
-            "test_section_writes_its_figure[section-41]",
             # the numbers, by the test that recomputes or reads them
             "test_shannon_bit_against_the_area_law",
             "test_mass_ratios_of_imp_a1",
@@ -338,26 +302,15 @@ class TestFigureSections:
     def test_section_writes_its_figure(self, n):
         """Artifact verification only: this test generates nothing.
 
-        The five cited ids are frozen.  ``pnpm run figures`` writes the
-        PDF; here the file must exist under ``images/``, still carry the
-        bytes pinned in ``FIGURE_MD5``, and be attributed to this test by
-        the caption that quotes it (SPEC-002 §1.1, §4.1).
+        ``pnpm run figures`` writes the PDF; here the file must exist
+        under ``images/`` and still carry the bytes pinned in
+        ``FIGURE_MD5`` (SPEC-002 §1.1).  The id is no longer cited by
+        the manuscript -- the caption carries no witness label -- but the
+        test stays in the suite and keeps verifying the artifact.
         """
         name = FIGURES[n]
         verify_figure_artifact(name)
         assert set(FIGURE_MD5) == set(FIGURES.values()), FIGURE_MD5
-        caption = caption_of(name).replace(r"\_", "_")
-        assert FIGURE_TESTS[n] in caption, (
-            f"the caption of {name} must cite {FIGURE_TESTS[n]!r}"
-        )
-
-    def test_every_figure_caption_cites_the_test_that_writes_it(self):
-        """Each of the five figures is attributed to a test, in its caption."""
-        for n, name in FIGURES.items():
-            caption = caption_of(name).replace(r"\_", "_")
-            assert FIGURE_TESTS[n] in caption, (
-                f"the caption of {name} must cite {FIGURE_TESTS[n]!r}"
-            )
 
     def test_slow_figure_sections_are_declared(self):
         """Section 41 (figure 5) renders >10 s and carries the slow mark.

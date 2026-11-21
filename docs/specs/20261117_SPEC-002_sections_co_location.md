@@ -15,14 +15,14 @@
 
 ## 2. Facts that make the migration safe (verified 2026-11-17)
 
-- **0 of the 99 `\testref` anchors** cite the marker driver (`grep 'testref{test_section_runs' = 0`): the driver and registry can be deleted without touching the paper's anchors.
-- **5 cited anchors** live in the figure census: `test_section_writes_its_figure[section-10|13|39|41|44]` — these ids are frozen: the test keeps its name and its `[section-NN]` ids (explicit `pytest.param(id=…)`). Their **bodies change** from "run the section and observe a file appear" to **artifact verification only** (existence/hash/caption), because generation moves to `scripts/figures` (§1.1).
+- **0 of the 94 `\testref` anchors** cite the marker driver (`grep 'testref{test_section_runs' = 0`): the driver and registry can be deleted without touching the paper's anchors.
+- **5 uncited anchors** live in the figure census: `test_section_writes_its_figure[section-10|13|39|41|44]` — these ids are frozen: the test keeps its name and its `[section-NN]` ids (explicit `pytest.param(id=…)`). Their **bodies change** from "run the section and observe a file appear" to **artifact verification only** (existence/hash), because generation moves to `scripts/figures` (§1.1). **Update (2026-11-20):** the operator retired the five labels from the captions (the figures now carry no witness text), so the `\testref` set went **99 → 94** and the census guard that read the captions (`test_every_figure_caption_cites_the_test_that_writes_it`) was deleted with its premise. The tests stay in the suite and keep verifying the artifacts; they are simply no longer cited — AUD-001 class *d* (asserted by a test, never cited).
 - **19 files** currently reference the package (conftest, `constants`, `harness`, `kkgt/__init__`, the package itself, census, driver, and all8 claim-test files): each is a migration unit.
 - Cited claim tests are **named functions** (`test_koide_scale_and_unit`, …): their names never move; only their bodies grow to own their computations.
 
 ## 3. Guards
 
-- `\testref` set stays **99**; the exact-equality pin stays (any change to the set requires the author's decision, as before).
+- `\testref` set stays **94**; the exact-equality pin stays (any change to the set requires the author's decision, as before).
 - **No assertion is relaxed, no figure invented.** A computation that cannot yet be located for a test goes to **bring-up** with the reason — never back into a shared file.
 - **Census is rewritten with the structure**: tests that police the package (`…_sections_in_order`, `…_live_in_the_package`, `…_body_has_an_identity`, `…_is_callable`, `titles_are_unique`) are replaced by a **no-import contract test** (AST scan: no `import`/`from` may resolve to `kkgt.sections`) so the artifact cannot return; the figure ids above keep their names. Gate count may change; the change is declared in the same commit.
 - Gates per commit: `uv run pytest tests/ -q` (550+), `pnpm run type-check`0, `build` at wave close; no `lake` inside this work.
@@ -40,4 +40,4 @@
 - [ ] No test parses section stdout; no module-level mutable registries; no `SECCIONES.append`.
 - [ ] Every migrated function: English name, annotated signature, module-level imports.
 - [ ] All47 sections' outputs are either asserted by a named claim test or listed as bring-up in AUD-001/TST-001.
-- [ ] Census green (declared count), `\testref`=99, gates green, `tests/README` regenerated.
+- [ ] Census green (declared count), `\testref`=94, gates green, `tests/README` regenerated.

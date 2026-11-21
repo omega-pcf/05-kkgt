@@ -259,10 +259,12 @@ repository) is never printed at all: the claim keeps its citation,
    agent without Lean, in draft) that need to tag a claim as written but not
    yet named. The printed text never invokes it: the body marks those claims
    `P`, the gloss does not mention it and the prose no longer speaks of it.
-8. **No status tags in captions.** A caption already names the test that
-   generates the figure (`\testref{…}` of that test, and the test of the
-   claim itself), which carries the status; a `\tier{…}`
-   inside `\caption{…}` is removed, not kept. Tags belong to the body.
+8. **No status tags in captions.** A caption may name the test of the
+   claim it states (`\testref{…}` of that claim's test), which carries the
+   status; it no longer names the test behind the figure — that label was
+   retired from the captions on 2026-11-20, the figures now carrying no
+   witness text at all. A `\tier{…}` inside `\caption{…}` is removed, not
+   kept. Tags belong to the body.
 
 ### 8.3 Alphabet
 

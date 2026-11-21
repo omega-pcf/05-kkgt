@@ -56,7 +56,7 @@ González García, J. A., González García, V. M., Dressler Pérez, I. M., & Ga
 
 ### Numerical checks
 
-- **`tests/`**: the suite that checks every number and every figure of the note, `uv run pytest tests/ -q` (499 tests; 496 with `-m 'not slow'`); each claim test owns the computation that produces its numbers, `main.tex` cites the test behind each number with `\testref{...}`, and an AST contract test forbids any module from importing the deleted `kkgt.sections` package.
+- **`tests/`**: the suite that checks every number and every figure of the note, `uv run pytest tests/ -q` (498 tests; 495 with `-m 'not slow'`); each claim test owns the computation that produces its numbers, `main.tex` cites the test behind each number with `\testref{...}`, and an AST contract test forbids any module from importing the deleted `kkgt.sections` package.
 
 ### Figures (`images/`)
 

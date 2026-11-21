@@ -8,22 +8,21 @@ computation module any more: each claim test owns the code that produces
 its numbers and asserts them directly (SPEC-002). `main.tex` cites the
 tests that check its numbers with `\testref{...}` (a test name of the
 suite), which `tests/test_section_census.py` parses to prove that every
-reference the manuscript makes exists in the suite, that no numbered
-`section~N` citation is left, and that each of the five figures names the
-test that writes it. The same file holds the no-import contract: an AST
+reference the manuscript makes exists in the suite, and that no numbered
+`section~N` citation is left. The same file holds the no-import contract: an AST
 sweep of `tests/` and `scripts/` that fails on any `import`/`from`
 resolving to the deleted `kkgt.sections` package or to a `seccion_*`
 function, so the artifact cannot return (SPEC-002 §3).
 
 ```bash
-uv run pytest tests/ -q                 # whole suite   (499 tests, ~35 s)
-uv run pytest tests/ -q -m 'not slow'   # without >10 s (496 tests, ~30 s)
+uv run pytest tests/ -q                 # whole suite   (498 tests, ~35 s)
+uv run pytest tests/ -q -m 'not slow'   # without >10 s (495 tests, ~30 s)
 pnpm run test                           # same, through package.json
 ```
 
 The pytest configuration lives in `pyproject.toml` under `[tool.pytest.ini_options]`
 (`testpaths`, `pythonpath`, `markers`, `addopts`), so a bare `uv run pytest` collects
-the same 499 tests as `uv run pytest tests/ -q`.
+the same 498 tests as `uv run pytest tests/ -q`.
 
 ## Layout (mirrors `03-crystalline-worldsheet/tests/`)
 
@@ -106,9 +105,11 @@ as it was written.
 The number in parentheses is the count of collected items of that class
 (`uv run pytest tests/ --collect-only -q | grep -c <ClassName>`), so it
 moves whenever a test is added. Every section is covered by one or more
-deep tests that recompute its numbers; the five cited figure tests
+deep tests that recompute its numbers; the five figure tests
 (`test_section_writes_its_figure[section-10|13|39|41|44]`) verify the
-committed artifacts instead of writing anything.
+committed artifacts instead of writing anything. The manuscript no longer
+cites them: since the witness labels left the captions, only the artifact
+is pinned here, never the attribution.
 
 ## Two kinds of check
 
@@ -144,4 +145,4 @@ pins `SLOW_SECTIONS ∩ FIGURES = {41}`.
 Figures are never written by a test: the five `fig_*.pdf` files belong to
 the generators of `scripts/figures` (`pnpm run figures`), and the tests
 only verify that the committed bytes of `images/` still match
-`FIGURE_MD5` and that the caption attributes each file to its test.
+`FIGURE_MD5`.
