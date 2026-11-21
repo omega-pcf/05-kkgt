@@ -141,6 +141,10 @@ above (script keys exist, version region present and exactly one pair, the
 committed token is the clean `vX.Y.Z` of `package.json` and never a
 `-dev@<sha>` suffix — *amended 2026-11-20*), plus a family manifest in05
 listing the expected contract — a repo that drifts fails its own `validate`.
+*(Amended 2026-11-21: the manifest now exists — `scripts/shared-files.json`
+pinned with one SHA-256 per shared file, verified by
+`scripts/tasks/manifest.ts` and wired into every `validate` as
+`manifest:check`.  See §3.1, note "Shared-file manifest".)*
 
 ### 3.1 Family manifest (P5 landed 2026-11-20; `figures` and `verify` amended by P6/P7, 2026-11-20)
 
@@ -154,19 +158,19 @@ committed token equal to `package.json`'s clean `vX.Y.Z` — never a
 
 | repository | `build` | `verify` | `figures` | `selfcitations` | `selfcitations:check` | `validate` | `scripts/tasks/parity.ts` | `main.tex` version region |
 |---|---|---|---|---|---|---|---|---|
-| `01-hilbert-polya` | ✓ | `verify:py && verify:lean && type-check` | ✓ → `generate:figures` | ✓ | ✓ | `selfcitations:check && parity && counts:check && verify` | ✓ | exactly one pair |
-| `02-odd-zeta` | ✓ | `verify:py && verify:lean && type-check` | ✓ → declares no committed figures | ✓ | ✓ | `selfcitations:check && parity && counts:check && verify` | ✓ | exactly one pair |
-| `03-crystalline-worldsheet` | ✓ | `verify:py && verify:lean && type-check` | ✓ → `generate:figures` | ✓ | ✓ | `selfcitations:check && parity && counts:check && verify` | ✓ | exactly one pair |
-| `04-mersenne-cr` | ✓ | `verify:lean && type-check` (no Python suite) | ✓ → `generate:figures` | ✓ | ✓ | `selfcitations:check && parity && counts:check && verify` | ✓ | exactly one pair |
-| `05-kk-golden-throat` | ✓ | `verify:py && verify:lean && type-check` | ✓ → `generate:figures` | ✓ | ✓ | `selfcitations:check && parity && counts:check && verify` | ✓ (wired by the 2026-11-20 amendment) | exactly one pair |
+| `01-hilbert-polya` | ✓ | `verify:py && verify:lean && type-check` | ✓ → `generate:figures` | ✓ | ✓ | `selfcitations:check && parity && counts:check && manifest:check && verify` | ✓ | exactly one pair |
+| `02-odd-zeta` | ✓ | `verify:py && verify:lean && type-check` | ✓ → declares no committed figures | ✓ | ✓ | `selfcitations:check && parity && counts:check && manifest:check && verify` | ✓ | exactly one pair |
+| `03-crystalline-worldsheet` | ✓ | `verify:py && verify:lean && type-check` | ✓ → `generate:figures` | ✓ | ✓ | `selfcitations:check && parity && counts:check && manifest:check && verify` | ✓ | exactly one pair |
+| `04-mersenne-cr` | ✓ | `verify:lean && type-check` (no Python suite) | ✓ → `generate:figures` | ✓ | ✓ | `selfcitations:check && parity && counts:check && manifest:check && verify` | ✓ | exactly one pair |
+| `05-kk-golden-throat` | ✓ | `verify:py && verify:lean && type-check` | ✓ → `generate:figures` | ✓ | ✓ | `selfcitations:check && parity && counts:check && manifest:check && verify` | ✓ (wired by the 2026-11-20 amendment) | exactly one pair |
 
 Notes:
 
 - `selfcitations:check` runs **first** in `validate` in all five; the parity
   script joins the chain in `01`–`04` (P5) and, since the 2026-11-20
-  amendment, in `05` as well — `05` keeps the manifest *and* gains the gate
-  (`validate = selfcitations:check && parity && counts:check && verify`), which
-  closes AC-15's "…/`05`" open point.
+  amendment, in `05` as well — so `05` carries the parity gate like its
+  siblings (`validate = selfcitations:check && parity && counts:check && manifest:check && verify`),
+  which closes AC-15's "…/`05`" open point.
 - **counts** *(added 2026-11-21, follow-up of `CVR-001` §5)*: every repository
   also runs `counts:check` inside `validate`, right after `parity` (the table
   above carries the composed string). `scripts/tasks/counts.ts` measures the
@@ -186,6 +190,44 @@ Notes:
   deliberately **outside** the six-key parity contract above (parity's list is
   unchanged), so the gate travels with the `validate` wiring of each
   repository.
+- **Shared-file manifest** *(added 2026-11-21, closing `CVR-001` CT-6 and §5.2
+  priority 2 — the pinned hash list `BLD-001` §4 Option A described but never
+  built, whose absence let `.latexmkrc` and `scripts/utils/git.ts` drift
+  undetected)*: `scripts/shared-files.json` pins one SHA-256 for every file the
+  five repositories must carry **byte-identically** —
+  `scripts/tasks/{citation,checksums,cleanup,compile,manifest,parity,selfcitations}.ts`,
+  `scripts/generate_types.ts`, `scripts/types.ts`, `scripts/types/global.d.ts`,
+  `scripts/schemas/cff-schema.json`, `scripts/schemas/zenodo-schema.json`,
+  `scripts/utils/git.ts`, `tsconfig.json`, `.latexmkrc`, `.npmrc`, `.nvmrc`,
+  `.python-version`, `LICENSE` — and `scripts/tasks/manifest.ts` verifies them:
+  `pnpm run manifest` rewrites the pins from the working tree,
+  `pnpm run manifest:check` runs inside `validate` right after `counts:check`
+  and fails with the file's name plus both digests.  Everything measured and
+  deliberately NOT pinned sits in the manifest's `excluded` table with its
+  reason in the same JSON (so that file stays byte-identical too):
+  `package.json`/`CITATION.cff`/`.zenodo.json` (per-repository identity and
+  generated metadata), `pyproject.toml`/`uv.lock` (per-repository
+  dependencies), `scripts/tasks/counts.ts` (per-repository counter table by
+  design), `.release-it.ts`/`.gitignore`/`.chktexrc` (per-repository), the
+  manifest itself (a file cannot hold its own digest), and `scripts/build.ts`
+  — the one file of `CVR-001` §5.2's list that stays unpinned: `05` calls
+  `syncCounts()` before the render while `01`/`02`/`03`/`04` do not and their
+  `counts.ts` exports no `syncCounts()` yet, so the two sides must be unified
+  before it can be pinned (recorded as the manifest's first follow-up).
+  Design sources (researched 2026-11-21): the checksum-manifest pattern — one
+  versioned list of digest + filename, verified as a batch
+  (https://www.sysax.com/topics/file-integrity-verification/checksum-files-and-manifests/);
+  the lockfile philosophy — pin the exact versions *and hashes* so the
+  installed tree cannot silently drift
+  (https://safeguard.sh/resources/blog/what-is-a-lockfile);
+  integrity versus authenticity — a checksum proves the bytes did not shift,
+  not who produced them, so the manifest guards drift, not malice
+  (https://docs.gradle.org/current/userguide/securing_dependencies.html);
+  and the reproducible-builds timestamp rule this build already follows
+  (`SOURCE_DATE_EPOCH`, https://reproducible-builds.org/specs/source-date-epoch/).
+  Like a lockfile the manifest records a state: it makes divergence loud, it
+  does not remove it — the remedy for a failure is always a family-wide port
+  plus a refreshed pin committed with the change.
 - `figures` (**P6**): every repository exposes the key and parity asserts it
   from P6 on; behind the alias the mechanism stays local — `01`/`03`/`05`
   `uv run python scripts/figures/main.py`, `04` `bash scripts/figures/build.sh`
