@@ -42,6 +42,18 @@
   `Version: v0.1.0-dev@a1b2c3d` (and `…-a1b2c3d-dirty` when the worktree has
   uncommitted changes). Derived at build time, never written by hand:
   `git rev-parse --short HEAD` + `git status --porcelain`.
+- **Typeset in monospace (2026-11-20).** The page-1 line sets only the
+  identifier in `\texttt`; the labels stay `\textbf` and `Version: ` itself
+  is not typed:
+
+  ```latex
+  \date{<Month D, YYYY>; \textbf{Last modified:} \today; \textbf{Version:} \texttt{vX.Y.Z}}
+  ```
+
+  Both tiers print inside that wrapper — `injectDevVersion()` replaces only
+  the token between the braces, so the `-dev@<sha>` form is monospaced as
+  well — and `selfcitations --check` together with `parity` fail when a
+  committed token sits outside `\texttt{…}` (the sync wraps it back).
 - **It cannot compete with the release tag** by construction: it is a *display*
   string in the PDF only — it never enters `package.json`, `CITATION.cff`,
   `.zenodo.json`, the changelog, or any tag, **nor `main.tex` in git**
