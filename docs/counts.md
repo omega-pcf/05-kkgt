@@ -7,14 +7,17 @@
 
 | counter | value | measured from | quoted in |
 |---|---:|---|---|
-| `pytest.collected` | 498 | `uv run pytest tests/ -q --collect-only` | `README.md` (`suite`), `tests/README.md` (`commands`), `tests/README.md` (`suite-total`) |
-| `pytest.not_slow` | 495 | `uv run pytest tests/ -q -m 'not slow' --collect-only` | `README.md` (`suite`), `tests/README.md` (`commands`) |
+| `pytest.collected` | 498 | `uv run pytest tests/ -q --collect-only` | `README.md` (`suite`), `tests/README.md` (`commands`), `tests/README.md` (`suite-total`), `main.tex` (`macros`), `main.tex` (`suite-total`) |
+| `pytest.not_slow` | 495 | `uv run pytest tests/ -q -m 'not slow' --collect-only` | `README.md` (`suite`), `tests/README.md` (`commands`), `main.tex` (`macros`), `main.tex` (`suite-not-slow`) |
 | `pytest.census` | 13 | `uv run pytest tests/test_section_census.py -q --collect-only` | — |
 | `testref.occurrences` | 94 | occurrences of `\testref{` in `main.tex` | — |
 | `testref.distinct` | 84 | distinct ids inside `\testref{…}` in `main.tex` | — |
-| `lean.theorems` | 164 | declarations in `lean/TorreKK_LYR_v35.lean` (comments stripped) | `README.md` (`lean`) |
-| `lean.axioms` | 6 | axioms in `lean/TorreKK_LYR_v35.lean` (comments stripped) | `README.md` (`lean`) |
-| `lean.sorry` | 0 | `sorry` in `lean/TorreKK_LYR_v35.lean` (comments stripped) | `README.md` (`lean`) |
+| `lean.theorems` | 164 | declarations in `lean/TorreKK_LYR_v35.lean` (comments stripped) | `README.md` (`lean`), `main.tex` (`macros`), `main.tex` (`lean`) |
+| `lean.axioms` | 6 | axioms in `lean/TorreKK_LYR_v35.lean` (comments stripped) | `README.md` (`lean`), `main.tex` (`macros`), `main.tex` (`lean`), `main.tex` (`axioms`) |
+| `lean.sorry` | 0 | `sorry` in `lean/TorreKK_LYR_v35.lean` (comments stripped) | `README.md` (`lean`), `main.tex` (`macros`), `main.tex` (`lean`), `main.tex` (`sorry-claim`) |
+| `kkgt.sections` | 47 | distinct `TestSection<N>` classes in `tests/test_sections_*.py` | `main.tex` (`macros`), `main.tex` (`sections`), `main.tex` (`sections-map`) |
 | `images.files` | 5 | file inventory of `images/` | — |
 
-The marked regions live in the documents that state the numbers: [`README.md`](../README.md) `lean`, [`README.md`](../README.md) `suite`, [`tests/README.md`](../tests/README.md) `commands`, [`tests/README.md`](../tests/README.md) `suite-total`.  Regenerate everything with `pnpm run counts`; `validate` runs `pnpm run counts:check` after `parity`.
+The marked regions live in the documents that state the numbers: [`README.md`](../README.md) `lean`, [`README.md`](../README.md) `suite`, [`tests/README.md`](../tests/README.md) `commands`, [`tests/README.md`](../tests/README.md) `suite-total`, [`main.tex`](../main.tex) `macros`, [`main.tex`](../main.tex) `sections`, [`main.tex`](../main.tex) `sections-map`, [`main.tex`](../main.tex) `suite-total`, [`main.tex`](../main.tex) `suite-not-slow`, [`main.tex`](../main.tex) `lean`, [`main.tex`](../main.tex) `axioms`, [`main.tex`](../main.tex) `sorry-claim`.  Regenerate everything with `pnpm run counts`; `validate` runs `pnpm run counts:check` after `parity`.
+
+`pnpm run build` re-syncs every region before the render (`syncCounts()` in `scripts/build.ts`), because the numbers the manuscript prints come from them. That makes the suite counters a per-build cost: three `pytest --collect-only` runs (collection only — seconds, never a test run). The alternative, measuring at release time, would let a PDF print a stale count, which is exactly the defect this mechanism exists to prevent.

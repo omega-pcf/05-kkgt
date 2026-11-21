@@ -11,8 +11,9 @@
  * unified diff when either has drifted, so a stale count is loud instead of
  * a report's footnote.
  *
- * Markers follow the selfcitations precedent (SPEC-001 §5.2) and come in two
- * forms, because a code fence prints HTML comments as text:
+ * Markers follow the selfcitations precedent (SPEC-001 §5.2) and come in three
+ * forms, because a code fence prints HTML comments as text and a `%` comments
+ * out the rest of its TeX line:
  *
  *   inline (HTML comment, prose):
  *     <!-- counts:begin id="suite" -->498 tests<!-- counts:end id="suite" -->
@@ -20,6 +21,26 @@
  *     # counts:begin id="commands"
  *     uv run pytest tests/ -q   # whole suite (498 tests)
  *     # counts:end id="commands"
+ *
+ *   tex (LaTeX comment, in main.tex — the markers sit on their own lines, as
+ *   the selfcite version markers do, because `%` comments out the rest of a
+ *   line):
+ *     % counts:begin id="macros"
+ *     \newcommand{\CountTests}{498}
+ *     % counts:end id="macros"
+ *
+ * The manuscript's counted claims are declared ONCE, as \newcommand macros in
+ * the `macros` region of `main.tex`, and the prose regions quote those macros
+ * instead of a raw number: a value is therefore typed into the tree only by
+ * this task, and a hand-typed digit in the prose fails `counts:check`.
+ * \newcommand rather than \def or an \input'ed generated file is deliberate:
+ * it refuses to shadow an already-defined name, so a collision with a package
+ * fails the compile instead of silently redefining (TeX FAQ, "Package reports
+ * 'command already defined'" — a redefiner that does not use \newcommand
+ * changes behaviour with no error at all), the definitions stay collected in
+ * the preamble rather than scattered through the document (Overleaf,
+ * "Commands"), and the region is rewritten whole, which keeps the task
+ * idempotent (f(f(x)) = f(x)) exactly like the README regions.
  *
  * Determinism: no Date, no locale, no network — only local measurements, so
  * f(f(x)) = f(x).  Dated reports under `docs/reports/` and the specs under
@@ -125,6 +146,15 @@ const LEAN_FILES = ['lean/TorreKK_LYR_v35.lean'];
 /** The manuscript whose `\testref{...}` anchors the docs state. */
 const TEX = 'main.tex';
 
+/**
+ * The test modules whose `TestSection<N>` classes are the numbered sections
+ * of the package `main.tex` counts ("forty-seven numbered sections"): the
+ * section-to-test map of `tests/README.md` is hand-written, so the count is
+ * measured from the classes themselves — a section added to the suite without
+ * touching the map still moves the number.
+ */
+const SECTION_MODULES = /^test_sections_.*\.py$/;
+
 interface Counter {
   id: string;
   /** How the value is measured — printed verbatim in `docs/counts.md`. */
@@ -174,6 +204,21 @@ const COUNTERS: Counter[] = [
     measure: () => LEAN_FILES.reduce((n, f) => n + matches(stripLeanComments(readFileSync(f, 'utf8')), SORRY), 0),
   },
   {
+    id: 'kkgt.sections',
+    source: 'distinct `TestSection<N>` classes in `tests/test_sections_*.py`',
+    measure: () => {
+      const modules = readdirSync('tests').filter((name) => SECTION_MODULES.test(name));
+      const sections = new Set<string>();
+      for (const module of modules) {
+        for (const match of readFileSync(`tests/${module}`, 'utf8').matchAll(/\bclass\s+TestSection(\d+)/g)) {
+          sections.add(match[1]);
+        }
+      }
+      if (sections.size === 0) throw new Error('no `TestSection<N>` class found under tests/');
+      return sections.size;
+    },
+  },
+  {
     id: 'images.files',
     source: 'file inventory of `images/`',
     measure: () => countFiles('images'),
@@ -188,8 +233,9 @@ interface Region {
   file: string;
   id: string;
   /** `inline` = one HTML-comment pair around a span of prose; `block` = a
-   *  pair of shell-comment lines around whole lines inside a code fence. */
-  kind: 'inline' | 'block';
+   *  pair of shell-comment lines around whole lines inside a code fence;
+   *  `tex` = a pair of `%` comment lines around whole lines of main.tex. */
+  kind: 'inline' | 'block' | 'tex';
   /** The counters this region quotes (drives the "quoted in" column). */
   uses: string[];
   render: (c: Counts) => string;
@@ -228,6 +274,76 @@ const REGIONS: Region[] = [
     uses: ['pytest.collected'],
     render: (c) => String(c['pytest.collected']),
   },
+  {
+    // The manuscript's declarations: the single place a count is written into
+    // main.tex.  Everything the prose prints goes through these macros.
+    file: 'main.tex',
+    id: 'macros',
+    kind: 'tex',
+    uses: ['kkgt.sections', 'pytest.collected', 'pytest.not_slow', 'lean.theorems', 'lean.axioms', 'lean.sorry'],
+    render: (c) =>
+      [
+        `\\newcommand{\\CountSections}{${c['kkgt.sections']}}`,
+        `\\newcommand{\\CountTests}{${c['pytest.collected']}}`,
+        `\\newcommand{\\CountNotSlow}{${c['pytest.not_slow']}}`,
+        `\\newcommand{\\CountTheorems}{${c['lean.theorems']}}`,
+        `\\newcommand{\\CountAxioms}{${c['lean.axioms']}}`,
+        `\\newcommand{\\CountSorry}{${c['lean.sorry']}}`,
+      ].join('\n'),
+  },
+  {
+    file: 'main.tex',
+    id: 'sections',
+    kind: 'tex',
+    uses: ['kkgt.sections'],
+    render: () => '\\CountSections{} numbered sections',
+  },
+  {
+    file: 'main.tex',
+    id: 'sections-map',
+    kind: 'tex',
+    uses: ['kkgt.sections'],
+    render: () => '\\CountSections{} sections',
+  },
+  {
+    file: 'main.tex',
+    id: 'suite-total',
+    kind: 'tex',
+    uses: ['pytest.collected'],
+    render: () => '$\\CountTests{}$',
+  },
+  {
+    file: 'main.tex',
+    id: 'suite-not-slow',
+    kind: 'tex',
+    uses: ['pytest.not_slow'],
+    render: () => '$\\CountNotSlow{}$',
+  },
+  {
+    file: 'main.tex',
+    id: 'lean',
+    kind: 'tex',
+    uses: ['lean.theorems', 'lean.axioms', 'lean.sorry'],
+    render: (c) =>
+      c['lean.sorry'] === 0
+        ? '\\CountTheorems{} theorems and \\CountAxioms{} axioms, no \\code{sorry},'
+        : '\\CountTheorems{} theorems and \\CountAxioms{} axioms, \\CountSorry{} occurrences of \\code{sorry},',
+  },
+  {
+    file: 'main.tex',
+    id: 'axioms',
+    kind: 'tex',
+    uses: ['lean.axioms'],
+    render: () => '\\CountAxioms{} axioms,',
+  },
+  {
+    file: 'main.tex',
+    id: 'sorry-claim',
+    kind: 'tex',
+    uses: ['lean.sorry'],
+    render: (c) =>
+      c['lean.sorry'] === 0 ? 'There is no \\code{sorry}.' : 'There are \\CountSorry{} occurrences of \\code{sorry}.',
+  },
 ];
 
 /* ---------------------------------------------------------------- markers */
@@ -244,6 +360,14 @@ function blockBegin(id: string): RegExp {
 function blockEnd(id: string): RegExp {
   return new RegExp(`^[\\t ]*#\\s*counts:end\\s+id="${id}"[\\t ]*$`, 'gm');
 }
+/** The `%` comment form used by main.tex (a `%` swallows the rest of its line,
+ *  so — like the selfcite version markers — each marker owns a whole line). */
+function texBegin(id: string): RegExp {
+  return new RegExp(`^[\\t ]*%\\s*counts:begin\\s+id="${id}"[\\t ]*$`, 'gm');
+}
+function texEnd(id: string): RegExp {
+  return new RegExp(`^[\\t ]*%\\s*counts:end\\s+id="${id}"[\\t ]*$`, 'gm');
+}
 
 interface Span {
   contentStart: number;
@@ -252,8 +376,9 @@ interface Span {
 
 /** Locate the single marker pair of `region` in `text`, or throw. */
 function findSpan(text: string, region: Region): Span {
-  const beginRe = region.kind === 'inline' ? inlineBegin(region.id) : blockBegin(region.id);
-  const endRe = region.kind === 'inline' ? inlineEnd(region.id) : blockEnd(region.id);
+  const beginRe =
+    region.kind === 'inline' ? inlineBegin(region.id) : region.kind === 'block' ? blockBegin(region.id) : texBegin(region.id);
+  const endRe = region.kind === 'inline' ? inlineEnd(region.id) : region.kind === 'block' ? blockEnd(region.id) : texEnd(region.id);
   const begins = [...text.matchAll(beginRe)];
   const ends = [...text.matchAll(endRe)];
   const where = `${region.file} id="${region.id}"`;
@@ -266,12 +391,12 @@ function findSpan(text: string, region: Region): Span {
   const endStart = ends[0].index;
   if (endStart < beginEnd) throw new Error(`${where}: marker pair is inverted (end before begin)`);
 
-  if (region.kind === 'block') {
+  if (region.kind !== 'inline') {
     // Markers sit on their own lines; the content is everything between them,
     // without the newline that terminates the last content line.
     const contentStart = text.charAt(beginEnd) === '\n' ? beginEnd + 1 : beginEnd;
     if (contentStart !== endStart && text.charAt(endStart - 1) !== '\n') {
-      throw new Error(`${where}: a block marker must sit on a line of its own`);
+      throw new Error(`${where}: a ${region.kind} marker must sit on a line of its own`);
     }
     return { contentStart, contentEnd: endStart - 1 };
   }
@@ -324,6 +449,12 @@ function renderLedger(): string {
     'The marked regions live in the documents that state the numbers: ' +
       REGIONS.map((r) => `[\`${r.file}\`](../${r.file}) \`${r.id}\``).join(', ') +
       '.  Regenerate everything with `pnpm run counts`; `validate` runs `pnpm run counts:check` after `parity`.',
+    '',
+    '`pnpm run build` re-syncs every region before the render (`syncCounts()` in ' +
+      '`scripts/build.ts`), because the numbers the manuscript prints come from them. That makes the suite ' +
+      'counters a per-build cost: three `pytest --collect-only` runs (collection only — seconds, never a ' +
+      'test run). The alternative, measuring at release time, would let a PDF print a stale count, which is ' +
+      'exactly the defect this mechanism exists to prevent.',
     '',
   ].join('\n');
 }
@@ -451,4 +582,26 @@ function main(): number {
   }
 }
 
-process.exit(main());
+/**
+ * Called by `scripts/build.ts` before the render, exactly where it calls
+ * `syncSelfCitations()`: the count regions are a build artifact, so the
+ * manuscript is brought up to date with the measurements before it is
+ * compiled, and a stale number can never reach the PDF.
+ */
+export function syncCounts(): void {
+  const result = run(false);
+  console.log(
+    result.changed
+      ? `  ✓ count regions regenerated (${[...new Set(result.staleRegions.map((entry) => entry.split(' id=')[0]))].join(', ')}${
+          result.staleLedger ? `, ${LEDGER}` : ''
+        }).`
+      : '  ✓ count regions up to date.'
+  );
+}
+
+// Only run when invoked directly (tsx scripts/tasks/counts.ts), not when
+// build.ts imports syncCounts().
+const invokedDirectly = process.argv[1] !== undefined && process.argv[1].endsWith('counts.ts');
+if (invokedDirectly) {
+  process.exit(main());
+}

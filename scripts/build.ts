@@ -2,6 +2,7 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { syncCitationMetadata } from './tasks/citation.js';
 import { syncSelfCitations, injectDevVersion } from './tasks/selfcitations.js';
+import { syncCounts } from './tasks/counts.js';
 import { cleanupOldVersions } from './tasks/cleanup.js';
 import { compilePDF } from './tasks/compile.js';
 import { generateChecksums } from './tasks/checksums.js';
@@ -40,6 +41,11 @@ async function main(): Promise<void> {
     cleanupOldVersions(config.buildDir);
     syncCitationMetadata(config.version);
     syncSelfCitations();
+    // The counts the manuscript prints are measured, not typed: bring the
+    // marked regions of main.tex (and the living documents) up to date with
+    // the working tree before the render, so the PDF cannot print a stale
+    // number (scripts/tasks/counts.ts).
+    syncCounts();
 
     // SPEC-004 §2 (amended 2026-11-20): the committed main.tex keeps the clean
     // `vX.Y.Z` token; the development form lives only in the rendered PDF.
