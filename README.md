@@ -90,7 +90,7 @@ pnpm run release
 
 Releases, tags and GitHub publication are handled by `release-it` and are **not** executed in this repository without an explicit instruction from the author.
 
-### Traditional Manual Build
+### Manual build
 
 For local environments with a full TeX Live distribution:
 
