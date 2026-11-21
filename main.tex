@@ -100,10 +100,10 @@
 \newcommand{\witness}[2]{%
   \par\noindent\hfill
   \parbox{\dimexpr\linewidth-1em\relax}{\raggedleft
-    \normalfont\footnotesize\bfseries\tiercol{#1}#1\mdseries\ttfamily\let\_\brk@us[#2]}%
+    \normalfont\footnotesize\bfseries\tiercol{#1}#1\mdseries{\upshape\small\ttfamily\let\_\brk@us[#2]}}%
   \par}
 % witness label of the W list: W1[CLPW]
-\newcommand{\wtag}[2]{{\normalfont\bfseries\tiercol{W}#1\mdseries\ttfamily[#2]}}
+\newcommand{\wtag}[2]{{\normalfont\footnotesize\bfseries\tiercol{W}#1\mdseries{\small\ttfamily[#2]}}}
 \makeatother
 \setlength{\emergencystretch}{2em}
 
