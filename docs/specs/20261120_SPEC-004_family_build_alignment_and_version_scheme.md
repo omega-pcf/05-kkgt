@@ -231,10 +231,14 @@ strings unchanged (`03` keeps its `CW6`), DOIs/keys untouched, one commit per re
   rendered PDF; the same build invoked as `tsx scripts/build.ts <version>`
   prints `Version: vX.Y.Z`.  Either way the committed `main.tex` keeps the
   clean token (the suffix is injected and restored around the render).
-- AC-12 *(rewritten by the 2026-11-20 amendment)*: a deliberately wrong base
-  (`v9.9.9`) in the committed token fails `pnpm run selfcitations:check` in
-  every repo, and so does any `-dev@<sha>` suffix in git — the committed token
-  never carries a sha, so the check can no longer go red because HEAD moved.
+- AC-12 *(rewritten by the 2026-11-20 amendment, extended the same day)*: a
+  deliberately wrong base (`v9.9.9`) in the committed token fails
+  `pnpm run selfcitations:check` in every repo, and so does any `-dev@<sha>`
+  suffix in git — the committed token never carries a sha, so the check can no
+  longer go red because HEAD moved. Beyond a clean base the committed token
+  must also be typeset inside `\texttt{…}`: `selfcitations:check` and
+  `parity` fail when the token sits outside the monospace wrapper, and
+  `pnpm run selfcitations` wraps it back.
 - AC-13: the `before:init` guard fails a suffixed `package.json.version` (probe
   recorded in the commit message).
 - AC-14: `git diff --exit-code -- images/` is clean after `pnpm run figures` in
