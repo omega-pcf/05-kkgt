@@ -73,7 +73,8 @@ Every generated file has exactly one editable origin: edit the origin, run
 next build. This table states where each chain **starts** and what it
 **writes**; the detail behind rows 1–4 lives in
 [`citations.md`](citations.md) §1–§2, behind row 7 in [`figures.md`](figures.md),
-behind row 8 in [`usage.md`](usage.md) §Counts, and
+behind row 8 in [`usage.md`](usage.md) §Counts, behind row 9 in
+[`usage.md`](usage.md) §Shared files, and
 the release side of rows 5–6 in [`usage.md`](usage.md) §Versioning — it
 links them instead of repeating them.
 
@@ -87,6 +88,7 @@ links them instead of repeating them.
 | 6 | Dates | the commit (`git log -1 --pretty=%ct`) read in the project's fixed zone | `scripts/utils/git.ts` → `SOURCE_DATE_EPOCH` plus `TZ=CST6` for latexmk in Docker; `citation.ts` pins `process.env.TZ = 'CST6'` and formats with `todayInProjectZone()` | `CITATION.cff` `date-released`, `.zenodo.json` `publication_date`, the `\today` of the PDF |
 | 7 | Figures | the generators of `scripts/figures/` | `pnpm run figures` (`uv run python scripts/figures/main.py`) | the five `images/fig_*.pdf`, byte-stable and pinned by `FIGURE_MD5` |
 | 8 | Counts | the measurements of the working tree (no editable origin: `pytest --collect-only`, `main.tex`, the Lean sources, the `TestSection<N>` classes, `images/`) | `scripts/tasks/counts.ts` (idempotent: `f(f(x)) = f(x)`) — `pnpm run counts`, `pnpm run counts:check` inside `validate`, and `build.ts` `syncCounts()` before every render | the marked regions of `README.md`, `tests/README.md` and `main.tex` (the `% counts:begin` block of `\newcommand{\Count…}{…}` plus the prose that quotes those macros) and `docs/counts.md` |
+| 9 | Shared files | `scripts/shared-files.json` — the family's byte-identity manifest: every file the five repositories must carry unchanged, pinned with its SHA-256 (SPEC-004 §3) | `scripts/tasks/manifest.ts` — `pnpm run manifest` rewrites the hashes from the working tree, `pnpm run manifest:check` runs inside `validate` after `counts:check` | the pinned hashes themselves; a listed file edited in one repository only fails `manifest:check`, naming the file and both digests |
 
 **A title change belongs in `package.json`, not in the CFF.** Row 2 runs on
 every build, so an edit of the `title` of `CITATION.cff` survives only until
