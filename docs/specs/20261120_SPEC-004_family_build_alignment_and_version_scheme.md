@@ -172,14 +172,20 @@ Notes:
   above carries the composed string). `scripts/tasks/counts.ts` measures the
   counts the living documents state — the suite totals from
   `pytest --collect-only`, the census size, the `\testref{...}` anchors, the
-  Lean source statistics with comments stripped, the `images/` inventory —
-  rewrites the marked regions (`<!-- counts:begin id="..." -->` in prose,
-  `# counts:begin id="..."` on a line of its own inside a code fence) and
-  regenerates `docs/counts.md`; a stale number then fails `validate` with a
-  diff instead of surviving as a report's footnote. The `counts` and
-  `counts:check` keys are deliberately **outside** the six-key parity
-  contract above (parity's list is unchanged), so the gate travels with the
-  `validate` wiring of each repository.
+  Lean source statistics with comments stripped, the numbered sections of the
+  package (`TestSection<N>` classes), the `images/` inventory — rewrites the
+  marked regions (`<!-- counts:begin id="..." -->` in prose,
+  `# counts:begin id="..."` on a line of its own inside a code fence, and the
+  LaTeX grammar `05` uses for the manuscript — `% counts:begin id="..."` on
+  lines of its own in `main.tex`, around the `\newcommand{\Count…}{…}`
+  declarations that the prose quotes instead of a raw number) and regenerates
+  `docs/counts.md`; `scripts/build.ts` calls `syncCounts()` beside
+  `syncSelfCitations()` before the render, so the PDF prints the measured
+  value; a stale number then fails `validate` with a diff instead of surviving
+  as a report's footnote. The `counts` and `counts:check` keys are
+  deliberately **outside** the six-key parity contract above (parity's list is
+  unchanged), so the gate travels with the `validate` wiring of each
+  repository.
 - `figures` (**P6**): every repository exposes the key and parity asserts it
   from P6 on; behind the alias the mechanism stays local — `01`/`03`/`05`
   `uv run python scripts/figures/main.py`, `04` `bash scripts/figures/build.sh`
