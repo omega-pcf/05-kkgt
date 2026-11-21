@@ -4,7 +4,7 @@
 |---|---|
 | **id** | `SPEC-004` |
 | **title** | Scope agreement for the family-wide build refactor: hybrid contract (option C of `BLD-001`) plus a development version identifier that does not compete with the release tag |
-| **status** | **approved 2026-11-20 — in execution** (P0…P7, family-wide, `02` included) |
+| **status** | **amended 2026-11-20 (approved)** — version-token amendment approved by the operator and executed family-wide: the committed token is the clean `vX.Y.Z`, the `-dev@<sha>` form is injected at build time only (§2, AC-12, §3.1). Previously: approved 2026-11-20 — in execution (P0…P7, family-wide, `02` included) |
 | **date** | 2026-11-20 |
 | **supersedes** | nothing; implements `BLD-001` §4–§5 (option C chosen by the operator 2026-11-20) |
 | **repositories** | `01-hilbert-polya`, `03-crystalline-worldsheet`, `04-mersenne-cr`, `05-kk-golden-throat` — **family-wide in one pass**, `05-granularity` excluded (draft), `02-odd-zeta` read-only until the author's version lands |
@@ -44,8 +44,13 @@
   `git rev-parse --short HEAD` + `git status --porcelain`.
 - **It cannot compete with the release tag** by construction: it is a *display*
   string in the PDF only — it never enters `package.json`, `CITATION.cff`,
-  `.zenodo.json`, the changelog, or any tag; `selfcitations --check` validates it
-  against the same derivation, so a stale line fails `validate`.
+  `.zenodo.json`, the changelog, or any tag, **nor `main.tex` in git**
+  *(amended 2026-11-20)*.  The token committed in the paper's
+  `selfcite id="version"` region is always the clean `vX.Y.Z` of
+  `package.json`, so `selfcitations --check` and `parity` are green on a
+  committed tree by construction; `--check` fails when the committed token is
+  not that clean form — a wrong base such as `v9.9.9`, or any `-dev@<sha>`
+  suffix.
 - **Precedent (verified 2026-11-20, in the ttamayo WordPress-plugin project the
   operator named — path withheld as local environment):** the release path there is
   **release-it** (`.release-it.json`: `tagName v${version}`, `before:init` build,
@@ -71,16 +76,41 @@
 
 ### Where it lives (one mechanism, family-wide)
 
-- `selfcitations.ts` gains `computeDisplayVersion()`:
+- `selfcitations.ts` exposes `computeDisplayVersion()`:
   release context (explicit version argument from `build.ts ${version}`, or the
   release-it environment) → `v${version}`; otherwise → `v${pkg.version}-dev@${sha}`.
 - `VERSION_TOKEN` widens to
   `/v\d+\.\d+\.\d+(?:-dev@[0-9a-f]{7,}(?:-dirty)?)?/`, still applied **only inside**
   the `% selfcite:begin/end id="version"` region (exactly-one-marker rule intact).
-- The token is written by the same rewrite pass as today (`pnpm run selfcitations`,
-  hooked in `build.ts`), checked by `--check` inside `validate`.
+- The token **written to `main.tex`** by the same rewrite pass as today
+  (`pnpm run selfcitations`, hooked in `build.ts`) is the clean `vX.Y.Z` of
+  `package.json` *(amended 2026-11-20)*; `--check` inside `validate` compares
+  the committed token against exactly that form.
+- The development form reaches the page only through `injectDevVersion()`,
+  called by `build.ts` around the compilation *(amended 2026-11-20)*.
 - **Non-goal:** the README badge keeps the clean `package.json` version; only the
   page-1 line carries the development suffix.
+
+**Amendment (approved 2026-11-20).** The original mechanism had the rewrite
+pass stamp the *derived* token into `main.tex`, so every commit moved HEAD and
+left the committed token stale: `selfcitations:check`/`validate` were red on a
+committed tree by construction — structurally incompatible with a tree that
+must stay green.  The approved mechanism keeps the precedent's shape
+(`inject → render → restore`, the ttamayo `git checkout --` pattern replaced
+by an in-memory restore that never depends on git):
+
+1. the sync always writes the clean `vX.Y.Z` (= `package.json`, the release
+   form) into the region — never a sha;
+2. `--check` validates (i) exactly one marker pair, (ii) the README regions up
+   to date, (iii) the committed token equals that clean `vX.Y.Z`
+   (`^\d+\.\d+\.\d+$` inside the `v`, no suffix) → **green at rest after every
+   commit**;
+3. `scripts/build.ts` reads the original `.tex`, injects the display token
+   (dev or release according to its argument), renders, and restores the
+   original bytes from memory in a `finally` — the committed PDF carries the
+   `-dev@<sha>` form while the committed `.tex` stays clean;
+4. `parity.ts` check (c) asserts the same clean committed token against
+   `package.json`, so `01`–`05` share one rule.
 
 ## 3. The contract (option C) — what "identical" means
 
@@ -95,17 +125,19 @@ Every repository exposes the same `package.json` scripts with the same semantics
 | `validate` | `selfcitations:check && verify` |
 
 **Parity gate (P5):** a small test or script per repo that asserts the contract
-above (script keys exist, version region present and exactly one pair, token
-matches `computeDisplayVersion()`), plus a family manifest in05 listing the
-expected contract — a repo that drifts fails its own `validate`.
+above (script keys exist, version region present and exactly one pair, the
+committed token is the clean `vX.Y.Z` of `package.json` and never a
+`-dev@<sha>` suffix — *amended 2026-11-20*), plus a family manifest in05
+listing the expected contract — a repo that drifts fails its own `validate`.
 
 ### 3.1 Family manifest (P5 landed 2026-11-20; `figures` and `verify` amended by P6/P7, 2026-11-20)
 
 The expected contract per repository as P1–P7 landed it.  The columns are
-exactly what `scripts/tasks/parity.ts` asserts in `01`–`04`: the six script
+exactly what `scripts/tasks/parity.ts` asserts in `01`–`05`: the six script
 keys (`build`, `verify`, `figures`, `selfcitations`, `selfcitations:check`,
 `validate`), one non-inverted `selfcite id="version"` pair in `main.tex`, the
-token equal to `computeDisplayVersion()`, and `validate` running
+committed token equal to `package.json`'s clean `vX.Y.Z` — never a
+`-dev@<sha>` suffix *(amended 2026-11-20)* — and `validate` running
 `selfcitations:check`.
 
 | repository | `build` | `verify` | `figures` | `selfcitations` | `selfcitations:check` | `validate` | `scripts/tasks/parity.ts` | `main.tex` version region |
@@ -114,15 +146,15 @@ token equal to `computeDisplayVersion()`, and `validate` running
 | `02-odd-zeta` | ✓ | `verify:py && verify:lean && type-check` | ✓ → declares no committed figures | ✓ | ✓ | `selfcitations:check && parity && verify` | ✓ | exactly one pair |
 | `03-crystalline-worldsheet` | ✓ | `verify:py && verify:lean && type-check` | ✓ → `generate:figures` | ✓ | ✓ | `selfcitations:check && parity && verify` | ✓ | exactly one pair |
 | `04-mersenne-cr` | ✓ | `verify:lean && type-check` (no Python suite) | ✓ → `generate:figures` | ✓ | ✓ | `selfcitations:check && parity && verify` | ✓ | exactly one pair |
-| `05-kk-golden-throat` | ✓ | `verify:py && verify:lean && type-check` | ✓ → `generate:figures` | ✓ | ✓ | `selfcitations:check && verify` | — (this manifest instead) | exactly one pair |
+| `05-kk-golden-throat` | ✓ | `verify:py && verify:lean && type-check` | ✓ → `generate:figures` | ✓ | ✓ | `selfcitations:check && parity && verify` | ✓ (wired by the 2026-11-20 amendment) | exactly one pair |
 
 Notes:
 
 - `selfcitations:check` runs **first** in `validate` in all five; the parity
-  script joins the chain in `01`–`04` (P5).  `05` carries the manifest and
-  keeps `validate = selfcitations:check && verify` — SPEC-004's phasing gives
-  `05` the manifest, not the gate (AC-15's "`01`/`03`/`04`/`05`" predates that
-  split; recorded as an open point).
+  script joins the chain in `01`–`04` (P5) and, since the 2026-11-20
+  amendment, in `05` as well — `05` keeps the manifest *and* gains the gate
+  (`validate = selfcitations:check && parity && verify`), which closes AC-15's
+  "…/`05`" open point.
 - `figures` (**P6**): every repository exposes the key and parity asserts it
   from P6 on; behind the alias the mechanism stays local — `01`/`03`/`05`
   `uv run python scripts/figures/main.py`, `04` `bash scripts/figures/build.sh`
@@ -153,10 +185,14 @@ Notes:
 - `02-odd-zeta` was ported **on `main`** through a temporary worktree — the
   local checkout sits on `scratch/lean-release` (the author's pending line)
   and predates this manifest, so read `02`'s contract from `origin/main`.
-- Every token shown by a development build is
-  `vX.Y.Z-dev@<shortsha>[-dirty]`; after any commit the committed token is
-  stale against the new HEAD by construction, and `pnpm run selfcitations`
-  re-aligns it (the `--check` failure message says so).
+- **Version token (amendment approved 2026-11-20).**  Every *rendered* build
+  shows `vX.Y.Z-dev@<shortsha>[-dirty]`, derived from `git rev-parse --short
+  HEAD` + `git status --porcelain` at build time; the token **committed** in
+  `main.tex` is always the clean `vX.Y.Z` of `package.json`.  The dev form
+  exists only in the PDF — `build.ts` injects it, renders and restores the
+  original bytes from memory — so `pnpm run selfcitations:check` and
+  `pnpm run validate` stay green at rest after every commit instead of going
+  stale against the new HEAD.
 
 ## 4. Phasing (family-wide, one effort)
 
@@ -179,9 +215,14 @@ strings unchanged (`03` keeps its `CW6`), DOIs/keys untouched, one commit per re
 ## 5. Acceptance criteria
 
 - AC-1 … AC-10 of `SPEC-001` remain the base for the selfcitations port.
-- AC-11: `pnpm run build` in any repo prints `Version: vX.Y.Z-dev@<sha>`; the same
-  build invoked as `tsx scripts/build.ts <version>` prints `Version: vX.Y.Z`.
-- AC-12: a deliberately stale token fails `pnpm run selfcitations:check` in every repo.
+- AC-11: `pnpm run build` in any repo prints `Version: vX.Y.Z-dev@<sha>` in the
+  rendered PDF; the same build invoked as `tsx scripts/build.ts <version>`
+  prints `Version: vX.Y.Z`.  Either way the committed `main.tex` keeps the
+  clean token (the suffix is injected and restored around the render).
+- AC-12 *(rewritten by the 2026-11-20 amendment)*: a deliberately wrong base
+  (`v9.9.9`) in the committed token fails `pnpm run selfcitations:check` in
+  every repo, and so does any `-dev@<sha>` suffix in git — the committed token
+  never carries a sha, so the check can no longer go red because HEAD moved.
 - AC-13: the `before:init` guard fails a suffixed `package.json.version` (probe
   recorded in the commit message).
 - AC-14: `git diff --exit-code -- images/` is clean after `pnpm run figures` in

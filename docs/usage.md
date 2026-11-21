@@ -61,16 +61,19 @@ from these subjects at each release.
   repository's Concept DOI (one DOI per version, one Concept DOI for all of
   them). Zenodo therefore consumes the same string the repository declares;
   the pipeline detail lives in [architecture.md](architecture.md).
-- **Two printed forms (SPEC-004).** The page-1 line prints the *release*
-  identifier `vX.Y.Z` on the release path and a *development* identifier
-  `vX.Y.Z-dev@<shortsha>` (`…-dirty` with uncommitted changes) on every other
-  build. The development string is derived at build time from
+- **Two printed forms (SPEC-004, amended 2026-11-20).** The page-1 line prints
+  the *release* identifier `vX.Y.Z` on the release path and a *development*
+  identifier `vX.Y.Z-dev@<shortsha>` (`…-dirty` with uncommitted changes) on
+  every other build. The development string is derived at build time from
   `git rev-parse --short HEAD` + `git status --porcelain`, is display-only —
   it never enters `package.json`, `CITATION.cff`, `.zenodo.json`, the
-  changelog or any tag — and `selfcitations:check` fails when the printed
-  token no longer matches the derivation. `.release-it.ts` guards the release
-  side with a `before:init` check that `package.json.version` is a clean
-  `X.Y.Z`.
+  changelog, any tag, **nor `main.tex` in git**: `scripts/build.ts` injects it
+  for the render and restores the original bytes, so the committed token is
+  always the clean `vX.Y.Z` of `package.json`. `selfcitations:check` fails
+  when the committed token is not that clean form (a wrong base such as
+  `v9.9.9`, or any `-dev@<sha>` suffix in git), so a committed tree stays
+  green at rest. `.release-it.ts` guards the release side with a `before:init`
+  check that `package.json.version` is a clean `X.Y.Z`.
 - **The paper prints it.** The page-1 footnote of the family is standardised
   as:
 
