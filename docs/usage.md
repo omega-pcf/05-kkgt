@@ -60,7 +60,9 @@ from these subjects at each release.
   carries the tag → **Zenodo archives exactly this version** under the
   repository's Concept DOI (one DOI per version, one Concept DOI for all of
   them). Zenodo therefore consumes the same string the repository declares;
-  the pipeline detail lives in [architecture.md](architecture.md).
+  the pipeline detail lives in [architecture.md](architecture.md), and the
+  row-by-row chain (source → generator → derived file) in
+  [architecture.md §Sources of truth](architecture.md#sources-of-truth).
 - **Two printed forms (SPEC-004, amended 2026-11-20).** The page-1 line prints
   the *release* identifier `vX.Y.Z` on the release path and a *development*
   identifier `vX.Y.Z-dev@<shortsha>` (`…-dirty` with uncommitted changes) on

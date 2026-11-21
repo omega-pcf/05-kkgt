@@ -10,7 +10,9 @@
 
 This document describes how citations flow from a single source of truth to
 the PDF, CITATION.cff, and .zenodo.json, and the conventions for adding new
-references.
+references. The row-by-row chain of every generated file (which source feeds
+which generator, and what it writes) is
+[`architecture.md` §Sources of truth](architecture.md#sources-of-truth).
 
 Two companion documents hold what this one deliberately does not: the
 **justification** of the witness device is argued in

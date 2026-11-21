@@ -50,7 +50,9 @@ setting below lives in our layer (`scripts/figures/generators/rc.py`).
 
 Only this pipeline writes `images/` (SPEC-002 §1.1): no test and no section
 generates a figure, and `tests/src/kkgt/constants.py` pins the md5 of the five
-PDFs so `pnpm run figures` must reproduce them byte for byte.
+PDFs so `pnpm run figures` must reproduce them byte for byte. The chain table
+(this pipeline → `images/` → the pin → the tests) is
+[`architecture.md` §Sources of truth](architecture.md#sources-of-truth).
 
 ## Prerequisites
 
