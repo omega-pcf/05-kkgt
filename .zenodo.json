@@ -102,6 +102,7 @@
     "Foucault, Michel (1969). L'archéologie du savoir. Gallimard. https://doi.org/10.14375/np.9782070119875",
     "Frobenius, Georg (1878). Über lineare Substitutionen und bilineare Formen. Journal für die reine und angewandte Mathematik. 84, 1–63. https://doi.org/10.1515/crelle-1878-18788403",
     "Garriga, J.; Tanaka, T. (2000). Gravity in the Randall--Sundrum brane world. Physical Review Letters. 84(13), 2778–2781. https://doi.org/10.1103/PhysRevLett.84.2778",
+    "Gelfond, A. (1934). Sur le septième Problème de Hilbert. Bulletin de l'Académie des Sciences de l'URSS. VII. Série.(4), 623–630.",
     "Gibbons, G. W.; Hawking, S. W. (1977). Cosmological event horizons, thermodynamics, and particle creation. Physical Review D. 15(10), 2738–2751. https://doi.org/10.1103/PhysRevD.15.2738",
     "Giddings, S. B.; Strominger, A. (1988). Loss of incoherence and determination of coupling constants in quantum gravity. Nuclear Physics B. 307(4), 854–866. https://doi.org/10.1016/0550-3213(88)90109-5",
     "Giddings, S. B.; Strominger, A. (1989). Baby universe, third quantization and the cosmological constant. Nuclear Physics B. 321(2), 481–508. https://doi.org/10.1016/0550-3213(89)90353-2",
@@ -179,7 +180,7 @@
     "Montgomery, H. L. (1973). The pair correlation of zeros of the zeta function. Proceedings of Symposia in Pure Mathematics. 24, 181–193. https://doi.org/10.1090/pspum/024/9944",
     "Morse, Marston; Hedlund, Gustav A. (1940). Symbolic dynamics II. Sturmian trajectories. American Journal of Mathematics. 62, 1–42. https://doi.org/10.2307/2371431",
     "Narovlansky, V.; Verlinde, H. (2025). Double-scaled SYK and de Sitter holography. Journal of High Energy Physics. 2025(5), 032. https://doi.org/10.1007/JHEP05(2025)032",
-    "National Institute of Standards and Technology (). NIST Digital Library of Mathematical Functions, §10.21(vii), McMahon's expansion. https://dlmf.nist.gov/10.21.vii",
+    "National Institute of Standards and Technology (). NIST Digital Library of Mathematical Functions, §10.21(vi), McMahon's expansion. https://dlmf.nist.gov/10.21.vi",
     "Neukirch, J. (1999). Algebraic Number Theory. Springer. https://doi.org/10.1007/978-3-662-03983-0",
     "Nguyen, J. (2026). Scientific representation. The Stanford Encyclopedia of Philosophy. https://plato.stanford.edu/entries/scientific-representation/",
     "Nielsen, Michael A.; Chuang, Isaac L. (2000). Quantum Computation and Quantum Information. Cambridge University Press. https://doi.org/10.1017/cbo9780511976667",
@@ -213,6 +214,7 @@
     "Schütte, K.; van der Waerden, B. L. (1952). Das Problem der dreizehn Kugeln. Mathematische Annalen. 125(1), 325–334. https://doi.org/10.1007/BF01343127",
     "Serre, Jean-Pierre (1971). Cohomologie des groupes discrets. Prospects in Mathematics., 77–170. https://doi.org/10.1515/9781400881697-005",
     "Serre, Jean-Pierre (1973). A Course in Arithmetic. Graduate Texts in Mathematics. https://doi.org/10.1007/978-1-4684-9884-4",
+    "Snyder, John P. (1987). Map projections: A working manual. U.S. Geological Survey Professional Paper. 1395. https://doi.org/10.3133/pp1395",
     "Sonnino, Giorgio; Nardone, Pasquale (2024). The golden ratio family of extremal Kerr--Newman black holes and its implications for the cosmological constant. Axioms. 13, 862. https://doi.org/10.3390/axioms13120862",
     "Sós, Vera T. (1958). On the distribution mod 1 of the sequence nα. Annales Universitatis Scientiarum Budapestinensis de Rolando Eötvös Nominatae, Sectio Mathematica. 1, 127–134.",
     "Streater, Raymond F.; Wightman, Arthur S. (1964). PCT, Spin and Statistics, and All That. Benjamin.",
@@ -1102,6 +1104,11 @@
       "identifier": "10.1088/1126-6708/2000/11/038",
       "relation": "cites",
       "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.3133/pp1395",
+      "relation": "cites",
+      "resource_type": "publication"
     }
   ]
 }

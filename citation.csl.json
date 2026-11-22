@@ -1990,13 +1990,13 @@
   {
     "id": "DLMF",
     "type": "webpage",
-    "title": "NIST Digital Library of Mathematical Functions, §10.21(vii), McMahon's expansion",
+    "title": "NIST Digital Library of Mathematical Functions, §10.21(vi), McMahon's expansion",
     "author": [
       {
         "literal": "National Institute of Standards and Technology"
       }
     ],
-    "URL": "https://dlmf.nist.gov/10.21.vii"
+    "URL": "https://dlmf.nist.gov/10.21.vi"
   },
   {
     "id": "Pol98",
@@ -5232,5 +5232,50 @@
     },
     "DOI": "10.1088/1126-6708/2000/11/038",
     "URL": "https://doi.org/10.1088/1126-6708/2000/11/038"
+  },
+  {
+    "id": "Gel34",
+    "type": "article-journal",
+    "title": "Sur le septième Problème de Hilbert",
+    "author": [
+      {
+        "given": "A.",
+        "family": "Gelfond"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1934
+        ]
+      ]
+    },
+    "container-title": "Bulletin de l'Académie des Sciences de l'URSS. VII. Série",
+    "issue": "4",
+    "page": "623-630",
+    "note": "Parallel title: Izvestiya Akademii Nauk SSSR, Otdelenie Matematicheskikh i Estestvennykh Nauk, VII, no. 4, 623-630 (1934)"
+  },
+  {
+    "id": "Sny87",
+    "type": "report",
+    "title": "Map projections: A working manual",
+    "author": [
+      {
+        "given": "John P.",
+        "family": "Snyder"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1987
+        ]
+      ]
+    },
+    "publisher": "U.S. Geological Survey",
+    "container-title": "U.S. Geological Survey Professional Paper",
+    "volume": "1395",
+    "note": "Professional Paper 1395",
+    "DOI": "10.3133/pp1395"
   }
 ]

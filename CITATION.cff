@@ -1438,10 +1438,10 @@ references:
       - name: National Institute of Standards and Technology
     identifiers:
       - type: url
-        value: https://dlmf.nist.gov/10.21.vii
-    title: NIST Digital Library of Mathematical Functions, §10.21(vii), McMahon's
+        value: https://dlmf.nist.gov/10.21.vi
+    title: NIST Digital Library of Mathematical Functions, §10.21(vi), McMahon's
       expansion
-    url: https://dlmf.nist.gov/10.21.vii
+    url: https://dlmf.nist.gov/10.21.vi
     type: website
   - authors:
       - family-names: Polchinski
@@ -3552,3 +3552,32 @@ references:
     start: "038"
     type: article
     volume: "2000"
+  - authors:
+      - family-names: Gelfond
+        given-names: A.
+    title: Sur le septième Problème de Hilbert
+    date-published: 1934-01-01
+    year: 1934
+    issue: "4"
+    journal: Bulletin de l'Académie des Sciences de l'URSS. VII. Série
+    notes: "Parallel title: Izvestiya Akademii Nauk SSSR, Otdelenie Matematicheskikh
+      i Estestvennykh Nauk, VII, no. 4, 623-630 (1934)"
+    start: "623"
+    end: "630"
+    type: article
+  - authors:
+      - family-names: Snyder
+        given-names: John P.
+    doi: 10.3133/pp1395
+    identifiers:
+      - type: doi
+        value: 10.3133/pp1395
+    title: "Map projections: A working manual"
+    date-published: 1987-01-01
+    year: 1987
+    journal: U.S. Geological Survey Professional Paper
+    notes: Professional Paper 1395
+    publisher:
+      name: U.S. Geological Survey
+    type: report
+    volume: "1395"
