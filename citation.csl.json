@@ -5277,5 +5277,26 @@
     "volume": "1395",
     "note": "Professional Paper 1395",
     "DOI": "10.3133/pp1395"
+  },
+  {
+    "id": "Apo67",
+    "type": "book",
+    "title": "Calculus, Volume 1: One-Variable Calculus, with an Introduction to Linear Algebra",
+    "author": [
+      {
+        "given": "Tom M.",
+        "family": "Apostol"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1967
+        ]
+      ]
+    },
+    "publisher": "John Wiley & Sons",
+    "edition": "2",
+    "note": "Theorem 4.1 (§4.5), p. 164: the quotient rule; no DOI in Crossref; pages from the Wiley issue, ISBN 0-471-00005-1; zbMATH Zbl 0148.28201 credits Blaisdell for the same edition"
   }
 ]

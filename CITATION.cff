@@ -6,7 +6,7 @@ title: "One object instead of a choice of vacuum to put the observer in de
   candidates and with the cosmological constant"
 type: software
 version: 0.1.0
-date-released: 2026-11-21
+date-released: 2026-11-22
 authors:
   - family-names: González García
     given-names: Jorge Armando
@@ -3581,3 +3581,17 @@ references:
       name: U.S. Geological Survey
     type: report
     volume: "1395"
+  - authors:
+      - family-names: Apostol
+        given-names: Tom M.
+    title: "Calculus, Volume 1: One-Variable Calculus, with an Introduction to
+      Linear Algebra"
+    date-published: 1967-01-01
+    year: 1967
+    edition: "2"
+    notes: "Theorem 4.1 (§4.5), p. 164: the quotient rule; no DOI in Crossref; pages
+      from the Wiley issue, ISBN 0-471-00005-1; zbMATH Zbl 0148.28201 credits
+      Blaisdell for the same edition"
+    publisher:
+      name: John Wiley & Sons
+    type: book
