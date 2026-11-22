@@ -773,13 +773,13 @@ $\vartheta(-1/\tau)=(-i\tau)^{1/2}\vartheta(\tau)$ (\code{jacobiTheta\_S\_smul})
 with its source, and each is used only where the text says:
 \begin{enumerate}
 \item \emph{The zeros of $J_1$}~\cite{Wat44}: they increase, the first four are $3.8317$, $7.0156$,
-$10.1735$ and $13.3237$, and $j_{1,k}-\pi(k+\tfrac14)\to0$ (McMahon). Used in Theorem~\ref{thm:bessel}
+$10.1735$ and $13.3237$, and $j_{1,k}-\pi(k+\tfrac14)\to0$ (McMahon~\cite{DLMF}). Used in Theorem~\ref{thm:bessel}
 and for the count of modes.
 \witness{P}{bessel\_J1\_zeros}
 \item \emph{The transcendence of $e^{\pi a}$ for every real algebraic $a\neq0$}, the case $(-1)^{-ia}$ of the Gelfond--Schneider
-theorem~\cite{Sch35}. From it the note proves that $e^{\pi}$ is transcendental and $\log\golden/\pi$ irrational, and that the growth $e^{S}$ of the dimension of a level is not a power of an integer (W2).
+theorem~\cite{Gel34,Sch35}. From it the note proves that $e^{\pi}$ is transcendental and $\log\golden/\pi$ irrational, and that the growth $e^{S}$ of the dimension of a level is not a power of an integer (W2).
 \witness{P}{exp\_pi\_mul\_algebraic\_transcendental, exp\_pi\_transcendental, level\_growth\_not\_power}
-\item \emph{The derivatives of the stereographic meridian}: with $r(b)=\sqrt2-\sin b$,
+\item \emph{The derivatives of the stereographic meridian}~\cite{Sny87}: with $r(b)=\sqrt2-\sin b$,
 $(1/r)'=\cos b/r^2$ and $(\cos b/r)'=(1-\sqrt2\sin b)/r^2$, the quotient rule. From them the note
 proves that the projection of the square torus is conformal.
 \witness{P}{stereographic\_meridian\_deriv}
@@ -2569,7 +2569,7 @@ Complex.abs\_conj & map\_ne\_zero
 % counts:begin id="axioms"
 \CountAxioms{} axioms,
 % counts:end id="axioms"
-each with its source and each used only where the text says: the zeros of $J_1$ with McMahon's phase \tier[bessel\_J1\_zeros]{P}~\cite{RS99,DHR00,Wat44}; the transcendence of $e^{\pi}$ \tier[exp\_pi\_transcendental]{P}~\cite{Sch35}, from which the irrationality of $\log\golden/\pi$ is proved; the two derivatives of the stereographic meridian \tier[stereographic\_meridian\_deriv]{P}, from which the conformality is proved; the function $\eta$ and its law under $T$ \tier[dedekindEta, eta\_T]{P}~\cite{Apo90}; and Weyl's equidistribution \tier[weyl\_equidistribution]{P}~\cite{Wey16}, from which the average along one orbit and its connected part are proved.
+each with its source and each used only where the text says: the zeros of $J_1$ with McMahon's phase \tier[bessel\_J1\_zeros]{P}~\cite{RS99,DHR00,Wat44}; the transcendence of $e^{\pi}$ \tier[exp\_pi\_transcendental]{P}~\cite{Gel34,Sch35}, from which the irrationality of $\log\golden/\pi$ is proved; the two derivatives of the stereographic meridian \tier[stereographic\_meridian\_deriv]{P}, from which the conformality is proved; the function $\eta$ and its law under $T$ \tier[dedekindEta, eta\_T]{P}~\cite{Apo90}; and Weyl's equidistribution \tier[weyl\_equidistribution]{P}~\cite{Wey16}, from which the average along one orbit and its connected part are proved.
 % counts:begin id="sorry-claim"
 There is no \code{sorry}.
 % counts:end id="sorry-claim"
