@@ -569,7 +569,7 @@ theorem exp_pi_transcendental : Transcendental ℚ (Real.exp Real.pi) := by
 theorem golden_is_algebraic : IsAlgebraic ℚ ((1 + Real.sqrt 5) / 2) := by
   refine ⟨Polynomial.X ^ 2 - Polynomial.X - 1, ?_, ?_⟩
   · intro h
-    have := congrArg (Polynomial.coeff · 2) h
+    have := congrArg (fun p : Polynomial ℚ => p.coeff 2) h
     simp [Polynomial.coeff_X, Polynomial.coeff_one] at this
   · have h5 : Real.sqrt 5 ^ 2 = 5 := Real.sq_sqrt (by norm_num)
     simp [Polynomial.aeval_def]
