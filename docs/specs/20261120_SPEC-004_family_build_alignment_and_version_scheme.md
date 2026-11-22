@@ -196,7 +196,7 @@ Notes:
   undetected)*: `scripts/shared-files.json` pins one SHA-256 for every file the
   five repositories must carry **byte-identically** —
   `scripts/tasks/{citation,checksums,cleanup,compile,manifest,parity,selfcitations}.ts`,
-  `scripts/generate_types.ts`, `scripts/types.ts`, `scripts/types/global.d.ts`,
+  `scripts/build.ts`, `scripts/generate_types.ts`, `scripts/types.ts`, `scripts/types/global.d.ts`,
   `scripts/schemas/cff-schema.json`, `scripts/schemas/zenodo-schema.json`,
   `scripts/utils/git.ts`, `tsconfig.json`, `.latexmkrc`, `.npmrc`, `.nvmrc`,
   `.python-version`, `LICENSE` — and `scripts/tasks/manifest.ts` verifies them:
@@ -208,12 +208,18 @@ Notes:
   `package.json`/`CITATION.cff`/`.zenodo.json` (per-repository identity and
   generated metadata), `pyproject.toml`/`uv.lock` (per-repository
   dependencies), `scripts/tasks/counts.ts` (per-repository counter table by
-  design), `.release-it.ts`/`.gitignore`/`.chktexrc` (per-repository), the
-  manifest itself (a file cannot hold its own digest), and `scripts/build.ts`
-  — the one file of `CVR-001` §5.2's list that stays unpinned: `05` calls
-  `syncCounts()` before the render while `01`/`02`/`03`/`04` do not and their
-  `counts.ts` exports no `syncCounts()` yet, so the two sides must be unified
-  before it can be pinned (recorded as the manifest's first follow-up).
+  design), `.release-it.ts`/`.gitignore`/`.chktexrc` (per-repository), and the
+  manifest itself (a file cannot hold its own digest).
+  **Amendment (2026-11-21, follow-up (a)):** `scripts/build.ts` — the one file
+  of `CVR-001` §5.2's list that stayed unpinned — now sits in `files`, not in
+  `excluded`: `01`/`02`/`03`/`04` ported `syncCounts()` from `05` (their
+  `counts.ts` gained the `syncCounts()` export, the `kind: 'tex'` marker
+  grammar and the `invokedDirectly` guard, and their `build.ts` calls it
+  beside `syncSelfCitations()`), so the entry point is byte-identical across
+  the five repositories — md5 `caf90950388f81a4d2a5f14ff3ed5575` (05's entry point, adopted verbatim; the siblings' `releaseVersion` const is `process.argv[2]` under another name, so the behaviour is unchanged) — and the
+  manifest pins its 20 files with that one change.  The manifest's `excluded`
+  table is down to ten entries; `pnpm run manifest:check` reports
+  `manifest ✓ 20 shared files` in every repository.
   Design sources (researched 2026-11-21): the checksum-manifest pattern — one
   versioned list of digest + filename, verified as a batch
   (https://www.sysax.com/topics/file-integrity-verification/checksum-files-and-manifests/);

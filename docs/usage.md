@@ -79,10 +79,12 @@ repositories, so the manifest itself stays byte-identical family-wide.
 The `excluded` table is part of the contract, not a footnote: `package.json`
 and `CITATION.cff` are per-repository identity roots (asserted by `parity`),
 `pyproject.toml` and `uv.lock` are the per-repository dependency sets,
-`scripts/tasks/counts.ts` is a per-repository counter table by design,
-`scripts/build.ts` carries the reason recorded in the manifest, and the
-manifest never lists itself. Each exclusion names its measured reason where a
-file was evaluated and rejected.
+`scripts/tasks/counts.ts` is a per-repository counter table by design, and
+the manifest never lists itself. Each exclusion names its measured reason
+where a file was evaluated and rejected. `scripts/build.ts` joined `files`
+when the two sides were unified (2026-11-21): `01`–`04` now call
+`syncCounts()` beside `syncSelfCitations()` exactly as `05` does, so the
+entry point is byte-identical family-wide and pinned like the rest.
 
 The design follows the checksum-manifest pattern (`sha256sum -c` over a
 versioned list) and the lockfile philosophy — pin the bytes, fail loudly on
