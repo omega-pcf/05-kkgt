@@ -51,8 +51,8 @@ González García, J. A., González García, V. M., Dressler Pérez, I. M., & Ga
 ### Formal Verification (`lean/`)
 
 - **`lean/TorreKK_LYR_v35.lean`**: the entire development in one file (<!-- counts:begin id="lean" -->164 theorems, 6 axioms, 0 `sorry`<!-- counts:end id="lean" -->).
-- **`lean/lakefile.toml`**: lake build configuration with the Mathlib dependency (`v4.33.1`).
-- **`lean/lean-toolchain`**: `leanprover/lean4:v4.33.1`.
+- **`lean/lakefile.toml`**: lake build configuration with the Mathlib dependency (`a8754b1890a7f7f1c859d48281cb84a1fce64139`, i.e. `a8754b18`).
+- **`lean/lean-toolchain`**: `leanprover/lean4:v4.36.0-rc2`.
 
 ### Numerical checks
 
