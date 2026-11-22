@@ -61,13 +61,29 @@ function sh(cmd: string): string {
 }
 
 /**
+ * The output of a `pytest --collect-only` run, memoised by command: several
+ * counters ask for the same collection, and the per-class counts below reuse
+ * the suite counter's own run, so one `pnpm run counts` (and one build) pays
+ * for each distinct collection command once instead of per counter.
+ */
+const COLLECT_CACHE = new Map<string, string>();
+
+function collect(cmd: string): string {
+  const cached = COLLECT_CACHE.get(cmd);
+  if (cached !== undefined) return cached;
+  const out = sh(cmd);
+  COLLECT_CACHE.set(cmd, out);
+  return out;
+}
+
+/**
  * The collected count of a `pytest --collect-only` run.  pytest prints either
  * `498 tests collected in 1.27s` or, when a `-m` filter deselected some,
  * `495/498 tests collected (3 deselected) in 0.82s`; the first number is the
  * count the command actually selects, which is what the docs state.
  */
 function collected(cmd: string): number {
-  const out = sh(cmd);
+  const out = collect(cmd);
   const matches = [...out.matchAll(/(\d+)\/(\d+) tests collected|\b(\d+) tests collected/g)];
   if (matches.length === 0) {
     throw new Error(`no "N tests collected" summary in: ${cmd}\n${out.slice(-400)}`);
@@ -155,6 +171,65 @@ const TEX = 'main.tex';
  */
 const SECTION_MODULES = /^test_sections_.*\.py$/;
 
+/**
+ * The numbers N of the `TestSection<N>…` classes under `tests/` — the
+ * numbered sections of the package `main.tex` counts ("forty-seven numbered
+ * sections"), one per row of the section -> test map of `tests/README.md`.
+ * Measured from the class definitions, so a section added to the suite
+ * without touching the map still moves both the manuscript's number and
+ * this table of counters and regions.
+ */
+const SECTION_NUMBERS: number[] = (() => {
+  const modules = readdirSync('tests').filter((name) => SECTION_MODULES.test(name));
+  const sections = new Set<number>();
+  for (const module of modules) {
+    for (const match of readFileSync(`tests/${module}`, 'utf8').matchAll(/\bclass\s+TestSection(\d+)/g)) {
+      sections.add(Number(match[1]));
+    }
+  }
+  if (sections.size === 0) throw new Error('no `TestSection<N>` class found under tests/');
+  return [...sections].sort((a, b) => a - b);
+})();
+
+/**
+ * The collected items of each numbered section class, parsed from the ONE
+ * `--collect-only` run the suite counter already pays for (the cache above
+ * reuses it): the number in parentheses of each row of the section -> test
+ * map of `tests/README.md` is measured, never typed.  A node id reads
+ * `tests/test_sections_01_08.py::TestSection1Numbers::test_…`, so the count
+ * of ids per class is exactly the "count of collected items of that class"
+ * the map documents.
+ */
+function sectionItems(): Map<number, number> {
+  const items = new Map<number, number>();
+  // The suite counter's own command: its output lists one node id per item,
+  // and the cache means this parse costs no extra collection.  (A second `-q`
+  // would flip pytest to its per-file summary, which lists no node ids at all.)
+  for (const line of collect(`${PYTEST} --collect-only`).split('\n')) {
+    const match = line.match(/::TestSection(\d+)\w*::/);
+    if (!match) continue;
+    const section = Number(match[1]);
+    items.set(section, (items.get(section) ?? 0) + 1);
+  }
+  for (const section of SECTION_NUMBERS) {
+    if (!items.has(section)) {
+      throw new Error(`no collected item of TestSection${section} in: ${PYTEST} --collect-only`);
+    }
+  }
+  if (items.size === 0) throw new Error(`no TestSection<N> item in: ${PYTEST} --collect-only`);
+  return items;
+}
+
+const SECTION_COUNTERS: Counter[] = SECTION_NUMBERS.map((section) => ({
+  id: `pytest.section.${section}`,
+  source: `collected items of the \`TestSection${section}…\` class (\`${PYTEST} --collect-only\`, the cached suite run)`,
+  measure: () => {
+    const count = sectionItems().get(section);
+    if (count === undefined) throw new Error(`no collected item of TestSection${section}`);
+    return count;
+  },
+}));
+
 interface Counter {
   id: string;
   /** How the value is measured — printed verbatim in `docs/counts.md`. */
@@ -206,18 +281,9 @@ const COUNTERS: Counter[] = [
   {
     id: 'kkgt.sections',
     source: 'distinct `TestSection<N>` classes in `tests/test_sections_*.py`',
-    measure: () => {
-      const modules = readdirSync('tests').filter((name) => SECTION_MODULES.test(name));
-      const sections = new Set<string>();
-      for (const module of modules) {
-        for (const match of readFileSync(`tests/${module}`, 'utf8').matchAll(/\bclass\s+TestSection(\d+)/g)) {
-          sections.add(match[1]);
-        }
-      }
-      if (sections.size === 0) throw new Error('no `TestSection<N>` class found under tests/');
-      return sections.size;
-    },
+    measure: () => SECTION_NUMBERS.length,
   },
+  ...SECTION_COUNTERS,
   {
     id: 'images.files',
     source: 'file inventory of `images/`',
@@ -240,6 +306,20 @@ interface Region {
   uses: string[];
   render: (c: Counts) => string;
 }
+
+/**
+ * One region per row of the section -> test map of `tests/README.md`: the
+ * number in parentheses after each class name is rewritten from the measured
+ * `pytest.section.N` counter, so a per-class count that moves is corrected by
+ * the task instead of by hand (`counts:check` fails with its diff first).
+ */
+const SECTION_REGIONS: Region[] = SECTION_NUMBERS.map((section) => ({
+  file: 'tests/README.md',
+  id: `section-${section}`,
+  kind: 'inline',
+  uses: [`pytest.section.${section}`],
+  render: (c) => String(c[`pytest.section.${section}`]),
+}));
 
 const REGIONS: Region[] = [
   {
@@ -344,6 +424,7 @@ const REGIONS: Region[] = [
     render: (c) =>
       c['lean.sorry'] === 0 ? 'There is no \\code{sorry}.' : 'There are \\CountSorry{} occurrences of \\code{sorry}.',
   },
+  ...SECTION_REGIONS,
 ];
 
 /* ---------------------------------------------------------------- markers */

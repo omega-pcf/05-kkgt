@@ -56,53 +56,53 @@ as it was written.
 
 | section | deep tests |
 |---|---|
-| 1  | `TestSection1Numbers` (41) |
-| 2  | `TestSection2Casimir` (3) |
-| 3  | `TestSection3TwoBraneSpectra` (7) |
-| 4  | `TestSection4MetricPositivity` (5) |
-| 5  | `TestSection5QuarterPhase` (2) |
-| 6  | `TestSection6BesselChain` (5) |
-| 7  | `TestSection7Prediction` (4) |
-| 8  | `TestSection8LookElsewhere` (12) |
-| 9  | `TestSection9GapRatios` (7) |
-| 10 | `TestSection10Granularity` (12) |
-| 11 | `TestSection11ContactConfigurations` (5) |
-| 12 | `TestSection12FigureOneStatements` (21) -- checks only: figure 1 moved to section 44 |
-| 13 | `TestSection13FigureTwoReciprocity` (11) |
-| 14 | `TestSection14RingGaps` (12) |
-| 15 | `TestSection15StateCount` (6) |
-| 16 | `TestSection16KoideFromM` (4) |
-| 17 | `TestSection17ObserverLevelFromLambda` (3) |
-| 18 | `TestSection18TwoReadingsOfTheSameCurvature` (3) |
-| 19 | `TestSection19TowerOffset` (9) |
-| 20 | `TestSection20TwoCandidates` (6) |
-| 21 | `TestSection21TwoBraneRival` (2) |
-| 22 | `TestSection22CurvatureUnit` (6) |
-| 23 | `TestSection23LatticeOfUnits` (10) |
-| 24 | `TestSection24ScaleAndTop` (4) |
-| 25 | `TestSection25AutodualWindow` (11) |
-| 26 | `TestSection26WindowEdge` (6) |
-| 27 | `TestSection27WindowAsNome` (6) |
-| 28 | `TestSection28PoissonTheta` (4) |
-| 29 | `TestSection29LatticePointFromOmegaLambda` (8) |
-| 30 | `TestSection30SymmetricThroat` (5) |
-| 31 | `TestSection31ModuliMetric` (11) |
-| 32 | `TestSection32LevelVersusGridShape` (7) |
-| 33 | `TestSection33ColourHole` (8) |
-| 34 | `TestSection34Quintessence` (4) |
-| 35 | `TestSection35HalfThreshold` (8) |
-| 36 | `TestSection36BlackHoleWhereNeeded` (7) |
-| 37 | `TestSection37Consistency` (13) |
-| 38 | `TestSection38AreaLawHalf` (4) |
-| 39 | `TestSection39FibonacciTiling` (28) |
-| 40 | `TestSection40DictionaryAgainstTheCusp` (27) |
-| 41 | `TestSection41FiveRegularTilings` (18) |
-| 42 | `TestSection42TwoCoordinatesAndTheStep` (33) |
-| 43 | `TestSection43ThreeColumns` (12) |
-| 44 | `TestSection44BackgroundFigure` (31) |
-| 45 | `TestSection45ObserverLevel` (15) |
-| 46 | `TestSection46HopfFoliation` (13) |
-| 47 | `TestSection47ThePentagonalCode` (6) |
+| 1  | `TestSection1Numbers` (<!-- counts:begin id="section-1" -->41<!-- counts:end id="section-1" -->) |
+| 2  | `TestSection2Casimir` (<!-- counts:begin id="section-2" -->3<!-- counts:end id="section-2" -->) |
+| 3  | `TestSection3TwoBraneSpectra` (<!-- counts:begin id="section-3" -->7<!-- counts:end id="section-3" -->) |
+| 4  | `TestSection4MetricPositivity` (<!-- counts:begin id="section-4" -->5<!-- counts:end id="section-4" -->) |
+| 5  | `TestSection5QuarterPhase` (<!-- counts:begin id="section-5" -->2<!-- counts:end id="section-5" -->) |
+| 6  | `TestSection6BesselChain` (<!-- counts:begin id="section-6" -->5<!-- counts:end id="section-6" -->) |
+| 7  | `TestSection7Prediction` (<!-- counts:begin id="section-7" -->4<!-- counts:end id="section-7" -->) |
+| 8  | `TestSection8LookElsewhere` (<!-- counts:begin id="section-8" -->12<!-- counts:end id="section-8" -->) |
+| 9  | `TestSection9GapRatios` (<!-- counts:begin id="section-9" -->7<!-- counts:end id="section-9" -->) |
+| 10 | `TestSection10Granularity` (<!-- counts:begin id="section-10" -->12<!-- counts:end id="section-10" -->) |
+| 11 | `TestSection11ContactConfigurations` (<!-- counts:begin id="section-11" -->5<!-- counts:end id="section-11" -->) |
+| 12 | `TestSection12FigureOneStatements` (<!-- counts:begin id="section-12" -->21<!-- counts:end id="section-12" -->) -- checks only: figure 1 moved to section 44 |
+| 13 | `TestSection13FigureTwoReciprocity` (<!-- counts:begin id="section-13" -->11<!-- counts:end id="section-13" -->) |
+| 14 | `TestSection14RingGaps` (<!-- counts:begin id="section-14" -->12<!-- counts:end id="section-14" -->) |
+| 15 | `TestSection15StateCount` (<!-- counts:begin id="section-15" -->6<!-- counts:end id="section-15" -->) |
+| 16 | `TestSection16KoideFromM` (<!-- counts:begin id="section-16" -->4<!-- counts:end id="section-16" -->) |
+| 17 | `TestSection17ObserverLevelFromLambda` (<!-- counts:begin id="section-17" -->3<!-- counts:end id="section-17" -->) |
+| 18 | `TestSection18TwoReadingsOfTheSameCurvature` (<!-- counts:begin id="section-18" -->3<!-- counts:end id="section-18" -->) |
+| 19 | `TestSection19TowerOffset` (<!-- counts:begin id="section-19" -->9<!-- counts:end id="section-19" -->) |
+| 20 | `TestSection20TwoCandidates` (<!-- counts:begin id="section-20" -->6<!-- counts:end id="section-20" -->) |
+| 21 | `TestSection21TwoBraneRival` (<!-- counts:begin id="section-21" -->2<!-- counts:end id="section-21" -->) |
+| 22 | `TestSection22CurvatureUnit` (<!-- counts:begin id="section-22" -->6<!-- counts:end id="section-22" -->) |
+| 23 | `TestSection23LatticeOfUnits` (<!-- counts:begin id="section-23" -->10<!-- counts:end id="section-23" -->) |
+| 24 | `TestSection24ScaleAndTop` (<!-- counts:begin id="section-24" -->4<!-- counts:end id="section-24" -->) |
+| 25 | `TestSection25AutodualWindow` (<!-- counts:begin id="section-25" -->11<!-- counts:end id="section-25" -->) |
+| 26 | `TestSection26WindowEdge` (<!-- counts:begin id="section-26" -->6<!-- counts:end id="section-26" -->) |
+| 27 | `TestSection27WindowAsNome` (<!-- counts:begin id="section-27" -->6<!-- counts:end id="section-27" -->) |
+| 28 | `TestSection28PoissonTheta` (<!-- counts:begin id="section-28" -->4<!-- counts:end id="section-28" -->) |
+| 29 | `TestSection29LatticePointFromOmegaLambda` (<!-- counts:begin id="section-29" -->8<!-- counts:end id="section-29" -->) |
+| 30 | `TestSection30SymmetricThroat` (<!-- counts:begin id="section-30" -->5<!-- counts:end id="section-30" -->) |
+| 31 | `TestSection31ModuliMetric` (<!-- counts:begin id="section-31" -->11<!-- counts:end id="section-31" -->) |
+| 32 | `TestSection32LevelVersusGridShape` (<!-- counts:begin id="section-32" -->7<!-- counts:end id="section-32" -->) |
+| 33 | `TestSection33ColourHole` (<!-- counts:begin id="section-33" -->8<!-- counts:end id="section-33" -->) |
+| 34 | `TestSection34Quintessence` (<!-- counts:begin id="section-34" -->4<!-- counts:end id="section-34" -->) |
+| 35 | `TestSection35HalfThreshold` (<!-- counts:begin id="section-35" -->8<!-- counts:end id="section-35" -->) |
+| 36 | `TestSection36BlackHoleWhereNeeded` (<!-- counts:begin id="section-36" -->7<!-- counts:end id="section-36" -->) |
+| 37 | `TestSection37Consistency` (<!-- counts:begin id="section-37" -->13<!-- counts:end id="section-37" -->) |
+| 38 | `TestSection38AreaLawHalf` (<!-- counts:begin id="section-38" -->4<!-- counts:end id="section-38" -->) |
+| 39 | `TestSection39FibonacciTiling` (<!-- counts:begin id="section-39" -->28<!-- counts:end id="section-39" -->) |
+| 40 | `TestSection40DictionaryAgainstTheCusp` (<!-- counts:begin id="section-40" -->27<!-- counts:end id="section-40" -->) |
+| 41 | `TestSection41FiveRegularTilings` (<!-- counts:begin id="section-41" -->18<!-- counts:end id="section-41" -->) |
+| 42 | `TestSection42TwoCoordinatesAndTheStep` (<!-- counts:begin id="section-42" -->33<!-- counts:end id="section-42" -->) |
+| 43 | `TestSection43ThreeColumns` (<!-- counts:begin id="section-43" -->12<!-- counts:end id="section-43" -->) |
+| 44 | `TestSection44BackgroundFigure` (<!-- counts:begin id="section-44" -->31<!-- counts:end id="section-44" -->) |
+| 45 | `TestSection45ObserverLevel` (<!-- counts:begin id="section-45" -->15<!-- counts:end id="section-45" -->) |
+| 46 | `TestSection46HopfFoliation` (<!-- counts:begin id="section-46" -->13<!-- counts:end id="section-46" -->) |
+| 47 | `TestSection47ThePentagonalCode` (<!-- counts:begin id="section-47" -->6<!-- counts:end id="section-47" -->) |
 
 The number in parentheses is the count of collected items of that class
 (`uv run pytest tests/ --collect-only -q | grep -c <ClassName>`), so it
