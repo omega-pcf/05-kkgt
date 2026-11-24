@@ -6,7 +6,7 @@ title: "One object instead of a choice of vacuum to put the observer in de
   candidates and with the cosmological constant"
 type: software
 version: 0.1.0
-date-released: 2026-11-22
+date-released: 2026-11-23
 authors:
   - family-names: González García
     given-names: Jorge Armando
@@ -1440,7 +1440,7 @@ references:
     year: 2000
     journal: Physics Letters B
     notes: "Second paper: Phenomenology of the Randall--Sundrum gauge hierarchy
-      model, Phys. Rev. Lett. 84 (2000) 2080, doi:10.1103/PhysRevLett.84.2080"
+      model, Phys. Rev. Lett. 84 (2000) 2080"
     start: "43"
     end: "49"
     type: article
