@@ -234,6 +234,15 @@ Notes:
   Like a lockfile the manifest records a state: it makes divergence loud, it
   does not remove it — the remedy for a failure is always a family-wide port
   plus a refreshed pin committed with the change.
+- **Witness-contract pin (amendment 2026-11-24, wave W01):** `docs/witness-contract.md`
+  joined `files` in `scripts/shared-files.json` as the manifest's 22nd entry —
+  the `chore(manifest): pin the witness contract` commit of 2026-11-24 in each
+  of the five repositories — so `pnpm run manifest:check` reports
+  `manifest ✓ 22 shared files` (9 documented exclusions) instead of the 20
+  quoted in the 2026-11-21 amendment above (the 21st entry, `.release-it.ts`,
+  was pinned on 2026-11-21).  The manifest is byte-identical in all five
+  repositories: md5 `641993135ec680e5f8cce3375bae0cac` over
+  `scripts/shared-files.json`.
 - `figures` (**P6**): every repository exposes the key and parity asserts it
   from P6 on; behind the alias the mechanism stays local — `01`/`03`/`05`
   `uv run python scripts/figures/main.py`, `04` `bash scripts/figures/build.sh`
