@@ -37,7 +37,9 @@
 % \itshape (amsthm's plain theorem style) nor an open \emph can leak into it.
 % ---------------------------------------------------------------------------
 \definecolor{tierP}{rgb}{0.15,0.35,0.65}   % blue   -- proved in Lean
-\definecolor{tierPs}{rgb}{0.70,0.45,0.05}  % ochre  -- written in Lean, no name cited
+\definecolor{tierPs}{rgb}{0.70,0.45,0.05}  % ochre  -- written, not yet
+% verified against the corpus (docs/witness-contract.md §6.5): the star's
+% one denotation, intermediate layers only, zero stars at release
 \definecolor{tierN}{rgb}{0.05,0.40,0.20}   % green  -- verified numerically
 \definecolor{tierW}{rgb}{0.00,0.35,0.45}   % teal   -- witness item
 % allow line breaks after underscores, commas and dots inside code names
@@ -96,7 +98,7 @@
 \fi}
 % a witness with names, on a line of its own, flush right: P[name1, name2]
 % (the sibling manuscripts set their witness blocks with \hfill + \raggedleft,
-% see \ProofWitnessBlock in 03-crystalline-worldsheet)
+% see \witness in 03-crystalline-worldsheet)
 \newcommand{\witness}[2]{%
   \par\noindent\hfill
   \parbox{\dimexpr\linewidth-1em\relax}{\raggedleft
