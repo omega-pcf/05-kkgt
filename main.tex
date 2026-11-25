@@ -43,11 +43,31 @@
 % allow line breaks after underscores, commas and dots inside code names
 \makeatletter
 \DeclareRobustCommand{\brk@us}{\textunderscore\allowbreak}
-\newcommand{\code}[1]{{\upshape\ttfamily\let\_\brk@us #1}}
+\ExplSyntaxOn
+\tl_new:N \l__tier_src_tl
+\tl_new:N \l__tier_us_tl   \tl_set:Nx \l__tier_us_tl  { \char_generate:nn { 95 } { 8  } }
+\tl_new:N \l__tier_usx_tl  \tl_set:Nx \l__tier_usx_tl { \char_generate:nn { 95 } { 11 } }
+\tl_new:N \l__tier_uso_tl  \tl_set:Nx \l__tier_uso_tl { \char_generate:nn { 95 } { 12 } }
+% \tierids{<arbitrary string>}: \_ and a raw _ (any category code) both
+% become the family's breakable typewriter underscore; every other token of
+% the argument passes through unchanged.  \tl_replace_all does not descend
+% into brace groups, so every wrapper applies the normalisation to its own
+% argument (docs/witness-contract.md §6.4).
+\cs_new_protected:Npn \tierids #1
+  {
+    \tl_set:Nn \l__tier_src_tl {#1}
+    \tl_replace_all:Nnn \l__tier_src_tl { \_ } { \brk@us }
+    \exp_args:NNV \tl_replace_all:Nnn \l__tier_src_tl \l__tier_us_tl  { \brk@us }
+    \exp_args:NNV \tl_replace_all:Nnn \l__tier_src_tl \l__tier_usx_tl { \brk@us }
+    \exp_args:NNV \tl_replace_all:Nnn \l__tier_src_tl \l__tier_uso_tl { \brk@us }
+    \tl_use:N \l__tier_src_tl
+  }
+\ExplSyntaxOff
+\newcommand{\code}[1]{{\upshape\ttfamily\tierids{#1}}}
 % the test that checks a number, cited by its pytest name; the argument is
 % written with \_ so a long name can break across lines, and
 % tests/test_section_census.py requires every one of them to exist
-\newcommand{\testref}[1]{{\upshape\small\ttfamily\let\_\brk@us #1}}
+\newcommand{\testref}[1]{{\upshape\small\ttfamily\tierids{#1}}}
 \@namedef{tiercol@P}{\color{tierP}}
 % internal/protected: draft-stage marker between builds; functional and rendering, but not used in the final/release text
 \@namedef{tiercol@P*}{\color{tierPs}}
@@ -72,27 +92,32 @@
 %                                  to the tag ([N]~\cite{key}, [P]
 %                                  in~\cite{key}), so a tag never prints a
 %                                  number in its bracket.
-%   a citation key in the optional argument (a plain alnum token: no \_,
-%   no comma, no \testref) is an error, not a fallback
-\def\tier@inside#1#2{{\normalfont\footnotesize\bfseries\tiercol{#2}#2[#1]}}
+%   the optional argument is read as an ARBITRARY STRING (contract §6.4):
+%   \_ and a raw _ both print as the breakable typewriter underscore and
+%   every other token passes through -- the macro does not judge the SHAPE
+%   of what it holds, because a character test rejects a valid internal id
+%   such as F1PaperTorus.chi5WeilOrbit and cannot recognise a citation key,
+%   whose characters are the characters of an identifier.  The only error
+%   it raises at run time is a literal \cite token inside the bracket,
+%   which is never an id; whether the bracket holds a citation key is
+%   measured where the key set exists, by the suite against
+%   citation.csl.json.
+\def\tier@inside#1#2{{\normalfont\footnotesize\bfseries\tiercol{#2}#2[\tierids{#1}]}}
 % raw internal names: the bracket is set in tt, with breakable underscores
-\def\tier@names#1#2{{\normalfont\footnotesize\bfseries\tiercol{#2}#2[{\upshape\small\ttfamily\let\_\brk@us #1}]}}
+\def\tier@names#1#2{{\normalfont\footnotesize\bfseries\tiercol{#2}#2[{\upshape\small\ttfamily\tierids{#1}}]}}
 \providecommand{\tier}[2][]{%
 \ifx\relax#1\relax
 {\normalfont\footnotesize\bfseries\tiercol{#2}[#2]}%
 \else
+\in@{\cite}{#1}\ifin@%
+\PackageError{tier}{the optional argument of \string\tier\space holds internal ids only}%
+{An external source is a \string\cite\space set next to the tag, never its key;}%
+\else%
 \in@{\testref}{#1}\ifin@
 \tier@inside{#1}{#2}%
-\else
-\in@{\_}{#1}\ifin@
+\else%
 \tier@names{#1}{#2}%
-\else
-\in@{,}{#1}\ifin@
-\tier@names{#1}{#2}%
-\else
-\PackageError{tier}{the optional argument of \string\tier\space holds internal ids only}
-{An external source is a \string\cite\space set next to the tag, never its key; a name of our own Lean file is written raw, with \string\_.}%
-\fi\fi\fi
+\fi\fi
 \fi}
 % a witness with names, on a line of its own, flush right: P[name1, name2]
 % (the sibling manuscripts set their witness blocks with \hfill + \raggedleft,
@@ -100,7 +125,7 @@
 \newcommand{\witness}[2]{%
   \par\noindent\hfill
   \parbox{\dimexpr\linewidth-1em\relax}{\raggedleft
-    \normalfont\footnotesize\bfseries\tiercol{#1}#1\mdseries{\upshape\small\ttfamily\let\_\brk@us[#2]}}%
+    \normalfont\footnotesize\bfseries\tiercol{#1}#1\mdseries{\upshape\small\ttfamily[\tierids{#2}]}}%
   \par}
 % witness label of the W list: W1[CLPW]
 \newcommand{\wtag}[2]{{\normalfont\footnotesize\bfseries\tiercol{W}#1\mdseries{\small\ttfamily[#2]}}}
