@@ -7,8 +7,8 @@
 
 | counter | value | measured from | quoted in |
 |---|---:|---|---|
-| `pytest.collected` | 498 | `uv run pytest tests/ -q --collect-only` | `README.md` (`suite`), `tests/README.md` (`commands`), `tests/README.md` (`suite-total`), `main.tex` (`macros`), `main.tex` (`suite-total`) |
-| `pytest.not_slow` | 495 | `uv run pytest tests/ -q -m 'not slow' --collect-only` | `README.md` (`suite`), `tests/README.md` (`commands`), `main.tex` (`macros`), `main.tex` (`suite-not-slow`) |
+| `pytest.collected` | 500 | `uv run pytest tests/ -q --collect-only` | `README.md` (`suite`), `tests/README.md` (`commands`), `tests/README.md` (`suite-total`), `main.tex` (`macros`), `main.tex` (`suite-total`) |
+| `pytest.not_slow` | 497 | `uv run pytest tests/ -q -m 'not slow' --collect-only` | `README.md` (`suite`), `tests/README.md` (`commands`), `main.tex` (`macros`), `main.tex` (`suite-not-slow`) |
 | `pytest.census` | 13 | `uv run pytest tests/test_section_census.py -q --collect-only` | — |
 | `testref.occurrences` | 94 | occurrences of `\testref{` in `main.tex` | — |
 | `testref.distinct` | 84 | distinct ids inside `\testref{…}` in `main.tex` | — |

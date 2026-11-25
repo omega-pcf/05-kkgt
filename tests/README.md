@@ -16,15 +16,15 @@ function, so the artifact cannot return (SPEC-002 §3).
 
 ```bash
 # counts:begin id="commands"
-uv run pytest tests/ -q                 # whole suite   (498 tests)
-uv run pytest tests/ -q -m 'not slow'   # without >10 s (495 tests)
+uv run pytest tests/ -q                 # whole suite   (500 tests)
+uv run pytest tests/ -q -m 'not slow'   # without >10 s (497 tests)
 # counts:end id="commands"
 pnpm run test                           # same, through package.json
 ```
 
 The pytest configuration lives in `pyproject.toml` under `[tool.pytest.ini_options]`
 (`testpaths`, `pythonpath`, `markers`, `addopts`), so a bare `uv run pytest` collects
-the same <!-- counts:begin id="suite-total" -->498<!-- counts:end id="suite-total" --> tests as `uv run pytest tests/ -q`.
+the same <!-- counts:begin id="suite-total" -->500<!-- counts:end id="suite-total" --> tests as `uv run pytest tests/ -q`.
 
 ## Layout (mirrors `03-crystalline-worldsheet/tests/`)
 
