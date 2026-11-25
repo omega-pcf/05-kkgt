@@ -36,7 +36,7 @@
 % ---------------------------------------------------------------------------
 \definecolor{tierP}{rgb}{0.15,0.35,0.65}   % blue   -- proved in Lean
 \definecolor{tierPs}{rgb}{0.70,0.45,0.05}  % ochre  -- written, not yet
-% verified against the corpus (docs/witness-contract.md §6.5): the star's
+% verified against the corpus (docs/witness-contract.md §6.6): the star's
 % one denotation, intermediate layers only, zero stars at release
 \definecolor{tierN}{rgb}{0.05,0.40,0.20}   % green  -- verified numerically
 \definecolor{tierW}{rgb}{0.00,0.35,0.45}   % teal   -- witness item
@@ -52,7 +52,7 @@
 % become the family's breakable typewriter underscore; every other token of
 % the argument passes through unchanged.  \tl_replace_all does not descend
 % into brace groups, so every wrapper applies the normalisation to its own
-% argument (docs/witness-contract.md §6.4).
+% argument (docs/witness-contract.md §6.5).
 \cs_new_protected:Npn \tierids #1
   {
     \tl_set:Nn \l__tier_src_tl {#1}
@@ -92,7 +92,7 @@
 %                                  to the tag ([N]~\cite{key}, [P]
 %                                  in~\cite{key}), so a tag never prints a
 %                                  number in its bracket.
-%   the optional argument is read as an ARBITRARY STRING (contract §6.4):
+%   the optional argument is read as an ARBITRARY STRING (contract §6.5):
 %   \_ and a raw _ both print as the breakable typewriter underscore and
 %   every other token passes through -- the macro does not judge the SHAPE
 %   of what it holds, because a character test rejects a valid internal id
