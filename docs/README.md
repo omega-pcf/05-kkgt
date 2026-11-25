@@ -22,17 +22,12 @@ docs/
 ├── specs/            # Design specifications (dated, id'd, ISO header)
 │   └── 20261116_SPEC-001_deterministic_self_citations.md
 └── reports/           # Specific, repository-tied reports (dated, id'd)
-    ├── README.md      # Reports convention (template) + index of this repository's reports
-    ├── 20261115_DEC-001_witness_decisions.md
-    ├── 20261115_WIT-001_criterion_sites.md
-    ├── 20261116_AUD-001_claim_test_matrix.md
-    ├── 20261116_CIT-001_citation_verification.md
-    ├── 20261116_FIG-001_figure_1_deembed.md
-    ├── 20261116_MRG-001_v138_diff_merge_plan.md
-    ├── 20261116_SEC-001_sections_migration.md
-    ├── 20261116_WIT-002_u_p_verdicts.md
-    └── 20261117_WIT-003_rationale_applied_state.md
+    └── README.md      # Reports convention (template) + index of this repository's reports
 ```
+
+The index of the reports is the table at the end of `reports/README.md`;
+it is not enumerated here, because a report is added by that index and not
+by this tree.
 
 `docs/` itself stays generic (rules and rationale, portable across the
 sibling repositories); anything tied to one repository state — per-site
@@ -63,11 +58,10 @@ inventories, decision logs, verdict tables — goes to `docs/reports/`.
   questions; first entry
   [SPEC-001](specs/20261116_SPEC-001_deterministic_self_citations.md)
   (deterministic self-citation blocks in the READMEs).
-- **reports/**: Specific reports — the witness decision log (DEC-001), the criterion site inventory
-  (WIT-001), the `u`/`p` verdict table (WIT-002), the rationale applied state and pending work
-  (WIT-003), the claim/test audit (AUD-001), the citation content verification (CIT-001), the
-  figure-1 prose de-embed (FIG-001), the v138 merge plan (MRG-001) and the sections migration
-  ledger (SEC-001); convention and index in `reports/README.md`.
+- **reports/**: Specific reports — per-site inventories, decision logs, verdict tables, audits
+  and incident records tied to one repository state. The convention (naming, ISO header, index
+  format) and the full index of this repository's reports are in `reports/README.md`; they are
+  not enumerated here, because that index is what a new report joins.
 
 ## Conventions
 
