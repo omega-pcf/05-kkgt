@@ -40,9 +40,20 @@
 % one denotation, intermediate layers only, zero stars at release
 \definecolor{tierN}{rgb}{0.05,0.40,0.20}   % green  -- verified numerically
 \definecolor{tierW}{rgb}{0.00,0.35,0.45}   % teal   -- witness item
-% allow line breaks after underscores, commas and dots inside code names
+% Line breaking of an id list (contract §6.12 S8): comma-first, "_" only as
+% a fallback.  The break after ", " is the natural interword break (penalty
+% 0) and the break inside an identifier is DISCOURAGED (penalty 500), so a
+% list splits at its commas and only an identifier longer than the remaining
+% measure is split at all -- never \allowbreak (= penalty 0), which made the
+% mid-identifier break equally attractive and produced twenty_divisor_ /
+% lattice_splits in the PDF.  The trailing \relax is load-bearing: after a
+% <dimen> TeX scans the keywords `plus' and `minus' of \hskip, and an
+% identifier that begins -- right after the underscore -- with the letters
+% `minus' or `plus' would be eaten as that keyword ("Missing number ...
+% Illegal unit of measure").  \relax is not a letter, so both keyword scans
+% push it back and the id prints whole.
 \makeatletter
-\DeclareRobustCommand{\brk@us}{\textunderscore\allowbreak}
+\DeclareRobustCommand{\brk@us}{\textunderscore\penalty500\hskip0pt\relax}
 \ExplSyntaxOn
 \tl_new:N \l__tier_src_tl
 \tl_new:N \l__tier_us_tl   \tl_set:Nx \l__tier_us_tl  { \char_generate:nn { 95 } { 8  } }
