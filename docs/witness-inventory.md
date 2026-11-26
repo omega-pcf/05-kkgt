@@ -14,9 +14,9 @@ Measured over the tracked manuscript sources (`main.tex` and `src/**/*.tex`) —
 | `\tier[ids]{N}` | 53 |
 | `\tier{P}` (bare) | 6 |
 | `\tier{N}` (bare) | 3 |
-| own-line `\witness{P}{…}` | 30 |
+| own-line `\witness{P}{…}` | 31 |
 | own-line `\witness{N}{…}` | 12 |
-| mid-line `\witness{…}` (no block) | 1 |
+| mid-line `\witness{…}` (no block) | 0 |
 | `\tier[\testref{…}]{N}` marks | 53 |
 
 Ids carried by `N` marks: **79 ids over 72 distinct**.
@@ -32,7 +32,7 @@ Ids carried by `N` marks: **79 ids over 72 distinct**.
 | `\leanline` | 0 |
 | `\code` | 40 |
 | `\testref` | 95 |
-| `\witness` | 43 |
+| `\witness` | 44 |
 
 ## Gates measured here
 

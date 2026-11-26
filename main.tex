@@ -119,14 +119,33 @@
 \tier@names{#1}{#2}%
 \fi\fi
 \fi}
-% a witness with names, on a line of its own, flush right: P[name1, name2]
-% (the sibling manuscripts set their witness blocks with \hfill + \raggedleft,
-% see \witness in 03-crystalline-worldsheet)
+% THE MARK -- one name, placement-driven (contract §6.12 S7): the shape
+% follows the position of the call in the source, never the class.
+%   own paragraph (\ifvmode)  -> the block, flush right, \medskip above and
+%                               below, indent 0, no terminal punctuation
+%                               (S2-S5);
+%   mid-line in the source
+%   (\ifhmode)               -> the mark inside the sentence: no \par, no
+%                               indent, no space is eaten, the paragraph
+%                               does not break; a mark that closes a list
+%                               item stays there (gate i = 0, S3).
+% Colour is ONE branch for the whole mark (S6), the letter and the ids in
+% the class colour; the sizes are the family rule 13/15 (CVR-001 TYP-4):
+% the letter in \footnotesize, the ids in \small tt, upright.
 \newcommand{\witness}[2]{%
-  \par\noindent\hfill
-  \parbox{\dimexpr\linewidth-1em\relax}{\raggedleft
-    \normalfont\footnotesize\bfseries\tiercol{#1}#1\mdseries{\upshape\small\ttfamily[\tierids{#2}]}}%
-  \par}
+  \ifvmode
+    \par\medskip\noindent\hfill
+    \parbox{\dimexpr\linewidth-1em\relax}{\raggedleft
+      \normalfont\footnotesize\bfseries\tiercol{#1}#1{\mdseries\upshape\small\ttfamily[\tierids{#2}]}}%
+    \par\medskip
+  \else
+    \in@{\cite}{#2}\ifin@
+      \PackageError{witness}{the ids of \string\witness\space are internal ids only}
+      {An external source is a \string\cite\space set next to the tag, never its key;}%
+    \else
+      {\normalfont\footnotesize\bfseries\tiercol{#1}#1{\mdseries\upshape\small\ttfamily[\tierids{#2}]}}%
+    \fi
+  \fi}
 % witness label of the W list: W1[CLPW]
 \newcommand{\wtag}[2]{{\normalfont\footnotesize\bfseries\tiercol{W}#1\mdseries{\small\ttfamily[#2]}}}
 \makeatother
@@ -357,7 +376,10 @@ $\pi$ and $\golden$ are irrational with respect to each other, and that keeps th
 apart: a step of scale $\golden$ turns a phase by $\log\golden$, and $\log\golden/\pi$ is irrational,
 for $\log\golden=(p/q)\pi$ would make the algebraic number $\golden^{q}$ equal to $e^{p\pi}$, which is
 transcendental by the Gelfond--Schneider theorem~\cite{Gel34,Sch35}.
-\witness{P}{exp\_pi\_transcendental, golden\_is\_algebraic, log\_golden\_div\_pi\_irrational} Incommensurate frequencies do not lock into a common cycle, and $\golden$, the number least
+
+\witness{P}{exp\_pi\_transcendental, golden\_is\_algebraic, log\_golden\_div\_pi\_irrational}
+
+Incommensurate frequencies do not lock into a common cycle, and $\golden$, the number least
 well approximated by fractions~\cite{Hur91}, is the step least able to lock~\cite{Gre79}. The two
 directions meet only where $\golden$ produces its own fractions: its period modulo $N$, which for
 $N=16$ and $N=9$ is $24$, the same $24$ that the angular side carries in the Dedekind $\eta$ of the
@@ -936,12 +958,14 @@ $m_k^2=4\sin^2\bigl(k\pi/(4(n+1))\bigr)/(\log\golden)^2$, $k=1,\dots,2n+1$, all 
 there). The continuous interior mode has $m^2_{\mathrm{KK}}\approx-4.318$, below the
 Breitenlohner--Freedman bound $m^2_{\mathrm{BF}}=-d^2/4=-4$. \tier{P} in~\cite{CW6}; the comparison
 with the bound.
+
 \witness{P}{log\_golden\_lt\_half}
 \end{imported}
 \noindent The golden numbers are the levels of this operator, $z(\sigma)=\golden^{\sigma}$, not its eigenvalues: for $n=6$ the ratios of successive masses are $1.99,1.48,\dots,1.02$. What Imported statement~\ref{imp:tower} reads as golden is the scale at which each level sits \tier[\testref{test\_mass\_ratios\_of\_imp\_a1}]{N}.
 
 \begin{imported}[The arity; \cite{CW6}, \S2.2 and Appendix~A.7]\label{imp:arity}
 The golden central chain $\golden^2+\golden^{-2}=3$ fixes the arity $n=3$, and $d=n+1=4$.
+
 \witness{P}{sq\_add\_inv\_sq}
 \end{imported}
 
@@ -954,6 +978,7 @@ identification $M=M_{\mathrm{PCF}}$ of~\cite{CW6} (\code{M\_eq\_Mpcf} there) wit
 charged-lepton scale $M=313.84$~MeV fixes the unit of the framework, $M/M_{\mathrm{PCF}}=4.626$~MeV, and
 every relation of $M$ with $\pi$ and $\log\golden$ below is written in that unit; its placement face, the proton five steps of action $\pi$ above the
 electron, gives $m_p/3=312.8$~MeV.
+
 \witness{P}{certainty\_principle, log\_from\_scale}
 \end{imported}
 
@@ -964,6 +989,7 @@ principle $\varepsilon_0M_{\mathrm{PCF}}=\pi$ are one $\golden$-fact. The same m
 $\tfrac12$, the self-conjugate midpoint of $x\mapsto1-x$, is the fermion spin (\cite{CW6},
 Proposition ``Fermion and Standard-Model content''). \tier{P} in~\cite{CW6};
 the half-turn and its order.
+
 \witness{P}{fibre\_half\_turn}
 \end{imported}
 
@@ -972,6 +998,7 @@ The throat coordinate $z(\sigma)=\golden^{\sigma}$ and the weld time
 $\tau(\sigma)=M_{\mathrm{PCF}}\golden^{-\sigma}$ satisfy $z(\sigma)\tau(\sigma)=M_{\mathrm{PCF}}$ at every
 level. This is $R\cdot(\alpha'/R)=\alpha'$ with $\alpha'=M_{\mathrm{PCF}}$: short and long distance are
 one family exchanged by T-duality.
+
 \witness{P}{lattice\_radius\_conjugate}
 \end{imported}
 
@@ -979,6 +1006,7 @@ one family exchanged by T-duality.
 $\golden^{\sigma}+\golden^{\sigma+1}=\golden^{\sigma+2}$ for every real $\sigma$; conversely, a positive
 $r$ with $r^{\sigma}+r^{\sigma+1}=r^{\sigma+2}$ for some real $\sigma$ satisfies $r^2=r+1$, whose only
 positive root is $\golden$.
+
 \witness{P}{additive\_law\_forces\_golden}
 \end{imported}
 
@@ -986,6 +1014,7 @@ positive root is $\golden$.
 With $v(x)=\log x/\log\golden$, $v(\golden^{n})=n$, and $x>0$ lies on the tower exactly when $v(x)$ is
 an integer. With $\lambda=\log2/\log\golden$, $|2|_2=\tfrac12=\golden^{-\lambda}$: a power of $2$ and a
 level of $\golden$ are one quantity, in the unit $\lambda$.
+
 \witness{P}{golden\_valuation\_on\_tower, two\_adic\_is\_level}
 \end{imported}
 
@@ -996,6 +1025,7 @@ Over $\mathbb{Q}$ the angular origin is already visible: $\golden=2\cos(\pi/5)=\
 with $\zeta_{10}=e^{i\pi/5}$ a root of the cyclotomic polynomial $\Phi_{10}$, so $\golden$ is a
 point of the circle read on its diameter; and $\golden=1+1/\golden$, the relation that makes its
 continued fraction $[1;1,1,\dots]$.
+
 \witness{P}{golden\_eq\_two\_cos\_pi\_div\_five,
 golden\_self\_reference}
 \end{imported}
@@ -1009,16 +1039,20 @@ periods~\cite{Wall60}, computed here; $S=\left(\begin{smallmatrix}0&-1\\1&0\end{
 and $T=\left(\begin{smallmatrix}1&1\\0&1\end{smallmatrix}\right)$ generate
 $\mathrm{SL}_2(\mathbb{Z})$~\cite{Ser73}, and the Euler characteristic is classical~\cite{Ser71}.
 The orders modulo $16$, $9$, $5$ and $10$, and those of $S$ and $ST$, are computed in Lean.
+
 \witness{P}{pisano\_orders, modular\_orders}
 \end{imported}
 
 \begin{imported}[One exponent, angle and radius]\label{imp:angle}
 With $q=e^{2\pi i\tau}$ and $\tau=x+iy$, $q^{E}=e^{2\pi iEx}\,e^{-2\pi Ey}$: a factor of modulus one
 and a positive real.
+
 \witness{P}{exponent\_angle\_radius, angle\_has\_modulus\_one}
+
 On the tower the angle and the radius are one quantity: the spectral angle of the level $\sigma$,
 $\alpha(\sigma)=\arctan(\varepsilon_0\golden^{\sigma})$, has $\tan\alpha(\sigma+1)/\tan\alpha(\sigma)=\golden$
 (\cite{CW6}, Proposition~3.4, eq.~(76)): one step in angle is one step $\golden$ in scale.
+
 \witness{P}{spectral\_angle\_ratio}
 \end{imported}
 
@@ -1168,6 +1202,7 @@ tower it is the Galois mirror. By Poisson summation, the law of the theta series
 $\sum_ke^{-\pi k^2N}=N^{-1/2}\sum_me^{-\pi m^2/N}$, so the weight $e^{-\pi/N}$ is the first winding term of
 the heat kernel on the ring whose modes are the left side \tier[theta\_S\_law]{P}. At $\tau=i$, the
 level $0$, $\vartheta_3(e^{-\pi})=\pi^{1/4}/\Gamma(\tfrac34)$, the lemniscatic value~\cite{WW27}
+
 \witness{N}{\testref{test\_theta3\_at\_tau\_i}}
 
 \subsubsection*{The criteria a single object must meet}
@@ -1243,7 +1278,10 @@ counted once. W5, W6, W7, W8 and W10 are properties the object could have lacked
 stated as such. The $\tfrac12$ of the criteria is of two kinds. As the fixed point of an involution
 it is a theorem: of $x\mapsto1-x$ and of the Galois conjugation, the order-two monodromy $\pi$, and
 the maximum of the binary entropy.
-\witness{P}{bin\_entropy\_half, fibre\_half\_turn, cpt\_involution} As a
+
+\witness{P}{bin\_entropy\_half, fibre\_half\_turn, cpt\_involution}
+
+As a
 threshold set on a function, the threshold of objectivity of W1 and the threshold set on the
 Gaussian window of Imported statement~\ref{imp:gauss}, it is an identification of that threshold with the modulus.
 
@@ -1272,6 +1310,7 @@ so $K$ is self-adjoint for $\langle u,v\rangle_\eta=\sum_\sigma\eta_\sigma u_\si
   \eta_\sigma=e^{4A(\sigma)},\qquad A(\sigma)=-\sigma\log b,
 \end{equation}
 which is $\sqrt{-g}$ of the throat. The symmetrizer is $D_\sigma=b^{-2\sigma}$, with $D^2=\eta$.
+
 \witness{P}{eta\_symmetrizes, eta\_eq\_exp\_fourA, D\_sq\_eq\_eta, D\_conjugated\_hops\_equal}
 \end{proposition}
 
@@ -1297,6 +1336,7 @@ $e^{A}=\golden^{\sigma}$, the reflected operator, with hoppings $b^{-2}$ from be
 from above, is symmetrised by $\eta'_\sigma=b^{4\sigma}=e^{4A}$; the reflection
 $\sigma\mapsto6-\sigma$ carries one operator to the other. Proposition~\ref{prop:metric} therefore
 holds in both orientations, each with its operator, and the spectra coincide.
+
 \witness{P}{eta\_reflected\_symmetrizes}
 
 \begin{remark}[The hoppings are a complexified Bloch momentum]\label{rmk:bloch}
@@ -1310,6 +1350,7 @@ $\log\golden<\tfrac12$ \tier[log\_golden\_lt\_half]{P}, $m^2=-1/(\log\golden)^2=
 $m^2_{\mathrm{BF}}=-d^2/4=-4$. This is the value $-4.318$ that~\cite{CW6} computes for the continuous
 interior mode (Imported statement~\ref{imp:A1}); the constant mode of the ring has exactly that value, and the
 open tower has no such mode. The Kaluza--Klein tower is therefore open for the complex spectrum.
+
 \witness{P}{bloch\_complexified, bloch\_factor\_is\_hop, bloch\_factor\_is\_hop\_inv, ring\_constant\_mode,
 ring\_mode\_below\_BF}
 
@@ -1359,6 +1400,7 @@ the spectral condition of Wightman's axioms~\cite{SW64} holds for the tower. For
 regular Sturm--Liouville problem, with smooth positive coefficients, and the second-order
 convergence of the three-point scheme to its eigenvalues is classical~\cite{Pry94}; \tier[\testref{test\_second\_order\_convergence\_on\_the\_golden\_grid}]{N} for the
 values on the golden grid. The zeros of $J_1$ enter Lean as an axiom with their source
+
 \witness{P}{bessel\_J1\_zeros}
 \end{theorem}
 
@@ -1372,6 +1414,7 @@ the tower of~\cite{CW6} alone, $\sigma\in[0,6]$, the
 residual is $1.0\%$; $m_2/m_1$ differs from the deep value by $0.011$ ($0.6\%$), ten times
 smaller than its error $\pm0.11$ implied by the mass uncertainties assumed in \S\ref{sec:data}
 (the other ratios carry $\pm0.16$ and $\pm0.21$).
+
 \witness{N}{\testref{test\_rms\_against\_the\_lyr\_table}, \testref{test\_error\_on\_the\_ratios}, \testref{test\_deep\_chain\_yields\_the\_j1\_zeros}}
 
 \begin{remark}[The levels are not the modes]\label{rmk:levels}
@@ -1385,7 +1428,9 @@ a physical parameter \tier[\testref{test\_one\_node\_per\_level\_degrades\_the\_
 \begin{corollary}[The Bessel phase is fixed by the arity]\label{cor:phase}
 The profile in $\mathrm{AdS}_{d+1}$ involves $J_\nu$ with $\nu=d/2-1$, whose zeros have asymptotic
 phase $\nu/2-\tfrac14=(d-3)/4$~\cite{DLMF}. The phase equals $\tfrac14$ if and only if $d=4$. With
-$d=n+1$, axiom~(F2), and the arity $n=3$ (Imported statement~\ref{imp:arity}), $\nu=1$ and the phase is $\tfrac14$. \witness{P}{phase\_of\_dimension, phase\_quarter\_iff, phase\_from\_arity}
+$d=n+1$, axiom~(F2), and the arity $n=3$ (Imported statement~\ref{imp:arity}), $\nu=1$ and the phase is $\tfrac14$.
+
+\witness{P}{phase\_of\_dimension, phase\_quarter\_iff, phase\_from\_arity}
 \end{corollary}
 
 \noindent Against~\eqref{eq:data}, with the scale as the only parameter:
@@ -1416,6 +1461,7 @@ asymptotically, those of a twisted sector with $\theta=\tfrac14$, modes $\pi(k+\
 energy per boson is $\tfrac12\zeta(-1,\theta)=-B_2(\theta)/4$: $-\tfrac1{24}$ for the untwisted string
 and $\tfrac1{192}$ at $\theta=\tfrac14$~\cite{Pol98}. The twist $\theta=\tfrac14$ is a quarter-turn, of
 order $4$. The value $\zeta(-1)$ thus enters the spectrum through its angle
+
 \witness{N}{\testref{test\_offset\_of\_j1\_zeros\_tends\_to\_one\_quarter}}
 
 The weight is what produces the phase. The operator~\eqref{eq:K} has no weight $e^{2A}$, and its
@@ -1502,6 +1548,7 @@ ultraviolet at a scale $M_{\mathrm{UV}}$,
 \begin{equation}\label{eq:kpir}
   k\pi r=\log\frac{M_{\mathrm{UV}}}{m_0}-\sigma_{\mathrm{IR}}\log b.
 \end{equation}
+
 \witness{P}{rs\_warp\_is\_golden, rs\_depth\_is\_levels, rs\_scale\_is\_H\_at\_bottom,
 rs\_kpir\_from\_uv}
 \end{proposition}
@@ -1649,7 +1696,10 @@ and $1028$ and $1346$~GeV against the $1000$ and $1322$~GeV that~\cite{LYR26} ex
 next two are $j_{1,5}M\golden^{12}=1664$~GeV and
 $j_{1,6}M\golden^{12}=1982$~GeV, with no free parameter
 .
-\witness{N}{\testref{test\_masses\_at\_the\_bottom\_of\_the\_throat}, \testref{test\_predictions\_at\_sigma\_12}} Fitted to the same two observed
+
+\witness{N}{\testref{test\_masses\_at\_the\_bottom\_of\_the\_throat}, \testref{test\_predictions\_at\_sigma\_12}}
+
+Fitted to the same two observed
 candidates with its scale free, the two-brane model gives $1014$ and $1328$~GeV for the next two
 modes; the golden throat differs from it by $1.4\%$, so those modes separate the two only at a mass
 resolution better than about $15$~GeV, against the $\pm30$ and $\pm40$~GeV assumed in
@@ -1801,7 +1851,10 @@ The angular direction is the torus. The framework places the microstate on
 $T^2=\mathbb{C}/M_{\mathrm{PCF}}\mathbb{Z}[i]$, $\tau=i$~\cite{CW6}, and the tower of lattices
 $\golden^{\sigma}M_{\mathrm{PCF}}\mathbb{Z}[i]$ has $\tau=i$ at every level \tier[lattice\_tower\_tau]{P}:
 the torus is the same at every level up to scale (Figure~\ref{fig:background}(a),(i)). The lattice points grow with the level: at the levels $\sigma=0,\dots,6$ of the tower of~\cite{CW6}, the points of $\mathbb{Z}[i]$ inside the ring of radius $\golden^{\sigma/2}$ are $5,5,9,13,21,37,57$. The disk has area $S(\sigma)=\pi\golden^{\sigma}$, the saturation entropy, and the count equals it only on average: the number of lattice points in a disk differs from its area by an error of lower order~\cite{Hux03}, and its ratio to $S$, $1.59,0.98,1.09,0.98,0.98,1.06,1.01$ here, is $0.9998$ at $\sigma=22$.
-\witness{N}{\testref{test\_lattice\_points\_follow\_the\_area\_on\_average}, \testref{test\_ratio\_at\_sigma\_22\_is\_unity\_to\_four\_decimals}} The mode count, the circle count of \S\ref{sec:intro}, is $\lfloor S\rfloor=3,5,8,13,21,34,56$; at the bottom of the throat, $\sigma=12$, the lattice points are $1005$ and $\lfloor S(12)\rfloor=1011$ (\testref{test\_bottom\_of\_the\_throat}). The right angle of
+
+\witness{N}{\testref{test\_lattice\_points\_follow\_the\_area\_on\_average}, \testref{test\_ratio\_at\_sigma\_22\_is\_unity\_to\_four\_decimals}}
+
+The mode count, the circle count of \S\ref{sec:intro}, is $\lfloor S\rfloor=3,5,8,13,21,34,56$; at the bottom of the throat, $\sigma=12$, the lattice points are $1005$ and $\lfloor S(12)\rfloor=1011$ (\testref{test\_bottom\_of\_the\_throat}). The right angle of
 the torus is not chosen. The microstate starts from the eigenvalue triangle $\tfrac12\omega^{k}$,
 $\omega=e^{2\pi i/3}$, on a hexagonal lattice at $120^{\circ}$; the golden coupling $z=\golden y$,
 a third direction tied to the plane by $\golden$, carries it onto the square lattice $\mathbb{Z}[i]$,
@@ -1821,7 +1874,10 @@ statement~\ref{imp:lengths} it accumulates exactly a half-turn at every level,
 $\varepsilon(\sigma)\tau(\sigma)=\varepsilon_0M_{\mathrm{PCF}}=\pi$ \tier[closure\_each\_level]{P}. The
 half-turn is carried by the reciprocal length, not by the ring: over the ring $M_{\mathrm{PCF}}\golden^{\sigma}$
 the phase is $\pi\golden^{2\sigma}$, a half-turn only at $\sigma=0$.
-\witness{P}{phase\_on\_cell, phase\_on\_cell\_halfturn\_iff} This is the pair $z\tau=M_{\mathrm{PCF}}$ again:
+
+\witness{P}{phase\_on\_cell, phase\_on\_cell\_halfturn\_iff}
+
+This is the pair $z\tau=M_{\mathrm{PCF}}$ again:
 the throat grows as the period of the half-turn shrinks. The accumulated phase $\pi$ acts on the
 fibre, of modulus $\tfrac12$ at every phase \tier[worldline\_modulus]{P}, as $e^{i\pi}=-1$, of order
 two \tier[fibre\_half\_turn]{P}; it is $\pi$ and not $2\pi$ because the modulus is $\tfrac12$
@@ -1845,7 +1901,10 @@ the ring into at most three lengths, and by Weyl's theorem they fill it evenly. 
 $\sigma=1,\dots,6$ and up to $10^4$ marks, there are never more than three gap lengths and the
 discrepancy stays below $0.005$
 .
-\witness{N}{\testref{test\_three\_gaps\_of\_the\_marks}, \testref{test\_discrepancy\_stays\_below\_half\_a\_percent}} The subdivision of the ring is the granularity of
+
+\witness{N}{\testref{test\_three\_gaps\_of\_the\_marks}, \testref{test\_discrepancy\_stays\_below\_half\_a\_percent}}
+
+The subdivision of the ring is the granularity of
 Figure~\ref{fig:granularity} at the rotation $\golden^{-2\sigma}$. Two further identities are pure
 algebra. With $c=3$ and $L_0=N/2$, Cardy's expression gives
 $2\pi\sqrt{c L_0/6}=\pi\sqrt N=\pi\golden^{\sigma}=S(\sigma)$ \tier[cardy\_entropy, cardy\_is\_tower\_entropy]{P}~\cite{Car86}; and the closed-string mass
@@ -1854,7 +1913,10 @@ $m^2=(n/R)^2+(wR/\alpha')^2$ is invariant under $R\mapsto\alpha'/R$, $(n,w)\maps
 $z(\sigma)$ is the loop $\tau(\sigma)$ \tier[dual\_radius\_is\_loop]{P}. Three comparisons of $N$ with
 $S$ follow. First, $N$ exceeds $S$ from $\sigma=3$ on: $\golden^{3}=2+\sqrt5>\pi$
 \tier[golden\_cube\_gt\_pi]{P}, so $\pi z<z^{2}$ for every $\sigma\geq3$.
-\witness{P}{ring\_count\_exceeds\_bound, ring\_count\_exceeds\_bound\_from\_three} Second, the
+
+\witness{P}{ring\_count\_exceeds\_bound, ring\_count\_exceeds\_bound\_from\_three}
+
+Second, the
 expression $4\pi z^{2}/(4\cdot\tfrac12)=2\pi z^{2}$ equals $S=\pi z$ only at $z=\tfrac12$
 \tier[area\_law\_4d\_meets\_weld\_iff]{P}, that is at $\sigma=-\log_\golden2$, below the bottom of the
 tower. Third, $\pi\sqrt{N}=\pi z=S$ exactly \tier[cardy\_saturates\_bound]{P}, and the count behind
@@ -1873,7 +1935,11 @@ changes $S$, the masses or the lattice counts of the angular direction above.
 
 This is why the bottom is a half-turn and the phase a quarter-turn: for the modular matrix $S$,
 the half-turn is $S^2=-1$ and the quarter-turn is $S$ itself \tier[quarter\_and\_half\_turn]{P}. The same pair of turns acts on the three-sphere in which the square torus sits as the Clifford torus. The tori $|z_1|=\cos\eta$, $|z_2|=\sin\eta$ that foliate it are flat, of modulus $\tau=i\tan\eta$, and with $\tan\eta_n=\golden^{-2n}$ they are the tower of tori of the window, $\tau_n=i\golden^{-2n}$ of Imported statement~\ref{imp:gauss}, not the lattice torus of every level, whose modulus stays $\tau=i$; the two meet only at the level $0$, where the window torus is the Clifford torus.
-\witness{P}{tan\_eta, level\_zero\_is\_clifford, clifford\_square} The exchange $z_1\leftrightarrow z_2$ is $\eta\mapsto\pi/2-\eta$, the mirror $n\mapsto-n$ of Imported statement~\ref{imp:gauss} \tier[swap\_is\_mirror, S\_acts\_as\_mirror]{P}, and each window torus projects stereographically, from a point of the circle $z_1=0$, onto a torus of revolution with $R/r=\sqrt{1+\golden^{4n}}$, $\sqrt2$ at the level $0$ \tier[stereo\_ratio, clifford\_stereographic\_torus]{P}. The map $J(z_1,z_2)=(-\bar z_2,\bar z_1)$, the quaternion $j$, has order four and square $-1$ \tier[J\_sq, J\_four]{P}: on the base of the Hopf fibration it is the antipodal map of W10 \tier[J\_lifts\_W10]{P}, on the tori it is the mirror \tier[J\_swaps\_moduli]{P}, and its square is the half-turn of the fibre, $-z=e^{i\pi}z$, which the base does not see \tier[antipode\_is\_half\_turn, hopf\_blind\_to\_half\_turn]{P} (\testref{test\_j\_squares\_to\_minus\_one\_and\_the\_half\_turn\_is\_invisible}). The antipodal map, the mirror and the half-turn are thus one quarter-turn and its square. The fibration itself is homogeneous: its isometries carry any fibre to any other; its tori are the preimages of the parallels of the base and need a chosen axis, which the same isometries carry to any other; the torus $\eta=\pi/4$ is fixed by the mirror, and the levels $\eta_n$ are placed by $\golden$ (Imported statement~\ref{imp:gauss}).
+
+\witness{P}{tan\_eta, level\_zero\_is\_clifford, clifford\_square}
+
+The exchange $z_1\leftrightarrow z_2$ is $\eta\mapsto\pi/2-\eta$, the mirror $n\mapsto-n$ of Imported statement~\ref{imp:gauss} \tier[swap\_is\_mirror, S\_acts\_as\_mirror]{P}, and each window torus projects stereographically, from a point of the circle $z_1=0$, onto a torus of revolution with $R/r=\sqrt{1+\golden^{4n}}$, $\sqrt2$ at the level $0$ \tier[stereo\_ratio, clifford\_stereographic\_torus]{P}. The map $J(z_1,z_2)=(-\bar z_2,\bar z_1)$, the quaternion $j$, has order four and square $-1$ \tier[J\_sq, J\_four]{P}: on the base of the Hopf fibration it is the antipodal map of W10 \tier[J\_lifts\_W10]{P}, on the tori it is the mirror \tier[J\_swaps\_moduli]{P}, and its square is the half-turn of the fibre, $-z=e^{i\pi}z$, which the base does not see \tier[antipode\_is\_half\_turn, hopf\_blind\_to\_half\_turn]{P} (\testref{test\_j\_squares\_to\_minus\_one\_and\_the\_half\_turn\_is\_invisible}). The antipodal map, the mirror and the half-turn are thus one quarter-turn and its square. The fibration itself is homogeneous: its isometries carry any fibre to any other; its tori are the preimages of the parallels of the base and need a chosen axis, which the same isometries carry to any other; the torus $\eta=\pi/4$ is fixed by the mirror, and the levels $\eta_n$ are placed by $\golden$ (Imported statement~\ref{imp:gauss}).
+
 \witness{N}{\testref{test\_a\_torus\_is\_the\_preimage\_of\_a\_parallel\_and\_asks\_for\_an\_axis}, \testref{test\_the\_flat\_tori\_have\_modulus\_i\_tan\_eta}}
 
 \begin{definition}[The hypertorus]\label{def:hypertorus}
@@ -1884,7 +1950,10 @@ fibre of modulus $\tfrac12$ whose half-turn period is $\tau(\sigma)=M_{\mathrm{P
 \noindent Each of its three pieces is proved above: $\tau=i$ at every level
 \tier[lattice\_tower\_tau]{P}, the half-turn at every level \tier[closure\_each\_level]{P}, and the
 throat.
-\witness{P}{pseudosphere\_unit\_speed, ring\_ratio} For a reader of AdS/CFT the difference with the usual throat is that the radial
+
+\witness{P}{pseudosphere\_unit\_speed, ring\_ratio}
+
+For a reader of AdS/CFT the difference with the usual throat is that the radial
 direction is not integrated out to leave a boundary theory: bulk and boundary are kept, and the
 boundary torus is the same at every level. The masses use only a minimal part of it: the measure,
 the boundaries, the phase and the bottom.
@@ -1913,7 +1982,10 @@ does: for every continuous function on the circle, its average along the orbit e
 over the circle~\cite{Wey16}; at each point of the orbit a product is the product, and along the
 orbit the connected part $\langle fg\rangle-\langle f\rangle\langle g\rangle$ tends to
 $\int fg-\int f\int g$.
-\witness{P}{weyl\_equidistribution, orbit\_connected\_part, single\_theory\_factorizes} The connected term that item (e) of the proof after Imported
+
+\witness{P}{weyl\_equidistribution, orbit\_connected\_part, single\_theory\_factorizes}
+
+The connected term that item (e) of the proof after Imported
 statement~\ref{imp:adscft} attributes to an average over several states is the one the orbit
 produces: the average over a uniform family of phases is the average over the circle, so one orbit
 gives, at each point, the factorisation of one state and, along itself, the connected part of an
@@ -1959,7 +2031,10 @@ weight on the second coordinate is not chosen: it is the self-dual Gaussian $e^{
 Imported statement~\ref{imp:gauss}, a weight and not a window. Two spaces can carry it. On the index $\sigma=a+b\golden$ the integer $12$ has conjugate $12$ and weight $e^{-144\pi}$,
 about $10^{-196}$, and the observed bottom would sit at $4+5\golden=12.09$: that form contradicts
 the clock and is eliminated.
-\witness{N}{\testref{test\_the\_integer\_12\_kills\_the\_cut}, \testref{test\_best\_lattice\_index}} On the scale $\golden^{\sigma}$ the unit $\golden^n$ has conjugate
+
+\witness{N}{\testref{test\_the\_integer\_12\_kills\_the\_cut}, \testref{test\_best\_lattice\_index}}
+
+On the scale $\golden^{\sigma}$ the unit $\golden^n$ has conjugate
 $\pm\golden^{-n}$ and weight $w(n)=e^{-\pi\golden^{-2n}}$, which with the norm $\pm1$ gives the tower
 itself; $w(n)>\tfrac12$ if and only if $\pi\golden^{-2n}<\log2$ \tier[window\_half\_iff]{P}, and since
 $\pi/\golden^2>\log2>\pi/\golden^4$, the first integer level that passes
@@ -1970,6 +2045,7 @@ places gravity, $\sigma_G=2$, the arity less one, is thus reached by two further
 a radius. The two are distinct conditions on the same variable, one on the self-dual width $\pi$ with
 the threshold $\log2$, the other on the factor $2$ of the Hubble rate, and neither follows from the
 other; the route of the arity is of another kind. The set and the tower are one lattice read twice: the ring of level $\sigma$ of Figure~\ref{fig:throattiling}, with $F_{\sigma+3}$ long and $F_{\sigma+2}$ short tiles, is labelled by the unit $\golden^{\sigma+3}=F_{\sigma+2}+F_{\sigma+3}\golden$ \tier[golden\_pow\_fib]{P}, and its word of tiles is a periodic approximant of the cut-and-project set (\testref{test\_ring\_word\_is\_the\_fibonacci\_rotations}). The Fourier transform of that set is a sum of Bragg peaks on the module $(\mathbb Z+\mathbb Z\golden)/(\golden+2)$, with amplitudes $0.95$, $0.88$ and $0.70$ at $(m,n)=(2,3),(1,2),(1,1)$ for $46\,368$ tiles, against at most $0.010$ at points chosen at random.
+
 \witness{N}{\testref{test\_bragg\_peaks\_of\_the\_fibonacci\_chain}, \testref{test\_bragg\_random\_level}}
 
 \emph{The three columns.} Read through the Rosetta stone, the pieces above are one translation. The unit $\golden^{\sigma}$ on the line is the arithmetic column; its pair with the conjugate on the plane of Imported statement~\ref{imp:units}, with the horocycle of the cusp and the lattice $\mathbb Z[i]$ of the torus, is arithmetic geometry; and the third direction enters by isometry through the golden coupling. The torus $\mathbb C/M_{\mathrm{PCF}}\mathbb Z[i]$ is a Riemann surface, Weil's third column; the second has no counterpart over a finite field here beyond the Pisano periods of Imported statement~\ref{imp:clocks}, so the three columns are a comparison of form. The throat meets the conditions of \S\ref{sec:discussion} by facts proved above, which is how they were read: the translation is invertible on what is counted, because $\golden$ is irrational and the step of level is unimodular \tier[golden\_rotation\_aperiodic, level\_step\_is\_exchange\_shift]{P}; the same at every level, by the additive law (Imported statement~\ref{imp:additive}); and exact at each level, by the two weights, with the unweighted count within $\golden^{-(\sigma+4)}/\sqrt5$ of its mean.
@@ -2109,7 +2185,10 @@ result does not depend on it. Planck alone gives $583.877$, $2.2$ to
 $3.1$ standard deviations from $584$ as the correlation of $\Omega_m$ and $H_0$ runs from $-1$ to
 $0$; the local $H_0$ with the $\omega_m$ of Planck, a combination that $\Lambda$CDM does not
 reconcile, gives $583.40$, nearest to $583$ and $5.0$ standard deviations from it.
-\witness{N}{\testref{test\_data\_readings}, \testref{test\_the\_planck\_level\_is\_2\_2\_to\_3\_1\_sigma\_from\_584}} The
+
+\witness{N}{\testref{test\_data\_readings}, \testref{test\_the\_planck\_level\_is\_2\_2\_to\_3\_1\_sigma\_from\_584}}
+
+The
 hypothesis is therefore excluded, by the criterion stated in advance, and the other determinations do not undo it: Planck alone agrees with the combination, $1.4$ to $1.8$ standard deviations from it in $\Omega_\Lambda h^2$, and differs only in precision, so it does not favour $584$ (\testref{test\_desi\_against\_planck}); the local $H_0$ moves the nearest integer to $583$ and excludes that one \tier[\testref{test\_the\_worst\_case\_is\_deci}]{N}. A tower with a rational step $p/q$ in place of $\golden$ reads the same data at other levels: with $21/13$ the bottom moves by $0.8$ standard deviations, which the data of \S\ref{sec:data} do not exclude, and the observer's level by $71$ (\testref{test\_rational\_step\_versus\_the\_contrast}); it stays within three standard deviations of the golden reading only from $144/89$ on, and each further depth asks for the next fraction, the convergents of $\golden$. This compares the steps with each other, not with a datum: what singles out $\golden$ is the clock and the additive law, not the data \tier[\testref{test\_three\_sigma\_criterion}]{N}. No measurement error is known that would remove the exclusion, the unit is
 fixed by an argument independent of the data and cannot be moved, and no level of the structure
 singles out $584$ ($584\equiv8\bmod 24$), so there is no mechanism to protect. An evolving dark
@@ -2151,7 +2230,9 @@ are one if the proper time of the heat kernel is $N$ and its coefficient $a_1$ i
 term, which the note does not compute. On that reading gravity turns on where the windings of the ring stop
 dominating, and the first level with weight above $\tfrac12$ and the first with $H_{\mathrm{dS}}\ell<1$ are
 both $\sigma_G=2$.
+
 \witness{P}{window\_crosses\_half, hubble\_below\_bulk\_crossing}
+
 The level
 lies far above the scales the data reach. The same modulus gives the slope of the potential in the canonical field,
 $|\partial_\Phi V|/V=1/\sqrt2=0.707$ (\S\ref{ssec:math}): of order one, as the de~Sitter conjecture
@@ -2159,7 +2240,10 @@ asks~\cite{Obi18,OPSV19}, but below the asymptotic lower bound $\sqrt{2/3}=0.816
 censorship~\cite{BV20} \tier[moduli\_slope\_below\_tcc]{P}, in a region that is asymptotic, since the
 canonical distance $\sqrt2\,\sigma\log\golden$ grows without bound along the tower, $397$ Planck units
 at the observer.
-\witness{N}{\testref{test\_condition\_on\_the\_moduli\_kinetic\_term}, \testref{test\_canonical\_distance\_along\_the\_tower}} Under the assumptions of \S\ref{ssec:math} this contrast of admissibility
+
+\witness{N}{\testref{test\_condition\_on\_the\_moduli\_kinetic\_term}, \testref{test\_canonical\_distance\_along\_the\_tower}}
+
+Under the assumptions of \S\ref{ssec:math} this contrast of admissibility
 fails. It is a conflict with a conjecture, not an exclusion by data, and it falls on those assumptions
 first: with $K=-k\log\mathrm{Im}\,\tau$ the slope is $1/\sqrt{2k}$ and the bound holds if and only if
 $k\le\tfrac34$ \tier[tcc\_iff\_k]{P}, or it does not apply if $\sigma$ is not a dynamical modulus.
@@ -2179,7 +2263,10 @@ the projection of the model onto $(w_0,w_a)$, with $w_a\simeq-0.11$, is not the 
 of~\cite{DESI25}, which the rolling field need not follow.
 
 \emph{From the accumulation to the patch.} Read with axiom~(F10), the levels have a history, in the unit $\ell$ of (F8), and it starts where the representation of \S\ref{sec:background} starts, from the empty space: the centre of the throat, compressed without bottom, is superpoint-like~\cite[\S4.2]{CW6}, the object at which the progression of~\cite{Sch13} from the empty space arrives. From there the observers accumulate (above), and the anti-de~Sitter throat, with $\Lambda_5=-6$ along all of it, compresses what they accumulate towards its centre, where the warp grows without bound~\cite[\S4.2]{CW6}: each level holds its own bits, $S=\pi z$, in a smaller ring, and the compression passes through the level $0$, $z=1$, still in anti-de~Sitter space, with no change of sign. Compression has a limit where a level can no longer hold its bits by the four-dimensional area law, at $z=|\Omega|=\tfrac12$, $\sigma=-\log_\golden2$, below the level $0$ at which the tower of~\cite{CW6} begins (\S\ref{ssec:math}); there $S=\pi/2$, half a cell, and below it $2\pi z^2<\pi z$ \tier[capacity\_exceeded]{P}, while the geometry continues. At that limit the capacity saturates, and the saturation causes the burst, the Big Bang. The burst is the internal rotation of (F8), the passage from the anti-de~Sitter throat to the de~Sitter patch: what is released is already de~Sitter. Axiom~(F8) turns each level of the throat into the patch of that level; in the history that passage takes place once, at the burst, and from it every level is a patch. The first expansion doubles the radius, $\log_\golden2$ levels (Imported statement~\ref{imp:valuation}), from $z=\tfrac12$ to $z=1$, and half a cell becomes one, $S=\pi$ \tier[\testref{test\_a\_doubling\_is\_not\_a\_bit}]{N}. The level $0$, $\tau=i$, is thus crossed twice: compressing, in anti-de~Sitter space, before the Big Bang, and expanding, as the first patch of the tower after it, of the Planck size, $H\ell=\sqrt2$. Its constant is that of the throat, $\Lambda(0)=|\Lambda_5|=6$, which agree only at $d=4$ (above). That they meet at $\sigma=0$ holds by construction \tier[flip\_level]{P}; that they meet at all does not. The two constants are equal, not the two radii: the throat has radius $\ell$, the first patch $H=\sqrt2/\ell$. In that patch the observers go on accumulating: four-dimensional gravity turns on at $\sigma_G=2$ (above), the level of their horizon rises and the curvature of the observer's horizon, $3H^2=6\pi/S_H$, falls towards the asymptotic level of the horizon, $\Lambda_{\mathrm{obs}}$, which does not move (above): with the determination from the cosmic microwave background and the baryon acoustic oscillations it is $583.79$, so that $3H^2(0)/\Lambda_{\mathrm{obs}}=\golden^{583.79}=10^{122.0}=S(583.79)/S(0)$ (\S\ref{sec:data}).
-\witness{N}{\testref{test\_three\_h\_squared\_is\_the\_entropy\_of\_the\_horizon}, \testref{test\_the\_number\_of\_pi\_cells\_is\_122}} Since the first patch has the constant of the throat, $\Lambda S=6\pi$ reads $\Lambda S=|\Lambda_5|\,S(0)$, and the observed constant is the constant of the throat, its sign turned by (F8), divided by the cells accumulated since the first patch, $\Lambda_{\mathrm{obs}}=|\Lambda_5|\,S(0)/S_{\mathrm{obs}}$; the $122$ orders of magnitude that separate it from the Planck scale are that number of cells of size $S(0)=\pi$. The equality follows from $\Lambda S=6\pi$, holds by construction and is not a contrast; that what crosses the burst is the size of the constant of the throat is the reading of (F10). The size is fixed by $d$ and $\ell$, not by how much was accumulated before the burst; whether that accumulation fixes the number of cells, the asymptotic level of the horizon, is not derived here: that level is the open number of the note, one debt with $M/M_{\mathrm{Pl}}$, not two~\cite[eq.~(sigma-obs)]{CW6}. The contrast is the equation of state: in this history $\Lambda$ does not fall, its asymptotic value is constant and $w=-1$, as in $\Lambda$CDM, within which (F8) gives each level a constant. An evolving dark energy, which combinations of DESI data prefer at $2.8$ to $4.2$ standard deviations (\S\ref{sec:data}), is in tension with (F10) as stated and, if confirmed, would refute it; the rolling modulus above, $w\simeq-0.92$, is another hypothesis, not an axiom of this note, which would then displace (F10). That the saturation causes the Big Bang, and that half a saturated cell becomes the first cell of the patch, is the identification of (F10), not a consequence of the mathematics.
+
+\witness{N}{\testref{test\_three\_h\_squared\_is\_the\_entropy\_of\_the\_horizon}, \testref{test\_the\_number\_of\_pi\_cells\_is\_122}}
+
+Since the first patch has the constant of the throat, $\Lambda S=6\pi$ reads $\Lambda S=|\Lambda_5|\,S(0)$, and the observed constant is the constant of the throat, its sign turned by (F8), divided by the cells accumulated since the first patch, $\Lambda_{\mathrm{obs}}=|\Lambda_5|\,S(0)/S_{\mathrm{obs}}$; the $122$ orders of magnitude that separate it from the Planck scale are that number of cells of size $S(0)=\pi$. The equality follows from $\Lambda S=6\pi$, holds by construction and is not a contrast; that what crosses the burst is the size of the constant of the throat is the reading of (F10). The size is fixed by $d$ and $\ell$, not by how much was accumulated before the burst; whether that accumulation fixes the number of cells, the asymptotic level of the horizon, is not derived here: that level is the open number of the note, one debt with $M/M_{\mathrm{Pl}}$, not two~\cite[eq.~(sigma-obs)]{CW6}. The contrast is the equation of state: in this history $\Lambda$ does not fall, its asymptotic value is constant and $w=-1$, as in $\Lambda$CDM, within which (F8) gives each level a constant. An evolving dark energy, which combinations of DESI data prefer at $2.8$ to $4.2$ standard deviations (\S\ref{sec:data}), is in tension with (F10) as stated and, if confirmed, would refute it; the rolling modulus above, $w\simeq-0.92$, is another hypothesis, not an axiom of this note, which would then displace (F10). That the saturation causes the Big Bang, and that half a saturated cell becomes the first cell of the patch, is the identification of (F10), not a consequence of the mathematics.
 
 \emph{The top: two hypotheses.} With the bottom placed by axiom~(F4), the depth of the throat has two readings,
 and the vector ratio would separate them. With the top at the Planck mass (\S\ref{sec:prediction}) the
