@@ -10,14 +10,15 @@ Measured over the tracked manuscript sources (`main.tex` and `src/**/*.tex`) —
 
 | form | count |
 |---|--:|
-| `\tier[ids]{P}` | 145 |
-| `\tier[ids]{N}` | 53 |
-| `\tier{P}` (bare) | 6 |
-| `\tier{N}` (bare) | 3 |
-| own-line `\witness{P}{…}` | 31 |
-| own-line `\witness{N}{…}` | 12 |
-| mid-line `\witness{…}` (no block) | 0 |
-| `\tier[\testref{…}]{N}` marks | 53 |
+| own-line `\witness[ids]{P}` | 26 |
+| own-line `\witness[ids]{N}` | 12 |
+| own-line `\witness{P}` (bare) | 0 |
+| own-line `\witness{N}` (bare) | 0 |
+| inline `\witness[ids]{P}` | 147 |
+| inline `\witness[ids]{N}` | 53 |
+| inline `\witness{P}` (bare) | 6 |
+| inline `\witness{N}` (bare) | 3 |
+| `\witness[\testref{…}]{N}` marks | 65 |
 
 Ids carried by `N` marks: **79 ids over 72 distinct**.
 
@@ -32,7 +33,7 @@ Ids carried by `N` marks: **79 ids over 72 distinct**.
 | `\leanline` | 0 |
 | `\code` | 40 |
 | `\testref` | 95 |
-| `\witness` | 44 |
+| `\witness` | 251 |
 
 ## Gates measured here
 
@@ -42,30 +43,33 @@ Ids carried by `N` marks: **79 ids over 72 distinct**.
 | stars (`\LeanStar` body uses) | **0** |
 | `Tier` column in a table | **0** |
 | `pending(D7)` markers | **0** |
-| `\tier[…]` id parts that are neither a `\testref`, a snake_case id nor a qualified declaration | **23** |
+| `\witness[…]` id parts that are neither a `\testref`, a snake_case id nor a qualified declaration | **30** |
 | open sites (`(open;`) | **0** |
 
-`\tier[…]` ids that are neither a `\testref`, a snake_case id nor a namespace-qualified declaration (23 occurrences, 14 distinct):
+`\witness[…]` ids that are neither a `\testref`, a snake_case id nor a namespace-qualified declaration (30 occurrences, 17 distinct):
 
+- `bessel\_J1\_zeros` ×5
 - `S\_acts\_as\_mirror` ×3
-- `bessel\_J1\_zeros` ×3
 - `dS\_entropy\_law` ×3
-- `eta\_T` ×2
+- `eta\_T` ×3
+- `dedekindEta` ×2
 - `pairing\_FP\_modulus\_half` ×2
 - `theta\_S\_law` ×2
 - `D\_conjugated\_hop\_is\_one` ×1
+- `D\_conjugated\_hops\_equal` ×1
+- `D\_sq\_eq\_eta` ×1
 - `J\_four` ×1
 - `J\_lifts\_W10` ×1
 - `J\_sq` ×1
 - `J\_swaps\_moduli` ×1
-- `dedekindEta` ×1
+- `eta\_eq\_exp\_fourA` ×1
 - `eta\_power\_T\_phase` ×1
 - `partition\_T\_invariant` ×1
 
 ## Per-file marks
 
-| file | `\tier[…]` + `\tier{…}` marks |
+| file | `\witness` marks |
 |---|--:|
-| `main.tex` | 207 |
+| `main.tex` | 247 |
 
 Re-generate with `pnpm run witness:inventory`; a hand-edited figure is a defect.

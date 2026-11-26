@@ -198,7 +198,7 @@ class TestTexTestRefs:
             "test_three_sigma_criterion",
             "test_vector_ratio_depends_only_on_the_depth",
             "test_black_hole_threshold",
-            # the tiers: the test that witnesses a \tier{N} in the text
+            # the tiers: the test that witnesses a \witness{N} in the text
             "test_offset_of_j1_zeros_tends_to_one_quarter",
             "test_predictions_at_sigma_12",
             "test_vector_ratio_range",
